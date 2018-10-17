@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { CancelToken } from "../helpers";
 
 export default {
 	name: "ButtonPageingView",
@@ -53,10 +53,10 @@ export default {
 			if (_loading) {
 				_loading.cancel();
 			}
-			const cancelToken = axios.CancelToken.source();
+			const cancelToken = new CancelToken();
 			this._loading = cancelToken;
 
-			return loader(index, pageSize, cancelToken.token).then(res => {
+			return loader(index, pageSize, cancelToken).then(res => {
 				this.index = index;
 
 				if (Array.isArray(res)) {

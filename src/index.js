@@ -3,7 +3,6 @@ import ScrollPager from "./components/ScrollPager";
 import SkFadingCircle from "./components/SkFadingCircle";
 import Swiper from "./components/FadeCarousel";
 import ToggleButton from "./components/ToggleButton";
-import TransitionCurtain from "../TransitionCurtain";
 import ScrollPageingView from "./components/ScrollPageingView";
 import ButtonPageingView from "./components/ButtonPageingView";
 import KxCheckBox from "./components/KxCheckBox";
@@ -13,11 +12,14 @@ import KxCarousel from "./components/KxCarousel";
 import KxDialogContainer from "./components/KxDialogContainer.vue";
 import KxBaseDialog from "./components/KxBaseDialog.vue";
 import KxContextMenu from "./components/KxContextMenu.vue";
+import MessageBox from "./components/KxMessageBox.vue";
+
 
 function installKxDialog (Vue) {
 	Vue.component(KxDialogContainer.name, KxDialogContainer);
 	Vue.component(KxBaseDialog.name, KxBaseDialog);
 	Vue.component(KxContextMenu.name, KxContextMenu);
+	Vue.component(MessageBox.name, MessageBox);
 
 	const eventBus = new Vue();
 
@@ -41,6 +43,25 @@ function installKxDialog (Vue) {
 		close (data) {
 			eventBus.$emit("close", data);
 		},
+		/**
+		 * 弹出一个简单的消息对话框。
+		 *
+		 * @param title 消息框的标题，或者一个对象包含了所有参数，如果使用了对象那么
+		 *                 后面的参数将无效。
+		 * @param content    消息框的内容
+		 * @param type 类型，error、warn 或 info（默认）
+		 * @param cancelable 是否显示取消按钮和右上角的关闭
+		 * @param dimmerClose 点击遮罩是否关闭窗口
+		 *
+		 * @return Promise<Boolean> 一个Promise，指示了窗口的状态和用户操作的结果，如果接受了true说
+		 *                             明用户点击了确定，false则点击了取消、遮罩或关闭按钮。
+		 */
+		messageBox (title, content, type, cancelable, dimmerClose) {
+			if (typeof title === "object") {
+				return this.$dialog.show(MessageBox, title);
+			}
+			return this.$dialog.show(MessageBox, { title, content, type, cancelable, dimmerClose });
+		},
 	};
 
 	const dialog = new Vue(KxDialogContainer).$mount();
@@ -57,7 +78,6 @@ function install (Vue) {
 	Vue.component(ButtonPager.name, ButtonPager);
 	Vue.component(ScrollPager.name, ScrollPager);
 	Vue.component(Swiper.name, Swiper);
-	Vue.component(TransitionCurtain.name, TransitionCurtain);
 	Vue.component(ToggleButton.name, ToggleButton);
 	Vue.component(ScrollPageingView.name, ScrollPageingView);
 	Vue.component(ButtonPageingView.name, ButtonPageingView);
