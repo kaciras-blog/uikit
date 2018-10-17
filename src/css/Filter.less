@@ -1,0 +1,22 @@
+@import "Mixin";
+
+.glass() {
+	position: relative;
+	overflow: hidden;
+
+	&::before {
+		content: '';
+		position: absolute;
+		.margin-abs(0);
+
+		filter: blur(var(--blurSize, 0))
+				grayscale(var(--grayscaleSize, 0));
+	}
+
+	.blur(@size) {
+		--blurSize: @size;
+		&::before {
+			margin: -@size;
+		}
+	}
+}
