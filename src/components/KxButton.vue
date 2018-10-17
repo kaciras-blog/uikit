@@ -55,7 +55,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../css/ToBeImport";
+@import "../css/imports";
 
 @color-button-primary: @color-primary; // 主要
 @color-button-second: #f570c7; // 次要

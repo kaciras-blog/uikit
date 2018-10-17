@@ -153,7 +153,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import "../css/ToBeImport";
+@import "../css/imports";
 
 .button-pager {
 	display: flex;

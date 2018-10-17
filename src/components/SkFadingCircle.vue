@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../css/ToBeImport";
+@import "../css/imports";
 
 .sk-fading-circle {
 	margin: 1rem auto;
