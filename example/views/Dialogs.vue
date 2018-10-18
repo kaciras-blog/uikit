@@ -6,11 +6,12 @@
 </template>
 
 <script>
+import LuckyNumber from "../components/LuckyNumber";
+
 export default {
-	name: "app",
 	methods: {
 		mainDialog () {
-			this.$dialog.show("lucky-number");
+			this.$dialog.show(LuckyNumber);
 		},
 		/**
 		 *
@@ -20,7 +21,7 @@ export default {
 			if (event.button !== 2) {
 				return;
 			}
-			this.$dialog.show("KxContextMenu", {event});
+			this.$dialog.show("KxContextMenu", { event });
 		},
 	},
 };

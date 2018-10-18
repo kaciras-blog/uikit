@@ -1,6 +1,3 @@
-<!--
-此页面仅用于开发调试，在生产环境下无法访问，默认路径为/test。
--->
 <template>
 	<main>
 		<kx-button @click="counter++" square>标准按钮</kx-button>
@@ -34,10 +31,9 @@
 </template>
 
 <script>
-import { sleep } from "../../utils";
+import { sleep } from "@/helpers";
 
 export default {
-	name: "Test",
 	data: () => ({
 		counter: 0,
 	}),

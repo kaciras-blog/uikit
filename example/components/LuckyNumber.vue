@@ -38,8 +38,9 @@ export default {
 
 			let num = parseInt(this.age);
 			const name = this.name;
-			for (let i = name.length - 1; i >= 0; i--)
+			for (let i = name.length - 1; i >= 0; i--) {
 				num += name.charCodeAt(i);
+			}
 
 			this.$dialog.messageBox({
 				title: "幸运数字",
