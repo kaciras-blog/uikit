@@ -9,8 +9,8 @@
 
 		<span class="tip">(点击背景可以关闭窗口)</span>
 		<div slot="footer">
-			<button @click="inputDialog">输入信息</button>
-			<button @click="luckyNum">计算！</button>
+			<kx-button @click="inputDialog">输入信息</kx-button>
+			<kx-button @click="luckyNum">计算！</kx-button>
 		</div>
 	</kx-base-dialog>
 </template>

@@ -1,6 +1,6 @@
 <template>
-	<div class="test-menu" :style="style">
-		<div>菜单项1</div>
+	<div :style="style">
+		<slot/>
 	</div>
 </template>
 
@@ -43,9 +43,6 @@ export default {
 
 <style lang="less">
 .test-menu {
-	width: 175px;
-	height: 500px;
 
-	border: solid 1px black;
 }
 </style>

@@ -58,9 +58,9 @@ function installKxDialog (Vue) {
 		 */
 		messageBox (title, content, type, cancelable, dimmerClose) {
 			if (typeof title === "object") {
-				return this.$dialog.show(MessageBox, title);
+				return this.show(MessageBox, title);
 			}
-			return this.$dialog.show(MessageBox, { title, content, type, cancelable, dimmerClose });
+			return this.show(MessageBox, { title, content, type, cancelable, dimmerClose });
 		},
 	};
 

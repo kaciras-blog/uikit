@@ -3,7 +3,7 @@
 		<kx-button @click="counter++" square>标准按钮</kx-button>
 		<h3>{{counter}}</h3>
 
-		<kx-button tag="a" :route="'/' + counter">路由按钮</kx-button>
+		<kx-button tag="a" route="/dialog">路由按钮</kx-button>
 
 		<kx-task-button :on-click="ck">
 			加载按钮

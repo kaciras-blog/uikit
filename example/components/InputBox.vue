@@ -8,7 +8,7 @@
 		<label>年龄</label>
 		<input type="number" v-model="age" value="0"/>
 
-		<button type="button" @click="ok">确定</button>
+		<kx-button @click="ok">确定</kx-button>
 	</form>
 </kx-base-dialog>
 </template>
