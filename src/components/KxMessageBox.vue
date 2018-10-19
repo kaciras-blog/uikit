@@ -4,7 +4,7 @@
 		:class="type"
 		:closeIcon="true"
 		:draggable="true"
-		@close-button-clicked="cancel"
+		@close-button-clicked="$dialog.close(false)"
 		@dimmer-clicked="dimmerClick">
 
 		<h3 slot="title">{{title}}</h3>
