@@ -1,6 +1,4 @@
 <script>
-import Vue from "vue";
-
 export default {
 	name: "KxButton",
 	functional: true,
@@ -38,7 +36,7 @@ export default {
 			data.props = data.props || {};
 			data.props.tag = tag;
 			data.props.to = route;
-			tag = Vue.component("router-link");
+			tag = "router-link";
 		}
 
 		if (icon) {
