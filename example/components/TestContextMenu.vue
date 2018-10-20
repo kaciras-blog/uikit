@@ -1,7 +1,7 @@
 <template>
-	<kx-context-menu class="menu">
-		<span>查看代码</span>
-	</kx-context-menu>
+	<ul class="menu">
+		<li class="menu-item">查看代码</li>
+	</ul>
 </template>
 
 <script>
@@ -12,7 +12,13 @@ export default {
 
 <style scoped lang="less">
 .menu {
-	border: solid 1px #888;
-	box-shadow: 0 0 4px 2px #888;
+	padding: 0;
+	margin: 0;
+	background-color: white;
+}
+.menu-item {
+	list-style: none;
+	padding: .4rem .8rem;
+	cursor: default;
 }
 </style>

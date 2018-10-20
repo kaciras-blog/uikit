@@ -9,64 +9,7 @@ import KxCheckBox from "./components/KxCheckBox";
 import KxButton from "./components/KxButton";
 import KxTaskButton from "./components/KxTaskButton";
 import KxCarousel from "./components/KxCarousel";
-import KxDialogContainer from "./components/KxDialogContainer.vue";
-import KxBaseDialog from "./components/KxBaseDialog.vue";
-import KxContextMenu from "./components/KxContextMenu.vue";
-import MessageBox from "./components/KxMessageBox.vue";
-
-
-function installKxDialog (Vue) {
-	Vue.component(KxDialogContainer.name, KxDialogContainer);
-	Vue.component(KxBaseDialog.name, KxBaseDialog);
-	Vue.component(KxContextMenu.name, KxContextMenu);
-	Vue.component(MessageBox.name, MessageBox);
-
-	const eventBus = new Vue();
-
-	Vue.prototype.$dialog = {
-		eventBus,
-		/**
-		 * 弹出一个窗口。
-		 *
-		 * @param component 弹窗组件
-		 * @param data 传递给弹窗的数据
-		 * @return {Promise<*>} 一个Promise，在窗口关闭后完成，使用then函数来获取窗口的返回值
-		 */
-		show (component, data) {
-			return new Promise(resolve => eventBus.$emit("show", { component, data, resolve }));
-		},
-		/**
-		 * 关闭最上层的弹窗，并返回一个结果。
-		 *
-		 * @param data 返回给调用方的结果。
-		 */
-		close (data) {
-			eventBus.$emit("close", data);
-		},
-		/**
-		 * 弹出一个简单的消息对话框。
-		 *
-		 * @param title 消息框的标题，或者一个对象包含了所有参数，如果使用了对象那么
-		 *                 后面的参数将无效。
-		 * @param content    消息框的内容
-		 * @param type 类型，error、warn 或 info（默认）
-		 * @param cancelable 是否显示取消按钮和右上角的关闭
-		 * @param dimmerClose 点击遮罩是否关闭窗口
-		 *
-		 * @return Promise<Boolean> 一个Promise，指示了窗口的状态和用户操作的结果，如果接受了true说
-		 *                             明用户点击了确定，false则点击了取消、遮罩或关闭按钮。
-		 */
-		messageBox (title, content, type, cancelable, dimmerClose) {
-			if (typeof title === "object") {
-				return this.show(MessageBox, title);
-			}
-			return this.show(MessageBox, { title, content, type, cancelable, dimmerClose });
-		},
-	};
-
-	const dialog = new Vue(KxDialogContainer).$mount();
-	document.body.appendChild(dialog.$el);
-}
+import KxDialog from "./KxDialog";
 
 /**
  * 自动注册目录下的Vue组件。
@@ -87,7 +30,7 @@ function install (Vue) {
 	Vue.component(KxCarousel.name, KxCarousel);
 
 	if (typeof window !== "undefined") {
-		installKxDialog(Vue);
+		Vue.use(KxDialog);
 	}
 
 	// 自动聚焦支持 v-autofocus

@@ -1,5 +1,5 @@
 <template>
-	<div id="app" @contextmenu.prevent="contextMenu">
+	<div id="app" v-context-menu="'TestContextMenu'">
 		<kx-button type="button" @click="mainDialog">算一下幸运数字</kx-button>
 		<kx-dialog-container></kx-dialog-container>
 	</div>
@@ -9,8 +9,8 @@
 import LuckyNumber from "../components/LuckyNumber";
 import TestContextMenu from "../components/TestContextMenu";
 
-
 export default {
+	components: { TestContextMenu },
 	methods: {
 		mainDialog () {
 			this.$dialog.show(LuckyNumber);
@@ -20,10 +20,7 @@ export default {
 		 * @param event {MouseEvent}
 		 */
 		contextMenu (event) {
-			if (event.button !== 2) {
-				return;
-			}
-			this.$dialog.show(TestContextMenu, { event });
+			this.$dialog.contextMenu(TestContextMenu, event);
 		},
 	},
 };
