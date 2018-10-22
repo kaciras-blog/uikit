@@ -1,7 +1,8 @@
 <template>
-	<div class="dimmer" @click.self="$dialog.close()">
+	<div class="dimmer" @mousedown.self="handleClick">
 		<component
 			:is="component"
+			ref="menu"
 			class="basic-ctx-menu"
 			:style="style"
 			v-bind="data"/>
@@ -17,13 +18,11 @@ export default {
 		data: {},
 	},
 	data: () => ({
-		style: {
-			opacity: 0,
-		},
+		style: {},
 	}),
 	methods: {
 		positionForCursor () {
-			const rect = this.$el.getBoundingClientRect();
+			const rect = this.$refs.menu.$el.getBoundingClientRect();
 			const { width, height } = rect;
 			const { clientX, clientY } = this.event;
 
@@ -39,19 +38,21 @@ export default {
 			}
 
 			this.style = {
-				position: "absolute",
-				opacity: 1,
+				visibility: "visible",
 				top: computePosition(clientY, height, window.innerHeight) + "px",
 				left: computePosition(clientX, width, window.innerWidth) + "px",
 			};
+		},
+		handleClick (event) {
+			this.$dialog.close();
+			this.$nextTick(() => document.elementFromPoint(event.clientX, event.clientY).dispatchEvent(event));
 		},
 	},
 	mounted () {
 		if (window.innerWidth <= 768) {
 			const rect = this.$el.getBoundingClientRect();
 			this.style = {
-				position: "absolute",
-				opacity: 1,
+				visibility: "visible",
 				top: `calc(50% - ${rect.height / 2}px)`,
 				left: `calc(50% - ${rect.width / 2}px)`,
 			};
@@ -64,6 +65,7 @@ export default {
 
 <style lang="less">
 .basic-ctx-menu {
-
+	position: absolute;
+	visibility: hidden;
 }
 </style>
