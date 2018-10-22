@@ -68,7 +68,9 @@ export default {
 	&:not(.ckecked) {
 		background-color: rgba(255, 255, 255, 0.3);
 	}
-	border-color: rgba(255, 255, 255, .7);
+	&.ckecked{
+		border-color: rgba(255, 255, 255, .7);
+	}
 }
 
 .check-box-input {
