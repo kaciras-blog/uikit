@@ -3,7 +3,7 @@
 		<slot :items="items"/>
 		<scroll-pager
 			:init-state="initState"
-			:next-page-url="nextPageUrl"
+			:next-page-url="nextLinkEnabled ? nextPageUrl : null"
 			@load-page="loadPage"/>
 	</div>
 </template>
@@ -19,6 +19,10 @@ export default {
 		pageSize: {
 			type: Number,
 			default: 16,
+		},
+		nextLinkEnabled: {
+			type: Boolean,
+			default: false,
 		},
 		// 下面两个设置初始状态，可以用于预渲染
 		initItems: {

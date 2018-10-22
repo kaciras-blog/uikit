@@ -91,7 +91,9 @@ export default {
 	methods: {
 		tryLoadPage () {
 			const { state, activeHeight } = this;
-			if (state !== FREE) { return; }
+			if (state !== FREE) {
+				return;
+			}
 			// 网页高度 - 窗口高度 - 窗口之上部分的高度 = 窗口下面剩余的高度
 			const remain = document.body.offsetHeight - window.innerHeight - window.scrollY;
 
@@ -107,7 +109,9 @@ export default {
 		},
 	},
 	mounted () {
-		if (this.autoLoad) { window.addEventListener("scroll", this.tryLoadPage); }
+		if (this.autoLoad) {
+			window.addEventListener("scroll", this.tryLoadPage);
+		}
 		this.tryLoadPage();
 	},
 };
