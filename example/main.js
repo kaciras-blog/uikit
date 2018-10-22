@@ -1,7 +1,7 @@
+import "../src/css/index.less";
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-import "@/css/index.less";
 import KxUI from "@";
 
 Vue.config.productionTip = false;

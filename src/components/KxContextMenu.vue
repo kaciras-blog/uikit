@@ -1,16 +1,18 @@
 <template>
-	<component
+	<div class="dimmer" @click.self="$dialog.close()">
+		<component
 			:is="component"
 			class="basic-ctx-menu"
 			:style="style"
 			v-bind="data"/>
+	</div>
 </template>
 
 <script>
 export default {
 	name: "KxContextMenu",
 	props: {
-		event: {},
+		event: MouseEvent,
 		component: {},
 		data: {},
 	},
@@ -62,6 +64,6 @@ export default {
 
 <style lang="less">
 .basic-ctx-menu {
-	border: solid 1px #9d9d9d;
+
 }
 </style>
