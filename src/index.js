@@ -9,7 +9,7 @@ import KxCheckBox from "./components/KxCheckBox";
 import KxButton from "./components/KxButton";
 import KxTaskButton from "./components/KxTaskButton";
 import KxCarousel from "./components/KxCarousel";
-import KxDialog from "./KxDialog";
+import KxDialog from "./kx-dialog";
 
 /**
  * 自动注册目录下的Vue组件。
