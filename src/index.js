@@ -9,25 +9,16 @@ import KxCheckBox from "./components/KxCheckBox";
 import KxButton from "./components/KxButton";
 import KxTaskButton from "./components/KxTaskButton";
 import KxCarousel from "./components/KxCarousel";
+
 import KxDialog from "./kx-dialog";
 
 /**
  * 自动注册目录下的Vue组件。
  *
  * @param Vue Vue类型，使用Vue.use()来注册该插件
+ * @param options 选项
  */
-function install (Vue) {
-	Vue.component(SkFadingCircle.name, SkFadingCircle);
-	Vue.component(ButtonPager.name, ButtonPager);
-	Vue.component(ScrollPager.name, ScrollPager);
-	Vue.component(Swiper.name, Swiper);
-	Vue.component(ToggleButton.name, ToggleButton);
-	Vue.component(ScrollPageingView.name, ScrollPageingView);
-	Vue.component(ButtonPageingView.name, ButtonPageingView);
-	Vue.component(KxCheckBox.name, KxCheckBox);
-	Vue.component(KxButton.name, KxButton);
-	Vue.component(KxTaskButton.name, KxTaskButton);
-	Vue.component(KxCarousel.name, KxCarousel);
+function install (Vue, options = {}) {
 
 	if (typeof window !== "undefined") {
 		Vue.use(KxDialog);
@@ -74,6 +65,18 @@ function install (Vue) {
 			el.addEventListener("keydown", handleSelect);	// 移动光标的键按住不放
 		},
 	});
+
+	Vue.component(SkFadingCircle.name, SkFadingCircle);
+	Vue.component(ButtonPager.name, ButtonPager);
+	Vue.component(ScrollPager.name, ScrollPager);
+	Vue.component(Swiper.name, Swiper);
+	Vue.component(ToggleButton.name, ToggleButton);
+	Vue.component(ScrollPageingView.name, ScrollPageingView);
+	Vue.component(ButtonPageingView.name, ButtonPageingView);
+	Vue.component(KxCheckBox.name, KxCheckBox);
+	Vue.component(KxButton.name, KxButton);
+	Vue.component(KxTaskButton.name, KxTaskButton);
+	Vue.component(KxCarousel.name, KxCarousel);
 
 //	IDE 无法分析自动扫描的引用
 // 	const requireContext = require.context(".", false,  /.vue$/);

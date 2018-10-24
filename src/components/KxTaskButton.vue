@@ -41,7 +41,7 @@ export default {
 			if (running && waiting) {
 				return;
 			}
-			const task = onClick();
+			const task = onClick.call(this);
 			if (task) {
 				this.running = true;
 				task.finally(() => this.running = false);
