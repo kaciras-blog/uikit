@@ -1,45 +1,51 @@
 <template>
-	<label class="kx-check-box"
+	<label class="kx-radio-box"
 		   :class="{ disabled }"
-		   role="checkbox"
 		   :aria-checked="model"
 		   :aria-disabled="disabled">
 
-		<input class="check-box-input"
+		<input class="radio-box-input"
 			   type="checkbox"
 			   :disabled="disabled"
 			   v-model="model"
 			   aria-hidden="true"
 			   @change="handleChange">
 
-		<span class="check-box-mark" :class="{ ckecked: model }"></span>
+		<span class="radio-box-mark" :class="{ ckecked: model }"></span>
 
-		<span class="check-box-label"><slot/></span>
+		<span class="radio-box-label"><slot/></span>
 	</label>
 </template>
 
 <script>
 export default {
-	name: "KxCheckBox",
+	name: "KxRadioBox",
 	props: {
-		// 可能没有设置，使用 undefined 区分
-		value: Boolean,
+		value: {
+			required: true,
+		},
+		name: {},
+		initSelected: {},
 		disabled: {
 			type: Boolean,
 			default: false,
 		},
 	},
-	data: () => ({
-		selfValue: false,
-	}),
+	data () {
+		return {
+			selected: false,
+			mName: this.name || this.value,
+		};
+	},
+	inject: ["updateSelected", "register"],
 	computed: {
 		model: {
 			get () {
-				return typeof this.value === "undefined" ? this.selfValue : this.value;
+				return this.selected;
 			},
-			set (value) {
-				this.selfValue = value;
-				this.$emit("input", value);
+			set (selected) {
+				this.selected = selected;
+				this.updateSelected(this.mName, this.value);
 			},
 		},
 	},
@@ -48,20 +54,25 @@ export default {
 			this.$emit("changed", event.target.checked);
 		},
 	},
+	created () {
+		this.register(name => this.selected = name === this.mName);
+		if (typeof this.initSelected !== "undefined") {
+			this.model = true;
+		}
+	},
 };
 </script>
 
 <style lang="less">
-@import "../css/exports";
 
-.kx-check-box {
+.kx-radio-box {
 	display: block;
 	height: 1.6em;
 	cursor: pointer;
 }
 
-.kx-check-box:hover > .check-box-mark,
-.check-box-input:focus + .check-box-mark {
+.kx-radio-box:hover > .check-radio-mark,
+.check-radio-input:focus + .check-radio-mark {
 	&:not(.ckecked) {
 		background-color: rgba(255, 255, 255, 0.3);
 	}
@@ -70,12 +81,12 @@ export default {
 	}
 }
 
-.check-box-input {
+.radio-box-input {
 	position: absolute;
 	opacity: 0;
 }
 
-.check-box-mark {
+.radio-box-mark {
 	display: inline-block;
 	position: relative;
 	height: 1.6em;
@@ -83,23 +94,23 @@ export default {
 	vertical-align: top;
 
 	border: 1px solid #dbdbdb;
-	border-radius: 4px;
+	border-radius: .8em;
 
 	transition: all .15s;
 
 	&::after {
 		content: "";
-		border: solid white;
-		border-width: 0 2px 2px 0;
-		position: absolute;
-
-		transform: translateX(-50%) translateY(-50%) rotate(45deg);
-		left: 10px;
-		top: 9px;
-		width: 7px;
-		height: 13px;
-
 		display: none;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+
+		margin-left: -5px;
+		margin-top:  -5px;
+		width: 10px;
+		height: 10px;
+		border-radius: 5px;
+		background-color: white;
 	}
 
 	&.ckecked {
@@ -111,7 +122,7 @@ export default {
 	}
 }
 
-.check-box-label {
+.radio-box-label {
 	display: inline-block;
 	padding-left: .5rem;
 	padding-top: 1px; // 微调下上边距跟勾对齐

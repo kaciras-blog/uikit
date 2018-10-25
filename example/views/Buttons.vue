@@ -4,6 +4,7 @@
 		<h3>{{counter}}</h3>
 
 		<kx-button tag="a" route="/dialog">路由按钮</kx-button>
+		<kx-button tag="a" route="/radiobox">RadioBox</kx-button>
 
 		<kx-task-button :on-click="ck">
 			加载按钮

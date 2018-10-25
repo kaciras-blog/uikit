@@ -9,6 +9,8 @@ import KxCheckBox from "./components/KxCheckBox";
 import KxButton from "./components/KxButton";
 import KxTaskButton from "./components/KxTaskButton";
 import KxCarousel from "./components/KxCarousel";
+import KxRadioBox from "./components/KxRadioBox";
+import KxRadioBoxGroup from "./components/KxRadioBoxGroup";
 
 import KxDialog from "./kx-dialog";
 
@@ -77,6 +79,8 @@ function install (Vue, options = {}) {
 	Vue.component(KxButton.name, KxButton);
 	Vue.component(KxTaskButton.name, KxTaskButton);
 	Vue.component(KxCarousel.name, KxCarousel);
+	Vue.component(KxRadioBox.name, KxRadioBox);
+	Vue.component(KxRadioBoxGroup.name, KxRadioBoxGroup);
 
 //	IDE 无法分析自动扫描的引用
 // 	const requireContext = require.context(".", false,  /.vue$/);
