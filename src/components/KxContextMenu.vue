@@ -13,7 +13,7 @@
 export default {
 	name: "KxContextMenu",
 	props: {
-		event: MouseEvent,
+		event: {}, // MouseEvent is unaliveable in SSR.
 		component: {},
 		data: {},
 	},
