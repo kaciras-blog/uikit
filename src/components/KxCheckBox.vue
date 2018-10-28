@@ -55,7 +55,6 @@ export default {
 @import "../css/exports";
 
 .kx-check-box {
-	display: block;
 	height: 1.6em;
 	cursor: pointer;
 }

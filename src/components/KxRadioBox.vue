@@ -56,7 +56,6 @@ export default {
 <style lang="less">
 
 .kx-radio-box {
-	/*display: block;*/
 	height: 1.6em;
 	cursor: pointer;
 }
