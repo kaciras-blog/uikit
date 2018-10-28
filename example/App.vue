@@ -1,29 +1,27 @@
 <template>
 	<div id="app">
 		<nav>
-			<router-link to="/buttons">按钮</router-link>
+			<router-link to="/usage">使用指南</router-link>
 		</nav>
 		<router-view/>
 	</div>
 </template>
 
 <style lang="less">
-#app {
-	font-family: 'Avenir', Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
-	color: #2c3e50;
-}
-
 nav {
-	padding: 30px;
-	a {
-		font-weight: bold;
-		color: #2c3e50;
-		&.router-link-exact-active {
-			color: #42b983;
-		}
+	font-size: 1rem;
+	margin-bottom: 1rem;
+	background-color: #2171f5;
+	color: white;
+
+	& > a {
+		display: inline-block;
+		padding: .8rem;
+	}
+
+	& > .router-link-active {
+		color: black;
+		background-color: white;
 	}
 }
 </style>
