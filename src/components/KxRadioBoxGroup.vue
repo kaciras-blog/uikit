@@ -6,22 +6,12 @@
 export default {
 	name: "KxRadioBoxGroup",
 	props: {
+		name: String,
 		value: {},
+		disabled: Boolean,
 	},
 	provide () {
-		return {
-			updateSelected: this.updateSelected,
-			register: this.register,
-		};
-	},
-	methods: {
-		updateSelected (name, value) {
-			this.$emit("select", name);
-			this.$emit("input", value);
-		},
-		register (callback) {
-			this.$on("select", callback);
-		},
+		return { radioGroup: this };
 	},
 };
 </script>

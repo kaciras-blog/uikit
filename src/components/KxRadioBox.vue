@@ -1,18 +1,24 @@
+<!--
+该组件必须与KxRadioBoxGroup搭配使用。
+目前仅使用value来区分，即相同value的组件具有同样的选择状态，请确保同一组下Radio的value各不相同。
+-->
 <template>
 	<label class="kx-radio-box"
-		   :class="{ disabled }"
-		   :aria-checked="model"
-		   :aria-disabled="disabled">
+		   :class="{ disabled: source.disabled }"
+		   :aria-checked="checked"
+		   :aria-disabled="source.disabled">
 
 		<input class="radio-box-input"
-			   type="checkbox"
-			   :disabled="disabled"
-			   v-model="model"
+			   type="radio"
 			   aria-hidden="true"
+			   :name="source.name"
+			   :value="value"
+			   :disabled="source.disabled"
+			   :checked="checked"
+			   @input="source.$emit('input', value)"
 			   @change="handleChange">
 
-		<span class="radio-box-mark" :class="{ ckecked: model }"></span>
-
+		<span class="radio-box-mark" :class="{ ckecked: checked }"></span>
 		<span class="radio-box-label"><slot/></span>
 	</label>
 </template>
@@ -21,44 +27,28 @@
 export default {
 	name: "KxRadioBox",
 	props: {
+		name: String,
 		value: {
 			required: true,
 		},
-		name: {},
-		initSelected: {},
 		disabled: {
 			type: Boolean,
 			default: false,
 		},
 	},
-	data () {
-		return {
-			selected: false,
-			mName: this.name || this.value,
-		};
-	},
-	inject: ["updateSelected", "register"],
+	inject: ["radioGroup"],
 	computed: {
-		model: {
-			get () {
-				return this.selected;
-			},
-			set (selected) {
-				this.selected = selected;
-				this.updateSelected(this.mName, this.value);
-			},
+		source () {
+			return this.radioGroup;
+		},
+		checked () {
+			return this.value === this.source.value;
 		},
 	},
 	methods: {
 		handleChange (event) {
-			this.$emit("changed", event.target.checked);
+			this.source.$emit("change", event.target.checked);
 		},
-	},
-	created () {
-		this.register(name => this.selected = name === this.mName);
-		if (typeof this.initSelected !== "undefined") {
-			this.model = true;
-		}
 	},
 };
 </script>
@@ -66,7 +56,7 @@ export default {
 <style lang="less">
 
 .kx-radio-box {
-	display: block;
+	/*display: block;*/
 	height: 1.6em;
 	cursor: pointer;
 }
@@ -76,7 +66,7 @@ export default {
 	&:not(.ckecked) {
 		background-color: rgba(255, 255, 255, 0.3);
 	}
-	&.ckecked{
+	&.ckecked {
 		border-color: rgba(255, 255, 255, .7);
 	}
 }
@@ -106,7 +96,7 @@ export default {
 		left: 50%;
 
 		margin-left: -5px;
-		margin-top:  -5px;
+		margin-top: -5px;
 		width: 10px;
 		height: 10px;
 		border-radius: 5px;
