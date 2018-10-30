@@ -1,3 +1,6 @@
+// import Velocity from "velocity-animate";
+import $ from "jquery";
+
 export class VueMultiWatcher {
 	constructor (vm, paths, callback, options) {
 		this.vm = vm;
@@ -104,6 +107,37 @@ export function openFile (multiple = false, accept = "*") {
 	});
 }
 
+function getScrollTop () {
+	const doc = document.documentElement || document.body.parentNode;
+	return (typeof doc.scrollTop === "number" ? doc : document.body).scrollTop;
+}
+
+/**
+ * 滚动到元素顶部，浏览器可视区域的上端滚到元素的顶端。
+ *
+ * @param element 元素对象或元素id
+ */
+export function scrollToElementStart (element) {
+	if (typeof element === "string") {
+		element = document.getElementById(element);
+	}
+	$("html,body").animate({ scrollTop: getScrollTop() + element.getBoundingClientRect().top }, 500);
+}
+
+/**
+ * 滚动到元素底部，浏览器可视区域的最下面对其到元素的底端。
+ *
+ * @param element 元素对象或元素id
+ */
+export function scrollToElementEnd (element) {
+	if (typeof element === "string") {
+		element = document.getElementById(element);
+	}
+	const elTop = getScrollTop() + element.getBoundingClientRect().top;
+	$("html,body").animate({ scrollTop: elTop + element.clientHeight - window.innerHeight }, 500);
+	// Velocity(document.getElementsByTagName("html")[0], {scrollTop: element.offsetTop + element.clientHeight}, 200);
+}
+
 export class CancelToken {
 
 	constructor () {
@@ -129,8 +163,10 @@ export class CancelToken {
 
 	static never () {
 		const token = new CancelToken();
-		token.cancel = () => {};
-		token.onCancel = () => {};
+		token.cancel = () => {
+		};
+		token.onCancel = () => {
+		};
 		return token;
 	}
 }
