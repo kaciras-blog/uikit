@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { CancelToken } from "../helpers";
+import { CancelToken, scrollToElementStart, scrollToElementEnd } from "../helpers";
 
 export default {
 	name: "ButtonPageingView",
@@ -77,13 +77,11 @@ export default {
 			const { loadPage, total, pageSize, scrollToEnd } = this;
 			loadPage(Math.floor(total / pageSize)).then(scrollToEnd);
 		},
-		// scroll helper methods
 		scrollToStart () {
-			// # 窗口高，楼中楼滚到屏幕顶了？
-			// this.$nextTick(() => scrollToElementStart(this.$el));
+			this.$nextTick(() => scrollToElementStart(this.$el));
 		},
 		scrollToEnd () {
-			// this.$nextTick(() => scrollToElementEnd(this.$el));
+			this.$nextTick(() => scrollToElementEnd(this.$el));
 		},
 	},
 	beforeMount () {
