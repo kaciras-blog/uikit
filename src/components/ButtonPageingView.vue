@@ -1,12 +1,21 @@
 <template>
 	<div>
-		<slot :items="items"/>
 		<button-pager
-				:theme="theme"
-				:total-count="total"
-				:index="index"
-				:page-size="pageSize"
-				@load-page="switchPage"/>
+			v-if="showTopButtons"
+			:theme="theme"
+			:total-count="total"
+			:index="index"
+			:page-size="pageSize"
+			@load-page="switchPage"/>
+
+		<slot :items="items"/>
+
+		<button-pager
+			:theme="theme"
+			:total-count="total"
+			:index="index"
+			:page-size="pageSize"
+			@load-page="switchPage"/>
 	</div>
 </template>
 
@@ -37,6 +46,7 @@ export default {
 			default: 0,
 		},
 		theme: String,
+		showTopButtons: Boolean,
 	},
 	data () {
 		return {
