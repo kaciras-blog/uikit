@@ -145,9 +145,6 @@ export default {
 	color: white;
 
 	user-select: none;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
 
 	padding-left: 1rem;
 	background-color: rgb(51, 149, 231);

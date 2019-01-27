@@ -178,9 +178,6 @@ export default {
 
 .omit {
 	cursor: default;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	-webkit-user-select: none;
 	user-select: none;
 }
 

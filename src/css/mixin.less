@@ -157,13 +157,5 @@
 // 用于点击的元素，指针为手指样式、并禁止选取
 .click-item() {
 	cursor: pointer;
-	.disable-user-select();
-}
-
-// 禁止选取文字，这个postcss不处理得自己搞前缀
-.disable-user-select() {
 	user-select: none;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
 }
