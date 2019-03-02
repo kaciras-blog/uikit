@@ -7,7 +7,7 @@
 			@mouseenter.native="handleEnter"
 			@mouseleave.native="handleLeave">
 
-			<template slot-scope="{ slide }">
+			<template v-slot="{ slide }">
 				<slot :slide="slide"/>
 			</template>
 		</fade-carousel>

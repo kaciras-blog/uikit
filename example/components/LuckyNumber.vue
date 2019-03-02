@@ -1,17 +1,23 @@
 <template>
 	<kx-base-dialog
-			@close-button-clicked="close"
-			@dimmer-clicked="close">
-		<h3 slot="title">算算你的幸运数字</h3>
+		@close-button-clicked="close"
+		@dimmer-clicked="close"
+	>
+		<template v-slot:title>
+			<h3>算算你的幸运数字</h3>
+		</template>
 
 		<div><span>姓名：</span>{{name}}</div>
 		<div><span>年龄：</span>{{age}}</div>
 
 		<span class="tip">(点击背景可以关闭窗口)</span>
-		<div slot="footer">
-			<kx-button @click="inputDialog">输入信息</kx-button>
-			<kx-button @click="luckyNum">计算！</kx-button>
-		</div>
+
+		<template v-slot:footer>
+			<div>
+				<kx-button @click="inputDialog">输入信息</kx-button>
+				<kx-button @click="luckyNum">计算！</kx-button>
+			</div>
+		</template>
 	</kx-base-dialog>
 </template>
 

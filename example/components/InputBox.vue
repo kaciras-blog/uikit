@@ -1,6 +1,8 @@
 <template>
 <kx-base-dialog :close-icon="false">
-	<h3 slot="title">请输入一些信息</h3>
+	<template v-slot:title>
+		<h3>请输入一些信息</h3>
+	</template>
 	<form id="result">
 		<label>您的名字</label>
 		<input v-model="name" placeholder="某某某"/>

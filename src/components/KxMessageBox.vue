@@ -7,20 +7,24 @@
 		@close-button-clicked="$dialog.close(false)"
 		@dimmer-clicked="dimmerClick">
 
-		<h3 slot="title">{{title}}</h3>
+		<template v-slot:title>
+			<h3>{{title}}</h3>
+		</template>
 		<pre class="kx-msgbox-body">{{message}}</pre>
 
-		<div slot="footer" class="kx-msgbox-buttons">
-			<kx-button
-				v-if="cancelable"
-				@click="$dialog.close(false)">
-				取消
-			</kx-button>
-			<kx-button
-				@click="$dialog.close(true)">
-				确定
-			</kx-button>
-		</div>
+		<template v-slot:footer>
+			<div class="kx-msgbox-buttons">
+				<kx-button
+					v-if="cancelable"
+					@click="$dialog.close(false)">
+					取消
+				</kx-button>
+				<kx-button
+					@click="$dialog.close(true)">
+					确定
+				</kx-button>
+			</div>
+		</template>
 	</kx-base-dialog>
 </template>
 

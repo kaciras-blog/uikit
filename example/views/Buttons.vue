@@ -8,12 +8,12 @@
 
 		<kx-task-button :on-click="ck">
 			加载按钮
-			<template slot="running">正在加载</template>
+			<template v-slot:running>正在加载</template>
 		</kx-task-button>
 
 		<kx-task-button class="second outline" :on-click="ck">
 			加载按钮
-			<template slot="running">正在加载</template>
+			<template v-slot:running>正在加载</template>
 		</kx-task-button>
 
 		<hr>
