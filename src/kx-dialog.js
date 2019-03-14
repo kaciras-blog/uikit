@@ -32,6 +32,12 @@ export default function (Vue) {
 		close (data) {
 			eventBus.$emit("close", data);
 		},
+
+		/** 关闭所有弹窗，该方法不能传递结果 */
+		clear () {
+			eventBus.$emit("clear");
+		},
+
 		/**
 		 * 弹出一个简单的消息对话框。
 		 *

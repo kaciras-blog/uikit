@@ -1,4 +1,3 @@
-// import Velocity from "velocity-animate";
 import anime from "animejs";
 
 export class VueMultiWatcher {
@@ -51,6 +50,7 @@ export function drag (el, startX, startY, onDragging) {
 		style.left = originX + "px";
 	}
 
+	// 拖动中不断计算新的坐标，并传递给回调函数
 	const onMove = event => {
 		event.preventDefault();
 		const { clientX, clientY } = event.touches && event.touches.length > 0
@@ -172,10 +172,8 @@ export class CancelToken {
 
 	static never () {
 		const token = new CancelToken();
-		token.cancel = () => {
-		};
-		token.onCancel = () => {
-		};
+		token.cancel = () => {};
+		token.onCancel = () => {};
 		return token;
 	}
 }

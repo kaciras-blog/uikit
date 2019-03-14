@@ -2,11 +2,11 @@
 	<div v-show="stack.length"
 		 class="kx-dialog-container">
 		<component
-				v-for="(dialog, index) in stack"
-				:key="dialog.id"
-				:is="dialog.component"
-				v-show="index === stack.length - 1"
-				v-bind="dialog.data"/>
+			v-for="(dialog, index) in stack"
+			:key="dialog.id"
+			:is="dialog.component"
+			v-show="index === stack.length - 1"
+			v-bind="dialog.data"/>
 	</div>
 </template>
 
@@ -29,6 +29,11 @@ export default {
 				throw new Error("当前没有可关闭的弹窗");
 			}
 			config.resolve(data);
+		});
+
+		this.$dialog.eventBus.$on("clear", () => {
+			this.stack.forEach(c => c.resolve());
+			this.stack = [];
 		});
 	},
 };
