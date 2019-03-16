@@ -44,8 +44,17 @@ export default {
 			};
 		},
 		handleClick (event) {
-			this.$dialog.close();
-			this.$nextTick(() => document.elementFromPoint(event.clientX, event.clientY).dispatchEvent(event));
+			this.$dialog.cancel();
+
+			// 重新触发点击事件，模拟点击穿透
+			const ev = new MouseEvent("click", {
+				view: window,
+				bubbles: true,
+				cancelable: true,
+				clientX: event.clientX,
+				clientY: event.clientY,
+			});
+			this.$nextTick(() => document.elementFromPoint(ev.clientX, ev.clientY).dispatchEvent(ev));
 		},
 	},
 	mounted () {
