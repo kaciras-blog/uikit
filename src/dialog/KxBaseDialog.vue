@@ -11,7 +11,7 @@
 
 			<header class="kx-dialog-header" @mousedown="drag">
 				<slot name="title">
-					<h2>{{title}}</h2>
+					<h2 class="kx-dialog-title">{{title}}</h2>
 				</slot>
 				<div title="关闭"
 					 class="kx-dialog-close"
@@ -82,7 +82,7 @@ export default {
 	methods: {
 		close () {
 			if (this.defaultClose) {
-				this.$dialog.close();
+				this.$dialog.cancel();
 			} else {
 				this.$emit("close-button-clicked");
 			}
@@ -113,10 +113,10 @@ export default {
 	font-size: 1.5rem;
 	text-align: center;
 	line-height: 3rem;
-	border-top-right-radius: calc(.5rem - 1px);
+	border-top-right-radius: 4px;
 
 	&:hover {
-		background-color: rgba(0, 0, 0, .15);
+		background-color: rgba(0, 0, 0, .05);
 	}
 }
 
@@ -124,20 +124,26 @@ export default {
 	display: flex;
 	flex-direction: column;
 
-	min-width: 16rem;
+	min-width: 400px;
+	max-width: 80vw;
 
-	border-radius: 5px;
+	border-radius: 4px;
 	background-color: white;
+}
+
+.kx-dialog-title {
+	margin: 0;
+	font-size: 22px;
+	font-weight: 500;
 }
 
 .kx-dialog-header {
 	height: 3rem;
-	color: white;
 
 	user-select: none;
 
-	padding-left: 1rem;
-	background-color: rgb(51, 149, 231);
+	padding-left: 16px;
+	border-bottom: solid 1px #d5d5d5;
 	border-top-left-radius: calc(.5rem - 1px);
 	border-top-right-radius: calc(.5rem - 1px);
 
@@ -150,8 +156,6 @@ export default {
 	padding: 1.5rem 1rem;
 	border-bottom-left-radius: calc(.5rem - 1px);
 	border-bottom-right-radius: calc(.5rem - 1px);
-	overflow-y: auto;
-	overflow-x: hidden;
 
 	/* footer插槽，如果有就加个下边距 */
 

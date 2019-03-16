@@ -1,16 +1,16 @@
 <template>
-	<div v-if="type === 0" class="sweet-modal-icon sweet-modal-info" ref="icon_info"></div>
-	<div v-if="type === 1" class="sweet-modal-icon sweet-modal-success" ref="icon_success">
+	<div v-if="type === 0" class="sweet-modal-icon sweet-modal-info"></div>
+	<div v-else-if="type === 1" class="sweet-modal-icon sweet-modal-success">
 		<span class="sweet-modal-line sweet-modal-tip"></span>
 		<span class="sweet-modal-line sweet-modal-long"></span>
 		<div class="sweet-modal-placeholder"></div>
 		<div class="sweet-modal-fix"></div>
 	</div>
-	<div v-if="type === 2" class="sweet-modal-icon sweet-modal-warning" ref="icon_warning">
+	<div v-else-if="type === 2" class="sweet-modal-icon sweet-modal-warning">
 		<span class="sweet-modal-body"></span>
 		<span class="sweet-modal-dot"></span>
 	</div>
-	<div v-if="type === 3" class="sweet-modal-icon sweet-modal-error" ref="icon_error">
+	<div v-else class="sweet-modal-icon sweet-modal-error">
 		<span class="sweet-modal-x-mark">
 			<span class="sweet-modal-line sweet-modal-left"></span>
 			<span class="sweet-modal-line sweet-modal-right"></span>
@@ -29,7 +29,12 @@ export default {
 }
 </script>
 
-<style module lang="less">
+<style lang="less">
+@color-info: #358bff;
+@color-success: #69ff80;
+@color-warning: #ffc04c;
+@color-error: #ff4a54;
+
 .sweet-modal-icon {
 	position: relative;
 
@@ -45,7 +50,7 @@ export default {
 	box-sizing: content-box;
 
 	&.sweet-modal-error {
-		border-color: color(red);
+		border-color: @color-error;
 
 		.sweet-modal-x-mark {
 			position: relative;
@@ -59,7 +64,7 @@ export default {
 			height: 5px;
 			width: 47px;
 
-			background-color: color(red);
+			background-color: @color-error;
 			border-radius: 2px;
 
 			&.sweet-modal-left {
@@ -75,7 +80,7 @@ export default {
 	}
 
 	&.sweet-modal-warning {
-		border-color: color(orange);
+		border-color: @color-warning;
 
 		.sweet-modal-body { // Exclamation mark body
 			position: absolute;
@@ -87,7 +92,7 @@ export default {
 			margin-left: -2px;
 
 			border-radius: 2px;
-			background-color: color(orange);
+			background-color:@color-warning;
 		}
 
 		.sweet-modal-dot { // Exclamation mark dot
@@ -100,12 +105,12 @@ export default {
 			margin-left: -3px;
 
 			border-radius: 50%;
-			background-color: color(orange);
+			background-color: @color-warning;
 		}
 	}
 
 	&.sweet-modal-info {
-		border-color: color(blue);
+		border-color: @color-info;
 
 		&::before { // i-letter body
 			content: '';
@@ -118,7 +123,7 @@ export default {
 			margin-left: -2px;
 
 			border-radius: 2px;
-			background-color: color(blue);
+			background-color: @color-info;
 		}
 
 		&::after { // i-letter dot
@@ -131,12 +136,12 @@ export default {
 			margin-left: -3px;
 
 			border-radius: 50%;
-			background-color: color(blue);
+			background-color: @color-info;
 		}
 	}
 
 	&.sweet-modal-success {
-		border-color: color(green);
+		border-color: @color-success;
 
 		&::before, &::after { // Emulate moving circular line
 			content: '';
@@ -186,7 +191,7 @@ export default {
 			width: 80px;
 			height: 80px;
 
-			border: 4px solid rgba(color(green), 0.2);
+			border: 4px solid rgba(0, 255, 0, 0.2);
 			border-radius: 50%;
 		}
 
@@ -209,7 +214,7 @@ export default {
 			z-index: 2;
 
 			height: 5px;
-			background-color: color(green);
+			background-color: @color-success;
 			border-radius: 2px;
 
 			&.sweet-modal-tip {
@@ -239,17 +244,6 @@ export default {
 		background-size: contain;
 		background-position: center center;
 		background-repeat: no-repeat;
-	}
-}
-
-.sweet-modal.theme-dark .sweet-modal-icon {
-
-	&.sweet-modal-success {
-
-		&::before, &::after,
-		.sweet-modal-fix {
-			background-color: color(dark-overlay);
-		}
 	}
 }
 </style>

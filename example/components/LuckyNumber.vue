@@ -2,7 +2,8 @@
 	<kx-base-dialog
 		title="算算你的幸运数字"
 		@close-button-clicked="close"
-		@dimmer-clicked="close"
+		:draggable="true"
+		:click-to-close="true"
 	>
 		<div><span>姓名：</span>{{name}}</div>
 		<div><span>年龄：</span>{{age}}</div>
@@ -11,8 +12,8 @@
 
 		<template v-slot:footer>
 			<div>
-				<kx-button @click="inputDialog">输入信息</kx-button>
-				<kx-button @click="luckyNum">计算！</kx-button>
+				<kx-button class="primary outline" @click="inputDialog">输入信息</kx-button>
+				<kx-button class="primary outline" @click="luckyNum">计算！</kx-button>
 			</div>
 		</template>
 	</kx-base-dialog>
@@ -40,7 +41,7 @@ export default {
 				return this.$dialog.messageBox({
 					title: "无法计算",
 					content: "请先随意输入姓名和年龄",
-					type: MessageBoxType.Warning,
+					type: MessageBoxType.Error,
 				});
 			}
 
@@ -57,7 +58,7 @@ export default {
 					"你的幸运数字是：" + (num % 11),
 				],
 				type: MessageBoxType.Info,
-			}).onClose(() => this.$dialog.close());
+			}).onClose(() => this.$dialog.confirm());
 		},
 		close () {
 			this.$dialog.confirm();

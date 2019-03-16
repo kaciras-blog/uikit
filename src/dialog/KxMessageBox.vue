@@ -3,11 +3,10 @@
 		<div class="kx-msgbox">
 			<button title="关闭"
 				 :class="$style.closeIcon"
-				 v-if="closeIcon"
 				 @mousedown.stop
 				 @click="close">X</button>
 
-			<!-- 图标 -->
+			<dialog-icons :class="$style.icon" :type="type"/>
 
 			<h2 v-if="title">{{title}}</h2>
 			<pre class="kx-msgbox-body">{{message}}</pre>
@@ -19,6 +18,7 @@
 					取消
 				</kx-button>
 				<kx-button
+					class="primary"
 					@click="$dialog.confirm(undefined)">
 					确定
 				</kx-button>
@@ -29,16 +29,17 @@
 
 <script>
 import KxModalWrapper from "./KxModalWrapper";
+import DialogIcons from "./DialogIcons";
 
 export default {
 	name: "KxMessageBox",
-	components: { KxModalWrapper },
+	components: { DialogIcons, KxModalWrapper },
 	props: {
 		title: String,
 		content: [String, Array],
 		type: {
-			type: String,
-			default: "info",
+			type: Number,
+			default: 0,
 		},
 		cancelable: {
 			type: Boolean,
@@ -46,7 +47,7 @@ export default {
 		},
 		dimmerClose: {
 			type: Boolean,
-			default: false,
+			default: true,
 		},
 	},
 	computed: {
@@ -63,6 +64,9 @@ export default {
 
 <style module lang="less">
 .closeIcon {
+	position: absolute;
+	top: 0;
+	right: 0;
 	height: 30px;
 	width: 30px;
 
@@ -78,14 +82,21 @@ export default {
 		background: rgba(0, 0, 0, .1);
 	}
 }
+
+.icon {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
 </style>
 
 <style lang="less">
 .kx-msgbox {
+	position: relative;
+
 	max-width: 500px;
 	width: 80vw;
 	border-radius: 5px;
-	padding: 16px;
+	padding: 20px;
 
 	background-color: white;
 	font-size: 1rem;
@@ -94,7 +105,5 @@ export default {
 
 .kx-msgbox-buttons {
 	text-align: right;
-	padding-left: 1rem;
-	padding-right: 1rem;
 }
 </style>

@@ -19,7 +19,7 @@ export default {
 	methods: {
 		dimmerClick () {
 			if (this.clickToClose)
-				this.$dialog.eventBus.$emit("cancel");
+				this.$dialog.cancel()
 		},
 	},
 };
@@ -27,15 +27,16 @@ export default {
 
 <style lang="less">
 .fade-enter {
+	transform: scale(0.95, 0.95);
 	opacity: 0;
 }
 
 .fade-enter-active {
-	transition: all 0.25s;
+	transition: all 0.3s;
 }
 
 .kx-dialog-background {
-	background-color: rgba(0, 0, 0, .1);
+	background-color: rgba(0, 0, 0, .2);
 	display: flex;
 	justify-content: center;
 	align-items: center;

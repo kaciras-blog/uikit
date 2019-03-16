@@ -1,7 +1,7 @@
 <template>
 	<div id="app" v-context-menu="'TestContextMenu'">
 		<kx-button type="button" @click="mainDialog">算一下幸运数字</kx-button>
-		<kx-dialog-container></kx-dialog-container>
+		<!--<kx-dialog-container></kx-dialog-container>-->
 	</div>
 </template>
 
