@@ -35,7 +35,7 @@ export default {
 			if (this.name.length === 0) {
 				this.name = "某某某";
 			}
-			this.$dialog.close(this.$data);
+			this.$dialog.confirm(this.$data);
 		},
 	},
 };

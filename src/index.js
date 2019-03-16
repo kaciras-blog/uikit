@@ -12,7 +12,7 @@ import KxCarousel from "./components/KxCarousel";
 import KxRadioBox from "./components/KxRadioBox";
 import KxRadioBoxGroup from "./components/KxRadioBoxGroup";
 
-import KxDialog from "./kx-dialog";
+import KxDialog from "./dialog";
 
 /**
  * 自动注册目录下的Vue组件。

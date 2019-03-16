@@ -2,53 +2,58 @@
 使用注意：footer插槽最好是一个元素，多个就用容器包起来
 -->
 <template>
-	<transition name="fade">
-		<div class="kx-dialog-dimmer dimmer"
-			 @click.self="$emit('dimmer-clicked')">
+	<kx-modal-wrapper :click-to-close="clickToClose">
+		<div class="kx-dialog"
+			 ref="panel"
+			 :style="optionalStyle"
+			 role="dialog"
+			 aria-modal="true">
 
-			<div class="kx-dialog"
-				 ref="panel"
-				 :style="optionalStyle"
-				 role="dialog"
-				 aria-modal="true">
-
-				<header class="kx-dialog-header"
-						@mousedown="drag">
-
-					<slot name="title"/>
-					<div title="关闭"
-						 class="kx-dialog-close"
-						 v-if="closeIcon"
-						 @mousedown.stop
-						 @click="close">X
-					</div>
-				</header>
-
-				<div class="kx-dialog-body">
-					<slot/>
+			<header class="kx-dialog-header" @mousedown="drag">
+				<slot name="title">
+					<h2>{{title}}</h2>
+				</slot>
+				<div title="关闭"
+					 class="kx-dialog-close"
+					 v-if="closeIcon"
+					 @mousedown.stop
+					 @click="close">X
 				</div>
-				<slot name="footer"/>
-			</div>
+			</header>
+
+			<div class="kx-dialog-body"><slot/></div>
+
+			<slot name="footer"/>
 		</div>
-	</transition>
+	</kx-modal-wrapper>
 </template>
 
 <script>
 import { drag } from "../helpers";
+import KxModalWrapper from "./KxModalWrapper";
 
 export default {
 	name: "KxBaseDialog",
+	components: { KxModalWrapper },
 	props: {
+		/** 点击遮罩层关闭 */
+		clickToClose: Boolean,
+
+		/** 标题，这是个设置标题的便捷方法，如果使用了标题插槽则该属性将被忽略 */
+		title: String,
+
 		/** 是否显示右上角的关闭按钮（叉） */
 		closeIcon: {
 			type: Boolean,
 			default: true,
 		},
+
 		/** 在点击关闭按钮时不发出事件，而是直接关闭窗口并返回undefined */
 		defaultClose: {
 			type: Boolean,
 			default: true,
 		},
+
 		/** 是否可以点击标题栏拖动 */
 		draggable: {
 			type: Boolean,
@@ -101,14 +106,6 @@ export default {
 </script>
 
 <style lang="less">
-.fade-enter {
-	opacity: 0;
-}
-
-.fade-enter-active {
-	transition: all 0.25s;
-}
-
 .kx-dialog-close {
 	height: 100%;
 	width: 3rem;
@@ -123,20 +120,13 @@ export default {
 	}
 }
 
-.kx-dialog-dimmer {
-	background-color: rgba(0, 0, 0, .1);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
 .kx-dialog {
 	display: flex;
 	flex-direction: column;
 
 	min-width: 16rem;
 
-	border-radius: .5rem;
+	border-radius: 5px;
 	background-color: white;
 }
 
@@ -164,6 +154,7 @@ export default {
 	overflow-x: hidden;
 
 	/* footer插槽，如果有就加个下边距 */
+
 	& + * {
 		padding-bottom: 1rem;
 	}

@@ -4,8 +4,9 @@ module.exports = {
 		node: true,
 	},
 	"extends": [
-		"plugin:vue/essential",
-		"@vue/standard",
+		'plugin:vue/essential',
+		'@vue/standard',
+		'@vue/typescript'
 	],
 	rules: {
 		"indent": ["error", "tab", { SwitchCase: 1 }],
@@ -25,6 +26,6 @@ module.exports = {
 		"no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
 	},
 	parserOptions: {
-		parser: "babel-eslint",
+		parser: '@typescript-eslint/parser',
 	},
 };

@@ -1,12 +1,9 @@
 <template>
 	<kx-base-dialog
+		title="算算你的幸运数字"
 		@close-button-clicked="close"
 		@dimmer-clicked="close"
 	>
-		<template v-slot:title>
-			<h3>算算你的幸运数字</h3>
-		</template>
-
 		<div><span>姓名：</span>{{name}}</div>
 		<div><span>年龄：</span>{{age}}</div>
 
@@ -23,6 +20,7 @@
 
 <script>
 import InputBox from "./InputBox.vue";
+import { MessageBoxType } from "../../src/dialog";
 
 export default {
 	name: "LuckyNumber",
@@ -33,13 +31,17 @@ export default {
 	}),
 	methods: {
 		async inputDialog () {
-			const data = await this.$dialog.show(InputBox, this.$data);
+			const { result } = await this.$dialog.show(InputBox, this.$data).waitForClose();
 			this.inputed = true;
-			Object.assign(this.$data, data);
+			Object.assign(this.$data, result);
 		},
 		luckyNum () {
 			if (!this.inputed) {
-				return this.$dialog.messageBox("无法计算", "请先随意输入姓名和年龄", "warn");
+				return this.$dialog.messageBox({
+					title: "无法计算",
+					content: "请先随意输入姓名和年龄",
+					type: MessageBoxType.Warning,
+				});
 			}
 
 			let num = parseInt(this.age);
@@ -51,15 +53,14 @@ export default {
 			this.$dialog.messageBox({
 				title: "幸运数字",
 				content: [
-					"点击标题可以拖动↑",
-					"",
 					"经过详细而周密的计算！",
 					"你的幸运数字是：" + (num % 11),
 				],
-			}).then(this.$dialog.close);
+				type: MessageBoxType.Info,
+			}).onClose(() => this.$dialog.close());
 		},
 		close () {
-			this.$dialog.close();
+			this.$dialog.confirm();
 		},
 	},
 };
