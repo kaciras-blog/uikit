@@ -17,7 +17,8 @@
 					 class="kx-dialog-close"
 					 v-if="closeIcon"
 					 @mousedown.stop
-					 @click="close">X
+					 @click="close">
+					<img src="../assets/icon-close.svg" alt="CloseIcon">
 				</div>
 			</header>
 
@@ -110,7 +111,6 @@ export default {
 
 	cursor: pointer;
 	text-align: center;
-	font-size: 1.5rem;
 	line-height: 3rem;
 	border-top-right-radius: 4px;
 

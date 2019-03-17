@@ -6,7 +6,10 @@
 				title="关闭"
 				:class="$style.closeIcon"
 				@mousedown.stop
-				@click="$dialog.cancel">X</div>
+				@click="$dialog.cancel"
+			>
+				<img src="../assets/icon-close.svg" alt="CloseIcon">
+			</div>
 
 			<dialog-icons :class="$style.icon" :type="type"/>
 
@@ -31,7 +34,7 @@ export default {
 		content: [String, Array],
 		type: {
 			type: Number,
-			default: 0,
+			default: 0, // MessageBoxType.Info
 		},
 		cancelable: {
 			type: Boolean,
@@ -59,12 +62,11 @@ export default {
 	position: absolute;
 	top: 0;
 	right: 0;
-	height: 30px;
-	width: 30px;
+	height: 3rem;
+	width: 3rem;
 
 	text-align: center;
-	font-size: 1.5rem;
-	line-height: 30px;
+	line-height: 3rem;
 
 	cursor: pointer;
 	border-top-right-radius: 4px;
