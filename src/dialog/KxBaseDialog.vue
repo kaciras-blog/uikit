@@ -68,14 +68,14 @@ export default {
 	}),
 	computed: {
 		optionalStyle () {
-			const style = {};
-
-			if (this.position.manual) {
-				style.position = "fixed";
-				style.left = this.position.X + "px";
-				style.top = this.position.Y + "px";
+			if (!this.position.manual) {
+				return undefined;
 			}
-			return style;
+			return {
+				position: "fixed",
+				left: this.position.X + "px",
+				top: this.position.Y + "px",
+			};
 		},
 	},
 	methods: {
@@ -93,9 +93,14 @@ export default {
 			if (!event.touches && event.button !== 0) {
 				return; // 鼠标右键不拖动
 			}
-			this.position.manual = true;
+			const panel = this.$refs.panel;
+			const rect = panel.getBoundingClientRect();
 
-			drag(this.$refs.panel, event.clientX, event.clientY, (x, y) => {
+			this.position.manual = true;
+			this.position.X = rect.left + "px";
+			this.position.Y = rect.top + "px";
+
+			drag(panel, event.clientX, event.clientY, (x, y) => {
 				this.position.X = x;
 				this.position.Y = y;
 			});
@@ -132,23 +137,22 @@ export default {
 
 .kx-dialog-title {
 	margin: 0;
+	padding-left: 16px;
 	font-size: 22px;
 	font-weight: 500;
 }
 
 .kx-dialog-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
 	height: 3rem;
-
-	user-select: none;
-
-	padding-left: 16px;
 	border-bottom: solid 1px #d5d5d5;
 	border-top-left-radius: calc(.5rem - 1px);
 	border-top-right-radius: calc(.5rem - 1px);
 
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	user-select: none;
 }
 
 .kx-dialog-body {
