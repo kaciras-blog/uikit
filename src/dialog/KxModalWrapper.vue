@@ -1,9 +1,7 @@
 <template>
-	<transition name="fade">
 		<div class="kx-dialog-background dimmer" @click.self="dimmerClick">
 			<slot/>
 		</div>
-	</transition>
 </template>
 
 <script>
@@ -40,15 +38,6 @@ export default {
 </script>
 
 <style lang="less">
-.fade-enter {
-	transform: scale(0.95, 0.95);
-	opacity: 0;
-}
-
-.fade-enter-active {
-	transition: all 0.3s;
-}
-
 .kx-dialog-background {
 	background-color: rgba(0, 0, 0, .2);
 	display: flex;

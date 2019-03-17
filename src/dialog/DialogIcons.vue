@@ -5,7 +5,7 @@
 	<div v-else class="kx-dialog-icon error"></div>
 </template>
 
-<script>
+<script lang="ts">
 import { MessageBoxType } from "./index";
 
 export default {

@@ -1,6 +1,6 @@
 <template>
 	<kx-modal-wrapper :click-to-close="dimmerClose">
-		<div class="kx-msgbox">
+		<div class="kx-msgbox anime-zoomIn">
 			<div
 				v-if="cancelable"
 				title="关闭"
@@ -96,5 +96,17 @@ export default {
 	background-color: white;
 	font-size: 1rem;
 	text-align: center;
+}
+
+.anime-zoomIn {
+	animation: dialog-zoomIn 0.3s 1;
+}
+
+@keyframes dialog-zoomIn {
+	from {
+		opacity: 0;
+		transform: scale(0.95, 0.95);
+	}
+	to { /* default */ }
 }
 </style>

@@ -3,7 +3,7 @@
 -->
 <template>
 	<kx-modal-wrapper :click-to-close="clickToClose">
-		<div class="kx-dialog"
+		<div class="kx-dialog anime-zoomIn"
 			 ref="panel"
 			 :style="optionalStyle"
 			 role="dialog"
