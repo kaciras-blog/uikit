@@ -42,7 +42,7 @@ export default {
 				return;
 			}
 			const task = onClick.call(this);
-			if (task) {
+			if (task.then && task.finally) {
 				this.running = true;
 				task.finally(() => this.running = false);
 			}

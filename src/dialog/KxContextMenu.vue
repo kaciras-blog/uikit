@@ -1,5 +1,8 @@
 <template>
-	<div class="dimmer" @mousedown.self="handleClick">
+	<div class="dimmer"
+		 @contextmenu.self.prevent="handleClick"
+		 @click.self="handleClick">
+
 		<component
 			:is="component"
 			ref="menu"
@@ -47,7 +50,7 @@ export default {
 			this.$dialog.cancel();
 
 			// 重新触发点击事件，模拟点击穿透
-			const ev = new MouseEvent("click", {
+			const ev = new MouseEvent(event.type, {
 				view: window,
 				bubbles: true,
 				cancelable: true,
