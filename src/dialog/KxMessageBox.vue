@@ -11,7 +11,7 @@
 				<img src="../assets/icon-close.svg" alt="CloseIcon">
 			</div>
 
-			<dialog-icons :class="$style.icon" :type="type"/>
+			<dialog-icons :type="type"/>
 
 			<h2 v-if="title">{{title}}</h2>
 			<pre :class="$style.messagePre">{{message}}</pre>
@@ -74,11 +74,6 @@ export default {
 	&:hover {
 		background: rgba(0, 0, 0, .1);
 	}
-}
-
-.icon {
-	margin-top: 20px;
-	margin-bottom: 20px;
 }
 
 .messagePre{
