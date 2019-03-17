@@ -4,6 +4,8 @@ import KxMessageBox from "./KxMessageBox.vue";
 import KxContextMenu from "./KxContextMenu.vue";
 import KxBaseDialog from "./KxBaseDialog.vue";
 import { boundClass } from "autobind-decorator";
+import PromiseDelegate from "./PromiseDelegate";
+
 
 export class DialogResult<TResult> {
 
@@ -19,18 +21,16 @@ export class DialogResult<TResult> {
 		return new DialogResult(true, result);
 	}
 
-	static CANCELED = new DialogResult<any>(false, undefined);
+	static CANCELED = new DialogResult<undefined>(false, undefined);
 }
 
-export class DialogSession<TResult> {
-
-	private readonly promise: Promise<DialogResult<TResult>>;
+export class DialogSession<TResult> extends PromiseDelegate<DialogResult<TResult>> {
 
 	private dialogResult?: DialogResult<TResult>;
 
 	constructor(promise: Promise<DialogResult<TResult>>) {
-		this.promise = promise;
-		this.promise.then(rv => this.dialogResult = rv);
+		super(promise);
+		promise.then(rv => this.dialogResult = rv);
 	}
 
 	onComfirm(callback: (result: TResult) => void) {
@@ -50,10 +50,6 @@ export class DialogSession<TResult> {
 	onClose(callback: () => void) {
 		this.promise.then(callback);
 		return this;
-	}
-
-	waitForClose(): Promise<DialogResult<TResult>> {
-		return this.promise;
 	}
 }
 

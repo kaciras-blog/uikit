@@ -29,7 +29,7 @@ export default {
 	}),
 	methods: {
 		async inputDialog () {
-			const { isConfirm, result } = await this.$dialog.show(InputBox, this.$data).waitForClose();
+			const { isConfirm, result } = await this.$dialog.show(InputBox, this.$data);
 			if (isConfirm) {
 				this.inputed = true;
 				Object.assign(this.$data, result);
@@ -49,15 +49,17 @@ export default {
 			for (let i = name.length - 1; i >= 0; i--) {
 				num += name.charCodeAt(i);
 			}
+			num = num % 11;
 
 			this.$dialog.messageBox({
 				title: "幸运数字",
 				content: [
 					"经过详细而周密的计算！",
-					"你的幸运数字是：" + (num % 11),
+					"你的幸运数字是：" + num,
 				],
 				type: MessageBoxType.Success,
-			}).onClose(() => this.$dialog.confirm());
+			})
+				.onComfirm(() => this.$dialog.confirm());
 		},
 		close () {
 			this.$dialog.confirm();
