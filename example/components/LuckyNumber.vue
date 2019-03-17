@@ -7,15 +7,12 @@
 	>
 		<div><span>姓名：</span>{{name}}</div>
 		<div><span>年龄：</span>{{age}}</div>
+		<span :class="$style.tip">(点击背景可以关闭窗口)</span>
 
-		<span class="tip">(点击背景可以关闭窗口)</span>
-
-		<template v-slot:footer>
-			<div>
-				<kx-button class="primary outline" @click="inputDialog">输入信息</kx-button>
-				<kx-button class="primary outline" @click="luckyNum">计算！</kx-button>
-			</div>
-		</template>
+		<div :class="$style.buttons" class="btn-group">
+			<kx-button class="second outline" @click="inputDialog">输入信息</kx-button>
+			<kx-button class="primary outline" @click="luckyNum">计算！</kx-button>
+		</div>
 	</kx-base-dialog>
 </template>
 
@@ -32,9 +29,11 @@ export default {
 	}),
 	methods: {
 		async inputDialog () {
-			const { result } = await this.$dialog.show(InputBox, this.$data).waitForClose();
-			this.inputed = true;
-			Object.assign(this.$data, result);
+			const { isConfirm, result } = await this.$dialog.show(InputBox, this.$data).waitForClose();
+			if (isConfirm) {
+				this.inputed = true;
+				Object.assign(this.$data, result);
+			}
 		},
 		luckyNum () {
 			if (!this.inputed) {
@@ -57,7 +56,7 @@ export default {
 					"经过详细而周密的计算！",
 					"你的幸运数字是：" + (num % 11),
 				],
-				type: MessageBoxType.Info,
+				type: MessageBoxType.Success,
 			}).onClose(() => this.$dialog.confirm());
 		},
 		close () {
@@ -67,9 +66,10 @@ export default {
 };
 </script>
 
-<style scoped>
-.footer {
+<style module lang="less">
+.buttons {
 	margin-top: 1rem;
+	float: right;
 }
 
 .tip {

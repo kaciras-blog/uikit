@@ -3,6 +3,7 @@ import KxDialogContainer from "./KxDialogContainer.vue";
 import KxMessageBox from "./KxMessageBox.vue";
 import KxContextMenu from "./KxContextMenu.vue";
 import KxBaseDialog from "./KxBaseDialog.vue";
+import { boundClass } from "autobind-decorator";
 
 export class DialogResult<TResult> {
 
@@ -77,6 +78,7 @@ export interface MessageBoxOptions {
 	dimmerClose?: boolean;
 }
 
+@boundClass
 export class DialogProperty {
 
 	public readonly eventBus = new Vue();

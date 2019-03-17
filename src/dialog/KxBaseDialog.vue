@@ -22,8 +22,6 @@
 			</header>
 
 			<div class="kx-dialog-body"><slot/></div>
-
-			<slot name="footer"/>
 		</div>
 	</kx-modal-wrapper>
 </template>
@@ -54,10 +52,10 @@ export default {
 			default: true,
 		},
 
-		/** 是否可以点击标题栏拖动 */
+		/** 是否可以点击标题栏拖动，默认true */
 		draggable: {
 			type: Boolean,
-			default: false,
+			default: true,
 		},
 	},
 	data: () => ({
@@ -109,9 +107,10 @@ export default {
 .kx-dialog-close {
 	height: 100%;
 	width: 3rem;
+
 	cursor: pointer;
-	font-size: 1.5rem;
 	text-align: center;
+	font-size: 1.5rem;
 	line-height: 3rem;
 	border-top-right-radius: 4px;
 
@@ -153,7 +152,7 @@ export default {
 }
 
 .kx-dialog-body {
-	padding: 1.5rem 1rem;
+	padding: 20px;
 	border-bottom-left-radius: calc(.5rem - 1px);
 	border-bottom-right-radius: calc(.5rem - 1px);
 

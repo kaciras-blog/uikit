@@ -31,7 +31,7 @@ export default {
 
 <style lang="less">
 @color-info: #358bff;
-@color-success: #69ff80;
+@color-success: #00e03a;
 @color-warning: #ffc04c;
 @color-error: #ff4a54;
 
@@ -46,7 +46,6 @@ export default {
 
 	margin: auto;
 	padding: 0;
-
 	box-sizing: content-box;
 
 	&.sweet-modal-error {
@@ -148,36 +147,26 @@ export default {
 			position: absolute;
 
 			border-radius: 40px;
-
 			width: 60px;
 			height: 120px;
 
 			background: white;
-
 			transform: rotate(45deg);
 		}
 
 		&::before {
 			border-radius: 120px 0 0 120px;
-
 			top: -7px;
 			left: -33px;
-
 			transform: rotate(-45deg);
-
-			-webkit-transform-origin: 60px 60px;
 			transform-origin: 60px 60px;
 		}
 
 		&::after {
 			border-radius: 0 120px 120px 0;
-
 			top: -11px;
 			left: 30px;
-
 			transform: rotate(-45deg);
-
-			-webkit-transform-origin: 0 60px;
 			transform-origin: 0 60px;
 		}
 
@@ -191,7 +180,7 @@ export default {
 			width: 80px;
 			height: 80px;
 
-			border: 4px solid rgba(0, 255, 0, 0.2);
+			border: 4px solid rgba(0, 220, 0, 0.2);
 			border-radius: 50%;
 		}
 
@@ -245,5 +234,84 @@ export default {
 		background-position: center center;
 		background-repeat: no-repeat;
 	}
+}
+
+// Success Icon
+@keyframes animateSuccessTip {
+	0%		{ width: 0;		left: 1px;		top: 19px; }
+	54%		{ width: 0;		left: 1px;		top: 19px; }
+	70%		{ width: 50px;	left: -8px;		top: 37px; }
+	84%		{ width: 17px;	left: 21px;		top: 48px; }
+	100%	{ width: 25px;	left: 14px;		top: 45px; }
+}
+
+@keyframes animateSuccessLong {
+	0%		{ width: 0;		right: 46px;	top: 54px; }
+	65%		{ width: 0;		right: 46px;	top: 54px; }
+	84%		{ width: 55px;	right: 0;		top: 35px; }
+	100%	{ width: 47px;	right: 8px;		top: 38px; }
+}
+
+@keyframes rotatePlaceholder {
+	0%		{ transform: rotate(-45deg); }
+	5%		{ transform: rotate(-45deg); }
+	12%   	{ transform: rotate(-405deg); }
+	100%	{ transform: rotate(-405deg); }
+}
+
+.animateSuccessTip {
+	animation: animateSuccessTip 0.75s;
+}
+
+.animateSuccessLong {
+	animation: animateSuccessLong 0.75s;
+}
+
+.sweet-modal-icon.sweet-modal-success.animate::after {
+	animation: rotatePlaceholder 4.25s ease-in;
+}
+
+/* Error Icon */
+@keyframes animateErrorIcon {
+	0%		{ transform: rotateX(100deg);	opacity: 0; }
+	100%	{ transform: rotateX(0deg);	opacity: 1; }
+}
+
+.animateErrorIcon {
+	animation: animateErrorIcon 0.5s;
+}
+
+@keyframes animateXMark {
+	0%    { transform: scale(0.4);	 margin-top: 26px;	opacity: 0; }
+	50%   { transform: scale(0.4);	 margin-top: 26px;	opacity: 0; }
+	80%   { transform: scale(1.15);	 margin-top: -6px;				}
+	100%  { transform: scale(1);	 margin-top: 0;		opacity: 1; }
+}
+
+.animateXMark {
+	animation: animateXMark 0.5s;
+}
+
+@keyframes pulseWarning {
+	0%		{ border-color: #F8D486; }
+	100%	{ border-color: #F8BB86; }
+}
+
+.pulseWarning {
+	animation: pulseWarning 0.75s infinite alternate;
+}
+
+@keyframes pulseWarningIns {
+	0%		{ background-color: #F8D486; }
+	100%	{ background-color: #F8BB86; }
+}
+
+.pulseWarningIns {
+	animation: pulseWarningIns 0.75s infinite alternate;
+}
+
+@keyframes rotate-loading {
+	0%		{ transform: rotate(0deg);   }
+	100%	{ transform: rotate(360deg); }
 }
 </style>

@@ -1,28 +1,19 @@
 <template>
 	<kx-modal-wrapper :click-to-close="dimmerClose">
 		<div class="kx-msgbox">
-			<button title="关闭"
-				 :class="$style.closeIcon"
-				 @mousedown.stop
-				 @click="close">X</button>
+			<div
+				v-if="cancelable"
+				title="关闭"
+				:class="$style.closeIcon"
+				@mousedown.stop
+				@click="$dialog.cancel">X</div>
 
 			<dialog-icons :class="$style.icon" :type="type"/>
 
 			<h2 v-if="title">{{title}}</h2>
-			<pre class="kx-msgbox-body">{{message}}</pre>
+			<pre :class="$style.messagePre">{{message}}</pre>
 
-			<div class="kx-msgbox-buttons btn-group">
-				<kx-button
-					v-if="cancelable"
-					@click="$dialog.cancel()">
-					取消
-				</kx-button>
-				<kx-button
-					class="primary"
-					@click="$dialog.confirm(undefined)">
-					确定
-				</kx-button>
-			</div>
+			<kx-standard-dialog-buttons :cancel-button="cancelable"/>
 		</div>
 	</kx-modal-wrapper>
 </template>
@@ -30,10 +21,11 @@
 <script>
 import KxModalWrapper from "./KxModalWrapper";
 import DialogIcons from "./DialogIcons";
+import KxStandardDialogButtons from "./KxStandardDialogButtons";
 
 export default {
 	name: "KxMessageBox",
-	components: { DialogIcons, KxModalWrapper },
+	components: { KxStandardDialogButtons, DialogIcons, KxModalWrapper },
 	props: {
 		title: String,
 		content: [String, Array],
@@ -43,7 +35,7 @@ export default {
 		},
 		cancelable: {
 			type: Boolean,
-			default: false,
+			default: true,
 		},
 		dimmerClose: {
 			type: Boolean,
@@ -75,8 +67,7 @@ export default {
 	line-height: 30px;
 
 	cursor: pointer;
-	background: transparent;
-	/*border-top-right-radius: calc(.5rem - 1px);*/
+	border-top-right-radius: 4px;
 
 	&:hover {
 		background: rgba(0, 0, 0, .1);
@@ -87,6 +78,13 @@ export default {
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
+
+.messagePre{
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	line-height: 20px;
+	margin-bottom: 20px;
+}
 </style>
 
 <style lang="less">
@@ -95,15 +93,11 @@ export default {
 
 	max-width: 500px;
 	width: 80vw;
-	border-radius: 5px;
+	border-radius: 4px;
 	padding: 20px;
 
 	background-color: white;
 	font-size: 1rem;
 	text-align: center;
-}
-
-.kx-msgbox-buttons {
-	text-align: right;
 }
 </style>
