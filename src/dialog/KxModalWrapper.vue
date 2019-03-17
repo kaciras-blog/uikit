@@ -1,6 +1,8 @@
 <template>
 	<transition name="fade">
-		<div class="kx-dialog-background dimmer" @click.self="dimmerClick"><slot/></div>
+		<div class="kx-dialog-background dimmer" @click.self="dimmerClick">
+			<slot/>
+		</div>
 	</transition>
 </template>
 
@@ -22,6 +24,18 @@ export default {
 				this.$dialog.cancel()
 		},
 	},
+	mounted () {
+		const { style } = document.body;
+		this._backupHeight = style.height;
+		this._backupOverflow = style.overflow;
+		style.height = '100%';
+		style.overflow = 'hidden';
+	},
+	destroyed () {
+		const { style } = document.body;
+		style.height = this._backupHeight;
+		style.overflow = this._backupOverflow;
+	}
 };
 </script>
 
