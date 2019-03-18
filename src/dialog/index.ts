@@ -116,7 +116,7 @@ export class DialogProperty {
 		return this.show(KxMessageBox, options);
 	}
 
-	contextMenu(component: any, event: MouseEvent, data: object) {
+	contextMenu(component: any, event: MouseEvent, data?: object) {
 		this.show(KxContextMenu, { component, event, data });
 	}
 }

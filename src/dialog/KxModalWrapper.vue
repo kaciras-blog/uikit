@@ -1,7 +1,5 @@
 <template>
-		<div class="kx-dialog-background dimmer" @click.self="dimmerClick">
-			<slot/>
-		</div>
+	<div class="kx-dialog-background dimmer" @click.self="dimmerClick"><slot/></div>
 </template>
 
 <script>
