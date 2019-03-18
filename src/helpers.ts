@@ -1,4 +1,6 @@
 import anime from "animejs";
+import { Observable, animationFrameScheduler } from "rxjs";
+import { filter, observeOn  } from "rxjs/operators";
 import Vue, { WatchOptions } from "vue";
 
 
@@ -35,31 +37,39 @@ export class VueMultiWatcher {
 
 // ============================================= 拖动 =============================================
 
-type DragCallback = (x: number, y: number) => void;
+interface Point2D {
+	x: number;
+	y: number;
+}
 
-export function listenDragging(callback: DragCallback) {
+export function listenDragging(): Observable<Point2D> {
+	return new Observable(subscriber => {
 
-	function onMove(event: MouseEvent | TouchEvent) {
-		event.preventDefault();
-		const touches = (event as TouchEvent).touches;
-		const { clientX, clientY } = touches && touches.length > 0 ? touches[0] : (event as MouseEvent);
-		callback(clientX, clientY);
-	}
+		function onMove(event: MouseEvent | TouchEvent) {
+			event.preventDefault();
+			const touches = (event as TouchEvent).touches;
+			const { clientX, clientY } = touches && touches.length > 0 ? touches[0] : (event as MouseEvent);
+			subscriber.next({ x: clientX, y: clientY });
+		}
 
-	return new Promise(resolve => {
 		const onUp = (event: Event) => {
 			event.preventDefault();
 			document.removeEventListener("mousemove", onMove);
 			document.removeEventListener("touchmove", onMove);
 			document.removeEventListener("mouseup", onUp);
 			document.removeEventListener("touchend", onUp);
-			resolve();
+			subscriber.complete();
 		};
+
 		document.addEventListener("mousemove", onMove);
 		document.addEventListener("touchmove", onMove);
 		document.addEventListener("mouseup", onUp);
 		document.addEventListener("touchend", onUp);
 	});
+}
+
+export function limitInWindow(obs: Observable<Point2D>): Observable<Point2D> {
+	return obs.pipe(filter(point => point.x >= 0 && point.x <= window.innerWidth && point.y >= 0 && point.y <= window.innerHeight));
 }
 
 /**
@@ -84,12 +94,10 @@ export function dragMoveElement(event: MouseEvent, el: HTMLElement) {
 	const { clientX, clientY } = event;
 
 	// 新的坐标 = 元素开始坐标 + (鼠标当前位置 - 鼠标开始位置)
-	return listenDragging((x, y) => {
-		if (x >= 0 && x <= window.innerWidth)
-			style.left = (originX + x - clientX) + "px";
-		if (y >= 0 && y <= window.innerHeight)
-			style.top = (originY + y - clientY) + "px";
-	});
+	return ({ x, y }: Point2D) => {
+		style.left = (originX + x - clientX) + "px";
+		style.top = (originY + y - clientY) + "px";
+	};
 }
 
 /**
@@ -195,8 +203,10 @@ export class CancelToken {
 
 	static never() {
 		const token = new CancelToken();
-		token.cancel = () => {};
-		token.onCancel = () => {};
+		token.cancel = () => {
+		};
+		token.onCancel = () => {
+		};
 		return token;
 	}
 }

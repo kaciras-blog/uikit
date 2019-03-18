@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { dragMoveElement } from "../helpers";
+import { dragMoveElement, listenDragging, limitInWindow } from "../helpers";
 import KxModalWrapper from "./KxModalWrapper";
 
 export default {
@@ -73,7 +73,7 @@ export default {
 			if (!event.touches && event.button !== 0) {
 				return; // 鼠标右键不拖动
 			}
-			dragMoveElement(event, this.$refs.panel);
+			listenDragging().pipe(limitInWindow).subscribe(dragMoveElement(event, this.$refs.panel));
 		},
 	},
 };

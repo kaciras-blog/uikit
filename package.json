@@ -10,6 +10,7 @@
 	"dependencies": {
 		"animejs": "^3.0.1",
 		"autobind-decorator": "^2.4.0",
+		"rxjs": "^6.4.0",
 		"vue": "^2.6.9",
 		"vue-class-component": "^6.0.0",
 		"vue-property-decorator": "^7.0.0",
