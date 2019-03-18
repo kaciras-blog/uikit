@@ -3,9 +3,8 @@
 -->
 <template>
 	<kx-modal-wrapper :click-to-close="clickToClose">
-		<div class="kx-dialog anime-zoomIn"
-			 ref="panel"
-			 :style="optionalStyle"
+		<div ref="panel"
+			 class="kx-dialog anime-zoomIn"
 			 role="dialog"
 			 aria-modal="true">
 
@@ -28,7 +27,7 @@
 </template>
 
 <script>
-import { drag } from "../helpers";
+import { dragMoveElement } from "../helpers";
 import KxModalWrapper from "./KxModalWrapper";
 
 export default {
@@ -59,25 +58,6 @@ export default {
 			default: true,
 		},
 	},
-	data: () => ({
-		position: {
-			X: 0,
-			Y: 0,
-			manual: false,
-		},
-	}),
-	computed: {
-		optionalStyle () {
-			if (!this.position.manual) {
-				return undefined;
-			}
-			return {
-				position: "fixed",
-				left: this.position.X + "px",
-				top: this.position.Y + "px",
-			};
-		},
-	},
 	methods: {
 		close () {
 			if (this.defaultClose) {
@@ -93,17 +73,7 @@ export default {
 			if (!event.touches && event.button !== 0) {
 				return; // 鼠标右键不拖动
 			}
-			const panel = this.$refs.panel;
-			const rect = panel.getBoundingClientRect();
-
-			this.position.manual = true;
-			this.position.X = rect.left + "px";
-			this.position.Y = rect.top + "px";
-
-			drag(panel, event.clientX, event.clientY, (x, y) => {
-				this.position.X = x;
-				this.position.Y = y;
-			});
+			dragMoveElement(event, this.$refs.panel);
 		},
 	},
 };
@@ -128,7 +98,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 
-	min-width: 400px;
+	min-width: 300px;
 	max-width: 80vw;
 
 	border-radius: 4px;

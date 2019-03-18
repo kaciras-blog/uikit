@@ -88,7 +88,7 @@ export default {
 .kx-msgbox {
 	position: relative;
 
-	max-width: 500px;
+	max-width: 450px;
 	width: 80vw;
 	border-radius: 4px;
 	padding: 20px;
