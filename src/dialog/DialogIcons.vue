@@ -18,7 +18,7 @@ export default {
 
 <style lang="less">
 @color-info: #358bff;
-@color-success: #00e03a;
+@color-success: #00d936;
 @color-warning: #ffc04c;
 @color-error: #ff5d64;
 

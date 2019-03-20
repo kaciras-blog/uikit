@@ -22,10 +22,6 @@ import KxDialog from "./dialog";
  */
 function install (Vue, options = {}) {
 
-	if (typeof window !== "undefined") {
-		Vue.use(KxDialog);
-	}
-
 	// 自动聚焦支持 v-autofocus
 	Vue.directive("autofocus", {
 		inserted: el => el.focus(),
@@ -88,6 +84,8 @@ function install (Vue, options = {}) {
 // 		const component = requireContext(file).default;
 // 		Vue.component(component.name, component);
 // 	});
+
+	Vue.use(KxDialog);
 }
 
 // Auto-install

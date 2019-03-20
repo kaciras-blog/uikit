@@ -150,6 +150,9 @@ export default function install(Vue: VueConstructor) {
 		},
 	});
 
-	const instance = new Vue(KxDialogContainer).$mount();
-	document.body.appendChild(instance.$el);
+	// 自动插入 vs 手动插入?
+	if (typeof window !== "undefined") {
+		const instance = new Vue(KxDialogContainer).$mount();
+		document.body.appendChild(instance.$el);
+	}
 }

@@ -8,9 +8,11 @@ export default {
 			type: String,
 			default: "button",
 		},
-		// 设置此属性后将渲染为 router-link，其to属性等于此属性的值，其tag属性等于prop中的tag
+
+		// 设置该按钮为 router-link，其to属性等于此属性的值，其tag属性等于prop中的tag
 		route: String,
-		// 设置此属性后将在按钮的子元素里加上一个图标
+
+		// 在按钮的内容的开头加上一个图标
 		icon: String,
 	},
 	render (h, ctx) {
@@ -26,7 +28,7 @@ export default {
 
 		let { tag, route, icon } = ctx.props;
 		if (tag === "button") {
-			attrs.type = "button"; // form
+			attrs.type = "button"; // 防止表单里的按钮点击刷新
 		} else {
 			attrs.role = "button"; // ARIA
 		}
