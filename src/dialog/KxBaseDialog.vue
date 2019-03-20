@@ -12,13 +12,7 @@
 				<slot name="title">
 					<h2 class="kx-dialog-title">{{title}}</h2>
 				</slot>
-				<div title="关闭"
-					 class="kx-dialog-close"
-					 v-if="closeIcon"
-					 @mousedown.stop
-					 @click="close">
-					<img src="../assets/icon-close.svg" alt="CloseIcon">
-				</div>
+				<kx-close-icon v-if="closeIcon" @click="close"/>
 			</header>
 
 			<div class="kx-dialog-body"><slot/></div>
@@ -29,10 +23,11 @@
 <script>
 import { dragMoveElement, listenDragging, limitInWindow } from "../helpers";
 import KxModalWrapper from "./KxModalWrapper";
+import KxCloseIcon from "./KxCloseIcon";
 
 export default {
 	name: "KxBaseDialog",
-	components: { KxModalWrapper },
+	components: { KxModalWrapper, KxCloseIcon },
 	props: {
 		/** 点击遮罩层关闭 */
 		clickToClose: Boolean,
@@ -80,20 +75,6 @@ export default {
 </script>
 
 <style lang="less">
-.kx-dialog-close {
-	height: 100%;
-	width: 3rem;
-
-	cursor: pointer;
-	text-align: center;
-	line-height: 3rem;
-	border-top-right-radius: 4px;
-
-	&:hover {
-		background-color: rgba(0, 0, 0, .05);
-	}
-}
-
 .kx-dialog {
 	display: flex;
 	flex-direction: column;

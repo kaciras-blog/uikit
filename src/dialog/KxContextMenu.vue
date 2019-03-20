@@ -8,6 +8,7 @@
 			ref="menu"
 			class="basic-ctx-menu"
 			:style="style"
+			role="menu"
 			v-bind="data"/>
 	</div>
 </template>

@@ -1,16 +1,10 @@
 <template>
 	<kx-modal-wrapper :click-to-close="dimmerClose">
-		<div class="kx-msgbox anime-zoomIn">
-			<div
-				v-if="cancelable"
-				title="关闭"
-				:class="$style.closeIcon"
-				@mousedown.stop
-				@click="$dialog.cancel"
-			>
-				<img src="../assets/icon-close.svg" alt="CloseIcon">
-			</div>
+		<div class="kx-msgbox anime-zoomIn"
+			 role="dialog"
+			 aria-modal="true">
 
+			<kx-close-icon v-if="cancelable" :class="$style.closeIcon" @click="$dialog.cancel"/>
 			<dialog-icons :type="type"/>
 
 			<h2 v-if="title">{{title}}</h2>
@@ -25,10 +19,16 @@
 import KxModalWrapper from "./KxModalWrapper";
 import DialogIcons from "./DialogIcons";
 import KxStandardDialogButtons from "./KxStandardDialogButtons";
+import KxCloseIcon from "./KxCloseIcon";
 
 export default {
 	name: "KxMessageBox",
-	components: { KxStandardDialogButtons, DialogIcons, KxModalWrapper },
+	components: {
+		KxStandardDialogButtons,
+		DialogIcons,
+		KxModalWrapper,
+		KxCloseIcon,
+	},
 	props: {
 		title: String,
 		content: [String, Array],
@@ -62,21 +62,9 @@ export default {
 	position: absolute;
 	top: 0;
 	right: 0;
-	height: 3rem;
-	width: 3rem;
-
-	text-align: center;
-	line-height: 3rem;
-
-	cursor: pointer;
-	border-top-right-radius: 4px;
-
-	&:hover {
-		background: rgba(0, 0, 0, .1);
-	}
 }
 
-.messagePre{
+.messagePre {
 	white-space: pre-wrap;
 	word-wrap: break-word;
 	line-height: 20px;
@@ -107,6 +95,7 @@ export default {
 		opacity: 0;
 		transform: scale(0.95, 0.95);
 	}
-	to { /* default */ }
+	to { /* default */
+	}
 }
 </style>
