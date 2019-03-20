@@ -94,20 +94,24 @@ export class DialogProperty {
 	}
 
 	/**
-	 * 确认并关闭最上层的弹窗，并返回一个结果。
+	 * 确认并关闭最上层的弹窗，并返回一个结果。相当于 {@code close(DialogResult.confirm(data))}
 	 *
-	 * @param data 返回给调用方的结果。
+	 * @param data 返回给调用方的数据。
 	 */
 	confirm(data?: any) {
-		this.eventBus.$emit("confirm", data);
+		this.close(DialogResult.confirm(data));
 	}
 
-	/** 取消最上层的弹窗 */
-	cancel() {
-		this.eventBus.$emit("cancel");
+	/**
+	 * 关闭最上层的弹窗，可以传递一个参数来表示弹窗会话的结果。
+	 *
+	 * @param result 弹窗会话的结果
+	 */
+	close(result: DialogResult<any> = DialogResult.CANCELED) {
+		this.eventBus.$emit("close", result);
 	}
 
-	/** 关闭所有弹窗，该方法不能传递结果 */
+	/** 关闭所有弹窗，该方法不能传递结果，所有弹窗会话将返回 DialogResult.CANCELED */
 	clear() {
 		this.eventBus.$emit("clear");
 	}

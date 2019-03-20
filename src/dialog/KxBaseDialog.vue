@@ -58,7 +58,7 @@ export default {
 	methods: {
 		close () {
 			if (this.defaultClose) {
-				this.$dialog.cancel();
+				this.$dialog.close();
 			} else {
 				this.$emit("close-button-clicked");
 			}
@@ -73,7 +73,7 @@ export default {
 			listenDragging().pipe(limitInWindow).subscribe(dragMoveElement(event, this.$refs.panel));
 		},
 		onOverlayClick() {
-			if(this.clickToClose) this.$dialog.cancel();
+			if(this.clickToClose) this.$dialog.close();
 		}
 	},
 };

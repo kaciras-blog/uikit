@@ -47,7 +47,7 @@ export default {
 			};
 		},
 		handleClick (event) {
-			this.$dialog.cancel();
+			this.$dialog.close();
 
 			// 重新触发点击事件，模拟点击穿透
 			const ev = new MouseEvent(event.type, {

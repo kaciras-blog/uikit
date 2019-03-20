@@ -32,20 +32,12 @@ export default class KxDialogContainer extends Vue {
 			this.stack.push(config);
 		});
 
-		eventBus.$on("confirm", (data: any) => {
+		eventBus.$on("close", (result: DialogResult<any>) => {
 			const config = this.stack.pop();
 			if (!config) {
 				throw new Error("当前没有可关闭的弹窗");
 			}
-			config.resolve(DialogResult.confirm(data));
-		});
-
-		eventBus.$on("cancel", () => {
-			const config = this.stack.pop();
-			if (!config) {
-				throw new Error("当前没有可关闭的弹窗");
-			}
-			config.resolve(DialogResult.CANCELED);
+			config.resolve(result);
 		});
 
 		eventBus.$on("clear", () => {

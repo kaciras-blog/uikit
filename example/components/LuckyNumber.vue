@@ -59,10 +59,10 @@ export default {
 				],
 				type: MessageBoxType.Success,
 			})
-				.onComfirm(() => this.$dialog.confirm());
+				.onComfirm(() => this.$dialog.close());
 		},
 		close () {
-			this.$dialog.confirm();
+			this.$dialog.close();
 		},
 	},
 };

@@ -7,7 +7,7 @@
 			 role="dialog"
 			 aria-modal="true">
 
-			<kx-close-icon v-if="quickClose" :class="$style.closeIcon" @click="$dialog.cancel"/>
+			<kx-close-icon v-if="quickClose" :class="$style.closeIcon" @click="$dialog.close"/>
 			<dialog-icons :type="type"/>
 
 			<h2 v-if="title">{{title}}</h2>
@@ -64,7 +64,7 @@ export default {
 	methods: {
 		onOverlayClick () {
 			if (this.quickClose) {
-				return this.$dialog.cancel();
+				return this.$dialog.close();
 			}
 			this.dialogZoomIn = false; // 一个元素不能有多个animation属性，要把进入动画去掉
 			this.shaking = true;

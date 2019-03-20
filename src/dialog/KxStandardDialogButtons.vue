@@ -2,7 +2,7 @@
 	<div class="btn-group" :class="$style.container">
 		<kx-button
 			v-if="cancelButton"
-			@click="$dialog.cancel()">
+			@click="$dialog.close()">
 			取消
 		</kx-button>
 		<kx-button

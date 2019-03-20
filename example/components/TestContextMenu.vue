@@ -1,7 +1,7 @@
 <template>
-	<ul class="menu">
-		<li class="menu-item">查看代码</li>
-		<li class="menu-item">菜单项目2</li>
+	<ul class="menu" role="menu">
+		<li class="menu-item" role="menuitem">查看代码</li>
+		<li class="menu-item" role="menuitem">菜单项目2</li>
 	</ul>
 </template>
 
