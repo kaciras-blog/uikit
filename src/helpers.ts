@@ -1,6 +1,6 @@
 import anime from "animejs";
-import { Observable, animationFrameScheduler } from "rxjs";
-import { filter, observeOn  } from "rxjs/operators";
+import { Observable } from "rxjs";
+import { filter } from "rxjs/operators";
 import Vue, { WatchOptions } from "vue";
 
 
@@ -35,7 +35,7 @@ export class VueMultiWatcher {
 	}
 }
 
-// ============================================= 拖动 =============================================
+// ========================================= 拖动 =========================================
 
 interface Point2D {
 	x: number;
@@ -131,52 +131,35 @@ export function openFile(multiple = false, accept = "*") {
 	});
 }
 
+// ========================================= 滚动到指定位置 =========================================
+
+
 function getScrollTop() {
 	const doc = document.documentElement || document.body.parentNode;
 	return (typeof doc.scrollTop === "number" ? doc : document.body).scrollTop;
 }
 
+function scrollAnime(element: HTMLElement, scrollTop: number) {
+	anime({ targets: "html,body", scrollTop, duration: 500, easing: "easeOutQuad" });
+}
+
 /**
  * 滚动到元素顶部，浏览器可视区域的上端滚到元素的顶端。
  *
- * @param element 元素对象或元素id
+ * @param element HTML元素
  */
-export function scrollToElementStart(element: HTMLElement | string) {
-	if (typeof element === "string") {
-		const elById = document.getElementById(element);
-		if (!elById) {
-			throw new Error(`Can not found element with id=${element}`);
-		}
-		element = elById;
-	}
-	anime({
-		targets: "html,body",
-		scrollTop: getScrollTop() + element.getBoundingClientRect().top,
-		duration: 500,
-		easing: "easeOutQuad",
-	});
+export function scrollToElementStart(element: HTMLElement) {
+	scrollAnime(element, getScrollTop() + element.getBoundingClientRect().top);
 }
 
 /**
  * 滚动到元素底部，浏览器可视区域的最下面对其到元素的底端。
  *
- * @param element 元素对象或元素id
+ * @param element HTML元素
  */
-export function scrollToElementEnd(element: HTMLElement | string) {
-	if (typeof element === "string") {
-		const elById = document.getElementById(element);
-		if (!elById) {
-			throw new Error(`Can not found element with id=${element}`);
-		}
-		element = elById;
-	}
+export function scrollToElementEnd(element: HTMLElement) {
 	const elTop = getScrollTop() + element.getBoundingClientRect().top;
-	anime({
-		targets: "html,body",
-		scrollTop: elTop + element.clientHeight - window.innerHeight,
-		duration: 500,
-		easing: "easeOutQuad",
-	});
+	scrollAnime(element, elTop + element.clientHeight - window.innerHeight);
 }
 
 export class CancelToken {
@@ -203,10 +186,8 @@ export class CancelToken {
 
 	static never() {
 		const token = new CancelToken();
-		token.cancel = () => {
-		};
-		token.onCancel = () => {
-		};
+		token.cancel = () => {};
+		token.onCancel = () => {};
 		return token;
 	}
 }
