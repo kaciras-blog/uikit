@@ -6,14 +6,14 @@
 </template>
 
 <script lang="ts">
-import { MessageBoxType } from "./index";
+import Vue from "vue";
 
-export default {
+export default Vue.extend({
 	name: "DialogIcons",
 	props: {
-		type: MessageBoxType,
+		type: Number,
 	}
-}
+});
 </script>
 
 <style lang="less">

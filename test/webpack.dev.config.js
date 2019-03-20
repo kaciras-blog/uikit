@@ -1,4 +1,4 @@
-const a = {
+exports = {
 	mode: 'development',
 	context: 'D:\\Project\\KxUI',
 	devtool: 'cheap-module-eval-source-map',
@@ -23,12 +23,14 @@ const a = {
 			vue$: 'vue/dist/vue.runtime.esm.js'
 		},
 		extensions: [
-			'.wasm',
 			'.mjs',
 			'.js',
 			'.jsx',
 			'.vue',
-			'.json'
+			'.json',
+			'.wasm',
+			'.ts',
+			'.tsx'
 		],
 		modules: [
 			'node_modules',
@@ -38,6 +40,7 @@ const a = {
 	},
 	resolveLoader: {
 		modules: [
+			'D:\\Project\\KxUI\\node_modules\\@vue\\cli-plugin-typescript\\node_modules',
 			'D:\\Project\\KxUI\\node_modules\\@vue\\cli-plugin-babel\\node_modules',
 			'node_modules',
 			'D:\\Project\\KxUI\\node_modules',
@@ -56,7 +59,7 @@ const a = {
 						loader: 'cache-loader',
 						options: {
 							cacheDirectory: 'D:\\Project\\KxUI\\node_modules\\.cache\\vue-loader',
-							cacheIdentifier: '2b8d0076'
+							cacheIdentifier: '355f5480'
 						}
 					},
 					/* config.module.rule('vue').use('vue-loader') */
@@ -67,7 +70,7 @@ const a = {
 								preserveWhitespace: false
 							},
 							cacheDirectory: 'D:\\Project\\KxUI\\node_modules\\.cache\\vue-loader',
-							cacheIdentifier: '2b8d0076'
+							cacheIdentifier: '355f5480'
 						}
 					}
 				]
@@ -1024,7 +1027,7 @@ const a = {
 			},
 			/* config.module.rule('js') */
 			{
-				test: /\.jsx?$/,
+				test: /\.m?jsx?$/,
 				exclude: [
 					function () { /* omitted long function */
 					}
@@ -1035,12 +1038,70 @@ const a = {
 						loader: 'cache-loader',
 						options: {
 							cacheDirectory: 'D:\\Project\\KxUI\\node_modules\\.cache\\babel-loader',
-							cacheIdentifier: 'd7e89c46'
+							cacheIdentifier: '602bfdaf'
 						}
 					},
 					/* config.module.rule('js').use('babel-loader') */
 					{
 						loader: 'babel-loader'
+					}
+				]
+			},
+			/* config.module.rule('ts') */
+			{
+				test: /\.ts$/,
+				use: [
+					/* config.module.rule('ts').use('cache-loader') */
+					{
+						loader: 'cache-loader',
+						options: {
+							cacheDirectory: 'D:\\Project\\KxUI\\node_modules\\.cache\\ts-loader',
+							cacheIdentifier: '0625940b'
+						}
+					},
+					/* config.module.rule('ts').use('babel-loader') */
+					{
+						loader: 'babel-loader'
+					},
+					/* config.module.rule('ts').use('ts-loader') */
+					{
+						loader: 'ts-loader',
+						options: {
+							transpileOnly: true,
+							appendTsSuffixTo: [
+								'\\.vue$'
+							],
+							happyPackMode: false
+						}
+					}
+				]
+			},
+			/* config.module.rule('tsx') */
+			{
+				test: /\.tsx$/,
+				use: [
+					/* config.module.rule('tsx').use('cache-loader') */
+					{
+						loader: 'cache-loader',
+						options: {
+							cacheDirectory: 'D:\\Project\\KxUI\\node_modules\\.cache\\ts-loader',
+							cacheIdentifier: '0625940b'
+						}
+					},
+					/* config.module.rule('tsx').use('babel-loader') */
+					{
+						loader: 'babel-loader'
+					},
+					/* config.module.rule('tsx').use('ts-loader') */
+					{
+						loader: 'ts-loader',
+						options: {
+							transpileOnly: true,
+							happyPackMode: false,
+							appendTsxSuffixTo: [
+								'\\.vue$'
+							]
+						}
 					}
 				]
 			}
@@ -1075,8 +1136,6 @@ const a = {
 		),
 		/* config.plugin('hmr') */
 		new HotModuleReplacementPlugin(),
-		/* config.plugin('no-emit-on-errors') */
-		new NoEmitOnErrorsPlugin(),
 		/* config.plugin('progress') */
 		new ProgressPlugin(),
 		/* config.plugin('html-index') */
@@ -1126,6 +1185,15 @@ const a = {
 					]
 				}
 			}
+		),
+		/* config.plugin('fork-ts-checker') */
+		new ForkTsCheckerWebpackPlugin(
+			{
+				vue: true,
+				tslint: false,
+				formatter: 'codeframe',
+				checkSyntacticErrors: false
+			}
 		)
 	],
 	entry: {
@@ -1133,4 +1201,4 @@ const a = {
 			'D:\\Project\\KxUI\\example\\main.js'
 		]
 	}
-}
+};

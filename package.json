@@ -12,8 +12,8 @@
 		"autobind-decorator": "^2.4.0",
 		"rxjs": "^6.4.0",
 		"vue": "^2.6.9",
-		"vue-class-component": "^6.0.0",
-		"vue-property-decorator": "^7.0.0",
+		"vue-class-component": "^7.0.1",
+		"vue-property-decorator": "^8.0.0",
 		"vue-router": "^3.0.2",
 		"vuex": "^3.1.0"
 	},

@@ -5,6 +5,7 @@ import KxContextMenu from "./KxContextMenu.vue";
 import KxBaseDialog from "./KxBaseDialog.vue";
 import { boundClass } from "autobind-decorator";
 import PromiseDelegate from "./PromiseDelegate";
+import KxStandardDialogButtons from "./KxStandardDialogButtons.vue";
 
 
 export class DialogResult<TResult> {
@@ -129,6 +130,7 @@ export default function install(Vue: VueConstructor) {
 	Vue.component(KxBaseDialog.name, KxBaseDialog);
 	Vue.component(KxDialogContainer.name, KxDialogContainer);
 	Vue.component(KxContextMenu.name, KxContextMenu);
+	Vue.component(KxStandardDialogButtons.name, KxStandardDialogButtons);
 
 	const commands = new DialogProperty();
 

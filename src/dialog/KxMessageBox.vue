@@ -21,13 +21,11 @@
 <script>
 import KxModalWrapper from "./KxModalWrapper";
 import DialogIcons from "./DialogIcons";
-import KxStandardDialogButtons from "./KxStandardDialogButtons";
 import KxCloseIcon from "./KxCloseIcon";
 
 export default {
 	name: "KxMessageBox",
 	components: {
-		KxStandardDialogButtons,
 		DialogIcons,
 		KxModalWrapper,
 		KxCloseIcon,
