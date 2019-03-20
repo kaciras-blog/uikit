@@ -2,9 +2,9 @@
 使用注意：footer插槽最好是一个元素，多个就用容器包起来
 -->
 <template>
-	<kx-modal-wrapper :click-to-close="clickToClose">
+	<kx-modal-wrapper @click.native.self="onOverlayClick">
 		<div ref="panel"
-			 class="kx-dialog anime-zoomIn"
+			 class="kx-dialog dialogZoomIn"
 			 role="dialog"
 			 aria-modal="true">
 
@@ -70,6 +70,9 @@ export default {
 			}
 			listenDragging().pipe(limitInWindow).subscribe(dragMoveElement(event, this.$refs.panel));
 		},
+		onOverlayClick() {
+			if(this.clickToClose) this.$dialog.cancel();
+		}
 	},
 };
 </script>
@@ -100,21 +103,15 @@ export default {
 
 	height: 3rem;
 	border-bottom: solid 1px #d5d5d5;
-	border-top-left-radius: calc(.5rem - 1px);
-	border-top-right-radius: calc(.5rem - 1px);
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
 
 	user-select: none;
 }
 
 .kx-dialog-body {
 	padding: 20px;
-	border-bottom-left-radius: calc(.5rem - 1px);
-	border-bottom-right-radius: calc(.5rem - 1px);
-
-	/* footer插槽，如果有就加个下边距 */
-
-	& + * {
-		padding-bottom: 1rem;
-	}
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
 }
 </style>

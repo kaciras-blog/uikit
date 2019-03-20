@@ -1,24 +1,15 @@
+<!--
+TODO: 将MessageBox和DialogBase的最外层移到这里，如何方便地对面板设置属性而不是遮罩层？
+-->
 <template>
-	<div class="kx-dialog-background dimmer" @click.self="dimmerClick"><slot/></div>
+	<div class="kx-dialog-background dimmer"><slot/></div>
 </template>
 
 <script>
 export default {
 	name: "KxModalWrapper",
 	props: {
-		/** 点击遮罩背景是否关闭弹窗，默认true */
-		clickToClose: {
-			type: Boolean,
-			default: true,
-		},
-
 		// TODO: ESC
-	},
-	methods: {
-		dimmerClick () {
-			if (this.clickToClose)
-				this.$dialog.cancel()
-		},
 	},
 	mounted () {
 		const { style } = document.body;

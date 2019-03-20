@@ -1,10 +1,11 @@
 <template>
-	<kx-modal-wrapper :click-to-close="dimmerClose">
-		<div class="kx-msgbox anime-zoomIn"
+	<kx-modal-wrapper @click.native.self="onOverlayClick">
+		<div class="kx-msgbox"
+			 :class="{ shaking, dialogZoomIn }"
 			 role="dialog"
 			 aria-modal="true">
 
-			<kx-close-icon v-if="cancelable" :class="$style.closeIcon" @click="$dialog.cancel"/>
+			<kx-close-icon v-if="quickClose" :class="$style.closeIcon" @click="$dialog.cancel"/>
 			<dialog-icons :type="type"/>
 
 			<h2 v-if="title">{{title}}</h2>
@@ -40,11 +41,15 @@ export default {
 			type: Boolean,
 			default: true,
 		},
-		dimmerClose: {
+		quickClose: {
 			type: Boolean,
-			default: true,
+			default: false,
 		},
 	},
+	data: () => ({
+		dialogZoomIn: true,
+		shaking: false,
+	}),
 	computed: {
 		message () {
 			const { content } = this;
@@ -52,6 +57,16 @@ export default {
 				return content;
 			}
 			return content.join("\n");
+		},
+	},
+	methods: {
+		onOverlayClick () {
+			if (this.quickClose) {
+				return this.$dialog.cancel();
+			}
+			this.dialogZoomIn = false; // 一个元素不能有多个animation属性，要把进入动画去掉
+			this.shaking = true;
+			setTimeout(() => this.shaking = false, 300);
 		},
 	},
 };
@@ -86,7 +101,7 @@ export default {
 	text-align: center;
 }
 
-.anime-zoomIn {
+.dialogZoomIn {
 	animation: dialog-zoomIn 0.3s 1;
 }
 
@@ -95,7 +110,17 @@ export default {
 		opacity: 0;
 		transform: scale(0.95, 0.95);
 	}
-	to { /* default */
-	}
+	to { /* default */ }
+}
+
+.shaking {
+	animation: shaking 0.3s 1;
+}
+
+@keyframes shaking {
+	0%   { transform: translateX(-4px);}
+	25%  {}
+	50%  { transform: translateX(4px); }
+	100% {}
 }
 </style>

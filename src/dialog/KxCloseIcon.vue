@@ -1,12 +1,11 @@
 <template functional>
-	<div title="关闭"
-		 :class="[data.class, data.staticClass, $style.iconBox]"
-		 :style="[data.style, data.staticStyle]"
-		 role="button"
-		 v-on="listeners"
-		 @mousedown.stop>
+	<button title="关闭"
+			:class="[data.class, data.staticClass, $style.iconBox]"
+			:style="[data.style, data.staticStyle]"
+			@mousedown.stop
+			v-on="listeners">
 		<img src="../assets/icon-close.svg" alt="关闭">
-	</div>
+	</button>
 </template>
 
 <style module lang="less">
@@ -17,6 +16,7 @@
 	text-align: center;
 	cursor: pointer;
 	border-top-right-radius: 4px;
+	background: none;
 }
 
 .iconBox:hover {
