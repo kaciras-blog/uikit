@@ -2,9 +2,11 @@
 使用注意：footer插槽最好是一个元素，多个就用容器包起来
 -->
 <template>
-	<kx-modal-wrapper @click.native.self="onOverlayClick">
+	<kx-modal-wrapper @click.native.self="onOverlayClick" @keyup.native.esc="onOverlayClick">
 		<div ref="panel"
 			 class="kx-dialog dialogZoomIn"
+			 tabindex="-1"
+			 v-autofocus
 			 role="dialog"
 			 aria-modal="true">
 

@@ -1,7 +1,9 @@
 <template>
-	<kx-modal-wrapper @click.native.self="onOverlayClick">
+	<kx-modal-wrapper @click.native.self="onOverlayClick" @keyup.native.esc="onOverlayClick">
 		<div class="kx-msgbox"
 			 :class="{ shaking, dialogZoomIn }"
+			 tabindex="-1"
+			 v-autofocus
 			 role="dialog"
 			 aria-modal="true">
 
@@ -43,7 +45,7 @@ export default {
 		},
 		quickClose: {
 			type: Boolean,
-			default: false,
+			default: true,
 		},
 	},
 	data: () => ({

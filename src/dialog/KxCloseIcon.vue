@@ -19,7 +19,7 @@
 	background: none;
 }
 
-.iconBox:hover {
+.iconBox:hover, .iconBox:focus {
 	background-color: rgba(0, 0, 0, .05);
 }
 </style>
