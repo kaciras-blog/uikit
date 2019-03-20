@@ -5,17 +5,6 @@
 	<div v-else class="kx-dialog-icon error"></div>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
-
-export default Vue.extend({
-	name: "DialogIcons",
-	props: {
-		type: Number,
-	}
-});
-</script>
-
 <style lang="less">
 @color-info: #358bff;
 @color-success: #00d936;

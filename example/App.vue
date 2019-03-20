@@ -1,4 +1,4 @@
-<template>
+<template functional>
 	<div id="app">
 		<nav>
 			<router-link to="/usage">使用指南</router-link>

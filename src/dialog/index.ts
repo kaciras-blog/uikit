@@ -137,8 +137,7 @@ export default function install(Vue: VueConstructor) {
 	// noinspection JSUnusedGlobalSymbols
 	Vue.prototype.$dialog = commands;
 
-
-	// 指令不支持字面量，还得加个引号优点烦。
+	// 指令不支持字面量，还得加个引号有点烦。
 	Vue.directive("context-menu", {
 		bind(el, { arg, value }, vnode) {
 			const vm = vnode.context as any; // 烦人

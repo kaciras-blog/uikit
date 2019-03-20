@@ -61,6 +61,8 @@ function install (Vue, options = {}) {
 			el.addEventListener("input", handleSelect);		// 增删内容改变光标位置
 			el.addEventListener("keyup", handleSelect);		// Home,End,PageUp,PageDown
 			el.addEventListener("keydown", handleSelect);	// 移动光标的键按住不放
+
+			el.addEventListener("blur", () => vm[expression](0, 0));
 		},
 	});
 
