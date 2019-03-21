@@ -9,30 +9,22 @@
 	</div>
 </template>
 
-<script lang="ts">
-import Component from 'vue-class-component';
-import Vue from 'vue';
-import { DialogOptions, DialogResult } from "./index";
-
-interface DialogContext extends DialogOptions {
-	id: number;
-}
-
-@Component
-export default class KxDialogContainer extends Vue {
-
-	private stack: DialogContext[] = [];
-	private counter: number = 0;
-
+<script>
+export default {
+	name: "KxDialogContainer",
+	data: () => ({
+		stack: [],
+		counter: 0,
+	}),
 	created() {
 		const { eventBus } = this.$dialog;
 
-		eventBus.$on("show", (config: DialogContext) => {
+		eventBus.$on("show", config => {
 			config.id = ++this.counter;
 			this.stack.push(config);
 		});
 
-		eventBus.$on("close", (result: DialogResult<any>) => {
+		eventBus.$on("close", result => {
 			const config = this.stack.pop();
 			if (!config) {
 				throw new Error("当前没有可关闭的弹窗");
