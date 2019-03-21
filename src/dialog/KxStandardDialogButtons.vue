@@ -1,4 +1,4 @@
-<template>
+<!--
 	<div class="btn-group" :class="$style.container">
 		<kx-button
 			v-if="cancelButton"
@@ -16,24 +16,32 @@
 			确定
 		</kx-button>
 	</div>
-</template>
+-->
 
 <script>
 export default {
 	name: "KxStandardDialogButtons",
+	functional: true,
 	props: {
 		cancelButton: Boolean,
 		applyHook: Function,
 		confirmHook: Function,
 	},
-	methods: {
-		confirm() {
-			if(this.confirmHook) {
-				this.confirmHook();
-			} else {
-				this.$dialog.confirm();
-			}
-		},
+	render (h, ctx) {
+		const { props, listeners } = ctx;
+		const buttons = [];
+
+		if (props.cancelButton) {
+			buttons.push(h("kx-button", { on: { click: this.$dialog.close } }, "取消"))
+		}
+		if (props.applyHook) {
+			buttons.push(h("kx-button", { on: { click: props.applyHook } }, "应用"))
+		}
+
+		const onConfirm = listeners.confirm || this.$dialog.confirm;
+		buttons.push(h("kx-button", { staticClass: "primary", on: { click: onConfirm } }, "确定"));
+
+		return h("div", { class: ["btn-group", this.$style.container] }, buttons)
 	},
 };
 </script>
