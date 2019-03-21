@@ -7,7 +7,7 @@
 			<label>年龄</label>
 			<input type="number" v-model="age" value="0"/>
 		</form>
-		<kx-standard-dialog-buttons :cancel-button="true" :confirm-hook="ok"/>
+		<kx-standard-dialog-buttons :cancel-button="true" @confirm="ok"/>
 	</kx-base-dialog>
 </template>
 

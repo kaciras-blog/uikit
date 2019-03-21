@@ -24,24 +24,25 @@ export default {
 	functional: true,
 	props: {
 		cancelButton: Boolean,
-		applyHook: Function,
-		confirmHook: Function,
 	},
 	render (h, ctx) {
 		const { props, listeners } = ctx;
 		const buttons = [];
 
+		// 函数组件没法引用到Vue.protorype？如果父组件也是函数组件？
+		const vm = ctx.parent;
+
 		if (props.cancelButton) {
-			buttons.push(h("kx-button", { on: { click: this.$dialog.close } }, "取消"))
+			buttons.push(h("kx-button", { on: { click: vm.$dialog.close } }, "取消"))
 		}
-		if (props.applyHook) {
-			buttons.push(h("kx-button", { on: { click: props.applyHook } }, "应用"))
+		if (listeners.apply) {
+			buttons.push(h("kx-button", { on: { click: listeners.apply } }, "应用"))
 		}
 
-		const onConfirm = listeners.confirm || this.$dialog.confirm;
+		const onConfirm = listeners.confirm || vm.$dialog.confirm;
 		buttons.push(h("kx-button", { staticClass: "primary", on: { click: onConfirm } }, "确定"));
 
-		return h("div", { class: ["btn-group", this.$style.container] }, buttons)
+		return h("div", { class: ["btn-group", ctx.$style.container] }, buttons)
 	},
 };
 </script>

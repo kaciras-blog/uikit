@@ -79,7 +79,9 @@ export default {
 		const buttons = [];
 
 		const createButton = (type, page) => {
-			if (theme === "button") { return simpleButton.call(this, h, type, page); }
+			if (theme === "button") {
+				return simpleButton.call(this, h, type, page);
+			}
 			return textButton.call(this, h, type, page);
 		};
 
