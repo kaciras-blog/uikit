@@ -1,5 +1,5 @@
 <template>
-	<kx-modal-wrapper @click.native.self="onOverlayClick" @keyup.native.esc="onOverlayClick">
+	<kx-modal-wrapper @click.native.self="onOverlayClick" @keyup.native.esc="onEscape">
 		<div ref="panel"
 			 class="kx-dialog dialogZoomIn"
 			 tabindex="-1"
@@ -26,25 +26,25 @@ import KxCloseIcon from "./KxCloseIcon";
 
 export default {
 	name: "KxBaseDialog",
-	components: { KxModalWrapper, KxCloseIcon },
+	components: {
+		KxModalWrapper,
+		KxCloseIcon,
+	},
 	props: {
-		/** 点击遮罩层关闭 */
-		clickToClose: Boolean,
-
 		/** 标题，这是个设置标题的便捷方法，如果使用了标题插槽则该属性将被忽略 */
 		title: String,
 
-		/** 是否显示右上角的关闭按钮（叉） */
+		/** 点击遮罩层关闭，默认false */
+		clickToClose: Boolean,
+
+		/** 是否显示右上角的关闭按钮（叉），并且允许按ESC关闭 */
 		closeIcon: {
 			type: Boolean,
 			default: true,
 		},
 
-		/** 在点击关闭按钮时不发出事件，而是直接关闭窗口并返回undefined */
-		defaultClose: {
-			type: Boolean,
-			default: true,
-		},
+		/** 拦截关闭按钮、ESC、遮罩点击的关闭事件 */
+		closeHook: Function,
 
 		/** 是否可以点击标题栏拖动，默认true */
 		draggable: {
@@ -54,11 +54,7 @@ export default {
 	},
 	methods: {
 		close () {
-			if (this.defaultClose) {
-				this.$dialog.close();
-			} else {
-				this.$emit("close-button-clicked");
-			}
+			(this.closeHook || this.$dialog.close)();
 		},
 		drag (event) {
 			if (!this.draggable) {
@@ -69,8 +65,11 @@ export default {
 			}
 			listenDragging().pipe(limitInWindow).subscribe(dragMoveElement(event, this.$refs.panel));
 		},
+		onEscape() {
+			if(this.closeIcon) this.close();
+		},
 		onOverlayClick() {
-			if(this.clickToClose) this.$dialog.close();
+			if(this.clickToClose) this.close();
 		}
 	},
 };

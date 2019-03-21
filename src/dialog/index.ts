@@ -8,18 +8,18 @@ import PromiseDelegate from "./PromiseDelegate";
 import KxStandardDialogButtons from "./KxStandardDialogButtons.vue";
 
 
-export class DialogResult<TResult> {
+export class DialogResult<TData> {
 
 	public readonly isConfirm: boolean;
-	public readonly result: TResult;
+	public readonly data: TData;
 
-	private constructor(isConfirm: boolean, result: TResult) {
+	private constructor(isConfirm: boolean, data: TData) {
 		this.isConfirm = isConfirm;
-		this.result = result;
+		this.data = data;
 	}
 
-	static confirm<TResult>(result: TResult) {
-		return new DialogResult(true, result);
+	static confirm<TResult>(data: TResult) {
+		return new DialogResult(true, data);
 	}
 
 	static CANCELED = new DialogResult<undefined>(false, undefined);
@@ -36,7 +36,7 @@ export class DialogSession<TResult> extends PromiseDelegate<DialogResult<TResult
 
 	onComfirm(callback: (result: TResult) => void) {
 		this.promise.then(rv => {
-			if (rv.isConfirm) callback(rv.result);
+			if (rv.isConfirm) callback(rv.data);
 		});
 		return this;
 	}
