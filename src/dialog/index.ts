@@ -4,7 +4,7 @@ import KxMessageBox from "./KxMessageBox.vue";
 import KxContextMenu from "./KxContextMenu.vue";
 import KxBaseDialog from "./KxBaseDialog.vue";
 import { boundClass } from "autobind-decorator";
-import PromiseDelegate from "./PromiseDelegate";
+import PromiseDelegate from "../PromiseDelegate";
 import KxStandardDialogButtons from "./KxStandardDialogButtons.vue";
 
 

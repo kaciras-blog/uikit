@@ -30,23 +30,23 @@ export default {
 		if (tag === "button") {
 			attrs.type = "button"; // 防止表单里的按钮点击刷新
 		} else {
-			attrs.role = "button"; // ARIA
+			attrs.role = "button"; // 如果不是button元素则添加ARIA属性
 		}
 
 		// 按钮样式的路由连接
 		if (route) {
-			data.props = data.props || {};
-			data.props.tag = tag;
-			data.props.to = route;
+			data.props = { tag, to: route, ...data.props };
 			tag = "router-link";
 		}
 
 		if (icon) {
+			const el = h("i", { staticClass: icon });
 			if (!children) {
-				clazz.push("icon"); // 仅有一个图标，给加一个样式
+				data.class.push("icon"); // 仅有一个图标，给加一个样式
+				children = [el];
+			} else {
+				children.unshift(el);
 			}
-			children = children || [];
-			children.unshift(h("i", { staticClass: icon }));
 		}
 
 		return h(tag, data, children);
@@ -97,14 +97,17 @@ export default {
 	&.primary {
 		.flat-style;
 	}
+
 	&.second {
 		.color-mixin(@color-button-second);
 		.flat-style;
 	}
+
 	&.info {
 		.color-mixin(@color-button-info);
 		.flat-style;
 	}
+
 	&.dangerous {
 		.color-mixin(@color-button-dangerous);
 		.flat-style;
@@ -146,9 +149,9 @@ export default {
 		}
 
 		background-image: linear-gradient(-45deg,
-			var(--background-highlight) 25%, transparent 25%,
-			transparent 50%, var(--background-highlight) 50%,
-			var(--background-highlight) 75%, transparent 75%);
+		var(--background-highlight) 25%, transparent 25%,
+		transparent 50%, var(--background-highlight) 50%,
+		var(--background-highlight) 75%, transparent 75%);
 
 		animation: barbershop linear .4s infinite;
 	}
