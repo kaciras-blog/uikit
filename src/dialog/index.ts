@@ -76,7 +76,7 @@ export interface MessageBoxOptions {
 }
 
 @boundClass
-export class DialogProperty {
+export class DialogManager {
 
 	public readonly eventBus = new Vue();
 
@@ -132,7 +132,7 @@ export default function install(Vue: VueConstructor) {
 	Vue.component(KxContextMenu.name, KxContextMenu);
 	Vue.component(KxStandardDialogButtons.name, KxStandardDialogButtons);
 
-	const commands = new DialogProperty();
+	const commands = new DialogManager();
 
 	// noinspection JSUnusedGlobalSymbols
 	Vue.prototype.$dialog = commands;

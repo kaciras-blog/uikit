@@ -166,8 +166,8 @@ export class CancelToken {
 
 	private readonly callbacks: Array<() => void> = [];
 
-	private canceled: boolean = false;
-	private completed: boolean = false;
+	public canceled: boolean = false;
+	public completed: boolean = false;
 
 	cancel() {
 		if (!this.completed) {
@@ -184,10 +184,8 @@ export class CancelToken {
 		this.completed = true;
 	}
 
-	static never() {
-		const token = new CancelToken();
-		token.cancel = () => {};
-		token.onCancel = () => {};
-		return token;
-	}
+	public static readonly NEVER = new CancelToken();
 }
+
+CancelToken.NEVER.cancel = () => {};
+CancelToken.NEVER.onCancel = () => {};
