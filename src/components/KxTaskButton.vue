@@ -37,16 +37,48 @@ export default {
 	}),
 	methods: {
 		handleClick () {
-			const { running, waiting, onClick } = this;
-			if (running && waiting) {
+			if (this.running && this.waiting) {
 				return;
 			}
-			const task = onClick.call(this);
-			if (task.then && task.finally) {
-				this.running = true;
-				task.finally(() => this.running = false);
+			const task = this.onClick.call(this);
+			if (!task.then || !task.finally) {
+				throw new Error("TaskButton onclick handler must return a Promise");
 			}
+			this.running = true;
+			task.finally(() => this.running = false);
 		},
 	},
 };
 </script>
+
+<style lang="less">
+@import "../css/exports";
+
+// 条纹宽度
+@stripeWidth: 32px;
+
+// 正在运行的按钮样式，因为需要长时间运行的任务并不一定是加载，所以没用.loading而是.running
+&.kx-btn.running {
+	&, &:hover {
+		color: white;
+		background-color: var(--background-active);
+		border-color: var(--background-highlight);
+		background-size: @stripeWidth @stripeWidth;
+	}
+
+	background-image: linear-gradient(
+		-45deg,
+		var(--background-highlight) 25%, transparent 25%,
+		transparent 50%, var(--background-highlight) 50%,
+		var(--background-highlight) 75%, transparent 75%
+	);
+
+	animation: barbershop linear .4s infinite;
+}
+
+// 国内理发店就是这个效果
+@keyframes barbershop {
+	from { background-position: 0; }
+	to { background-position: -@stripeWidth; }
+}
+</style>

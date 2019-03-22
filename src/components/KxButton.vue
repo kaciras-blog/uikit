@@ -57,14 +57,6 @@ export default {
 <style lang="less">
 @import "../css/exports";
 
-@color-button-primary: @color-primary; // 主要
-@color-button-second: #f570c7; // 次要
-@color-button-info: #29d547; // 信息
-@color-button-dangerous: #ef4c42; // 危险
-
-// 条纹宽度
-@stripeWidth: 32px;
-
 // 园角按钮的圆角半径
 @radius: .25rem;
 
@@ -137,24 +129,6 @@ export default {
 		padding: .3rem .8rem;
 		font-size: 1.2rem;
 	}
-
-	// 正在运行的按钮样式，因为需要长时间运行的任务并不一定是加载，所以没用.loading
-	// noinspection CssOptimizeSimilarProperties
-	&.running {
-		&, &:hover {
-			color: white;
-			background-color: var(--background-active);
-			border-color: var(--background-highlight);
-			background-size: @stripeWidth @stripeWidth;
-		}
-
-		background-image: linear-gradient(-45deg,
-		var(--background-highlight) 25%, transparent 25%,
-		transparent 50%, var(--background-highlight) 50%,
-		var(--background-highlight) 75%, transparent 75%);
-
-		animation: barbershop linear .4s infinite;
-	}
 }
 
 .psudo-style() {
@@ -206,23 +180,14 @@ export default {
 	--background-glass: @color-glass;
 }
 
-@keyframes button-ripple {
-	from {
-		opacity: 1;
-	}
-	to {
-		opacity: 0;
-		transform: scale(1.1, 1.2);
-	}
-}
-
-// 国内理发店就是这个效果
-@keyframes barbershop {
-	from {
-		background-position: 0;
-	}
-	to {
-		background-position: -@stripeWidth;
-	}
-}
+// 如果按钮在边缘，放大会导致滚动条出现
+/*@keyframes button-ripple {*/
+	/*from {*/
+		/*opacity: 1;*/
+	/*}*/
+	/*to {*/
+		/*opacity: 0;*/
+		/*transform: scale(1.1, 1.2);*/
+	/*}*/
+/*}*/
 </style>
