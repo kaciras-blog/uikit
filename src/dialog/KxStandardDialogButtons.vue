@@ -23,7 +23,11 @@ export default {
 	name: "KxStandardDialogButtons",
 	functional: true,
 	props: {
-		cancelButton: Boolean,
+		/** 是否显示取消按钮，默认true */
+		cancelButton: {
+			type: Boolean,
+			default: true,
+		},
 	},
 	render (h, ctx) {
 		const { props, listeners } = ctx;
