@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { dragMoveElement, listenDragging, limitInWindow } from "../helpers";
+import { moveElement, listenDragging, limitInWindow } from "../dragging";
 import KxModalWrapper from "./KxModalWrapper";
 import KxCloseIcon from "./KxCloseIcon";
 
@@ -63,7 +63,7 @@ export default {
 			if (!event.touches && event.button !== 0) {
 				return; // 鼠标右键不拖动
 			}
-			listenDragging().pipe(limitInWindow).subscribe(dragMoveElement(event, this.$refs.panel));
+			listenDragging().pipe(limitInWindow, moveElement(event, this.$refs.panel)).subscribe();
 		},
 		onEscape() {
 			if(this.closeIcon) this.close();

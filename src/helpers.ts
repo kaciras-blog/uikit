@@ -1,6 +1,4 @@
 import anime from "animejs";
-import { Observable } from "rxjs";
-import { filter } from "rxjs/operators";
 import Vue, { WatchOptions } from "vue";
 
 
@@ -33,71 +31,6 @@ export class VueMultiWatcher {
 	unwatch() {
 		this.unwatchs.forEach(unwatch => unwatch());
 	}
-}
-
-// ========================================= 拖动 =========================================
-
-interface Point2D {
-	x: number;
-	y: number;
-}
-
-export function listenDragging(): Observable<Point2D> {
-	return new Observable(subscriber => {
-
-		function onMove(event: MouseEvent | TouchEvent) {
-			event.preventDefault();
-			const touches = (event as TouchEvent).touches;
-			const { clientX, clientY } = touches && touches.length > 0 ? touches[0] : (event as MouseEvent);
-			subscriber.next({ x: clientX, y: clientY });
-		}
-
-		const onUp = (event: Event) => {
-			event.preventDefault();
-			document.removeEventListener("mousemove", onMove);
-			document.removeEventListener("touchmove", onMove);
-			document.removeEventListener("mouseup", onUp);
-			document.removeEventListener("touchend", onUp);
-			subscriber.complete();
-		};
-
-		document.addEventListener("mousemove", onMove);
-		document.addEventListener("touchmove", onMove);
-		document.addEventListener("mouseup", onUp);
-		document.addEventListener("touchend", onUp);
-	});
-}
-
-export function limitInWindow(obs: Observable<Point2D>): Observable<Point2D> {
-	return obs.pipe(filter(point => point.x >= 0 && point.x <= window.innerWidth && point.y >= 0 && point.y <= window.innerHeight));
-}
-
-/**
- * 开始拖动HTML元素，被拖动的元素可以与被点击元素不同。
- *
- * @param el 被拖动的元素
- * @param event 拖动开始的那一下点击事件
- * @return 在拖动结束后resolve
- */
-export function dragMoveElement(event: MouseEvent, el: HTMLElement) {
-	const clientRect = el.getBoundingClientRect();
-
-	// 拖动开始时元素的左上角坐标
-	const originX = clientRect.left;
-	const originY = clientRect.top;
-
-	const { style } = el;
-	style.position = "absolute";
-	style.top = originY + "px";
-	style.left = originX + "px";
-
-	const { clientX, clientY } = event;
-
-	// 新的坐标 = 元素开始坐标 + (鼠标当前位置 - 鼠标开始位置)
-	return ({ x, y }: Point2D) => {
-		style.left = (originX + x - clientX) + "px";
-		style.top = (originY + y - clientY) + "px";
-	};
 }
 
 /**
