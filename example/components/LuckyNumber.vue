@@ -29,10 +29,10 @@ export default {
 	}),
 	methods: {
 		async inputDialog () {
-			const { isConfirm, result } = await this.$dialog.show(InputBox, this.$data);
-			if (isConfirm) {
+			const result = await this.$dialog.show(InputBox, this.$data);
+			if (result.isConfirm) {
 				this.inputed = true;
-				Object.assign(this.$data, result);
+				Object.assign(this.$data, result.data);
 			}
 		},
 		luckyNum () {

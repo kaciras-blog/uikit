@@ -12,11 +12,14 @@
 .iconBox {
 	height: 3rem;
 	width: 3rem;
+
 	line-height: 3rem;
 	text-align: center;
 	cursor: pointer;
 	border-top-right-radius: 4px;
 	background: none;
+
+	transition: .15s ease-out;
 }
 
 .iconBox:hover, .iconBox:focus {
