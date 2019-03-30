@@ -94,31 +94,3 @@ export function scrollToElementEnd(element: HTMLElement) {
 	const elTop = getScrollTop() + element.getBoundingClientRect().top;
 	scrollAnime(element, elTop + element.clientHeight - window.innerHeight);
 }
-
-export class CancelToken {
-
-	private readonly callbacks: Array<() => void> = [];
-
-	public canceled: boolean = false;
-	public completed: boolean = false;
-
-	cancel() {
-		if (!this.completed) {
-			this.canceled = true;
-			this.callbacks.forEach(cb => cb());
-		}
-	}
-
-	onCancel(callback: () => void) {
-		this.callbacks.push(callback);
-	}
-
-	complete() {
-		this.completed = true;
-	}
-
-	public static readonly NEVER = new CancelToken();
-}
-
-CancelToken.NEVER.cancel = () => {};
-CancelToken.NEVER.onCancel = () => {};

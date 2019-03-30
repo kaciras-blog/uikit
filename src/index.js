@@ -102,4 +102,7 @@ if (GlobalVue) {
 }
 
 export * from "./helpers";
+export * from "./cancellation";
+export * from "./dragging";
+
 export default install;
