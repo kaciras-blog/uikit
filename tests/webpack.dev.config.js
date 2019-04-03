@@ -59,7 +59,7 @@ exports = {
 						loader: 'cache-loader',
 						options: {
 							cacheDirectory: 'D:\\Project\\KxUI\\node_modules\\.cache\\vue-loader',
-							cacheIdentifier: '355f5480'
+							cacheIdentifier: '8a3c7c76'
 						}
 					},
 					/* config.module.rule('vue').use('vue-loader') */
@@ -70,7 +70,7 @@ exports = {
 								preserveWhitespace: false
 							},
 							cacheDirectory: 'D:\\Project\\KxUI\\node_modules\\.cache\\vue-loader',
-							cacheIdentifier: '355f5480'
+							cacheIdentifier: '8a3c7c76'
 						}
 					}
 				]
@@ -1038,7 +1038,7 @@ exports = {
 						loader: 'cache-loader',
 						options: {
 							cacheDirectory: 'D:\\Project\\KxUI\\node_modules\\.cache\\babel-loader',
-							cacheIdentifier: '602bfdaf'
+							cacheIdentifier: '37beac65'
 						}
 					},
 					/* config.module.rule('js').use('babel-loader') */
@@ -1056,7 +1056,7 @@ exports = {
 						loader: 'cache-loader',
 						options: {
 							cacheDirectory: 'D:\\Project\\KxUI\\node_modules\\.cache\\ts-loader',
-							cacheIdentifier: '0625940b'
+							cacheIdentifier: '07914b7c'
 						}
 					},
 					/* config.module.rule('ts').use('babel-loader') */
@@ -1085,7 +1085,7 @@ exports = {
 						loader: 'cache-loader',
 						options: {
 							cacheDirectory: 'D:\\Project\\KxUI\\node_modules\\.cache\\ts-loader',
-							cacheIdentifier: '0625940b'
+							cacheIdentifier: '07914b7c'
 						}
 					},
 					/* config.module.rule('tsx').use('babel-loader') */
@@ -1201,4 +1201,4 @@ exports = {
 			'D:\\Project\\KxUI\\example\\main.js'
 		]
 	}
-};
+}

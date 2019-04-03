@@ -1,48 +1,51 @@
-const a = {
-	mode: "production",
-	context: "D:\\Project\\KxUI",
-	devtool: false,
+exports = {
+	mode: 'development',
+	context: 'D:\\Project\\KxUI',
+	devtool: 'cheap-module-eval-source-map',
 	node: {
 		setImmediate: false,
-		process: "mock",
-		dgram: "empty",
-		fs: "empty",
-		net: "empty",
-		tls: "empty",
-		child_process: "empty",
+		process: 'mock',
+		dgram: 'empty',
+		fs: 'empty',
+		net: 'empty',
+		tls: 'empty',
+		child_process: 'empty'
 	},
 	output: {
-		path: "D:\\Project\\KxUI\\dist",
-		filename: "js/[name].[contenthash:8].js",
-		publicPath: "/",
-		chunkFilename: "js/[name].[contenthash:8].js",
+		path: 'D:\\Project\\KxUI\\dist',
+		filename: '[name].js',
+		publicPath: '/',
+		globalObject: 'this'
 	},
 	resolve: {
 		alias: {
-			"@": "D:\\Project\\KxUI\\src",
-			vue$: "vue/dist/vue.runtime.esm.js",
+			'@': 'D:\\Project\\KxUI\\src',
+			vue$: 'vue/dist/vue.runtime.esm.js'
 		},
 		extensions: [
-			".wasm",
-			".mjs",
-			".js",
-			".jsx",
-			".vue",
-			".json",
+			'.mjs',
+			'.js',
+			'.jsx',
+			'.vue',
+			'.json',
+			'.wasm',
+			'.ts',
+			'.tsx'
 		],
 		modules: [
-			"node_modules",
-			"D:\\Project\\KxUI\\node_modules",
-			"D:\\Project\\KxUI\\node_modules\\@vue\\cli-service\\node_modules",
-		],
+			'node_modules',
+			'D:\\Project\\KxUI\\node_modules',
+			'D:\\Project\\KxUI\\node_modules\\@vue\\cli-service\\node_modules'
+		]
 	},
 	resolveLoader: {
 		modules: [
-			"D:\\Project\\KxUI\\node_modules\\@vue\\cli-plugin-babel\\node_modules",
-			"node_modules",
-			"D:\\Project\\KxUI\\node_modules",
-			"D:\\Project\\KxUI\\node_modules\\@vue\\cli-service\\node_modules",
-		],
+			'D:\\Project\\KxUI\\node_modules\\@vue\\cli-plugin-typescript\\node_modules',
+			'D:\\Project\\KxUI\\node_modules\\@vue\\cli-plugin-babel\\node_modules',
+			'node_modules',
+			'D:\\Project\\KxUI\\node_modules',
+			'D:\\Project\\KxUI\\node_modules\\@vue\\cli-service\\node_modules'
+		]
 	},
 	module: {
 		noParse: /^(vue|vue-router|vuex|vuex-router-sync)$/,
@@ -53,24 +56,24 @@ const a = {
 				use: [
 					/* config.module.rule('vue').use('cache-loader') */
 					{
-						loader: "cache-loader",
+						loader: 'cache-loader',
 						options: {
-							cacheDirectory: "D:\\Project\\KxUI\\node_modules\\.cache\\vue-loader",
-							cacheIdentifier: "738ae667",
-						},
+							cacheDirectory: 'D:\\Project\\KxUI\\node_modules\\.cache\\vue-loader',
+							cacheIdentifier: '8a3c7c76'
+						}
 					},
 					/* config.module.rule('vue').use('vue-loader') */
 					{
-						loader: "vue-loader",
+						loader: 'vue-loader',
 						options: {
 							compilerOptions: {
-								preserveWhitespace: false,
+								preserveWhitespace: false
 							},
-							cacheDirectory: "D:\\Project\\KxUI\\node_modules\\.cache\\vue-loader",
-							cacheIdentifier: "738ae667",
-						},
-					},
-				],
+							cacheDirectory: 'D:\\Project\\KxUI\\node_modules\\.cache\\vue-loader',
+							cacheIdentifier: '8a3c7c76'
+						}
+					}
+				]
 			},
 			/* config.module.rule('images') */
 			{
@@ -78,18 +81,18 @@ const a = {
 				use: [
 					/* config.module.rule('images').use('url-loader') */
 					{
-						loader: "url-loader",
+						loader: 'url-loader',
 						options: {
 							limit: 4096,
 							fallback: {
-								loader: "file-loader",
+								loader: 'file-loader',
 								options: {
-									name: "img/[name].[hash:8].[ext]",
-								},
-							},
-						},
-					},
-				],
+									name: 'img/[name].[hash:8].[ext]'
+								}
+							}
+						}
+					}
+				]
 			},
 			/* config.module.rule('svg') */
 			{
@@ -97,12 +100,12 @@ const a = {
 				use: [
 					/* config.module.rule('svg').use('file-loader') */
 					{
-						loader: "file-loader",
+						loader: 'file-loader',
 						options: {
-							name: "img/[name].[hash:8].[ext]",
-						},
-					},
-				],
+							name: 'img/[name].[hash:8].[ext]'
+						}
+					}
+				]
 			},
 			/* config.module.rule('media') */
 			{
@@ -110,18 +113,18 @@ const a = {
 				use: [
 					/* config.module.rule('media').use('url-loader') */
 					{
-						loader: "url-loader",
+						loader: 'url-loader',
 						options: {
 							limit: 4096,
 							fallback: {
-								loader: "file-loader",
+								loader: 'file-loader',
 								options: {
-									name: "media/[name].[hash:8].[ext]",
-								},
-							},
-						},
-					},
-				],
+									name: 'media/[name].[hash:8].[ext]'
+								}
+							}
+						}
+					}
+				]
 			},
 			/* config.module.rule('fonts') */
 			{
@@ -129,18 +132,18 @@ const a = {
 				use: [
 					/* config.module.rule('fonts').use('url-loader') */
 					{
-						loader: "url-loader",
+						loader: 'url-loader',
 						options: {
 							limit: 4096,
 							fallback: {
-								loader: "file-loader",
+								loader: 'file-loader',
 								options: {
-									name: "fonts/[name].[hash:8].[ext]",
-								},
-							},
-						},
-					},
-				],
+									name: 'fonts/[name].[hash:8].[ext]'
+								}
+							}
+						}
+					}
+				]
 			},
 			/* config.module.rule('pug') */
 			{
@@ -148,9 +151,9 @@ const a = {
 				use: [
 					/* config.module.rule('pug').use('pug-plain-loader') */
 					{
-						loader: "pug-plain-loader",
-					},
-				],
+						loader: 'pug-plain-loader'
+					}
+				]
 			},
 			/* config.module.rule('css') */
 			{
@@ -160,118 +163,122 @@ const a = {
 					{
 						resourceQuery: /module/,
 						use: [
-							/* config.module.rule('css').oneOf('vue-modules').use('extract-css-loader') */
+							/* config.module.rule('css').oneOf('vue-modules').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('css').oneOf('vue-modules').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
 									importLoaders: 2,
 									modules: true,
-									localIdentName: "[name]_[local]_[hash:base64:5]",
-								},
+									localIdentName: '[name]_[local]_[hash:base64:5]'
+								}
 							},
 							/* config.module.rule('css').oneOf('vue-modules').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
-							},
-						],
+									sourceMap: true
+								}
+							}
+						]
 					},
 					/* config.module.rule('css').oneOf('vue') */
 					{
 						resourceQuery: /\?vue/,
 						use: [
-							/* config.module.rule('css').oneOf('vue').use('extract-css-loader') */
+							/* config.module.rule('css').oneOf('vue').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('css').oneOf('vue').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
-									importLoaders: 2,
-								},
+									importLoaders: 2
+								}
 							},
 							/* config.module.rule('css').oneOf('vue').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
-							},
-						],
+									sourceMap: true
+								}
+							}
+						]
 					},
 					/* config.module.rule('css').oneOf('normal-modules') */
 					{
 						test: /\.module\.\w+$/,
 						use: [
-							/* config.module.rule('css').oneOf('normal-modules').use('extract-css-loader') */
+							/* config.module.rule('css').oneOf('normal-modules').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('css').oneOf('normal-modules').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
 									importLoaders: 2,
 									modules: true,
-									localIdentName: "[name]_[local]_[hash:base64:5]",
-								},
+									localIdentName: '[name]_[local]_[hash:base64:5]'
+								}
 							},
 							/* config.module.rule('css').oneOf('normal-modules').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
-							},
-						],
+									sourceMap: true
+								}
+							}
+						]
 					},
 					/* config.module.rule('css').oneOf('normal') */
 					{
 						use: [
-							/* config.module.rule('css').oneOf('normal').use('extract-css-loader') */
+							/* config.module.rule('css').oneOf('normal').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('css').oneOf('normal').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
-									importLoaders: 2,
-								},
+									importLoaders: 2
+								}
 							},
 							/* config.module.rule('css').oneOf('normal').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
-							},
-						],
-					},
-				],
+									sourceMap: true
+								}
+							}
+						]
+					}
+				]
 			},
 			/* config.module.rule('postcss') */
 			{
@@ -281,118 +288,122 @@ const a = {
 					{
 						resourceQuery: /module/,
 						use: [
-							/* config.module.rule('postcss').oneOf('vue-modules').use('extract-css-loader') */
+							/* config.module.rule('postcss').oneOf('vue-modules').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('postcss').oneOf('vue-modules').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
 									importLoaders: 2,
 									modules: true,
-									localIdentName: "[name]_[local]_[hash:base64:5]",
-								},
+									localIdentName: '[name]_[local]_[hash:base64:5]'
+								}
 							},
 							/* config.module.rule('postcss').oneOf('vue-modules').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
-							},
-						],
+									sourceMap: true
+								}
+							}
+						]
 					},
 					/* config.module.rule('postcss').oneOf('vue') */
 					{
 						resourceQuery: /\?vue/,
 						use: [
-							/* config.module.rule('postcss').oneOf('vue').use('extract-css-loader') */
+							/* config.module.rule('postcss').oneOf('vue').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('postcss').oneOf('vue').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
-									importLoaders: 2,
-								},
+									importLoaders: 2
+								}
 							},
 							/* config.module.rule('postcss').oneOf('vue').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
-							},
-						],
+									sourceMap: true
+								}
+							}
+						]
 					},
 					/* config.module.rule('postcss').oneOf('normal-modules') */
 					{
 						test: /\.module\.\w+$/,
 						use: [
-							/* config.module.rule('postcss').oneOf('normal-modules').use('extract-css-loader') */
+							/* config.module.rule('postcss').oneOf('normal-modules').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('postcss').oneOf('normal-modules').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
 									importLoaders: 2,
 									modules: true,
-									localIdentName: "[name]_[local]_[hash:base64:5]",
-								},
+									localIdentName: '[name]_[local]_[hash:base64:5]'
+								}
 							},
 							/* config.module.rule('postcss').oneOf('normal-modules').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
-							},
-						],
+									sourceMap: true
+								}
+							}
+						]
 					},
 					/* config.module.rule('postcss').oneOf('normal') */
 					{
 						use: [
-							/* config.module.rule('postcss').oneOf('normal').use('extract-css-loader') */
+							/* config.module.rule('postcss').oneOf('normal').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('postcss').oneOf('normal').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
-									importLoaders: 2,
-								},
+									importLoaders: 2
+								}
 							},
 							/* config.module.rule('postcss').oneOf('normal').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
-							},
-						],
-					},
-				],
+									sourceMap: true
+								}
+							}
+						]
+					}
+				]
 			},
 			/* config.module.rule('scss') */
 			{
@@ -402,146 +413,150 @@ const a = {
 					{
 						resourceQuery: /module/,
 						use: [
-							/* config.module.rule('scss').oneOf('vue-modules').use('extract-css-loader') */
+							/* config.module.rule('scss').oneOf('vue-modules').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('scss').oneOf('vue-modules').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
 									importLoaders: 2,
 									modules: true,
-									localIdentName: "[name]_[local]_[hash:base64:5]",
-								},
+									localIdentName: '[name]_[local]_[hash:base64:5]'
+								}
 							},
 							/* config.module.rule('scss').oneOf('vue-modules').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
+									sourceMap: true
+								}
 							},
 							/* config.module.rule('scss').oneOf('vue-modules').use('sass-loader') */
 							{
-								loader: "sass-loader",
+								loader: 'sass-loader',
 								options: {
-									sourceMap: true,
-								},
-							},
-						],
+									sourceMap: true
+								}
+							}
+						]
 					},
 					/* config.module.rule('scss').oneOf('vue') */
 					{
 						resourceQuery: /\?vue/,
 						use: [
-							/* config.module.rule('scss').oneOf('vue').use('extract-css-loader') */
+							/* config.module.rule('scss').oneOf('vue').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('scss').oneOf('vue').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
-									importLoaders: 2,
-								},
+									importLoaders: 2
+								}
 							},
 							/* config.module.rule('scss').oneOf('vue').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
+									sourceMap: true
+								}
 							},
 							/* config.module.rule('scss').oneOf('vue').use('sass-loader') */
 							{
-								loader: "sass-loader",
+								loader: 'sass-loader',
 								options: {
-									sourceMap: true,
-								},
-							},
-						],
+									sourceMap: true
+								}
+							}
+						]
 					},
 					/* config.module.rule('scss').oneOf('normal-modules') */
 					{
 						test: /\.module\.\w+$/,
 						use: [
-							/* config.module.rule('scss').oneOf('normal-modules').use('extract-css-loader') */
+							/* config.module.rule('scss').oneOf('normal-modules').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('scss').oneOf('normal-modules').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
 									importLoaders: 2,
 									modules: true,
-									localIdentName: "[name]_[local]_[hash:base64:5]",
-								},
+									localIdentName: '[name]_[local]_[hash:base64:5]'
+								}
 							},
 							/* config.module.rule('scss').oneOf('normal-modules').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
+									sourceMap: true
+								}
 							},
 							/* config.module.rule('scss').oneOf('normal-modules').use('sass-loader') */
 							{
-								loader: "sass-loader",
+								loader: 'sass-loader',
 								options: {
-									sourceMap: true,
-								},
-							},
-						],
+									sourceMap: true
+								}
+							}
+						]
 					},
 					/* config.module.rule('scss').oneOf('normal') */
 					{
 						use: [
-							/* config.module.rule('scss').oneOf('normal').use('extract-css-loader') */
+							/* config.module.rule('scss').oneOf('normal').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('scss').oneOf('normal').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
-									importLoaders: 2,
-								},
+									importLoaders: 2
+								}
 							},
 							/* config.module.rule('scss').oneOf('normal').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
+									sourceMap: true
+								}
 							},
 							/* config.module.rule('scss').oneOf('normal').use('sass-loader') */
 							{
-								loader: "sass-loader",
+								loader: 'sass-loader',
 								options: {
-									sourceMap: true,
-								},
-							},
-						],
-					},
-				],
+									sourceMap: true
+								}
+							}
+						]
+					}
+				]
 			},
 			/* config.module.rule('sass') */
 			{
@@ -551,150 +566,154 @@ const a = {
 					{
 						resourceQuery: /module/,
 						use: [
-							/* config.module.rule('sass').oneOf('vue-modules').use('extract-css-loader') */
+							/* config.module.rule('sass').oneOf('vue-modules').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('sass').oneOf('vue-modules').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
 									importLoaders: 2,
 									modules: true,
-									localIdentName: "[name]_[local]_[hash:base64:5]",
-								},
+									localIdentName: '[name]_[local]_[hash:base64:5]'
+								}
 							},
 							/* config.module.rule('sass').oneOf('vue-modules').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
+									sourceMap: true
+								}
 							},
 							/* config.module.rule('sass').oneOf('vue-modules').use('sass-loader') */
 							{
-								loader: "sass-loader",
+								loader: 'sass-loader',
 								options: {
 									sourceMap: true,
-									indentedSyntax: true,
-								},
-							},
-						],
+									indentedSyntax: true
+								}
+							}
+						]
 					},
 					/* config.module.rule('sass').oneOf('vue') */
 					{
 						resourceQuery: /\?vue/,
 						use: [
-							/* config.module.rule('sass').oneOf('vue').use('extract-css-loader') */
+							/* config.module.rule('sass').oneOf('vue').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('sass').oneOf('vue').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
-									importLoaders: 2,
-								},
+									importLoaders: 2
+								}
 							},
 							/* config.module.rule('sass').oneOf('vue').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
+									sourceMap: true
+								}
 							},
 							/* config.module.rule('sass').oneOf('vue').use('sass-loader') */
 							{
-								loader: "sass-loader",
+								loader: 'sass-loader',
 								options: {
 									sourceMap: true,
-									indentedSyntax: true,
-								},
-							},
-						],
+									indentedSyntax: true
+								}
+							}
+						]
 					},
 					/* config.module.rule('sass').oneOf('normal-modules') */
 					{
 						test: /\.module\.\w+$/,
 						use: [
-							/* config.module.rule('sass').oneOf('normal-modules').use('extract-css-loader') */
+							/* config.module.rule('sass').oneOf('normal-modules').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('sass').oneOf('normal-modules').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
 									importLoaders: 2,
 									modules: true,
-									localIdentName: "[name]_[local]_[hash:base64:5]",
-								},
+									localIdentName: '[name]_[local]_[hash:base64:5]'
+								}
 							},
 							/* config.module.rule('sass').oneOf('normal-modules').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
+									sourceMap: true
+								}
 							},
 							/* config.module.rule('sass').oneOf('normal-modules').use('sass-loader') */
 							{
-								loader: "sass-loader",
+								loader: 'sass-loader',
 								options: {
 									sourceMap: true,
-									indentedSyntax: true,
-								},
-							},
-						],
+									indentedSyntax: true
+								}
+							}
+						]
 					},
 					/* config.module.rule('sass').oneOf('normal') */
 					{
 						use: [
-							/* config.module.rule('sass').oneOf('normal').use('extract-css-loader') */
+							/* config.module.rule('sass').oneOf('normal').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('sass').oneOf('normal').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
-									importLoaders: 2,
-								},
+									importLoaders: 2
+								}
 							},
 							/* config.module.rule('sass').oneOf('normal').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
+									sourceMap: true
+								}
 							},
 							/* config.module.rule('sass').oneOf('normal').use('sass-loader') */
 							{
-								loader: "sass-loader",
+								loader: 'sass-loader',
 								options: {
 									sourceMap: true,
-									indentedSyntax: true,
-								},
-							},
-						],
-					},
-				],
+									indentedSyntax: true
+								}
+							}
+						]
+					}
+				]
 			},
 			/* config.module.rule('less') */
 			{
@@ -704,146 +723,150 @@ const a = {
 					{
 						resourceQuery: /module/,
 						use: [
-							/* config.module.rule('less').oneOf('vue-modules').use('extract-css-loader') */
+							/* config.module.rule('less').oneOf('vue-modules').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('less').oneOf('vue-modules').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
 									importLoaders: 2,
 									modules: true,
-									localIdentName: "[name]_[local]_[hash:base64:5]",
-								},
+									localIdentName: '[name]_[local]_[hash:base64:5]'
+								}
 							},
 							/* config.module.rule('less').oneOf('vue-modules').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
+									sourceMap: true
+								}
 							},
 							/* config.module.rule('less').oneOf('vue-modules').use('less-loader') */
 							{
-								loader: "less-loader",
+								loader: 'less-loader',
 								options: {
-									sourceMap: true,
-								},
-							},
-						],
+									sourceMap: true
+								}
+							}
+						]
 					},
 					/* config.module.rule('less').oneOf('vue') */
 					{
 						resourceQuery: /\?vue/,
 						use: [
-							/* config.module.rule('less').oneOf('vue').use('extract-css-loader') */
+							/* config.module.rule('less').oneOf('vue').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('less').oneOf('vue').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
-									importLoaders: 2,
-								},
+									importLoaders: 2
+								}
 							},
 							/* config.module.rule('less').oneOf('vue').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
+									sourceMap: true
+								}
 							},
 							/* config.module.rule('less').oneOf('vue').use('less-loader') */
 							{
-								loader: "less-loader",
+								loader: 'less-loader',
 								options: {
-									sourceMap: true,
-								},
-							},
-						],
+									sourceMap: true
+								}
+							}
+						]
 					},
 					/* config.module.rule('less').oneOf('normal-modules') */
 					{
 						test: /\.module\.\w+$/,
 						use: [
-							/* config.module.rule('less').oneOf('normal-modules').use('extract-css-loader') */
+							/* config.module.rule('less').oneOf('normal-modules').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('less').oneOf('normal-modules').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
 									importLoaders: 2,
 									modules: true,
-									localIdentName: "[name]_[local]_[hash:base64:5]",
-								},
+									localIdentName: '[name]_[local]_[hash:base64:5]'
+								}
 							},
 							/* config.module.rule('less').oneOf('normal-modules').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
+									sourceMap: true
+								}
 							},
 							/* config.module.rule('less').oneOf('normal-modules').use('less-loader') */
 							{
-								loader: "less-loader",
+								loader: 'less-loader',
 								options: {
-									sourceMap: true,
-								},
-							},
-						],
+									sourceMap: true
+								}
+							}
+						]
 					},
 					/* config.module.rule('less').oneOf('normal') */
 					{
 						use: [
-							/* config.module.rule('less').oneOf('normal').use('extract-css-loader') */
+							/* config.module.rule('less').oneOf('normal').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('less').oneOf('normal').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
-									importLoaders: 2,
-								},
+									importLoaders: 2
+								}
 							},
 							/* config.module.rule('less').oneOf('normal').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
+									sourceMap: true
+								}
 							},
 							/* config.module.rule('less').oneOf('normal').use('less-loader') */
 							{
-								loader: "less-loader",
+								loader: 'less-loader',
 								options: {
-									sourceMap: true,
-								},
-							},
-						],
-					},
-				],
+									sourceMap: true
+								}
+							}
+						]
+					}
+				]
 			},
 			/* config.module.rule('stylus') */
 			{
@@ -853,246 +876,236 @@ const a = {
 					{
 						resourceQuery: /module/,
 						use: [
-							/* config.module.rule('stylus').oneOf('vue-modules').use('extract-css-loader') */
+							/* config.module.rule('stylus').oneOf('vue-modules').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('stylus').oneOf('vue-modules').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
 									importLoaders: 2,
 									modules: true,
-									localIdentName: "[name]_[local]_[hash:base64:5]",
-								},
+									localIdentName: '[name]_[local]_[hash:base64:5]'
+								}
 							},
 							/* config.module.rule('stylus').oneOf('vue-modules').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
+									sourceMap: true
+								}
 							},
 							/* config.module.rule('stylus').oneOf('vue-modules').use('stylus-loader') */
 							{
-								loader: "stylus-loader",
+								loader: 'stylus-loader',
 								options: {
 									sourceMap: true,
-									preferPathResolver: "webpack",
-								},
-							},
-						],
+									preferPathResolver: 'webpack'
+								}
+							}
+						]
 					},
 					/* config.module.rule('stylus').oneOf('vue') */
 					{
 						resourceQuery: /\?vue/,
 						use: [
-							/* config.module.rule('stylus').oneOf('vue').use('extract-css-loader') */
+							/* config.module.rule('stylus').oneOf('vue').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('stylus').oneOf('vue').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
-									importLoaders: 2,
-								},
+									importLoaders: 2
+								}
 							},
 							/* config.module.rule('stylus').oneOf('vue').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
+									sourceMap: true
+								}
 							},
 							/* config.module.rule('stylus').oneOf('vue').use('stylus-loader') */
 							{
-								loader: "stylus-loader",
+								loader: 'stylus-loader',
 								options: {
 									sourceMap: true,
-									preferPathResolver: "webpack",
-								},
-							},
-						],
+									preferPathResolver: 'webpack'
+								}
+							}
+						]
 					},
 					/* config.module.rule('stylus').oneOf('normal-modules') */
 					{
 						test: /\.module\.\w+$/,
 						use: [
-							/* config.module.rule('stylus').oneOf('normal-modules').use('extract-css-loader') */
+							/* config.module.rule('stylus').oneOf('normal-modules').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('stylus').oneOf('normal-modules').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
 									importLoaders: 2,
 									modules: true,
-									localIdentName: "[name]_[local]_[hash:base64:5]",
-								},
+									localIdentName: '[name]_[local]_[hash:base64:5]'
+								}
 							},
 							/* config.module.rule('stylus').oneOf('normal-modules').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
+									sourceMap: true
+								}
 							},
 							/* config.module.rule('stylus').oneOf('normal-modules').use('stylus-loader') */
 							{
-								loader: "stylus-loader",
+								loader: 'stylus-loader',
 								options: {
 									sourceMap: true,
-									preferPathResolver: "webpack",
-								},
-							},
-						],
+									preferPathResolver: 'webpack'
+								}
+							}
+						]
 					},
 					/* config.module.rule('stylus').oneOf('normal') */
 					{
 						use: [
-							/* config.module.rule('stylus').oneOf('normal').use('extract-css-loader') */
+							/* config.module.rule('stylus').oneOf('normal').use('vue-style-loader') */
 							{
-								loader: "D:\\Project\\KxUI\\node_modules\\mini-css-extract-plugin\\dist\\loader.js",
+								loader: 'vue-style-loader',
 								options: {
-									publicPath: "../",
-								},
+									sourceMap: true,
+									shadowMode: false
+								}
 							},
 							/* config.module.rule('stylus').oneOf('normal').use('css-loader') */
 							{
-								loader: "css-loader",
+								loader: 'css-loader',
 								options: {
 									sourceMap: true,
-									importLoaders: 2,
-								},
+									importLoaders: 2
+								}
 							},
 							/* config.module.rule('stylus').oneOf('normal').use('postcss-loader') */
 							{
-								loader: "postcss-loader",
+								loader: 'postcss-loader',
 								options: {
-									sourceMap: true,
-								},
+									sourceMap: true
+								}
 							},
 							/* config.module.rule('stylus').oneOf('normal').use('stylus-loader') */
 							{
-								loader: "stylus-loader",
+								loader: 'stylus-loader',
 								options: {
 									sourceMap: true,
-									preferPathResolver: "webpack",
-								},
-							},
-						],
-					},
-				],
+									preferPathResolver: 'webpack'
+								}
+							}
+						]
+					}
+				]
 			},
 			/* config.module.rule('js') */
 			{
-				test: /\.jsx?$/,
+				test: /\.m?jsx?$/,
 				exclude: [
 					function () { /* omitted long function */
-					},
+					}
 				],
 				use: [
 					/* config.module.rule('js').use('cache-loader') */
 					{
-						loader: "cache-loader",
+						loader: 'cache-loader',
 						options: {
-							cacheDirectory: "D:\\Project\\KxUI\\node_modules\\.cache\\babel-loader",
-							cacheIdentifier: "30665eb2",
-						},
-					},
-					/* config.module.rule('js').use('thread-loader') */
-					{
-						loader: "thread-loader",
+							cacheDirectory: 'D:\\Project\\KxUI\\node_modules\\.cache\\babel-loader',
+							cacheIdentifier: '37beac65'
+						}
 					},
 					/* config.module.rule('js').use('babel-loader') */
 					{
-						loader: "babel-loader",
-					},
-				],
+						loader: 'babel-loader'
+					}
+				]
 			},
-		],
-	},
-	optimization: {
-		minimizer: [
+			/* config.module.rule('ts') */
 			{
-				options: {
-					test: /\.js(\?.*)?$/i,
-					warningsFilter: () => true,
-					extractComments: false,
-					sourceMap: false,
-					cache: true,
-					cacheKeys: defaultCacheKeys => defaultCacheKeys,
-					parallel: true,
-					include: undefined,
-					exclude: undefined,
-					minify: undefined,
-					terserOptions: {
-						output: {
-							comments: /^\**!|@preserve|@license|@cc_on/i,
-						},
-						compress: {
-							arrows: false,
-							collapse_vars: false,
-							comparisons: false,
-							computed_props: false,
-							hoist_funs: false,
-							hoist_props: false,
-							hoist_vars: false,
-							inline: false,
-							loops: false,
-							negate_iife: false,
-							properties: false,
-							reduce_funcs: false,
-							reduce_vars: false,
-							switches: false,
-							toplevel: false,
-							typeofs: false,
-							booleans: true,
-							if_return: true,
-							sequences: true,
-							unused: true,
-							conditionals: true,
-							dead_code: true,
-							evaluate: true,
-						},
-						mangle: {
-							safari10: true,
-						},
+				test: /\.ts$/,
+				use: [
+					/* config.module.rule('ts').use('cache-loader') */
+					{
+						loader: 'cache-loader',
+						options: {
+							cacheDirectory: 'D:\\Project\\KxUI\\node_modules\\.cache\\ts-loader',
+							cacheIdentifier: '07914b7c'
+						}
 					},
-				},
+					/* config.module.rule('ts').use('babel-loader') */
+					{
+						loader: 'babel-loader'
+					},
+					/* config.module.rule('ts').use('ts-loader') */
+					{
+						loader: 'ts-loader',
+						options: {
+							transpileOnly: true,
+							appendTsSuffixTo: [
+								'\\.vue$'
+							],
+							happyPackMode: false
+						}
+					}
+				]
 			},
-		],
-		splitChunks: {
-			cacheGroups: {
-				vendors: {
-					name: "chunk-vendors",
-					test: /[\\\/]node_modules[\\\/]/,
-					priority: -10,
-					chunks: "initial",
-				},
-				common: {
-					name: "chunk-common",
-					minChunks: 2,
-					priority: -20,
-					chunks: "initial",
-					reuseExistingChunk: true,
-				},
-			},
-		},
+			/* config.module.rule('tsx') */
+			{
+				test: /\.tsx$/,
+				use: [
+					/* config.module.rule('tsx').use('cache-loader') */
+					{
+						loader: 'cache-loader',
+						options: {
+							cacheDirectory: 'D:\\Project\\KxUI\\node_modules\\.cache\\ts-loader',
+							cacheIdentifier: '07914b7c'
+						}
+					},
+					/* config.module.rule('tsx').use('babel-loader') */
+					{
+						loader: 'babel-loader'
+					},
+					/* config.module.rule('tsx').use('ts-loader') */
+					{
+						loader: 'ts-loader',
+						options: {
+							transpileOnly: true,
+							happyPackMode: false,
+							appendTsxSuffixTo: [
+								'\\.vue$'
+							]
+						}
+					}
+				]
+			}
+		]
 	},
 	plugins: [
 		/* config.plugin('vue-loader') */
@@ -1100,10 +1113,10 @@ const a = {
 		/* config.plugin('define') */
 		new DefinePlugin(
 			{
-				"process.env": {
-					NODE_ENV: "\"production\"",
-					BASE_URL: "\"/\"",
-				},
+				'process.env': {
+					NODE_ENV: '"development"',
+					BASE_URL: '"/"'
+				}
 			}
 		),
 		/* config.plugin('case-sensitive-paths') */
@@ -1113,106 +1126,79 @@ const a = {
 			{
 				additionalTransformers: [
 					function () { /* omitted long function */
-					},
+					}
 				],
 				additionalFormatters: [
 					function () { /* omitted long function */
-					},
-				],
+					}
+				]
 			}
 		),
-		/* config.plugin('extract-css') */
-		new MiniCssExtractPlugin(
-			{
-				filename: "css/[name].[contenthash:8].css",
-				chunkFilename: "css/[name].[contenthash:8].css",
-			}
-		),
-		/* config.plugin('optimize-css') */
-		new OptimizeCssnanoPlugin(
-			{
-				sourceMap: false,
-				cssnanoOptions: {
-					preset: [
-						"default",
-						{
-							mergeLonghand: false,
-							cssDeclarationSorter: false,
-						},
-					],
-				},
-			}
-		),
-		/* config.plugin('hash-module-ids') */
-		new HashedModuleIdsPlugin(
-			{
-				hashDigest: "hex",
-			}
-		),
-		/* config.plugin('named-chunks') */
-		new NamedChunksPlugin(
-			function () { /* omitted long function */
-			}
-		),
+		/* config.plugin('hmr') */
+		new HotModuleReplacementPlugin(),
+		/* config.plugin('progress') */
+		new ProgressPlugin(),
 		/* config.plugin('html-index') */
 		new HtmlWebpackPlugin(
 			{
 				templateParameters: function () { /* omitted long function */
 				},
-				minify: {
-					removeComments: true,
-					collapseWhitespace: true,
-					removeAttributeQuotes: true,
-					collapseBooleanAttributes: true,
-					removeScriptTypeAttributes: true,
-				},
 				chunks: [
-					"chunk-vendors",
-					"chunk-common",
-					"index",
+					'chunk-vendors',
+					'chunk-common',
+					'index'
 				],
-				template: "example/public/index.html",
-				filename: "index.html",
+				template: 'example/public/index.html',
+				filename: 'index.html'
 			}
 		),
 		/* config.plugin('preload-index') */
 		new PreloadPlugin(
 			{
-				rel: "preload",
+				rel: 'preload',
 				includeHtmlNames: [
-					"index.html",
+					'index.html'
 				],
 				include: {
-					type: "initial",
+					type: 'initial',
 					entries: [
-						"index",
-					],
+						'index'
+					]
 				},
 				fileBlacklist: [
 					/\.map$/,
-					/hot-update\.js$/,
-				],
+					/hot-update\.js$/
+				]
 			}
 		),
 		/* config.plugin('prefetch-index') */
 		new PreloadPlugin(
 			{
-				rel: "prefetch",
+				rel: 'prefetch',
 				includeHtmlNames: [
-					"index.html",
+					'index.html'
 				],
 				include: {
-					type: "asyncChunks",
+					type: 'asyncChunks',
 					entries: [
-						"index",
-					],
-				},
+						'index'
+					]
+				}
 			}
 		),
+		/* config.plugin('fork-ts-checker') */
+		new ForkTsCheckerWebpackPlugin(
+			{
+				vue: true,
+				tslint: false,
+				formatter: 'codeframe',
+				checkSyntacticErrors: false
+			}
+		)
 	],
 	entry: {
 		index: [
-			"D:\\Project\\KxUI\\example\\main.js",
-		],
-	},
-};
+			'D:\\Project\\KxUI\\example\\main.js'
+		]
+	}
+}

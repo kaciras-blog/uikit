@@ -30,8 +30,8 @@
 			color: white;
 		}
 
-		&:hover {
-			color: #ffffa3;
+		&:hover, &:focus {
+			color: #ffff4d;
 			text-decoration: none;
 		}
 	}

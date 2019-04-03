@@ -7,7 +7,7 @@
 		"build": "vue-cli-service build",
 		"test": "jest",
 		"lint": "vue-cli-service lint src test example",
-		"inspect": "vue-cli-service inspect > webpack.dev.config.js"
+		"inspect": "vue-cli-service inspect > tests/webpack.dev.config.js && vue-cli-service inspect -production > tests/webpack.config.js"
 	},
 	"dependencies": {
 		"animejs": "^3.0.1",
