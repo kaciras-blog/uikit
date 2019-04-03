@@ -1,48 +1,43 @@
+<!-- Vue的路由 -->
 <template>
 	<main :class="$style.container">
-		<aside :class="$style.aside">
-			<h1>组件列表</h1>
-			<ul :class="$style.tab">
-				<router-link to="/buttons" tag="li">对话框</router-link>
-				<router-link to="/dialog" tag="li">对话框</router-link>
-				<router-link to="/radiobox" tag="li">单选按钮</router-link>
-			</ul>
-		</aside>
-		<div :class="$style.view">
-			<router-view/>
-		</div>
+		<ul :class="$style.tab">
+			<router-link to="/usage/buttons" tag="li">按钮</router-link>
+			<router-link to="/usage/dialog" tag="li">对话框</router-link>
+			<router-link to="/usage/radiobox" tag="li">单选按钮</router-link>
+		</ul>
+		<div :class="$style.view"><router-view/></div>
 	</main>
 </template>
-
-<script>
-export default {
-	name: "UsageView",
-};
-</script>
 
 <style module lang="less">
 .container {
 	height: 100vh;
 }
 
-.aside {
+.tab {
+	position: fixed;
 	width: 20%;
 	height: 100%;
-	display: inline-block;
-}
-
-.view {
-	display: inline-block;
-	padding: 1rem;
-}
-
-.tab {
-	padding: 0;
+	margin: 0;
+	padding: 14px;
+	overflow-y: scroll;
 }
 
 .tab > li {
 	list-style: none;
 	cursor: pointer;
-	padding: .4rem .5rem;
+	padding: 6px 0;
+	font-size: 1rem;
+
+	&:hover {
+		color: #f50cce;
+		text-decoration: underline;
+	}
+}
+
+.view {
+	margin-left: 20%;
+	padding: 20px;
 }
 </style>

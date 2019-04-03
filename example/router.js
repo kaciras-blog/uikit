@@ -13,6 +13,10 @@ export default new Router({
 	routes: [
 		{
 			path: "/",
+			redirect: "/usage",
+		},
+		{
+			path: "/usage",
 			component: UsageView,
 			children: [
 				{ path: "", component: RadioBoxes },

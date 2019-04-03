@@ -6,10 +6,6 @@
 		<kx-button tag="a" route="/dialog">路由按钮</kx-button>
 		<kx-button tag="a" route="/radiobox">RadioBox</kx-button>
 
-
-
-
-
 		<p class="btn-group">
 			<kx-button class="primary">主按钮</kx-button>
 			<kx-button class="second">次要按钮</kx-button>
