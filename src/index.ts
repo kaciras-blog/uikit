@@ -1,16 +1,17 @@
-import ButtonPager from "./paging/ButtonPager";
-import ScrollPager from "./paging/ScrollPager";
-import SkFadingCircle from "./components/SkFadingCircle";
-import Swiper from "./components/FadeCarousel";
-import ToggleButton from "./components/ToggleButton";
-import ScrollPageingView from "./paging/ScrollPageingView";
-import ButtonPageingView from "./paging/ButtonPageingView";
-import KxCheckBox from "./components/KxCheckBox";
-import KxButton from "./components/KxButton";
-import KxTaskButton from "./components/KxTaskButton";
-import KxCarousel from "./components/KxCarousel";
-import KxRadioBox from "./components/KxRadioBox";
-import KxRadioBoxGroup from "./components/KxRadioBoxGroup";
+import Vue, { VueConstructor } from 'vue';
+import ButtonPager from "./paging/ButtonPager.vue";
+import ScrollPager from "./paging/ScrollPager.vue";
+import SkFadingCircle from "./components/SkFadingCircle.vue";
+import Swiper from "./components/FadeCarousel.vue";
+import ToggleButton from "./components/ToggleButton.vue";
+import ScrollPageingView from "./paging/ScrollPageingView.vue";
+import ButtonPageingView from "./paging/ButtonPageingView.vue";
+import KxCheckBox from "./components/KxCheckBox.vue";
+import KxButton from "./components/KxButton.vue";
+import KxTaskButton from "./components/KxTaskButton.vue";
+import KxCarousel from "./components/KxCarousel.vue";
+import KxRadioBox from "./components/KxRadioBox.vue";
+import KxRadioBoxGroup from "./components/KxRadioBoxGroup.vue";
 
 import KxDialog from "./dialog";
 
@@ -18,9 +19,8 @@ import KxDialog from "./dialog";
  * 自动注册目录下的Vue组件。
  *
  * @param Vue Vue类型，使用Vue.use()来注册该插件
- * @param options 选项
  */
-function install (Vue, options = {}) {
+function install(Vue: VueConstructor) {
 
 	// 自动聚焦支持 v-autofocus
 	Vue.directive("autofocus", {
@@ -29,8 +29,12 @@ function install (Vue, options = {}) {
 
 	// 文本选区绑定
 	Vue.directive("bind-selection", {
-		inserted (el, { expression, modifiers }, vnode) {
-			const vm = vnode.context;
+		inserted(el, { expression, modifiers }, vnode) {
+			const vm = vnode.context as Vue;
+
+			if (!(el instanceof HTMLTextAreaElement || el instanceof HTMLInputElement)) {
+				throw new Error("v-bind-selection can only apply to HTMLTextAreaElement or HTMLInputElement");
+			}
 			vm.$watch(expression, nv => {
 				const [s, e] = nv;
 				el.selectionStart = s;
@@ -42,18 +46,28 @@ function install (Vue, options = {}) {
 
 	// 文本选区改变监听
 	Vue.directive("on-selection-changed", {
-		inserted (el, { expression }, vnode) {
-			const vm = vnode.context;
+		inserted(el, { expression }, vnode) {
+			const vm = vnode.context as Vue;
+
+			if (!(el instanceof HTMLTextAreaElement || el instanceof HTMLInputElement)) {
+				throw new Error("v-on-selection-changed can only apply to HTMLTextAreaElement or HTMLInputElement");
+			}
+
+			// @ts-ignore ???
+			const handlerFunction = vm[expression] as (start: number, end: number) => void;
+			if (typeof handlerFunction !== "function") {
+				throw new Error("v-on-selection-changed value muse be a function");
+			}
 
 			let oldStart = el.selectionStart;
 			let oldEnd = el.selectionEnd;
 
-			function handleSelect () {
-				const { selectionStart, selectionEnd } = el;
+			function handleSelect() {
+				const { selectionStart, selectionEnd } = el as any; // 没有改变el，但TypeScript检测不出来
 				if (oldStart !== selectionStart || oldEnd !== selectionEnd) {
 					oldStart = selectionStart;
 					oldEnd = selectionEnd;
-					vm[expression](selectionStart, selectionEnd);
+					handlerFunction(selectionStart, selectionEnd);
 				}
 			}
 
@@ -62,7 +76,7 @@ function install (Vue, options = {}) {
 			el.addEventListener("keyup", handleSelect);		// Home,End,PageUp,PageDown
 			el.addEventListener("keydown", handleSelect);	// 移动光标的键按住不放
 
-			el.addEventListener("blur", () => vm[expression](0, 0));
+			el.addEventListener("blur", () => handlerFunction(0, 0));
 		},
 	});
 
@@ -91,6 +105,9 @@ function install (Vue, options = {}) {
 }
 
 // Auto-install
+declare const window: Window & { Vue?: VueConstructor };
+declare const global: any;
+
 let GlobalVue = null;
 if (typeof window !== "undefined") {
 	GlobalVue = window.Vue;
