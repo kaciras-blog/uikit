@@ -5,6 +5,7 @@
 			<router-link to="/usage/buttons" tag="li">按钮</router-link>
 			<router-link to="/usage/dialog" tag="li">对话框</router-link>
 			<router-link to="/usage/radiobox" tag="li">单选按钮</router-link>
+			<router-link to="/usage/pageing" tag="li">分页</router-link>
 		</ul>
 		<div :class="$style.view"><router-view/></div>
 	</main>

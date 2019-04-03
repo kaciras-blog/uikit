@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<button-pager
-			v-if="showTopButtons"
+			v-if="showTopButtons && items.length"
 			:theme="theme"
 			:total-count="total"
 			:index="index"
@@ -11,6 +11,7 @@
 		<slot :items="items"/>
 
 		<button-pager
+			v-if="items.length"
 			:theme="theme"
 			:total-count="total"
 			:index="index"
@@ -20,13 +21,14 @@
 </template>
 
 <script>
-import { CancelToken, scrollToElementStart, scrollToElementEnd } from "../helpers";
+import { CancelToken, scrollToElementStart, scrollToElementEnd } from "..";
 
 export default {
 	name: "ButtonPageingView",
 	props: {
+		/** index, size, cancelToken => { items, total } or items */
 		loader: {
-			type: Function, // index, size, cancelToken => { items, total } or items
+			type: Function,
 			required: true,
 		},
 		start: {
@@ -45,20 +47,23 @@ export default {
 			type: Number,
 			default: 0,
 		},
+		showTopButtons: {
+			type: Boolean,
+			default: true,
+		},
 		theme: String,
-		showTopButtons: Boolean,
 	},
-	data () {
+	data() {
 		return {
 			index: this.start,
 			pageSize: this.initPageSize,
 			items: this.initItems,
-			total: this.initTotalCount,
+			total: Math.max(this.initTotalCount, this.initItems.length),
 			loading: null,
 		};
 	},
 	methods: {
-		loadPage (index) {
+		loadPage(index) {
 			const { pageSize, _loading, loader } = this;
 			if (_loading) {
 				_loading.cancel();
@@ -77,24 +82,24 @@ export default {
 				}
 			}).finally(() => this._loading = null);
 		},
-		switchPage (index) {
+		switchPage(index) {
 			this.loadPage(index).then(this.scrollToStart);
 		},
-		refresh () {
+		refresh() {
 			this.loadPage(this.index);
 		},
-		switchToLast () {
+		switchToLast() {
 			const { loadPage, total, pageSize, scrollToEnd } = this;
 			loadPage(Math.floor(total / pageSize)).then(scrollToEnd);
 		},
-		scrollToStart () {
+		scrollToStart() {
 			this.$nextTick(() => scrollToElementStart(this.$el));
 		},
-		scrollToEnd () {
+		scrollToEnd() {
 			this.$nextTick(() => scrollToElementEnd(this.$el));
 		},
 	},
-	beforeMount () {
+	beforeMount() {
 		if (!this.items.length) {
 			this.refresh();
 		}
