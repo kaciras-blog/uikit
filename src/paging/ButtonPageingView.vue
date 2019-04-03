@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { CancelToken, scrollToElementStart, scrollToElementEnd } from "..";
+import { CancelToken, scrollToElementStart, scrollToElementEnd } from "../index";
 
 export default {
 	name: "ButtonPageingView",

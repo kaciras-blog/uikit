@@ -1,5 +1,5 @@
 <script>
-import KxButton from "./KxButton";
+import KxButton from "../components/KxButton";
 
 function contentOf (type, index) {
 	switch (type) {
