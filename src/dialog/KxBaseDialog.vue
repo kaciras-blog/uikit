@@ -24,7 +24,7 @@
 <script>
 import KxModalWrapper from "./KxModalWrapper";
 import KxCloseIcon from "./KxCloseIcon";
-import { moveElement, listenDragging, limitInWindow, elementPosition } from "../dragging";
+import { moveElement, observeMouseMove, limitInWindow, elementPosition } from "../dragging";
 
 export default {
 	name: "KxBaseDialog",
@@ -65,7 +65,7 @@ export default {
 			if (!event.touches && event.button !== 0) {
 				return; // 鼠标右键不拖动
 			}
-			listenDragging().pipe(
+			observeMouseMove().pipe(
 				limitInWindow,
 				elementPosition(event, this.$refs.panel),
 				moveElement(this.$refs.panel)

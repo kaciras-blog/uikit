@@ -1,4 +1,4 @@
-import { NextObserver, Observable, Subscriber } from "rxjs";
+import { Observable, Subscriber } from "rxjs";
 
 interface Point2D {
 	x: number;
@@ -6,9 +6,10 @@ interface Point2D {
 }
 
 /**
- * 请保证调用该函数时鼠标处于按下状态
+ * 监听鼠标的移动，不断产生鼠标的位置，请保证调用该函数时鼠标处于按下状态，比如
+ * 在 mousedown 事件里调用此函数。
  */
-export function listenDragging() {
+export function observeMouseMove() {
 	return new Observable<Point2D>(subscriber => {
 
 		function onMove(event: MouseEvent | TouchEvent) {
@@ -39,20 +40,14 @@ export function listenDragging() {
 	});
 }
 
-class InWindowPointFilter implements NextObserver<Point2D> {
-
-	private readonly destination: Subscriber<Point2D>;
-
-	constructor(destination: Subscriber<Point2D>) {
-		this.destination = destination;
-	}
+class InWindowPointFilter extends Subscriber<Point2D> {
 
 	public next(point: Point2D) {
 		if (point.x < 0 || point.x > window.innerWidth)
 			return;
 		if (point.y < 0 || point.y > window.innerHeight)
 			return;
-		this.destination.next(point);
+		super._next(point);
 	}
 }
 
@@ -67,16 +62,14 @@ export function limitInWindow(source: Observable<Point2D>) {
 }
 
 
-class ElementPositionMapper implements NextObserver<Point2D> {
+class ElementPositionMapper extends Subscriber<Point2D> {
 
 	// 元素顶点相对于鼠标位置的偏移 = 元素位置 - 鼠标位置
 	private readonly mouseOffsetX: number;
 	private readonly mouseOffsetY: number;
 
-	private readonly destination: Subscriber<Point2D>;
-
 	constructor(destination: Subscriber<Point2D>, event: MouseEvent, el: HTMLElement) {
-		this.destination = destination;
+		super(destination);
 		const clientRect = el.getBoundingClientRect();
 
 		// 拖动开始时元素的左上角坐标
@@ -91,7 +84,7 @@ class ElementPositionMapper implements NextObserver<Point2D> {
 	public next(value: Point2D) {
 		const elementX = this.mouseOffsetX + value.x;
 		const elementY = this.mouseOffsetY + value.y;
-		this.destination.next({ x: elementX, y: elementY });
+		super._next({ x: elementX, y: elementY });
 	}
 }
 
@@ -107,13 +100,12 @@ export function elementPosition(event: MouseEvent, el: HTMLElement) {
 }
 
 
-class MoveElementPipe implements NextObserver<Point2D> {
+class MoveElementPipe extends Subscriber<Point2D> {
 
 	private readonly style: CSSStyleDeclaration;
-	private readonly destination: Subscriber<Point2D>;
 
 	constructor(destination: Subscriber<Point2D>, el: HTMLElement) {
-		this.destination = destination;
+		super(destination);
 
 		// 拖动开始时元素的左上角坐标
 		const clientRect = el.getBoundingClientRect();
@@ -128,10 +120,10 @@ class MoveElementPipe implements NextObserver<Point2D> {
 		this.style = style;
 	}
 
-	public next(value: Point2D) {
+	public _next(value: Point2D) {
 		this.style.top = value.y + "px";
 		this.style.left = value.x + "px";
-		this.destination.next(value);
+		super._next(value);
 	}
 }
 
