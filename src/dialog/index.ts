@@ -117,7 +117,17 @@ export class DialogManager {
 		this.eventBus.$emit("clear");
 	}
 
-	messageBox(options: MessageBoxOptions) {
+	/**
+	 * 显示内置的消息框
+	 *
+	 * @param options 标题或选项
+	 * @param content 内容
+	 * @param type 类型
+	 */
+	messageBox(options: MessageBoxOptions | string, content?: string | string[], type?: MessageBoxType) {
+		if (typeof options === "string") {
+			options = { title: options, content, type }
+		}
 		return this.show(KxMessageBox, options);
 	}
 
