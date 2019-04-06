@@ -2,6 +2,7 @@
 	<div>
 		<button-pager
 			v-if="showTopButtons && items.length"
+			:class="$style.buttons"
 			:theme="theme"
 			:total-count="total"
 			:index="index"
@@ -12,6 +13,7 @@
 
 		<button-pager
 			v-if="items.length"
+			:class="$style.buttons"
 			:theme="theme"
 			:total-count="total"
 			:index="index"
@@ -58,7 +60,7 @@ export default {
 			index: this.start,
 			pageSize: this.initPageSize,
 			items: this.initItems,
-			total: Math.max(this.initTotalCount, this.initItems.length),
+			total: this.initTotalCount,
 			loading: null,
 		};
 	},
@@ -99,10 +101,11 @@ export default {
 			this.$nextTick(() => scrollToElementEnd(this.$el));
 		},
 	},
-	beforeMount() {
-		if (!this.items.length) {
-			this.refresh();
-		}
-	},
 };
 </script>
+
+<style module lang="less">
+.buttons {
+	margin: 16px 0;
+}
+</style>
