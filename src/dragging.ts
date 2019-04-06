@@ -39,7 +39,7 @@ export function listenDragging() {
 	});
 }
 
-class InWindowPointLimiter implements NextObserver<Point2D> {
+class InWindowPointFilter implements NextObserver<Point2D> {
 
 	private readonly destination: Subscriber<Point2D>;
 
@@ -63,13 +63,11 @@ class InWindowPointLimiter implements NextObserver<Point2D> {
  * @param source 原始Observable
  */
 export function limitInWindow(source: Observable<Point2D>) {
-	return new Observable<Point2D>(subscriber => source.subscribe(new InWindowPointLimiter(subscriber)));
+	return new Observable<Point2D>(subscriber => source.subscribe(new InWindowPointFilter(subscriber)));
 }
 
 
-class MoveElementPipe implements NextObserver<Point2D> {
-
-	private readonly style: CSSStyleDeclaration;
+class ElementPositionMapper implements NextObserver<Point2D> {
 
 	// 元素顶点相对于鼠标位置的偏移 = 元素位置 - 鼠标位置
 	private readonly mouseOffsetX: number;
@@ -85,12 +83,6 @@ class MoveElementPipe implements NextObserver<Point2D> {
 		const originX = clientRect.left;
 		const originY = clientRect.top;
 
-		const { style } = el;
-		style.position = "absolute";
-		style.top = originY + "px";
-		style.left = originX + "px";
-
-		this.style = style;
 		this.mouseOffsetX = originX - event.clientX;
 		this.mouseOffsetY = originY - event.clientY;
 	}
@@ -99,19 +91,57 @@ class MoveElementPipe implements NextObserver<Point2D> {
 	public next(value: Point2D) {
 		const elementX = this.mouseOffsetX + value.x;
 		const elementY = this.mouseOffsetY + value.y;
-		this.style.top = elementY + "px";
-		this.style.left = elementX + "px";
 		this.destination.next({ x: elementX, y: elementY });
 	}
 }
 
 /**
- * 开始拖动HTML元素，被拖动的元素可以与被点击元素不同。
+ * 将鼠标位置映射到元素的顶点坐标。
  *
- * @param event 拖动开始的那一下点击事件
- * @param el 被拖动的元素
- * @return 新的Observable，每个点将转换为元素的顶点
+ * @param event 鼠标事件
+ * @param el 映射的目标元素
+ * @return 新的Observable，每个点将映射到元素的顶点
  */
-export function moveElement(event: MouseEvent, el: HTMLElement) {
-	return (source: Observable<Point2D>) => new Observable<Point2D>(subscriber => source.subscribe(new MoveElementPipe(subscriber, event, el)));
+export function elementPosition(event: MouseEvent, el: HTMLElement) {
+	return (source: Observable<Point2D>) => new Observable<Point2D>(subscriber => source.subscribe(new ElementPositionMapper(subscriber, event, el)));
+}
+
+
+class MoveElementPipe implements NextObserver<Point2D> {
+
+	private readonly style: CSSStyleDeclaration;
+	private readonly destination: Subscriber<Point2D>;
+
+	constructor(destination: Subscriber<Point2D>, el: HTMLElement) {
+		this.destination = destination;
+
+		// 拖动开始时元素的左上角坐标
+		const clientRect = el.getBoundingClientRect();
+		const originY = clientRect.top;
+		const originX = clientRect.left;
+
+		const { style } = el;
+		style.position = "absolute";
+		style.top = originY + "px";
+		style.left = originX + "px";
+
+		this.style = style;
+	}
+
+	public next(value: Point2D) {
+		this.style.top = value.y + "px";
+		this.style.left = value.x + "px";
+		this.destination.next(value);
+	}
+}
+
+
+/**
+ * 将元素设为绝对定位，并根据观察到的点改变元素的位置。
+ *
+ * @param el 被移动的元素
+ * @return 该函数不改变Observable
+ */
+export function moveElement(el: HTMLElement) {
+	return (source: Observable<Point2D>) => new Observable<Point2D>(subscriber => source.subscribe(new MoveElementPipe(subscriber, el)));
 }

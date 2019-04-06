@@ -14,15 +14,17 @@
 				<kx-close-icon v-if="closeIcon" @click="close"/>
 			</header>
 
-			<div class="kx-dialog-body"><slot/></div>
+			<div class="kx-dialog-body">
+				<slot/>
+			</div>
 		</div>
 	</kx-modal-wrapper>
 </template>
 
 <script>
-import { moveElement, listenDragging, limitInWindow } from "../dragging";
 import KxModalWrapper from "./KxModalWrapper";
 import KxCloseIcon from "./KxCloseIcon";
+import { moveElement, listenDragging, limitInWindow, elementPosition } from "../dragging";
 
 export default {
 	name: "KxBaseDialog",
@@ -53,23 +55,27 @@ export default {
 		},
 	},
 	methods: {
-		close () {
+		close() {
 			(this.closeHook || this.$dialog.close)();
 		},
-		drag (event) {
+		drag(event) {
 			if (!this.draggable) {
 				return;
 			}
 			if (!event.touches && event.button !== 0) {
 				return; // 鼠标右键不拖动
 			}
-			listenDragging().pipe(limitInWindow, moveElement(event, this.$refs.panel)).subscribe();
+			listenDragging().pipe(
+				limitInWindow,
+				elementPosition(event, this.$refs.panel),
+				moveElement(this.$refs.panel)
+			).subscribe();
 		},
 		onEscape() {
-			if(this.closeIcon) this.close();
+			if (this.closeIcon) this.close();
 		},
 		onOverlayClick() {
-			if(this.clickToClose) this.close();
+			if (this.clickToClose) this.close();
 		}
 	},
 };
