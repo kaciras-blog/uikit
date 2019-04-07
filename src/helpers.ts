@@ -11,13 +11,13 @@ export class VueMultiWatcher {
 	private readonly vm: Vue;
 	private readonly callback: (this: Vue, n: any, o: any) => void;
 	private readonly once: boolean;
-	private readonly unwatchs: Array<Function>;
+	private readonly unWatches: Array<Function>;
 
 	constructor(vm: Vue, paths: string[], callback: (this: Vue, n: any, o: any) => void, options: MultiWatchOptions) {
 		this.vm = vm;
 		this.callback = callback;
 		this.once = options.once;
-		this.unwatchs = paths.map(path => vm.$watch(path, this.handleEvent.bind(this), options));
+		this.unWatches = paths.map(path => vm.$watch(path, this.handleEvent.bind(this), options));
 	}
 
 	handleEvent(n: any, o: any) {
@@ -29,7 +29,7 @@ export class VueMultiWatcher {
 	}
 
 	unwatch() {
-		this.unwatchs.forEach(unwatch => unwatch());
+		this.unWatches.forEach(unwatch => unwatch());
 	}
 }
 
@@ -67,12 +67,19 @@ export function openFile(multiple = false, accept = "*") {
 // ========================================= 滚动到指定位置 =========================================
 
 
-function getScrollTop() {
+/**
+ * 获取元素的绝对位置（相对于文档）。
+ * getBoundingClientRect 获取的是相对于视口的偏移，需要再加上视口位置才是绝对位置。
+ *
+ * @param element 元素
+ */
+function getScrollTop(element: HTMLElement) {
 	const doc = document.documentElement || document.body.parentNode;
-	return (typeof doc.scrollTop === "number" ? doc : document.body).scrollTop;
+	const viewport = (typeof doc.scrollTop === "number" ? doc : document.body).scrollTop;
+	return element.getBoundingClientRect().top + viewport;
 }
 
-function scrollAnime(element: HTMLElement, scrollTop: number) {
+function scrollAnimation(element: HTMLElement, scrollTop: number) {
 	anime({ targets: "html,body", scrollTop, duration: 500, easing: "easeOutQuad" });
 }
 
@@ -80,17 +87,18 @@ function scrollAnime(element: HTMLElement, scrollTop: number) {
  * 滚动到元素顶部，浏览器可视区域的上端滚到元素的顶端。
  *
  * @param element HTML元素
+ * @param offset 可以附加一个偏移（往下）
  */
-export function scrollToElementStart(element: HTMLElement) {
-	scrollAnime(element, getScrollTop() + element.getBoundingClientRect().top);
+export function scrollToElementStart(element: HTMLElement, offset: number = 0) {
+	scrollAnimation(element, getScrollTop(element) + offset);
 }
 
 /**
  * 滚动到元素底部，浏览器可视区域的最下面对其到元素的底端。
  *
  * @param element HTML元素
+ * @param offset 可以附加一个偏移（往下）
  */
-export function scrollToElementEnd(element: HTMLElement) {
-	const elTop = getScrollTop() + element.getBoundingClientRect().top;
-	scrollAnime(element, elTop + element.clientHeight - window.innerHeight);
+export function scrollToElementEnd(element: HTMLElement, offset: number = 0) {
+	scrollAnimation(element, getScrollTop(element) + element.clientHeight - window.innerHeight + offset);
 }
