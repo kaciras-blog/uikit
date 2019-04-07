@@ -9,19 +9,27 @@ TODO: 将MessageBox和DialogBase的最外层移到这里，如何方便地对面
 export default {
 	name: "KxModalWrapper",
 	props: {
+		preventScroll: {
+			type: Boolean,
+			default: false,
+		}
 		// TODO: ESC
 	},
 	mounted () {
-		const { style } = document.body;
-		this._backupHeight = style.height;
-		this._backupOverflow = style.overflow;
-		style.height = '100%';
-		style.overflow = 'hidden';
+		if (this.preventScroll) {
+			const { style } = document.body;
+			this._backupHeight = style.height;
+			this._backupOverflow = style.overflow;
+			style.height = '100%';
+			style.overflow = 'hidden';
+		}
 	},
 	destroyed () {
-		const { style } = document.body;
-		style.height = this._backupHeight;
-		style.overflow = this._backupOverflow;
+		if (this._backupHeight) {
+			const { style } = document.body;
+			style.overflow = this._backupOverflow;
+			style.height = this._backupHeight;
+		}
 	}
 };
 </script>
