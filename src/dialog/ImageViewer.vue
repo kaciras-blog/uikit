@@ -1,14 +1,21 @@
 <template>
-	<div :class="$style.container">
+	<kx-modal-wrapper
+		:class="$style.container"
+		:prevent-scroll="true"
+		@click.native="$dialog.close">
 		<img :src="src" alt="查看大图" :class="$style.image">
-	</div>
+	</kx-modal-wrapper>
 </template>
 
 <script>
+import KxModalWrapper from "./KxModalWrapper";
+
 export default {
 	name: "ImageViewer",
+	components: { KxModalWrapper },
 	props: {
 		src: { required: true },
+		element: {},
 	},
 };
 </script>
@@ -17,15 +24,15 @@ export default {
 @import "../css/mixin";
 
 .container {
-	.overlay-fixed;
-	background-color: rgba(0, 0, 0, .7);
-	z-index: 100;
+	background-color: rgba(0, 0, 0, .8);
 }
 
 .image {
 	.center-absolute-auto;
 	max-width: 100vw;
 	max-height: 100vh;
+
 	cursor: zoom-out;
+	user-select: none; // 防止选中样式遮挡
 }
 </style>

@@ -1,7 +1,8 @@
 <template>
 	<div id="app" v-context-menu="'TestContextMenu'">
 		<kx-button type="button" @click="mainDialog">算一下幸运数字</kx-button>
-		<kx-button type="button" @click="showImageViewer">很宽的图片</kx-button>
+		<kx-button type="button" @click="showImageViewer($event, true)">很宽的图片</kx-button>
+		<kx-button type="button" @click="showImageViewer($event, false)">很高的图片</kx-button>
 		<!--<kx-dialog-container></kx-dialog-container>-->
 	</div>
 </template>
@@ -24,8 +25,9 @@ export default {
 		contextMenu (event) {
 			this.$dialog.contextMenu(TestContextMenu, event);
 		},
-		showImageViewer() {
-			this.$dialog.show(ImageViewer, { src: require("../assets/WideImage.jpg") })
+		showImageViewer(event, wideOrHeight) {
+			const src = wideOrHeight ? require("../assets/WideImage.jpg") : require("../assets/HeightImage.jpg");
+			this.$dialog.show(ImageViewer, { src, element: event.target })
 		},
 	},
 };
