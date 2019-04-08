@@ -102,3 +102,21 @@ export function scrollToElementStart(element: HTMLElement, offset: number = 0) {
 export function scrollToElementEnd(element: HTMLElement, offset: number = 0) {
 	scrollAnimation(element, getScrollTop(element) + element.clientHeight - window.innerHeight + offset);
 }
+
+/**
+ * 禁止body的滚动条，返回一个取消禁止的函数。
+ *
+ * @return 取消禁止的函数
+ */
+export function preventScroll() {
+	const { style } = document.body;
+	const oldHeight = style.height;
+	const oldOverflow = style.overflow;
+
+	style.height = '100%';
+	style.overflow = 'hidden';
+	return () => {
+		style.height = oldHeight;
+		style.overflow = oldOverflow;
+	};
+}

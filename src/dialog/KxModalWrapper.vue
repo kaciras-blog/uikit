@@ -6,6 +6,8 @@ TODO: 将MessageBox和DialogBase的最外层移到这里，如何方便地对面
 </template>
 
 <script>
+import { preventScroll } from "..";
+
 export default {
 	name: "KxModalWrapper",
 	props: {
@@ -17,18 +19,12 @@ export default {
 	},
 	mounted () {
 		if (this.preventScroll) {
-			const { style } = document.body;
-			this._backupHeight = style.height;
-			this._backupOverflow = style.overflow;
-			style.height = '100%';
-			style.overflow = 'hidden';
+			this._restore = preventScroll();
 		}
 	},
 	destroyed () {
-		if (this._backupHeight) {
-			const { style } = document.body;
-			style.overflow = this._backupOverflow;
-			style.height = this._backupHeight;
+		if (this._restore) {
+			this._restore();
 		}
 	}
 };
