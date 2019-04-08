@@ -8,6 +8,8 @@ interface Point2D {
 /**
  * 监听鼠标的移动，不断产生鼠标的位置，请保证调用该函数时鼠标处于按下状态，比如
  * 在 mousedown 事件里调用此函数。
+ *
+ * @return 不断发出鼠标坐标的Observable
  */
 export function observeMouseMove() {
 	return new Observable<Point2D>(subscriber => {
@@ -90,6 +92,7 @@ class ElementPositionMapper extends Subscriber<Point2D> {
 
 /**
  * 将鼠标位置映射到元素的顶点坐标。
+ * 配合 moveElement 可以实现拖动元素，之所以拆开因为一些框架有自己的dom更新机制，不一定要直接修改元素样式。
  *
  * @param event 鼠标事件
  * @param el 映射的目标元素
@@ -129,7 +132,7 @@ class MoveElementPipe extends Subscriber<Point2D> {
 
 
 /**
- * 将元素设为绝对定位，并根据观察到的点改变元素的位置。
+ * 将元素设为绝对定位，并根据观察到的点改变元素的 top 和 left.
  *
  * @param el 被移动的元素
  * @return 该函数不改变Observable

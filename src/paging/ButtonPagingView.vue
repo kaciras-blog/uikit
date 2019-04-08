@@ -28,7 +28,7 @@ import { CancelToken, scrollToElementStart, scrollToElementEnd } from "../index"
 export default {
 	name: "ButtonPagingView",
 	props: {
-		/** index, size, cancelToken => { items, total } or items */
+		/** index, size, cancelToken => Promise<{ items, total } | items> */
 		loader: {
 			type: Function,
 			required: true,

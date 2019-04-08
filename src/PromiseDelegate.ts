@@ -3,7 +3,7 @@ type OnFulfilled<T, R> = ((value: T) => R | PromiseLike<R>) | undefined | null;
 type OnRejected<R> = ((reason: any) => R | PromiseLike<R>) | undefined | null;
 
 /**
- * 因为Promise不能直接继承，否则使用await的时候会出错，所以需要用代理的方式来扩展。
+ * Promise不能直接继承，否则使用await的时候会出错，所以需要用代理的方式来扩展。
  */
 export default abstract class PromiseDelegate<T> implements Promise<T> {
 

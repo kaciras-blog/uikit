@@ -3,6 +3,7 @@
 		:class="$style.container"
 		:prevent-scroll="true"
 		@click.native="$dialog.close">
+
 		<img :src="src" alt="查看大图" :class="$style.image">
 	</kx-modal-wrapper>
 </template>
