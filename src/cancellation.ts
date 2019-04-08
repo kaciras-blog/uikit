@@ -1,6 +1,9 @@
-/**
- * 使用自定义的异常以便于其他异常做区分
+/*
+ * CancelToken没有完成状态，无法感知操作是否已经完成，也就无法在完成时取消定时器。
+ * 这要求注册的取消回调必须在操作完成后也能调用，并不会破坏结果。
  */
+
+/** 使用自定义的异常以便于其他异常做区分 */
 export class OperationCancelledError extends Error {
 	constructor() { super("The operation is cancelled"); }
 }
@@ -71,11 +74,6 @@ export class CancelToken {
 
 CancelToken.NEVER.cancel = CancelToken.NEVER.onCancel = () => {};
 
-
-/*
- * CancelToken没有完成状态，无法感知操作是否已经完成，也就无法在完成时取消定时器。
- * 这要求注册的取消回调必须在操作完成后也能调用，并不会破坏结果。
- */
 class TimeoutCancelToken extends CancelToken {
 
 	public readonly timeout: number;
