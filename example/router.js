@@ -4,7 +4,7 @@ import Buttons from "./views/Buttons";
 import Dialogs from "./views/Dialogs";
 import RadioBoxes from "./views/RadioBoxes";
 import UsageView from "./views/UsageView";
-import Pageing from "./views/Pageing";
+import Pageing from "./views/Paging";
 
 Vue.use(Router);
 
