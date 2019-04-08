@@ -10,7 +10,7 @@
 
 <script>
 export default {
-	name: "ScrollPageingView",
+	name: "ScrollPagingView",
 	props: {
 		loader: {
 			type: Function, // items, pageSize -> nextUrl

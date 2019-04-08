@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { sleep } from "@/helpers";
+import { sleep } from "@";
 
 export default {
 	data: () => ({

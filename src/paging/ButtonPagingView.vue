@@ -26,7 +26,7 @@
 import { CancelToken, scrollToElementStart, scrollToElementEnd } from "../index";
 
 export default {
-	name: "ButtonPageingView",
+	name: "ButtonPagingView",
 	props: {
 		/** index, size, cancelToken => { items, total } or items */
 		loader: {
