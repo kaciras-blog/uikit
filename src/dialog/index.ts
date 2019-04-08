@@ -6,6 +6,7 @@ import KxBaseDialog from "./KxBaseDialog.vue";
 import KxStandardDialogButtons from "./KxStandardDialogButtons.vue";
 import { DialogManager, DialogSession } from "@/dialog/controller";
 
+export { DialogManager, DialogSession };
 
 export enum MessageBoxType {
 	Info, Success, Warning, Error,

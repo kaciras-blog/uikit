@@ -10,7 +10,7 @@
 <script>
 import LuckyNumber from "../components/LuckyNumber";
 import TestContextMenu from "../components/TestContextMenu";
-import ImageViewer from "../../src/dialog/ImageViewer";
+import ImageViewer from "../../src/dialog/KxImageViewer";
 
 export default {
 	components: { TestContextMenu },

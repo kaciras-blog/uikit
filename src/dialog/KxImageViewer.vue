@@ -12,7 +12,7 @@
 import KxModalWrapper from "./KxModalWrapper";
 
 export default {
-	name: "ImageViewer",
+	name: "KxImageViewer",
 	components: { KxModalWrapper },
 	props: {
 		src: { required: true },
