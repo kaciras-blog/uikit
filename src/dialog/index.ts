@@ -16,8 +16,12 @@ export interface MessageBoxOptions {
 	title?: string;
 	content?: string | string[];
 	type?: MessageBoxType;
+
+	/** 是否显示取消按钮 */
 	cancelable?: boolean;
-	dimmerClose?: boolean;
+
+	/** 是否启用点击遮罩关闭、Esc键关闭和右上角的关闭按钮 */
+	quickClose?: boolean;
 }
 
 export interface KxDialogApi extends DialogManager {

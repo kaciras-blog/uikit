@@ -1,7 +1,7 @@
 // vue-jest 不支持 babel 7，所以必须把与vue文件相关的部分分开。
 // 该文件包含弹窗的核心API，index.ts里会增加一些具体的弹窗API。
-import PromiseDelegate, { OnFulfilled } from "@/PromiseDelegate";
 import Vue from "vue";
+import PromiseDelegate, { OnFulfilled } from "../PromiseDelegate";
 import { boundClass } from "autobind-decorator";
 
 export class DialogResult<TData> {
@@ -57,9 +57,9 @@ export class DialogSession<TResult> extends PromiseDelegate<DialogResult<TResult
 	/**
 	 * 类似于 Promise.then 但是只在 confirm 状态下才会 resolve.
 	 */
-	confirmThen<R>(onFulfilled: OnFulfilled<void, R>) {
+	confirmThen<R>(onFulfilled: OnFulfilled<TResult, R>) {
 		if (!this.confirmPromise) {
-			this.confirmPromise = new Promise<any>(resolve => this.onConfirm(resolve));
+			this.confirmPromise = new Promise<TResult>(resolve => this.onConfirm(resolve));
 		}
 		return this.confirmPromise.then(onFulfilled);
 	}

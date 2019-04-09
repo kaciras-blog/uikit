@@ -30,6 +30,7 @@ export default {
 		KxModalWrapper,
 		KxCloseIcon,
 	},
+	// 详情见 index.ts MessageBoxOptions
 	props: {
 		title: String,
 		content: [String, Array],
