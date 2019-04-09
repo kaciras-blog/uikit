@@ -4,7 +4,7 @@ import KxMessageBox from "./KxMessageBox.vue";
 import KxContextMenu from "./KxContextMenu.vue";
 import KxBaseDialog from "./KxBaseDialog.vue";
 import KxStandardDialogButtons from "./KxStandardDialogButtons.vue";
-import { DialogManager, DialogSession } from "@/dialog/controller";
+import { DialogManager, DialogSession } from "./controller";
 
 export { DialogManager, DialogSession };
 
