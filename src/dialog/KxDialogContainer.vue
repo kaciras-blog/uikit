@@ -16,26 +16,32 @@ export default {
 		stack: [],
 		counter: 0,
 	}),
-	created() {
-		const { eventBus } = this.$dialog;
-
-		eventBus.$on("show", config => {
+	methods: {
+		add(config) {
 			config.id = ++this.counter;
 			this.stack.push(config);
-		});
-
-		eventBus.$on("close", result => {
+		},
+		close(result) {
 			const config = this.stack.pop();
 			if (!config) {
 				throw new Error("当前没有可关闭的弹窗");
 			}
 			config.resolve(result);
-		});
-
-		eventBus.$on("clear", () => {
+		},
+		clear() {
 			this.stack.forEach(c => c.resolve(DialogResult.CANCELED));
 			this.stack = [];
-		});
+		},
+	},
+	created() {
+		this.$dialog.eventBus.$on("show", this.add);
+		this.$dialog.eventBus.$on("close", this.close);
+		this.$dialog.eventBus.$on("clear", this.clear);
+	},
+	beforeDestroy() {
+		this.$dialog.eventBus.$off("show", this.add);
+		this.$dialog.eventBus.$off("close", this.close);
+		this.$dialog.eventBus.$off("clear", this.clear);
 	}
 }
 </script>
