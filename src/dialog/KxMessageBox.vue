@@ -103,13 +103,13 @@ export default {
 }
 
 .dialogZoomIn {
-	animation: dialog-zoomIn 0.3s 1;
+	animation: dialog-zoomIn .3s 1;
 }
 
 @keyframes dialog-zoomIn {
 	from {
 		opacity: 0;
-		transform: scale(0.95, 0.95);
+		transform: scale(0.96, 0.96);
 	}
 	to { /* default */ }
 }
