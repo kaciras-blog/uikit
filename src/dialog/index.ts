@@ -69,9 +69,6 @@ export default function install(Vue: VueConstructor) {
 	commands.messageBox = messageBox.bind(commands);
 	commands.contextMenu = contextMenu.bind(commands);
 
-	// noinspection JSUnusedGlobalSymbols
-	Vue.prototype.$dialog = commands;
-
 	// 指令不支持字面量，还得加个引号有点烦。
 	Vue.directive("context-menu", {
 		bind(el, { arg, value }, vnode) {
@@ -86,9 +83,6 @@ export default function install(Vue: VueConstructor) {
 		},
 	});
 
-	// 自动插入 vs 手动插入?
-	if (typeof window !== "undefined") {
-		const instance = new Vue(KxDialogContainer).$mount();
-		document.body.appendChild(instance.$el);
-	}
+	// noinspection JSUnusedGlobalSymbols
+	Vue.prototype.$dialog = commands;
 }

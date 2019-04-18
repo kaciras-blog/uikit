@@ -33,7 +33,7 @@ export default {
 		const { props, listeners } = ctx;
 		const buttons = [];
 
-		// 函数组件没法引用到Vue.prototype？如果父组件也是函数组件？
+		// TODO: 函数组件没法引用到Vue.prototype？如果父组件也是函数组件？
 		const vm = ctx.parent;
 
 		if (props.cancelButton) {
