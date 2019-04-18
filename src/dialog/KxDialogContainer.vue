@@ -1,5 +1,5 @@
 <template>
-	<div v-show="stack.length" :class="$style.container">
+	<div :class="$style.container">
 		<component
 			v-for="(options, index) in stack"
 			:key="options.id"
@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { DialogResult } from "./controller";
+
 export default {
 	name: "KxDialogContainer",
 	data: () => ({
@@ -43,16 +45,12 @@ export default {
 		this.$dialog.eventBus.$off("close", this.close);
 		this.$dialog.eventBus.$off("clear", this.clear);
 	}
-}
+};
 </script>
 
 <style module lang="less">
 .container {
 	position: fixed;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
 	z-index: 1000;
 }
 </style>
