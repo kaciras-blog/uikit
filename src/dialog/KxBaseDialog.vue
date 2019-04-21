@@ -7,7 +7,7 @@
 			 role="dialog"
 			 aria-modal="true">
 
-			<header class="kx-dialog-header" @mousedown="drag">
+			<header class="kx-dialog-header" @mousedown="drag" @touchmove="drag">
 				<slot name="title">
 					<h2 class="kx-dialog-title">{{title}}</h2>
 				</slot>
@@ -24,7 +24,7 @@
 <script>
 import KxModalWrapper from "./KxModalWrapper";
 import KxCloseIcon from "./KxCloseIcon";
-import { moveElement, observeMouseMove, limitInWindow, elementPosition } from "../dragging";
+import { elementPosition, limitInWindow, moveElement, observeMouseMove } from "../dragging";
 
 export default {
 	name: "KxBaseDialog",

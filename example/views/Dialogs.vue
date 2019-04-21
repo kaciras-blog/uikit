@@ -1,5 +1,5 @@
 <template>
-	<div id="app" v-context-menu="'TestContextMenu'">
+	<div v-context-menu="'TestContextMenu'">
 		<kx-button type="button" @click="mainDialog">算一下幸运数字</kx-button>
 		<kx-button type="button" @click="showImageViewer($event, true)">很宽的图片</kx-button>
 		<kx-button type="button" @click="showImageViewer($event, false)">很高的图片</kx-button>

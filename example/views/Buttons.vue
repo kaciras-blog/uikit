@@ -36,6 +36,8 @@
 				<template v-slot:running>正在加载</template>
 			</kx-task-button>
 		</p>
+		<input>
+		<textarea class="input"></textarea>
 	</main>
 </template>
 
