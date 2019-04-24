@@ -70,8 +70,8 @@ export function preventScroll() {
 	const oldHeight = style.height;
 	const oldOverflow = style.overflow;
 
-	style.height = '100%';
-	style.overflow = 'hidden';
+	style.height = "100%";
+	style.overflow = "hidden";
 	return () => {
 		style.height = oldHeight;
 		style.overflow = oldOverflow;

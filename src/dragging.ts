@@ -44,6 +44,7 @@ export function observeMouseMove() {
 
 class InWindowPointFilter extends Subscriber<Point2D> {
 
+	/* eslint-disable curly */
 	public next(point: Point2D) {
 		if (point.x < 0 || point.x > window.innerWidth)
 			return;
@@ -51,6 +52,8 @@ class InWindowPointFilter extends Subscriber<Point2D> {
 			return;
 		super._next(point);
 	}
+
+	/* eslint-enable curly */
 }
 
 /**

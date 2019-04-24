@@ -48,10 +48,10 @@ export class CancelToken {
 	 * 获取一个Promise，在该CancelToken取消时resolve
 	 */
 	get promise() {
-		if(this.cancelled) {
+		if (this.cancelled) {
 			return Promise.resolve();
 		}
-		if(!this.lazyPromise) {
+		if (!this.lazyPromise) {
 			this.lazyPromise = new Promise(resolve => this.callbacks.push(() => resolve()));
 		}
 		return this.lazyPromise;
@@ -87,7 +87,7 @@ class TimeoutCancelToken extends CancelToken {
 	}
 
 	cancel() {
-		if(!this.cancelled) {
+		if (!this.cancelled) {
 			super.cancel();
 			clearTimeout(this.timer);
 		}

@@ -1,4 +1,4 @@
-import { VueConstructor } from 'vue';
+import { VueConstructor } from "vue";
 import KxDialogContainer from "./KxDialogContainer.vue";
 import KxMessageBox from "./KxMessageBox.vue";
 import KxContextMenu from "./KxContextMenu.vue";
@@ -50,7 +50,7 @@ function messageBox(this: DialogManager,
 					content?: string | string[],
 					type?: MessageBoxType) {
 	if (typeof options === "string") {
-		options = { title: options, content, type }
+		options = { title: options, content, type };
 	}
 	return this.show(KxMessageBox, options);
 }

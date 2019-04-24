@@ -9,7 +9,11 @@ module.exports = {
 		'@vue/typescript'
 	],
 	rules: {
-		"indent": ["error", "tab", { SwitchCase: 1 }],
+		"indent": ["error", "tab", {
+			SwitchCase: 1,
+			FunctionDeclaration: { parameters: "off" }, // first 在 tab 缩进下有bug
+			ignoreComments: true, // IDE 自动注释直接加在开头
+		}],
 		"no-tabs": "off",
 		"quotes": ["error", "double"],
 		"semi": ["error", "always"],
