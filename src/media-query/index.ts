@@ -3,6 +3,19 @@ import Vue, { VueConstructor } from "vue";
 
 export const SET_SCREEN_WIDTH = "SET_SCREEN_WIDTH";
 
+/**
+ * 断点对象，键位断点名，值为断点的宽度。
+ * 最大的一个值没有意义，因为比倒数第二大的就认为是最大，而没必要去比较最大
+ * 的宽度值，故其值通常设为Infinity。
+ *
+ * 例如：
+ * const breakpoints = {
+ *     mobile: 768,
+ *     tablet: 992,
+ *     desktop: 1200,
+ *     wide: Infinity,
+ * };
+ */
 export interface MediaBreakPoints {
 	[key: string]: number;
 }
@@ -36,11 +49,12 @@ export function registerToStore(store: Store<any>) {
  * TODO: 没检查少于3个的情况
  *
  * @param store Vuex的存储
+ * @param window_ 监听的window对象，默认是全局变量
  */
-export function observeWindow(store: Store<any>) {
+export function observeWindow(store: Store<any>, window_ = window) {
 
 	function observe(width: number, query: string) {
-		const mql = window.matchMedia(query);
+		const mql = window_.matchMedia(query);
 		mql.addEventListener("change", (event) => event.matches && store.commit(SET_SCREEN_WIDTH, name));
 	}
 

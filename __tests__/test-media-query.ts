@@ -1,4 +1,4 @@
-import { MediaQueryPlugin, registerToStore, SET_SCREEN_WIDTH } from "../src/media-query";
+import { MediaQueryPlugin, observeWindow, registerToStore, SET_SCREEN_WIDTH } from "../src/media-query";
 import { createLocalVue, shallowMount } from "@vue/test-utils";
 import Vuex from "vuex";
 import Vue from "vue";
@@ -22,7 +22,7 @@ test("$mediaMatch", () => {
 	const wrapper = shallowMount<MediaQueryExt>({
 		render(h) {
 			return h("div");
-		}
+		},
 	}, suite);
 
 	expect(wrapper.vm.$mediaMatch("wide")).toBe(true);
@@ -45,4 +45,15 @@ test("responsive $mediaMatch", () => {
 
 	suite.store.commit(SET_SCREEN_WIDTH, 768);
 	expect(wrapper.html()).toContain("TABLET");
+});
+
+// TODO: mock mediaQuery ?
+test("observeWindow", () => {
+	const { store } = createVueSuite();
+	observeWindow(store);
+	const module = (store.state as any).mediaQuery;
+
+	expect(module.screenWidth).toBe(Infinity);
+	window.resizeTo(600, 1200);
+	expect(module.screenWidth).toBe(768);
 });
