@@ -55,7 +55,7 @@ export function observeWindow(store: Store<any>, window_ = window) {
 
 	function observe(width: number, query: string) {
 		const mql = window_.matchMedia(query);
-		mql.addEventListener("change", (event) => event.matches && store.commit(SET_SCREEN_WIDTH, name));
+		mql.addEventListener("change", (event) => event.matches && store.commit(SET_SCREEN_WIDTH, width));
 	}
 
 	const first = entries[0];
