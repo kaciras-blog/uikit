@@ -53,6 +53,7 @@ export function registerToStore(store: Store<any>) {
  */
 export function observeWindow(store: Store<any>, window_ = window) {
 
+	// lib.dom.d.ts 里竟然有个叫 name 的全局变量，搞得TS检查不出 name 不在局部变量里
 	function observe(width: number, query: string) {
 		const mql = window_.matchMedia(query);
 		mql.addEventListener("change", (event) => event.matches && store.commit(SET_SCREEN_WIDTH, width));
