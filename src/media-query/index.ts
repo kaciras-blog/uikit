@@ -5,15 +5,15 @@ export const SET_SCREEN_WIDTH = "SET_SCREEN_WIDTH";
 
 /**
  * 断点对象，键位断点名，值为断点的宽度。
- * 最大的一个值没有意义，因为比倒数第二大的就认为是最大，而没必要去比较最大
- * 的宽度值，故其值通常设为Infinity。
+ * 最大的一个值没有意义，因为比倒数第二大的就认为是最大，而没必要去比较最大的宽度值，所以随便
+ * 设一个较大的数即可，但是不要设为 Infinity，因为它不是合法的 JSON 数字，在序列化时会出问题。
  *
- * 例如：
+ * @example
  * const breakpoints = {
  *     mobile: 768,
  *     tablet: 992,
  *     desktop: 1200,
- *     wide: Infinity,
+ *     wide: 99999,
  * };
  */
 export interface MediaBreakPoints {
@@ -24,7 +24,7 @@ export const DEFAULT_QUERIES: MediaBreakPoints = {
 	mobile: 768,
 	tablet: 992,
 	desktop: 1200,
-	wide: Infinity,
+	wide: 99999,
 };
 
 const entries = Object.entries(DEFAULT_QUERIES);
@@ -74,6 +74,7 @@ export function observeWindow(store: Store<any>, window_ = window) {
 
 /**
  * 注册为Vue的插件，别忘了还要注册一个Vuex的模块。
+ * TODO: 目前使用数值比较容易实现，换成名字比较是不是更好？
  *
  * @param Vue Vue对象
  */

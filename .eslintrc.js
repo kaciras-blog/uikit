@@ -24,7 +24,9 @@ module.exports = {
 			maxEOF: 1,
 			maxBOF: 0,
 		}],
-		"space-before-function-paren": ["error", "never"],
+		"space-before-function-paren": ["error", {
+			named: "never",
+		}],
 		"padded-blocks": "off",
 		"no-mixed-spaces-and-tabs": ["warn", "smart-tabs"],
 		"no-console": process.env.NODE_ENV === "production" ? "error" : "off",
