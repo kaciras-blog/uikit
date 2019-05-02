@@ -23,7 +23,8 @@
 </template>
 
 <script>
-import { CancelToken, scrollToElementStart, scrollToElementEnd } from "../index";
+import { CancelToken, scrollToElementEnd, scrollToElementStart } from "../index";
+import { getScrollTop } from "../interactive";
 
 export default {
 	name: "ButtonPagingView",
@@ -53,6 +54,7 @@ export default {
 			type: Boolean,
 			default: true,
 		},
+		viewportOffset: Number,
 		theme: String,
 	},
 	data() {
@@ -84,8 +86,18 @@ export default {
 				}
 			}).finally(() => this._loading = null);
 		},
-		switchPage(index) {
-			this.loadPage(index).then(this.scrollToStart);
+		/**
+		 * 用户点击按钮后切换页面，同时如果视口无法看到第一项，则会滚动到刚好能看到第一项的位置。
+		 * 这个滚动不要用动画，否则会让人觉得磨叽。
+		 *
+		 * @param index 页码
+		 */
+		async switchPage(index) {
+			await this.loadPage(index);
+			const top = this.$el.getBoundingClientRect().top - this.viewportOffset;
+			if (top < 0) {
+				document.documentElement.scrollTop = getScrollTop(this.$el) - this.viewportOffset;
+			}
 		},
 		refresh() {
 			this.loadPage(this.index);

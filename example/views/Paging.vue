@@ -1,13 +1,14 @@
 <template>
 	<div>
 		<button-paging-view
+			:viewport-offset="60"
 			:init-page-size="2"
 			:init-total-count="100"
 			:show-top-buttons="true"
 			:loader="loadMockItems"
 			:init-items="[0,1]">
 			<template v-slot="{ items }">
-				<p v-for="item of items">{{item}}</p>
+				<p v-for="item of items" :key="item">{{item}}</p>
 			</template>
 		</button-paging-view>
 

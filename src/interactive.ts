@@ -30,7 +30,7 @@ export function openFile(multiple = false, accept: string = "*") {
  *
  * @param element 元素
  */
-function getScrollTop(element: HTMLElement) {
+export function getScrollTop(element: HTMLElement) {
 	const doc = document.documentElement || document.body.parentNode;
 	const viewport = (typeof doc.scrollTop === "number" ? doc : document.body).scrollTop;
 	return element.getBoundingClientRect().top + viewport;
