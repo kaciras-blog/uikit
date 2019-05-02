@@ -53,10 +53,15 @@ hr {
 
 	transition: box-shadow .2s;
 
+	&:not([readonly]):hover {
+		outline: 0;
+		border-color: #209cee;
+	}
+
 	// TODO: 跟按钮的有点像，能不能通用一下
 	&:not([readonly]):focus {
 		outline: 0;
-		border-color: #51bfff;
+		border-color: #209cee;
 		box-shadow: 0 0 0 .2rem #a8e8ff;
 	}
 

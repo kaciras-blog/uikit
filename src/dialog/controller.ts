@@ -65,7 +65,7 @@ export class DialogSession<TResult> extends PromiseDelegate<DialogResult<TResult
 	}
 }
 
-type PropsData = { [key: string]: any };
+type PropsData = { readonly [key: string]: any };
 
 export interface DialogOptions {
 	component: Vue;

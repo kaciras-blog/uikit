@@ -21,14 +21,12 @@ export function openFile(multiple = false, accept: string = "*") {
 	});
 }
 
-// ========================================= 滚动到指定位置 =========================================
-
-
 /**
- * 获取元素的绝对位置（相对于文档）。
+ * 获取元素的绝对位置（相对于文档的位置）。
  * getBoundingClientRect 获取的是相对于视口的偏移，需要再加上视口位置才是绝对位置。
  *
  * @param element 元素
+ * @return 元素的绝对位置
  */
 export function getScrollTop(element: HTMLElement) {
 	const doc = document.documentElement || document.body.parentNode;
