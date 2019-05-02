@@ -3,6 +3,7 @@
 		<kx-button type="button" @click="mainDialog">算一下幸运数字</kx-button>
 		<kx-button type="button" @click="showImageViewer($event, true)">很宽的图片</kx-button>
 		<kx-button type="button" @click="showImageViewer($event, false)">很高的图片</kx-button>
+		<kx-check-box>TestContextMenu</kx-check-box>
 		<kx-dialog-container></kx-dialog-container>
 	</div>
 </template>
@@ -15,14 +16,14 @@ import ImageViewer from "../../src/dialog/KxImageViewer";
 export default {
 	components: { TestContextMenu },
 	methods: {
-		mainDialog () {
+		mainDialog() {
 			this.$dialog.show(LuckyNumber);
 		},
 		/**
 		 *
 		 * @param event {MouseEvent}
 		 */
-		contextMenu (event) {
+		contextMenu(event) {
 			this.$dialog.contextMenu(TestContextMenu, event);
 		},
 		showImageViewer(event, wideOrHeight) {

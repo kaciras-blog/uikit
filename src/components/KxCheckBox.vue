@@ -14,7 +14,7 @@
 
 		<span class="check-box-mark" :class="{ ckecked: model }"></span>
 
-		<span class="check-box-label"><slot/></span>
+		<slot/> <!-- 外面不套一层不知道行不行 -->
 	</label>
 </template>
 
@@ -23,7 +23,10 @@ export default {
 	name: "KxCheckBox",
 	props: {
 		// 可能没有设置，使用 undefined 区分
-		value: Boolean,
+		value: {
+			type: Boolean,
+			default: undefined,
+		},
 		disabled: {
 			type: Boolean,
 			default: false,
@@ -34,17 +37,18 @@ export default {
 	}),
 	computed: {
 		model: {
-			get () {
-				return typeof this.value === "undefined" ? this.selfValue : this.value;
+			get() {
+				const { selfValue, value } = this;
+				return typeof value === "undefined" ? selfValue : value;
 			},
-			set (value) {
+			set(value) {
 				this.selfValue = value;
 				this.$emit("input", value);
 			},
 		},
 	},
 	methods: {
-		handleChange (event) {
+		handleChange(event) {
 			this.$emit("changed", event.target.checked);
 		},
 	},
@@ -55,38 +59,38 @@ export default {
 @import "../css/exports";
 
 .kx-check-box {
+	margin-top: 50px;
+	display: flex;
+	align-items: center;
 	height: 1.6em;
 	cursor: pointer;
-}
-
-.kx-check-box:hover > .check-box-mark,
-.check-box-input:focus + .check-box-mark {
-	&:not(.ckecked) {
-		background-color: rgba(255, 255, 255, 0.3);
-	}
-	&.ckecked{
-		border-color: rgba(255, 255, 255, .7);
-	}
 }
 
 .check-box-input {
 	position: absolute;
 	opacity: 0;
+
+	&:focus + .check-box-mark {
+		box-shadow: 0 0 0 .2rem #94dfff;
+	}
 }
 
 .check-box-mark {
 	display: inline-block;
 	position: relative;
-	height: 1.6em;
-	width: 1.6em;
-	vertical-align: top;
+	.size(1.6em);
+	margin-right: 5px;
 
-	border: 1px solid #dbdbdb;
+	border: 1px solid @color-border;
 	border-radius: 4px;
-
 	transition: all .15s;
 
-	&::after {
+	&.ckecked {
+		background-color: #2196F3;
+		border-color: #2196F3;
+	}
+
+	&.ckecked::after {
 		content: "";
 		border: solid white;
 		border-width: 0 2px 2px 0;
@@ -97,23 +101,6 @@ export default {
 		top: 9px;
 		width: 7px;
 		height: 13px;
-
-		display: none;
 	}
-
-	&.ckecked {
-		background-color: #2196F3;
-		border-color: #2196F3;
-	}
-	&.ckecked::after {
-		display: block;
-	}
-}
-
-.check-box-label {
-	display: inline-block;
-	padding-left: .5rem;
-	padding-top: 1px; // 微调下上边距跟勾对齐
-	line-height: 19px;
 }
 </style>
