@@ -94,7 +94,7 @@ export default {
 	methods: {
 		tryLoadPage() {
 			const { state, activeHeight, autoLoad } = this;
-			if (state !== FREE && !autoLoad) {
+			if (state !== FREE || !autoLoad) {
 				return;
 			}
 			// 网页高度 - 窗口高度 - 窗口之上部分的高度 = 窗口下面剩余的高度
