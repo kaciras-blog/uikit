@@ -1,11 +1,13 @@
 import { MediaQueryPlugin, observeWindow, registerToStore, SET_SCREEN_WIDTH } from "../src/media-query";
 import { createLocalVue, shallowMount } from "@vue/test-utils";
-import Vuex from "vuex";
 import Vue from "vue";
+import Vuex from "vuex";
 
 // TODO： 怎么搞一下类型系统
 interface MediaQueryExt extends Vue {
-	$mediaMatch(exp: string): boolean;
+	$mediaQuery: {
+		match(exp: string): boolean;
+	}
 }
 
 function createVueSuite() {
@@ -19,14 +21,10 @@ function createVueSuite() {
 
 test("$mediaMatch", () => {
 	const suite = createVueSuite();
-	const wrapper = shallowMount<MediaQueryExt>({
-		render(h) {
-			return h("div");
-		},
-	}, suite);
+	const wrapper = shallowMount<MediaQueryExt>({ render(h) { return h("div"); }, }, suite);
 
-	expect(wrapper.vm.$mediaMatch("wide")).toBe(true);
-	expect(wrapper.vm.$mediaMatch("desktop")).toBe(false);
+	expect(wrapper.vm.$mediaQuery.match("wide")).toBe(true);
+	expect(wrapper.vm.$mediaQuery.match("desktop")).toBe(false);
 });
 
 /**
@@ -34,8 +32,8 @@ test("$mediaMatch", () => {
  */
 test("responsive $mediaMatch", () => {
 	const template = `
-		<div v-if="$mediaMatch('desktop+')">DESKTOP</div>
-		<div v-else-if="$mediaMatch('mobile')">TABLET</div>`;
+		<div v-if="$mediaQuery.match('desktop+')">DESKTOP</div>
+		<div v-else-if="$mediaQuery.match('mobile')">TABLET</div>`;
 
 	const suite = createVueSuite();
 	const wrapper = shallowMount<MediaQueryExt>({ template }, suite);

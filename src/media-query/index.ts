@@ -1,5 +1,5 @@
 import { Store } from "vuex";
-import Vue, { VueConstructor } from "vue";
+import { VueConstructor } from "vue";
 
 export const SET_SCREEN_WIDTH = "SET_SCREEN_WIDTH";
 
@@ -72,18 +72,19 @@ export function observeWindow(store: Store<any>, window_ = window) {
 	observe(last[1], `(min-width: ${entries[entries.length - 2][1]}px`);
 }
 
-/**
- * 注册为Vue的插件，别忘了还要注册一个Vuex的模块。
- * TODO: 目前使用数值比较容易实现，换成名字比较是不是更好？
- *
- * @param Vue Vue对象
- */
-export function MediaQueryPlugin(Vue: VueConstructor) {
+class MediaQueryAPI {
+
+	private readonly store: Store<any>;
+
+	constructor(store: Store<any>) {
+		this.store = store;
+	}
 
 	/**
 	 * 检测给定的查询是否符合当前的屏幕宽度。
-	 * 查询字符串由 `断点名 + 修饰符（可选）` 组成，修饰符可以是 `+` 或 `-`，分别表示大于
-	 * 等于和小于，没有修饰符表示等于。
+	 * 查询字符串由 `断点名 + 修饰符（可选）` 组成，修饰符可以是 `+` 或 `-`，分别表示
+	 * 大于等于 和 小于，没有修饰符表示等于。
+	 * TODO: 目前使用数值比较容易实现，换成名字比较是不是更好？
 	 *
 	 * 例如当断点选项为：{ mobile: 100, desktop: 200, wide: 300 }，当前宽度为 desktop 时：
 	 * mobile   返回 false：当前宽度不是mobile
@@ -96,9 +97,9 @@ export function MediaQueryPlugin(Vue: VueConstructor) {
 	 * @param exp 查询字符串
 	 * @return 当前宽度是否匹配给定的查询字符串
 	 */
-	Vue.prototype.$mediaMatch = function (this: Vue, exp: string) {
+	match(exp: string) {
 		const modifier = exp[exp.length - 1];
-		const width = this.$store.state.mediaQuery.screenWidth;
+		const width = this.store.state.mediaQuery.screenWidth;
 
 		if (modifier === "+") {
 			return width >= DEFAULT_QUERIES[exp = exp.substring(0, exp.length - 1)];
@@ -107,6 +108,19 @@ export function MediaQueryPlugin(Vue: VueConstructor) {
 			return width < DEFAULT_QUERIES[exp = exp.substring(0, exp.length - 1)];
 		}
 		return width === DEFAULT_QUERIES[exp];
-	};
+	}
+}
+
+/**
+ * 注册为Vue的插件，别忘了还要注册一个Vuex的模块。
+ *
+ * @param Vue Vue对象
+ */
+export function MediaQueryPlugin(Vue: VueConstructor) {
+
+	// this.$mediaQuery.func(...) 里面访问不到Vue实例，所以得这么搞一下
+	Object.defineProperty(Vue.prototype, "$mediaQuery", {
+		get() { return new MediaQueryAPI(this.$store); },
+	});
 
 }
