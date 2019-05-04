@@ -59,7 +59,6 @@ export default {
 @import "../css/exports";
 
 .kx-check-box {
-	margin-top: 50px;
 	display: flex;
 	align-items: center;
 	height: 1.6em;

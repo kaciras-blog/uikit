@@ -1,4 +1,4 @@
-import Vue, { VueConstructor } from 'vue';
+import Vue, { VueConstructor } from "vue";
 import ButtonPager from "./paging/ButtonPager.vue";
 import ScrollPager from "./paging/ScrollPager.vue";
 import SkFadingCircle from "./components/SkFadingCircle.vue";
