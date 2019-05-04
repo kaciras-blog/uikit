@@ -21,7 +21,7 @@ function createVueSuite() {
 
 test("$mediaMatch", () => {
 	const suite = createVueSuite();
-	const wrapper = shallowMount<MediaQueryExt>({ render(h) { return h("div"); }, }, suite);
+	const wrapper = shallowMount<MediaQueryExt>({ render(h) { return h("div"); } }, suite);
 
 	expect(wrapper.vm.$mediaQuery.match("wide")).toBe(true);
 	expect(wrapper.vm.$mediaQuery.match("desktop")).toBe(false);

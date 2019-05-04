@@ -54,7 +54,10 @@ export default {
 			type: Boolean,
 			default: true,
 		},
-		viewportOffset: Number,
+		viewportOffset: {
+			type: Number,
+			default: 0,
+		},
 		theme: String,
 	},
 	data() {

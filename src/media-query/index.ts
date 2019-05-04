@@ -121,6 +121,8 @@ export function MediaQueryPlugin(Vue: VueConstructor) {
 	// this.$mediaQuery.func(...) 里面访问不到Vue实例，所以得这么搞一下
 	Object.defineProperty(Vue.prototype, "$mediaQuery", {
 		get() { return new MediaQueryAPI(this.$store); },
+		enumerable: true,
+		configurable: true, // SSR 使用外部Vue模块时会重复加载插件
 	});
 
 }
