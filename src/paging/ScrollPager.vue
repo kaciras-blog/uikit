@@ -94,9 +94,8 @@ export default {
 	methods: {
 		tryLoadPage() {
 			const { state, activeHeight, autoLoad } = this;
-			if (state !== FREE || !autoLoad) {
-				return;
-			}
+			if (state !== FREE || !autoLoad) return;
+
 			// 网页高度 - 窗口高度 - 窗口之上部分的高度 = 窗口下面剩余的高度
 			const remain = document.body.offsetHeight - window.innerHeight - window.scrollY;
 
@@ -113,7 +112,7 @@ export default {
 	},
 	mounted() {
 		window.addEventListener("scroll", this.tryLoadPage);
-		this.tryLoadPage();
+		this.loadPage(); // 第一页一定加载，无论是否滚动到位
 	},
 	destroyed() {
 		window.removeEventListener("scroll", this.tryLoadPage);
