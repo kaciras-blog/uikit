@@ -41,3 +41,7 @@ export class VueMultiWatcher {
 export function sleep(time: number) {
 	return new Promise(resolve => setTimeout(resolve, time));
 }
+
+export function isTouchEvent(e: MouseEvent | TouchEvent): e is TouchEvent {
+	return e.constructor.name === "TouchEvent";
+}

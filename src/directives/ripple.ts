@@ -6,14 +6,11 @@
  */
 import { VNode } from "vue";
 import { DirectiveBinding } from "vue/types/options";
+import { isTouchEvent } from "@/common";
 
 function transform(el: HTMLElement, value: string) {
 	el.style["transform"] = value;
 	el.style["webkitTransform"] = value;
-}
-
-function isTouchEvent(e: MouseEvent | TouchEvent): e is TouchEvent {
-	return e.constructor.name === "TouchEvent";
 }
 
 function calculate(e: MouseEvent | TouchEvent, el: HTMLElement) {

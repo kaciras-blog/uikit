@@ -1,8 +1,18 @@
 import { Observable, Subscriber } from "rxjs";
+import { isTouchEvent } from "@/common";
 
 interface Point2D {
 	x: number;
 	y: number;
+}
+
+interface ClientPosition2D {
+	clientX: number;
+	clientY: number;
+}
+
+function clientPosition(event: MouseEvent | TouchEvent): ClientPosition2D {
+	return isTouchEvent(event) ? event.touches[0] : event;
 }
 
 /**
@@ -15,9 +25,7 @@ export function observeMouseMove() {
 	return new Observable<Point2D>(subscriber => {
 
 		function onMove(event: MouseEvent | TouchEvent) {
-			event.preventDefault();
-			const touches = (event as TouchEvent).touches;
-			const { clientX, clientY } = touches && touches.length > 0 ? touches[0] : (event as MouseEvent);
+			const { clientX, clientY } = clientPosition(event);
 			subscriber.next({ x: clientX, y: clientY });
 		}
 
@@ -73,7 +81,7 @@ class ElementPositionMapper extends Subscriber<Point2D> {
 	private readonly mouseOffsetX: number;
 	private readonly mouseOffsetY: number;
 
-	constructor(destination: Subscriber<Point2D>, event: MouseEvent, el: HTMLElement) {
+	constructor(destination: Subscriber<Point2D>, event: MouseEvent | TouchEvent, el: HTMLElement) {
 		super(destination);
 		const clientRect = el.getBoundingClientRect();
 
@@ -81,8 +89,9 @@ class ElementPositionMapper extends Subscriber<Point2D> {
 		const originX = clientRect.left;
 		const originY = clientRect.top;
 
-		this.mouseOffsetX = originX - event.clientX;
-		this.mouseOffsetY = originY - event.clientY;
+		const { clientX, clientY } = clientPosition(event);
+		this.mouseOffsetX = originX - clientX;
+		this.mouseOffsetY = originY - clientY;
 	}
 
 	// 新的坐标 = 元素开始位置 + (鼠标当前位置 - 鼠标开始位置)

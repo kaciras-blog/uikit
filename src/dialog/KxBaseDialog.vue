@@ -7,7 +7,7 @@
 			 role="dialog"
 			 aria-modal="true">
 
-			<header class="kx-dialog-header" @mousedown="drag" @touchmove="drag">
+			<header class="kx-dialog-header" @mousedown="drag" @touchstart.prevent="drag">
 				<slot name="title">
 					<h2 class="kx-dialog-title">{{title}}</h2>
 				</slot>
@@ -76,7 +76,7 @@ export default {
 		},
 		onOverlayClick() {
 			if (this.clickToClose) this.close();
-		}
+		},
 	},
 };
 </script>
