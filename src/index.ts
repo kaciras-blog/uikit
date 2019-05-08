@@ -15,6 +15,7 @@ import KxRadioBoxGroup from "./components/KxRadioBoxGroup.vue";
 
 import SelectionBinding from "@/directives/selection-bind";
 import SelectionChangeDirective from "@/directives/selection-change";
+import Ripple from "@/directives/ripple";
 
 import KxDialog from "./dialog";
 
@@ -49,6 +50,7 @@ function install(Vue: VueConstructor) {
 	Vue.directive("autofocus", { inserted: el => el.focus() });
 	Vue.directive("bind-selection", SelectionBinding);
 	Vue.directive("on-selection-changed", SelectionChangeDirective);
+	Vue.directive("ripple", Ripple);
 
 	Vue.use(KxDialog);
 }
