@@ -16,8 +16,8 @@ function clientPosition(event: MouseEvent | TouchEvent): ClientPosition2D {
 }
 
 /**
- * 监听鼠标的移动，不断产生鼠标的位置，请保证调用该函数时鼠标处于按下状态，比如
- * 在 mousedown 事件里调用此函数。
+ * 监听鼠标的移动，不断产生鼠标的位置，请保证调用该函数时鼠标处于按下状态，或触摸状态，
+ * 比如在 mousedown 和 touchstart 事件里调用此函数。
  *
  * @return 不断发出鼠标坐标的Observable
  */
@@ -77,9 +77,9 @@ export function limitInWindow(source: Observable<Point2D>) {
 
 class ElementPositionMapper extends Subscriber<Point2D> {
 
-	// 元素顶点相对于鼠标位置的偏移 = 元素位置 - 鼠标位置
-	private readonly mouseOffsetX: number;
-	private readonly mouseOffsetY: number;
+	// 元素顶点相对于鼠标（或触摸点）位置的偏移 = 元素位置 - 鼠标位置
+	private readonly offsetX: number;
+	private readonly offsetY: number;
 
 	constructor(destination: Subscriber<Point2D>, event: MouseEvent | TouchEvent, el: HTMLElement) {
 		super(destination);
@@ -90,15 +90,13 @@ class ElementPositionMapper extends Subscriber<Point2D> {
 		const originY = clientRect.top;
 
 		const { clientX, clientY } = clientPosition(event);
-		this.mouseOffsetX = originX - clientX;
-		this.mouseOffsetY = originY - clientY;
+		this.offsetX = originX - clientX;
+		this.offsetY = originY - clientY;
 	}
 
-	// 新的坐标 = 元素开始位置 + (鼠标当前位置 - 鼠标开始位置)
+	// 新的坐标 = 元素开始位置 + 偏移
 	public next(value: Point2D) {
-		const elementX = this.mouseOffsetX + value.x;
-		const elementY = this.mouseOffsetY + value.y;
-		super._next({ x: elementX, y: elementY });
+		super._next({ x: this.offsetX + value.x, y: this.offsetY + value.y });
 	}
 }
 
