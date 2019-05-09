@@ -1,5 +1,5 @@
 /**
- * 点击后产生波浪效果，参考了Vuetify。
+ * 点击后产生
  * 修饰符：
  *   centered - 波纹从元素中心发出，默认是从点击位置发出
  *   circle - 波纹最大宽度不超过元素，默认是要超过的
@@ -7,127 +7,43 @@
 import { VNode } from "vue";
 import { DirectiveBinding } from "vue/types/options";
 import { isTouchEvent } from "@/common";
+import { RippleEffect } from "@/ripple-effect";
 
-function transform(el: HTMLElement, value: string) {
-	el.style["transform"] = value;
-	el.style["webkitTransform"] = value;
+
+class RippleBinding extends RippleEffect {
+
+	public touched: boolean = false;
+	public enabled: boolean = true;
 }
 
-function calculate(e: MouseEvent | TouchEvent, el: HTMLElement) {
-	const offset = el.getBoundingClientRect();
-	const target = isTouchEvent(e) ? e.touches[e.touches.length - 1] : e;
-	const localX = target.clientX - offset.left;
-	const localY = target.clientY - offset.top;
-
-	let radius = 0;
-	let scale = 0.3;
-	// if (el._ripple && el._ripple.circle) {
-	// 	scale = 0.15;
-	// 	radius = el.clientWidth / 2;
-	// 	radius = radius + Math.sqrt((localX - radius) ** 2 + (localY - radius) ** 2) / 4;
-	// } else {
-		radius = Math.sqrt(el.clientWidth ** 2 + el.clientHeight ** 2) / 2;
-	// }
-
-	const centerX = `${(el.clientWidth - (radius * 2)) / 2}px`;
-	const centerY = `${(el.clientHeight - (radius * 2)) / 2}px`;
-
-	const x = `${localX - radius}px`;
-	const y = `${localY - radius}px`;
-
-	/*
-	 * radius 波浪圆形的结束半径
-	 * scale 波浪圆形的初始半径比例
-	 */
-	return { radius, scale, x, y, centerX, centerY };
+interface RippledHtmlElement extends HTMLElement {
+	_ripple: RippleBinding;
 }
 
 function rippleShow(e: MouseEvent | TouchEvent) {
-	const el = e.currentTarget as HTMLElement;
+	const el = e.currentTarget as RippledHtmlElement;
 
-	// if (!el || !el._ripple || el._ripple.touched) {
-	// 	return;
-	// }
-	// if (isTouchEvent(e)) {
-	// 	el._ripple.touched = true;
-	// }
-
-	const container = document.createElement("span");
-	const animation = document.createElement("span");
-	container.appendChild(animation);
-
-	container.className = "v-ripple__container";
-	animation.className = "v-ripple__animation";
-
-	const { radius, scale, x, y, centerX, centerY } = calculate(e, el);
-
-	const size = `${radius * 2}px`;
-	animation.style.width = size;
-	animation.style.height = size;
-
-	el.appendChild(container);
-
-	const computed = window.getComputedStyle(el);
-	if (computed && computed.position === "static") {
-		el.style.position = "relative";
-		el.dataset.previousPosition = "static";
+	if (!el || !el._ripple || el._ripple.touched) {
+		return;
 	}
-
-	animation.classList.add("v-ripple__animation--enter");
-	animation.classList.add("v-ripple__animation--visible");
-
-	transform(animation, `translate(${x}, ${y}) scale3d(${scale},${scale},${scale})`);
-	animation.style.opacity = "0";
-	animation.dataset.activated = String(performance.now());
-
-	setTimeout(() => {
-		animation.classList.remove("v-ripple__animation--enter");
-		animation.classList.add("v-ripple__animation--in");
-		transform(animation, `translate(${centerX}, ${centerY}) scale3d(1,1,1)`);
-		animation.style.opacity = "0.25";
-	}, 0);
+	if (isTouchEvent(e)) {
+		el._ripple.touched = true;
+	}
+	const target = isTouchEvent(e) ? e.touches[e.touches.length - 1] : e;
+	el._ripple.show(target.clientX, target.clientY);
 }
 
-function rippleHide(e: Event) {
-	const el = e.currentTarget as HTMLElement | null;
+function rippleHide(e: MouseEvent | TouchEvent) {
+	const el = e.currentTarget as RippledHtmlElement | null;
 	if (!el) return;
 
-	// window.setTimeout(() => {
-	// 	if (el._ripple) {
-	// 		el._ripple.touched = false;
-	// 	}
-	// });
-
-	// _ripple.hide
-
-	// if (!el || !el._ripple || !el._ripple.enabled) return;
-
-	const ripples = el.getElementsByClassName("v-ripple__animation");
-
-	if (ripples.length === 0) return;
-	const animation = ripples[ripples.length - 1] as HTMLElement;
-
-	if (animation.dataset.isHiding) return;
-	else animation.dataset.isHiding = "true";
-
-	const diff = performance.now() - Number(animation.dataset.activated);
-	const delay = Math.max(250 - diff, 0);
-
-	setTimeout(() => {
-		animation.classList.remove("v-ripple__animation--in");
-		animation.classList.add("v-ripple__animation--out");
-		animation.style.opacity = "0";
-
-		setTimeout(() => {
-			const ripples = el.getElementsByClassName("v-ripple__animation");
-			if (ripples.length === 1 && el.dataset.previousPosition) {
-				el.style.position = el.dataset.previousPosition;
-				delete el.dataset.previousPosition;
-			}
-
-			animation.parentNode && el.removeChild(animation.parentNode);
-		}, 300);
-	}, delay);
+	window.setTimeout(() => {
+		if (el._ripple) {
+			el._ripple.touched = false;
+		}
+	});
+	if (!el || !el._ripple || !el._ripple.enabled) return;
+	el._ripple.hide();
 }
 
 /**
@@ -159,16 +75,17 @@ function removeListeners(el: HTMLElement) {
 
 export default {
 	bind(el: HTMLElement, binding: DirectiveBinding, node: VNode) {
+		const { centered, circle } = binding.modifiers;
+		(el as RippledHtmlElement)._ripple = new RippleBinding(el, centered, circle);
 		addListeners(el);
 	},
 	unbind(el: HTMLElement) {
-		delete el._ripple;
+		delete (el as RippledHtmlElement)._ripple;
 		removeListeners(el);
 	},
 	update(el: HTMLElement, binding: DirectiveBinding) {
 		if (binding.value === binding.oldValue) {
-
 		}
-
+		console.debug("update");
 	},
 };
