@@ -92,10 +92,11 @@ export class RippleEffect {
 
 		let radius = 0;
 		let scale = 0.3;
+
 		if (this.circle) {
 			scale = 0.15;
 			radius = el.clientWidth / 2;
-			radius = this.centered ? radius : radius + Math.sqrt((localX - radius) ** 2 + (localY - radius) ** 2) / 4
+			radius = this.centered ? radius : radius + Math.sqrt((localX - radius) ** 2 + (localY - radius) ** 2) / 4;
 		} else {
 			radius = Math.sqrt(el.clientWidth ** 2 + el.clientHeight ** 2) / 2;
 		}

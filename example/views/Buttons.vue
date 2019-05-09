@@ -7,7 +7,7 @@
 		<kx-button tag="a" route="/radiobox">RadioBox</kx-button>
 
 		<p class="btn-group">
-			<kx-button class="primary" v-ripple.centered>主按钮</kx-button>
+			<kx-button class="primary" v-ripple.centered.circle>主按钮</kx-button>
 			<kx-button class="second">次要按钮</kx-button>
 			<kx-button class="info">信息</kx-button>
 			<kx-button class="dangerous">危险操作</kx-button>
