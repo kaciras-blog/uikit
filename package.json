@@ -13,10 +13,10 @@
 	"dependencies": {
 		"animejs": "^3.0.1",
 		"autobind-decorator": "^2.4.0",
-		"rxjs": "^6.5.1",
+		"rxjs": "^6.5.2",
 		"vue": "^2.6.9",
 		"vue-router": "^3.0.6",
-		"vuex": "^3.1.0"
+		"vuex": "^3.1.1"
 	},
 	"devDependencies": {
 		"@storybook/vue": "^5.0.11",
@@ -33,7 +33,7 @@
 		"babel-preset-vue": "^2.0.2",
 		"eslint": "^5.16.0",
 		"eslint-plugin-vue": "^5.2.2",
-		"jest": "^24.7.1",
+		"jest": "^24.8.0",
 		"less": "^3.9.0",
 		"less-loader": "^5.0.0",
 		"ts-jest": "^24.0.2",
