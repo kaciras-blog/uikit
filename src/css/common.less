@@ -12,6 +12,9 @@
 	background-color: @color-panel-background;
 	box-shadow: 0 0 4px fade(@color-border, 70%);
 
+	&.compact {
+		padding: 0;
+	}
 	&.large-padding {
 		padding: 3rem;
 	}
@@ -53,13 +56,14 @@ hr {
 
 	transition: box-shadow .2s;
 
+	// TODO: 高亮样式跟按钮的有点像，能不能通用一下
 	&:not([readonly]):hover {
 		outline: 0;
 		border-color: #209cee;
 	}
 
-	// TODO: 跟按钮的有点像，能不能通用一下
-	&:not([readonly]):focus {
+	// 一些模仿 input 样式的复合组件使用 focus-within
+	&:not([readonly]):focus-within {
 		outline: 0;
 		border-color: #209cee;
 		box-shadow: 0 0 0 .2rem #a8e8ff;
