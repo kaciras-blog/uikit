@@ -6,8 +6,8 @@
  */
 import { VNode } from "vue";
 import { DirectiveBinding } from "vue/types/options";
-import { isTouchEvent } from "@/common";
-import { RippleEffect } from "@/ripple-effect";
+import { isTouchEvent } from "../common";
+import { RippleEffect } from "../ripple-effect";
 
 
 class RippleBinding extends RippleEffect {
