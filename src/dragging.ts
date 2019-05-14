@@ -1,5 +1,5 @@
 import { Observable, Subscriber } from "rxjs";
-import { isTouchEvent } from "@/common";
+import { isTouchEvent } from "./common";
 
 interface Point2D {
 	x: number;

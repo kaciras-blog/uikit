@@ -13,9 +13,9 @@ import KxCarousel from "./components/KxCarousel.vue";
 import KxRadioBox from "./components/KxRadioBox.vue";
 import KxRadioBoxGroup from "./components/KxRadioBoxGroup.vue";
 
-import SelectionBinding from "@/directives/selection-bind";
-import SelectionChangeDirective from "@/directives/selection-change";
-import Ripple from "@/directives/ripple";
+import SelectionBinding from "./directives/selection-bind";
+import SelectionChangeDirective from "./directives/selection-change";
+import Ripple from "./directives/ripple";
 
 import KxDialog from "./dialog";
 
