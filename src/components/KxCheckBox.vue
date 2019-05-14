@@ -58,11 +58,17 @@ export default {
 <style lang="less">
 @import "../css/exports";
 
+@checked-color: #2196F3;
+
 .kx-check-box {
-	display: flex;
+	display: inline-flex;
 	align-items: center;
 	height: 1.6em;
 	cursor: pointer;
+
+	// 竖直对齐以内部的input为基准，但input设了绝对定位切容器不是相对定位，没法调整
+	// 内部input的位置，所以这里手动调下距离，14和16像素的字体刚好能对齐
+	vertical-align: -6px;
 }
 
 .check-box-input {
@@ -70,6 +76,7 @@ export default {
 	opacity: 0;
 
 	&:focus + .check-box-mark {
+		border-color: #32b3ff;
 		box-shadow: 0 0 0 .2rem #94dfff;
 	}
 }
@@ -85,8 +92,8 @@ export default {
 	transition: all .15s;
 
 	&.ckecked {
-		background-color: #2196F3;
-		border-color: #2196F3;
+		background-color: @checked-color;
+		border-color: @checked-color;
 	}
 
 	&.ckecked::after {
