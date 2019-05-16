@@ -36,11 +36,11 @@ export default {
 		running: false,
 	}),
 	methods: {
-		handleClick () {
+		handleClick() {
 			if (this.running && this.waiting) {
 				return;
 			}
-			const task = this.onClick.call(this);
+			const task = this.onClick();
 			if (!task.then || !task.finally) {
 				throw new Error("TaskButton onclick handler must return a Promise");
 			}
