@@ -1,6 +1,9 @@
 <!-- 加载动画效果, 抄自 http://tobiasahlin.com/spinkit/ -->
-<template functional v-once>
-	<div class="sk-fading-circle">
+<template functional>
+	<div :class="[data.class, data.staticClass]"
+		 :style="[data.style, data.staticStyle]"
+		 class="sk-fading-circle">
+
 		<div class="sk-circle1 sk-circle"></div>
 		<div class="sk-circle2 sk-circle"></div>
 		<div class="sk-circle3 sk-circle"></div>
