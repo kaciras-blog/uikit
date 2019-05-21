@@ -102,9 +102,11 @@ export default {
 				document.documentElement.scrollTop = getScrollTop(this.$el) - this.viewportOffset;
 			}
 		},
+		/** 刷新（重新加载）当前页，返回 Promise 表示刷新完成 */
 		refresh() {
-			this.loadPage(this.index);
+			return this.loadPage(this.index);
 		},
+		/** 切换到最后一页 */
 		switchToLast() {
 			const { loadPage, total, pageSize, scrollToEnd } = this;
 			loadPage(Math.floor(total / pageSize)).then(scrollToEnd);
