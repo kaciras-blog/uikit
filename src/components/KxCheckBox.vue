@@ -62,6 +62,10 @@ export default {
 
 .kx-check-box {
 	display: inline-flex;
+
+	// 里面的input使用了绝对定位，这里一定要设置个相对定位。否则虽然input仍在
+	// 里面并且不影响布局，但是它的的绝对定位会导致更外层的布局BUG，如虚空滚动条和点击乱跳等。
+	position: relative;
 	align-items: center;
 	height: 1.6em;
 	cursor: pointer;
