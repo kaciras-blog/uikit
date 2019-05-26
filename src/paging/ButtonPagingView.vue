@@ -77,10 +77,9 @@ export default {
 			}
 			const cancelToken = new CancelToken();
 			this._loading = cancelToken;
+			this.index = index; // 先跳页再加载
 
 			return loader(index, pageSize, cancelToken).then(res => {
-				this.index = index;
-
 				if (Array.isArray(res)) {
 					this.items = res;
 				} else {
