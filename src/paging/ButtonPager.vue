@@ -1,50 +1,6 @@
 <script>
-import KxButton from "../components/KxButton";
-
-function contentOf(type, index) {
-	switch (type) {
-		case "FIRST":
-			return "首页";
-		case "PREV":
-			return "上一页";
-		case "NEXT":
-			return "下一页";
-		case "LAST":
-			return "尾页";
-		case "OMIT":
-			return "...";
-		default:
-			return index; // JUMP, CURRENT
-	}
-}
-
-function textButton(createElement, type, index) {
-	if (type === "OMIT") {
-		return createElement("span", { staticClass: "omit" }, "...");
-	}
-	const content = contentOf(type, index);
-	if (type === "CURRENT") {
-		return createElement("span", { staticClass: "active" }, content);
-	}
-	return createElement("a", {
-		attrs: {
-			"class": "text-link",
-			tabIndex: 0,
-		},
-		on: { click: () => this.showPage(index) },
-	}, content);
-}
-
-function simpleButton(createElement, type, index) {
-	if (type === "OMIT") {
-		return createElement("span", { staticClass: "omit" }, "...");
-	}
-	const content = contentOf(type, index);
-	if (type === "CURRENT") {
-		return createElement(KxButton, { staticClass: "primary" }, content);
-	}
-	return createElement(KxButton, { on: { click: () => this.showPage(index) } }, content);
-}
+import PagingButtons from "./PagingButtons";
+import TextPagingButtons from "./TextPagingButtons";
 
 export default {
 	name: "ButtonPager",
@@ -75,62 +31,32 @@ export default {
 		},
 	},
 	render(h) {
-		const { current, omitPos, totalPage, theme } = this;
-		const buttons = [];
+		const { current, omitPos, totalPage, theme, $style } = this;
 
-		const createButton = (type, page) => {
-			if (theme === "button") {
-				return simpleButton.call(this, h, type, page);
-			}
-			return textButton.call(this, h, type, page);
-		};
-
-		if (current > 1) {
-			buttons.push(createButton("FIRST", 1));
-			buttons.push(createButton("PREV", current - 1));
-		}
-		if (current - omitPos > 1) {
-			buttons.push(createButton("OMIT"));
-		}
-		for (let i = Math.max(current - omitPos, 1); i <= Math.min(current + omitPos, totalPage); i++) {
-			if (i === current) {
-				buttons.push(createButton("CURRENT", i));
-			} else {
-				buttons.push(createButton("JUMP", i));
-			}
-		}
-		if (current + omitPos < totalPage) {
-			buttons.push(createButton("OMIT"));
-		}
-		if (current < totalPage) {
-			buttons.push(createButton("NEXT", current + 1));
-			buttons.push(createButton("LAST", totalPage));
-		}
-
-		// <input class="jump" @keyup="jump"/>
-		const jumpInput = h("input", {
-			staticClass: "jump",
-			on: { keyup: this.jump },
+		const buttons = h(theme === "button" ? PagingButtons : TextPagingButtons, {
+			props: { index: current, total: totalPage, omitPos },
+			on: { showPage: index => this.showPage(index) },
 		});
 
-		/*
-		 * <div class="minor-text">
-		 *     <span>共{{totalPage}}页，</span>
-		 *     <label>跳至<input ...>页</label>
-		 * </div>
-		 */
-		if (theme === "button") {
+		if (theme === "text") {
+			return buttons;
+		} else {
+			/*
+		 	 * <div class="minor-text">
+		 	 *     <span>共{{totalPage}}页，</span>
+		 	 *     <label>跳至<input ...>页</label>
+		 	 * </div>
+		 	 */
+			const jumpInput = h("input", {
+				staticClass: $style.jump,
+				on: { keyup: this.jump },
+			});
 			const jump = h("div", { staticClass: "minor-text" }, [
 				h("span", `共${totalPage}页，`),
-				h("label", { staticClass: "jump-label" }, ["跳至", jumpInput, "页"]),
+				h("label", { staticClass: $style.jump_label }, ["跳至", jumpInput, "页"]),
 			]);
-			const btnWrapper = h("div", { staticClass: "buttons" }, buttons);
-			return h("div", { staticClass: "button-pager" }, [btnWrapper, jump]);
+			return h("div", { staticClass: $style.wrapper }, [buttons, jump]);
 		}
-
-		buttons.unshift(h("span", { staticClass: ".button-pager-total" }, "共" + totalPage + "页"));
-		const btnWrapper = h("div", { staticClass: "buttons" }, buttons);
-		return h("div", { staticClass: "text-pager" }, [btnWrapper]);
 	},
 	computed: {
 		current() {
@@ -154,21 +80,13 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
+<style module lang="less">
 @import "../css/exports";
 
-.button-pager {
+.wrapper {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-}
-
-.button-pager-total {
-	margin-right: 1rem;
-}
-
-.buttons button {
-	margin: 0 .2rem;
 }
 
 .jump {
@@ -178,34 +96,8 @@ export default {
 	text-align: center;
 }
 
-.omit {
-	cursor: default;
-	user-select: none;
-}
-
-button + .omit {
-	vertical-align: middle;
-	line-height: 34px;
-	padding: 0 1rem;
-	font-size: 1.5em;
-}
-
-.jump-label {
+.jump_label {
 	display: inline-flex;
 	align-items: center;
-}
-
-.active {
-	padding: 0 .3rem;
-	color: #00a1ff;
-	font-weight: 600;
-}
-
-.text-link {
-	padding: 0 .3rem;
-
-	&:hover, &:focus {
-		color: @color-second;
-	}
 }
 </style>

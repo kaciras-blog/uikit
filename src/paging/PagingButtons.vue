@@ -1,0 +1,81 @@
+<script>
+import KxButton from "../components/KxButton";
+
+export default {
+	name: "PagingButtons",
+	functional: true,
+	render(h, context) {
+		const { $style } = context;
+		const { index, total, omitPos } = context.props;
+		const { showPage } = context.listeners;
+		const buttons = [];
+
+		function button(page, content, disabled = false) {
+			const data = {
+				staticClass: $style.margin_fix,
+				attrs: { disabled },
+				on: { click: () => showPage(page) },
+			};
+			return h(KxButton, data, content);
+		}
+
+		function indexButton(page) {
+			if (page !== index) {
+				return button(page, page);
+			}
+			return h("div", { staticClass: $style.active }, page);
+		}
+
+		// 下面都是按钮，前三个跟后三个是对称的，中间循环创建跳转按钮
+		buttons.push(button(index - 1, "<", index <= 1));
+		buttons.push(indexButton(1));
+		if (index - omitPos > 1) {
+			buttons.push(h("span", { staticClass: $style.omit }, "..."));
+		}
+
+		const cStart = Math.max(index - omitPos, 2);
+		const cEnd = Math.min(index + omitPos, total - 1);
+		for (let i = cStart; i <= cEnd; i++) {
+			buttons.push(indexButton(i));
+		}
+
+		if (index + omitPos < total) {
+			buttons.push(h("span", { staticClass: $style.omit }, "..."));
+		}
+		buttons.push(indexButton(total));
+		buttons.push(button(index + 1, ">", index >= total));
+
+		return h("div", { staticClass: "btn-group compact" }, buttons);
+	},
+};
+</script>
+
+<style module lang="less">
+@import "../css/exports";
+
+.active {
+	display: inline-block;
+	padding: .5rem 1.2rem;
+	border: solid 1px @color-button-primary;
+	font-size: 1rem;
+	line-height: 1;
+	user-select: none;
+	color: white;
+	background-color: @color-button-primary;
+}
+
+// TODO: cursor 和 user-select 组合也挺常见的
+.omit {
+	vertical-align: middle;
+	line-height: 34px;
+	padding: 0 1rem;
+	font-size: 1.5em;
+
+	cursor: default;
+	user-select: none;
+}
+
+.margin_fix {
+	margin-left: -1px !important;
+}
+</style>
