@@ -62,11 +62,9 @@ export default {
 		},
 		theme: String,
 	},
-	data() {
-		return {
-			index: this.start,
-		};
-	},
+	data: () => ({
+		index: 0,
+	}),
 	computed: {
 		items() {
 			const { value } = this;
@@ -79,7 +77,7 @@ export default {
 	},
 	methods: {
 		loadPage(index) {
-			const { pageSize, _loading, loader } = this;
+			const { start, pageSize, _loading, loader } = this;
 			if (_loading) {
 				_loading.cancel();
 			}
@@ -87,8 +85,8 @@ export default {
 			this._loading = cancelToken;
 			this.index = index; // 先跳页再加载
 
-			return loader(index, pageSize, cancelToken)
-				.then(res => this.$emit("input", res))
+			return loader(start + index * pageSize, pageSize, cancelToken)
+				.then(r => this.$emit("input", r))
 				.finally(() => this._loading = null);
 		},
 		/**
