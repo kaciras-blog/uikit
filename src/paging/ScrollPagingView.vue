@@ -2,7 +2,7 @@
 	<div>
 		<slot :items="value ? value.items : []"/>
 		<scroll-pager
-			:init-state="initState"
+			:init-state="drained ? 'ALL_LOADED' : 'FREE'"
 			:auto-load="autoLoad"
 			:next-page-url="nextLink ? nextLink(value) : null"
 			@load-page="handleLoadTask"/>
@@ -19,30 +19,39 @@ export default {
 		},
 		value: {
 			type: Object,
-			// required: true, v-model警告
 		},
-
+		start: {
+			type: Number,
+			default: 0,
+		},
 		pageSize: {
 			type: Number,
 			default: 16,
 		},
+
 		nextLink: Function, // value -> string
 		autoLoad: Boolean,
-
-		// 设置初始状态，用于预渲染
-		initState: String,
+	},
+	computed: {
+		/** 是否全部加载完毕，没有数据视为未加载完 */
+		drained() {
+			if (!this.value) return false;
+			const { items, total } = this.value;
+			return this.start + items.length >= total;
+		},
 	},
 	methods: {
 		handleLoadTask(task) {
 			return this.loadPage()
-				.then(res => task.complete(res.items.length < this.pageSize))
+				.then(() => task.complete(this.drained))
 				.catch(err => task.completeWithError(err));
 		},
 		async loadPage() {
 			const { loader, value, pageSize } = this;
-			const { items } = value;
-			const res = await loader(items.length, pageSize);
-			this.$emit("input", { items: items.concat(res.items), total: res.total });
+			const { items = [] } = value || {};
+
+			const data = await loader(items.length, pageSize);
+			this.$emit("input", { items: items.concat(data.items), total: data.total });
 		},
 	},
 };

@@ -1,5 +1,5 @@
 <template>
-	<div class="scroll-pager">
+	<div :class="$style.container">
 
 		<!-- 通过该插槽可以自定义状态显示，父组件内请使用inline-template -->
 		<slot name="state">
@@ -74,7 +74,7 @@ export default {
 		// 滚动到距离底部还有多高时触发加载事件
 		activeHeight: {
 			type: Number,
-			default: 500,
+			default: 512,
 		},
 		// 初始状态，用于预渲染。
 		initState: {
@@ -120,8 +120,8 @@ export default {
 };
 </script>
 
-<style>
-.scroll-pager {
+<style module lang="less">
+.container {
 	text-align: center;
 }
 </style>
