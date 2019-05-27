@@ -1,4 +1,4 @@
-import { MediaQueryPlugin, observeWindow, registerToStore, SET_SCREEN_WIDTH } from "../src/media-query";
+import { MediaQueryPlugin, registerToStore, SET_SCREEN_WIDTH } from "../src/media-query";
 import { createLocalVue, shallowMount } from "@vue/test-utils";
 import Vue from "vue";
 import Vuex from "vuex";
@@ -7,6 +7,7 @@ import Vuex from "vuex";
 interface MediaQueryExt extends Vue {
 	$mediaQuery: {
 		match(exp: string): boolean;
+		watch(exp: string, enter?: () => void, leave?: () => void): () => void;
 	}
 }
 
@@ -45,13 +46,43 @@ test("responsive $mediaMatch", () => {
 	expect(wrapper.html()).toContain("TABLET");
 });
 
-// TODO: mock mediaQuery ?
-test("observeWindow", () => {
-	const { store } = createVueSuite();
-	observeWindow(store);
-	const module = (store.state as any).mediaQuery;
+test("watch", () => {
+	const suite = createVueSuite();
+	const wrapper = shallowMount<MediaQueryExt>({ render(h) { return h("div"); } }, suite);
 
-	expect(module.screenWidth).toBe(Infinity);
-	window.resizeTo(600, 1200);
-	expect(module.screenWidth).toBe(768);
+	const mq = wrapper.vm.$mediaQuery;
+	const enterCb = jest.fn();
+	const leaveCb = jest.fn();
+	const unwatch = mq.watch("tablet-", enterCb, leaveCb);
+
+	suite.store.commit(SET_SCREEN_WIDTH, 500);
+	expect(enterCb.mock.calls.length).toBe(1);
+	expect(leaveCb.mock.calls.length).toBe(0);
+
+	suite.store.commit(SET_SCREEN_WIDTH, 800);
+	expect(enterCb.mock.calls.length).toBe(1);
+	expect(leaveCb.mock.calls.length).toBe(0);
+
+	suite.store.commit(SET_SCREEN_WIDTH, 1000);
+	expect(enterCb.mock.calls.length).toBe(1);
+	expect(leaveCb.mock.calls.length).toBe(1);
+
+	suite.store.commit(SET_SCREEN_WIDTH, 3840);
+	expect(enterCb.mock.calls.length).toBe(1);
+	expect(leaveCb.mock.calls.length).toBe(1);
+
+	unwatch();
+	suite.store.commit(SET_SCREEN_WIDTH, 500);
+	expect(enterCb.mock.calls.length).toBe(1);
+	expect(leaveCb.mock.calls.length).toBe(1);
 });
+// TODO: mock mediaQuery ?
+// test("observeWindow", () => {
+// 	const { store } = createVueSuite();
+// 	observeWindow(store);
+// 	const module = (store.state as any).mediaQuery;
+//
+// 	expect(module.screenWidth).toBe(Infinity);
+// 	window.resizeTo(600, 1200);
+// 	expect(module.screenWidth).toBe(768);
+// });

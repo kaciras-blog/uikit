@@ -81,7 +81,7 @@ class MediaQueryAPI {
 	}
 
 	/**
-	 * 检测给定的查询是否符合当前的屏幕宽度。
+	 * 检测当前的屏幕宽度是否符合给定的查询表达式。
 	 * 查询字符串由 `断点名 + 修饰符（可选）` 组成，修饰符可以是 `+` 或 `-`，分别表示
 	 * 大于等于 和 小于，没有修饰符表示等于。
 	 * TODO: 目前使用数值比较容易实现，换成名字比较是不是更好？
@@ -94,13 +94,33 @@ class MediaQueryAPI {
 	 * desktop- 返回 false：当前宽度不小于desktop
 	 * wide-    返回 true： 当前宽度小于wide
 	 *
-	 * @param exp 查询字符串
+	 * @param exp 查询表达式
 	 * @return 当前宽度是否匹配给定的查询字符串
 	 */
 	match(exp: string) {
-		const modifier = exp[exp.length - 1];
-		const width = this.store.state.mediaQuery.screenWidth;
+		return this.testMatchExp(exp, this.store.state.mediaQuery.screenWidth);
+	}
 
+	/**
+	 * 使用给定的查询表达式监视屏幕宽度，当该表达式的匹配结果改变时触发相应的回调。
+	 *
+	 * @param exp 查询表达式
+	 * @param enter 从不匹配变为匹配时的回调
+	 * @param leave 从匹配变为不匹配时的回调
+	 * @return 取消监听的函数
+	 */
+	watch(exp: string, enter?: () => void, leave?: () => void) {
+		const callback = (nv: number, ov: number) => {
+			const nvMatch = this.testMatchExp(exp, nv);
+			const ovMatch = this.testMatchExp(exp, ov);
+			if (nvMatch && !ovMatch && enter) enter();
+			if (ovMatch && !nvMatch && leave) leave();
+		};
+		return this.store.watch((state) => state.mediaQuery.screenWidth, callback);
+	}
+
+	private testMatchExp(exp: string, width: number) {
+		const modifier = exp[exp.length - 1];
 		if (modifier === "+") {
 			return width >= DEFAULT_QUERIES[exp = exp.substring(0, exp.length - 1)];
 		}
