@@ -1,3 +1,7 @@
+<!--
+新加项目的跳转显示问题：
+bilibili 的新评论是添加在第一页的最后
+-->
 <template>
 	<div>
 		<slot :items="value ? value.items : []"/>
@@ -46,11 +50,12 @@ export default {
 				.then(() => task.complete(this.drained))
 				.catch(err => task.completeWithError(err));
 		},
-		async loadPage() {
-			const { loader, value, pageSize } = this;
+		async loadPage(index) {
+			const { start, loader, value, pageSize } = this;
 			const { items = [] } = value || {};
 
-			const data = await loader(items.length, pageSize);
+			const requestStart = start + Number.isInteger(index) ? index * pageSize : items.length;
+			const data = await loader(requestStart, pageSize);
 			this.$emit("input", { items: items.concat(data.items), total: data.total });
 		},
 	},

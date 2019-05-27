@@ -10,14 +10,16 @@
 
 	border: solid 1px @color-border;
 	background-color: @color-panel-background;
-	box-shadow: 0 0 4px fade(@color-border, 70%);
+	box-shadow: 0 0 3px fade(@color-border, 50%);
 
 	&.compact {
 		padding: 0;
 	}
+
 	&.large-padding {
 		padding: 3rem;
 	}
+
 	&.round {
 		border-radius: 1rem;
 	}
@@ -34,6 +36,7 @@ h1, h2, h3, h4, h5, h6 {
 		border-left: 8px solid @color-primary-light;
 		padding-left: 10px;
 	}
+
 	&.compact {
 		margin: 0;
 	}
@@ -89,6 +92,7 @@ hr {
 
 .highlight {
 	.highlight-color(@color-link, @color-link);
+
 	&:hover {
 		text-decoration: underline;
 	}
@@ -96,6 +100,7 @@ hr {
 	&.error {
 		.highlight-color(#f94f55, #f94f55);
 	}
+
 	&.pink {
 		.highlight-color(white, #ff72ae);
 	}
@@ -117,14 +122,18 @@ hr {
 
 	&.compact > .kx-btn {
 		&:not(:last-child) {
+			margin: 0;
 			border-top-right-radius: 0;
 			border-bottom-right-radius: 0;
 		}
+
 		&:not(:first-child) {
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
 
 			margin-left: 1px;
+			margin-right: 0;
+
 			&.outline {
 				margin-left: -1px;
 			}
@@ -144,11 +153,13 @@ hr {
 			border-bottom-left-radius: 0;
 			border-bottom-right-radius: 0;
 		}
+
 		&:not(:first-child) {
 			border-top-left-radius: 0;
 			border-top-right-radius: 0;
 
 			margin-top: 1px;
+
 			&.outline {
 				margin-top: -1px;
 			}

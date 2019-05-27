@@ -86,7 +86,7 @@ export default {
 			this.index = index; // 先跳页再加载
 
 			return loader(start + index * pageSize, pageSize, cancelToken)
-				.then(r => this.$emit("input", r))
+				.then(res => !cancelToken.isCancelled && this.$emit("input", res))
 				.finally(() => this._loading = null);
 		},
 		/**
