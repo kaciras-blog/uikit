@@ -9,7 +9,8 @@
 			:page-size="pageSize"
 			@load-page="switchPage"/>
 
-		<slot :items="items"/>
+		<!-- 检查一下防止初始项目数量大于分页数量 -->
+		<slot :items="items.length > pageSize ? items.slice(0, pageSize) : items"/>
 
 		<button-pager
 			v-if="items.length"
@@ -29,27 +30,28 @@ import { getScrollTop } from "../interactive";
 export default {
 	name: "ButtonPagingView",
 	props: {
-		/** index, size, cancelToken => Promise<{ items, total } | items> */
+		/** index, size, cancelToken => Promise<{ items, total }> */
 		loader: {
 			type: Function,
 			required: true,
+		},
+		/**
+		 * value 必须是一个对象，并包含以下字段：
+		 *   - items: any[]; // 列表项
+		 *   - total: number; // 总数
+		 */
+		value: {
+			type: Object,
 		},
 		start: {
 			type: Number,
 			default: 0,
 		},
-		initItems: {
-			type: Array,
-			default: () => ([]),
-		},
-		initPageSize: {
+		pageSize: {
 			type: Number,
 			default: 20,
 		},
-		initTotalCount: {
-			type: Number,
-			default: 0,
-		},
+
 		showTopButtons: {
 			type: Boolean,
 			default: true,
@@ -63,11 +65,17 @@ export default {
 	data() {
 		return {
 			index: this.start,
-			pageSize: this.initPageSize,
-			items: this.initItems,
-			total: this.initTotalCount,
-			loading: null,
 		};
+	},
+	computed: {
+		items() {
+			const { value } = this;
+			return value ? value.items : [];
+		},
+		total() {
+			const { value } = this;
+			return value ? value.total : 0;
+		},
 	},
 	methods: {
 		loadPage(index) {
@@ -79,14 +87,9 @@ export default {
 			this._loading = cancelToken;
 			this.index = index; // 先跳页再加载
 
-			return loader(index, pageSize, cancelToken).then(res => {
-				if (Array.isArray(res)) {
-					this.items = res;
-				} else {
-					this.items = res.items;
-					this.total = res.total;
-				}
-			}).finally(() => this._loading = null);
+			return loader(index, pageSize, cancelToken)
+				.then(res => this.$emit("input", res))
+				.finally(() => this._loading = null);
 		},
 		/**
 		 * 用户点击按钮后切换页面，同时如果视口无法看到第一项，则会滚动到刚好能看到第一项的位置。

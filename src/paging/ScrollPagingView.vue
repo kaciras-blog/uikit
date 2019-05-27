@@ -1,11 +1,11 @@
 <template>
 	<div>
-		<slot :items="items"/>
+		<slot :items="value ? value.items : []"/>
 		<scroll-pager
-			:auto-load="autoLoad"
 			:init-state="initState"
-			:next-page-url="nextLinkEnabled ? nextPageUrl : null"
-			@load-page="loadPage"/>
+			:auto-load="autoLoad"
+			:next-page-url="nextLink ? nextLink(value) : null"
+			@load-page="handleLoadTask"/>
 	</div>
 </template>
 
@@ -14,43 +14,35 @@ export default {
 	name: "ScrollPagingView",
 	props: {
 		loader: {
-			type: Function, // items, pageSize -> nextUrl
+			type: Function, // start, pageSize -> value
 			required: true,
 		},
+		value: {
+			type: Object,
+			// required: true, v-model警告
+		},
+
 		pageSize: {
 			type: Number,
 			default: 16,
 		},
-		nextLinkEnabled: {
-			type: Boolean,
-			default: false,
-		},
-		// 下面两个设置初始状态，可以用于预渲染
-		initItems: {
-			type: Array,
-			default: () => [],
-		},
-		initState: String,
-		initNextUrl: String,
+		nextLink: Function, // value -> string
 		autoLoad: Boolean,
-	},
-	data() {
-		return {
-			items: this.initItems.slice(), // 复制一份避免影响到父组件的状态
-			nextPageUrl: this.initNextUrl,
-		};
+
+		// 设置初始状态，用于预渲染
+		initState: String,
 	},
 	methods: {
-		async loadPage(task) {
-			const { loader, items, pageSize } = this;
-
-			try {
-				const oldLength = items.length;
-				this.nextPageUrl = await loader(items, pageSize);
-				task.complete(items.length - oldLength < pageSize);
-			} catch (err) {
-				task.completeWithError(err);
-			}
+		handleLoadTask(task) {
+			return this.loadPage()
+				.then(res => task.complete(res.items.length < this.pageSize))
+				.catch(err => task.completeWithError(err));
+		},
+		async loadPage() {
+			const { loader, value, pageSize } = this;
+			const { items } = value;
+			const res = await loader(items.length, pageSize);
+			this.$emit("input", { items: items.concat(res.items), total: res.total });
 		},
 	},
 };
