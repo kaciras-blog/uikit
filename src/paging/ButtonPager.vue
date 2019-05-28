@@ -1,3 +1,4 @@
+<!-- TODO:以后可以删掉，目前仅为兼容 -->
 <script>
 import PagingButtons from "./PagingButtons";
 import TextPagingButtons from "./TextPagingButtons";
@@ -31,32 +32,12 @@ export default {
 		},
 	},
 	render(h) {
-		const { current, omitPos, totalPage, theme, $style } = this;
+		const { current, omitPos, totalPage, theme } = this;
 
-		const buttons = h(theme === "button" ? PagingButtons : TextPagingButtons, {
+		return h(theme === "button" ? PagingButtons : TextPagingButtons, {
 			props: { index: current, total: totalPage, omitPos },
 			on: { showPage: index => this.showPage(index) },
 		});
-
-		if (theme === "text") {
-			return buttons;
-		} else {
-			/*
-		 	 * <div class="minor-text">
-		 	 *     <span>共{{totalPage}}页，</span>
-		 	 *     <label>跳至<input ...>页</label>
-		 	 * </div>
-		 	 */
-			const jumpInput = h("input", {
-				staticClass: $style.jump,
-				on: { keyup: this.jump },
-			});
-			const jump = h("div", { staticClass: "minor-text" }, [
-				h("span", `共${totalPage}页，`),
-				h("label", { staticClass: $style.jump_label }, ["跳至", jumpInput, "页"]),
-			]);
-			return h("div", { staticClass: $style.wrapper }, [buttons, jump]);
-		}
 	},
 	computed: {
 		current() {
@@ -67,37 +48,9 @@ export default {
 		},
 	},
 	methods: {
-		jump(event) {
-			if (event.key === "Enter") {
-				this.$emit("load-page", event.target.value - 1);
-				event.target.value = "";
-			}
-		},
 		showPage(index) {
 			this.$emit("load-page", index - 1);
 		},
 	},
 };
 </script>
-
-<style module lang="less">
-@import "../css/exports";
-
-.wrapper {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.jump {
-	font-size: .8em;
-	width: 4em;
-	margin: 0 .5em;
-	text-align: center;
-}
-
-.jump_label {
-	display: inline-flex;
-	align-items: center;
-}
-</style>

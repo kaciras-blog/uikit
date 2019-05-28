@@ -45,13 +45,40 @@ export default {
 		buttons.push(indexButton(total));
 		buttons.push(button(index + 1, ">", index >= total));
 
-		return h("div", { staticClass: "btn-group compact" }, buttons);
+		function jumpToPage(event) {
+			const page = event.target.value;
+			if (page > 0 && page < total) {
+				showPage(page);
+			}
+			event.target.value = "";
+		}
+
+		/*
+		 * <div class="minor-text">
+		 *     <span>共{{totalPage}}页，</span>
+		 *     <label>跳至<input ...>页</label>
+		 * </div>
+		 */
+		const jumpInput = h("input", {
+			staticClass: $style.jump_input,
+			on: { change: jumpToPage },
+		});
+		const jumpGroup = h("label", { staticClass: "minor-text " + $style.jump_label }, ["转到", jumpInput, "页"]);
+		const buttonGroup = h("div", { staticClass: "btn-group compact" }, buttons);
+
+		return h("div", { staticClass: $style.wrapper }, [buttonGroup, jumpGroup]);
 	},
 };
 </script>
 
 <style module lang="less">
 @import "../css/exports";
+
+.wrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
 
 .active {
 	display: inline-block;
@@ -73,6 +100,17 @@ export default {
 
 	cursor: default;
 	user-select: none;
+}
+
+.jump_input {
+	font-size: .8em;
+	width: 4em;
+	margin: 0 .5em;
+	text-align: center;
+}
+
+.jump_label {
+	margin-left: auto;
 }
 
 .margin_fix {
