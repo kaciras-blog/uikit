@@ -8,7 +8,7 @@ bilibili 的新评论是添加在第一页的最后
 		<scroll-pager
 			:init-state="drained ? 'ALL_LOADED' : 'FREE'"
 			:auto-load="autoLoad"
-			:next-page-url="nextLink ? nextLink(value) : null"
+			:next-page-url="nextLink && !drained ? nextLink(start + loadedCount, pageSize) : null"
 			@load-page="handleLoadTask"/>
 	</div>
 </template>
@@ -36,26 +36,30 @@ export default {
 		nextLink: Function, // value -> string
 		autoLoad: Boolean,
 	},
+	data: () => ({
+		// 内部维护数量而不是用 value.items.length，是为了外部增删元素而不打乱索引
+		loadedCount: 0,
+	}),
 	computed: {
 		/** 是否全部加载完毕，没有数据视为未加载完 */
 		drained() {
-			if (!this.value) return false;
-			const { items, total } = this.value;
-			return this.start + items.length >= total;
+			const { loadedCount, start, value } = this;
+			if (!value) return false;
+			return start + loadedCount >= value.total;
 		},
 	},
 	methods: {
 		handleLoadTask(task) {
 			return this.loadPage()
 				.then(() => task.complete(this.drained))
-				.catch(err => task.completeWithError(err));
+				.catch(e => task.completeWithError(e));
 		},
-		async loadPage(index) {
-			const { start, loader, value, pageSize } = this;
+		async loadPage() {
+			const { start, loader, value, pageSize, loadedCount } = this;
 			const { items = [] } = value || {};
 
-			const requestStart = start + Number.isInteger(index) ? index * pageSize : items.length;
-			const data = await loader(requestStart, pageSize);
+			const data = await loader(start + loadedCount, pageSize);
+			this.loadedCount += pageSize;
 			this.$emit("input", { items: items.concat(data.items), total: data.total });
 		},
 	},
