@@ -17,4 +17,4 @@ export default {
 			if (modifiers.focus) el.focus();
 		});
 	},
-}
+};

@@ -44,7 +44,7 @@ export function sleep(time: number) {
 
 /**
  * 判断事件是触摸事件还是鼠标事件。
- * 处于桌面模式的 Firefox 中没有 TouchEvent，不能用 instanceof 判断。
+ * 桌面模式的 Firefox 中没有 TouchEvent，故不能用 instanceof 判断。
  *
  * @param e 事件对象
  * @return 如果是触摸事件则为true，否则false

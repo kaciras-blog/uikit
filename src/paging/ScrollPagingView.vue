@@ -18,7 +18,7 @@ export default {
 	name: "ScrollPagingView",
 	props: {
 		loader: {
-			type: Function, // start, pageSize -> value
+			type: Function,
 			required: true,
 		},
 		value: {
@@ -33,7 +33,10 @@ export default {
 			default: 16,
 		},
 
-		nextLink: Function, // value -> string
+		/** (start, count) => string，如果不存在则不生成下一页的链接 */
+		nextLink: Function,
+
+		/** 是否触发滚动加载 */
 		autoLoad: Boolean,
 	},
 	data: () => ({
@@ -44,7 +47,9 @@ export default {
 		/** 是否全部加载完毕，没有数据视为未加载完 */
 		drained() {
 			const { loadedCount, start, value } = this;
-			if (!value) return false;
+			if (!value) {
+				return false;
+			}
 			return start + loadedCount >= value.total;
 		},
 	},

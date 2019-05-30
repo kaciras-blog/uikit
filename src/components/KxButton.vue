@@ -15,7 +15,7 @@ export default {
 		// 在按钮的内容的开头加上一个图标
 		icon: String,
 	},
-	render (h, ctx) {
+	render(h, ctx) {
 		let { data, children } = ctx;
 		data.attrs = data.attrs || {};
 		const { attrs } = data;
