@@ -40,6 +40,9 @@ export class MediaQueryManager implements PluginObject<never> {
 	constructor(breakpoints: MediaBreakPoints) {
 		this.breakpoints = breakpoints;
 		this.entries = Object.entries(breakpoints);
+		if (!this.entries.length) {
+			throw new Error("至少要有一个断点");
+		}
 		this.entries.sort((a, b) => a[1] - b[1]);
 	}
 
@@ -47,7 +50,7 @@ export class MediaQueryManager implements PluginObject<never> {
 		const { entries } = this;
 		store.registerModule("mediaQuery", {
 			state: {
-				screenWidth: entries[entries.length - 1][1],
+				width: entries[entries.length - 1][1],
 			},
 			mutations: {
 				[SET_WIDTH]: (state: any, width: number) => state.width = width,
@@ -58,13 +61,16 @@ export class MediaQueryManager implements PluginObject<never> {
 	/**
 	 * 监听 window.matchMedia() 的 change 事件，在窗口大小改变时自动修改Vuex的状态。
 	 * 该函数只能在浏览器环境下使用。
-	 * TODO: 没检查少于3个的情况
 	 *
 	 * @param store Vuex的存储
 	 * @param window_ 监听的window对象，默认是全局变量
 	 */
 	observeWindow(store: Store<any>, window_ = window) {
 		const { entries } = this;
+
+		if (entries.length < 2) {
+			return;
+		}
 
 		// lib.dom.d.ts 里竟然有个叫 name 的全局变量，搞得TS检查不出 name 不在局部变量里
 		function observe(width: number, query: string) {
@@ -75,10 +81,12 @@ export class MediaQueryManager implements PluginObject<never> {
 		const first = entries[0];
 		observe(first[1], `(max-width: ${first[1]}px`);
 
-		for (let i = 1; i < entries.length - 1; i++) {
-			const previous = entries[i - 1][1];
-			const current = entries[i][1];
-			observe(entries[i][1], `(min-width: ${previous}px) and (max-width: ${current}px)`);
+		if (entries.length > 2) {
+			for (let i = 1; i < entries.length - 1; i++) {
+				const previous = entries[i - 1][1];
+				const current = entries[i][1];
+				observe(entries[i][1], `(min-width: ${previous}px) and (max-width: ${current}px)`);
+			}
 		}
 
 		const last = entries[entries.length - 1];

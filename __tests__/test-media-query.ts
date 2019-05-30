@@ -1,24 +1,26 @@
 import "@/media-query/shims-media-query.d.ts";
-import { MediaQueryManager, SET_WIDTH } from "../src/media-query";
+import { MediaBreakPoints, MediaQueryManager, SET_WIDTH } from "../src/media-query";
 import { createLocalVue, shallowMount } from "@vue/test-utils";
 import Vuex from "vuex";
 
 
-const plugin = new MediaQueryManager({
+const DEFAULT_POINTS: MediaBreakPoints = {
 	mobile: 768,
 	tablet: 992,
 	desktop: 1200,
 	wide: 99999,
-});
+};
 
-function createVueSuite() {
+function createVueSuite(breakpoints = DEFAULT_POINTS) {
 	const localVue = createLocalVue();
 	localVue.use(Vuex);
+
+	const plugin = new MediaQueryManager(breakpoints);
 	localVue.use(plugin);
 
 	const store = new Vuex.Store({});
 	plugin.registerToStore(store);
-	return { localVue, store };
+	return { plugin, localVue, store };
 }
 
 test("$mediaMatch", () => {
@@ -78,7 +80,13 @@ test("watch", () => {
 	expect(leaveCb.mock.calls.length).toBe(1);
 });
 
-// TODO: mock mediaQuery ?
+// TODO: 以下两个测试怎么 mock window.matchMedia ?
+test("breakpoints argument", () => {
+	expect(() => createVueSuite({})).toThrow(Error);
+	createVueSuite({ a: 100 });
+	createVueSuite({ a: 100, b: 50 });
+});
+
 // test("observeWindow", () => {
 // 	const { store } = createVueSuite();
 // 	observeWindow(store);
