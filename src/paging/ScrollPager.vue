@@ -17,6 +17,7 @@
 			v-if="state==='FREE'"
 			tag="a"
 			class="primary"
+			:class="$style.button"
 			icon="fas fa-chevron-circle-down"
 			:href="nextPageUrl"
 			@click.prevent="loadPage">
@@ -83,7 +84,7 @@ export default {
 		},
 	},
 	data() {
-		/* free,fail,loading,allLoaded */
+		/* FREE, FAIL, LOADING, ALL_LOADED */
 		return { state: this.initState };
 	},
 	computed: {
@@ -121,7 +122,13 @@ export default {
 </script>
 
 <style module lang="less">
+@import "../css/exports";
+
 .container {
 	text-align: center;
+}
+
+@media screen and (max-width: @length-screen-mobile) {
+	.button { width: 100%; }
 }
 </style>
