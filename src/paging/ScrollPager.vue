@@ -128,6 +128,6 @@ export default {
 }
 
 @media screen and (max-width: @length-screen-mobile) {
-	.button { width: 100%; }
+	.button { width: 64%; }
 }
 </style>

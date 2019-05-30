@@ -2,7 +2,6 @@
 	<div>
 		<button-pager
 			v-if="showTopButtons && items.length"
-			:class="$style.buttons"
 			:theme="theme"
 			:total-count="total"
 			:index="index"
@@ -14,7 +13,6 @@
 
 		<button-pager
 			v-if="items.length"
-			:class="$style.buttons"
 			:theme="theme"
 			:total-count="total"
 			:index="index"
@@ -120,9 +118,3 @@ export default {
 	},
 };
 </script>
-
-<style module lang="less">
-.buttons {
-	margin: 16px 0;
-}
-</style>
