@@ -32,7 +32,7 @@ const FREE = "FREE";
 const FAILED = "FAILED";
 const ALL_LOADED = "ALL_LOADED";
 
-class LoadTask {
+export class LoadTask {
 
 	constructor(vm) {
 		this._finish = false;
@@ -113,7 +113,6 @@ export default {
 	},
 	mounted() {
 		window.addEventListener("scroll", this.tryLoadPage);
-		this.loadPage(); // 第一页一定加载，无论是否滚动到位
 	},
 	destroyed() {
 		window.removeEventListener("scroll", this.tryLoadPage);
