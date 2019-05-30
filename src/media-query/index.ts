@@ -50,7 +50,7 @@ export class MediaQueryManager implements PluginObject<never> {
 				screenWidth: entries[entries.length - 1][1],
 			},
 			mutations: {
-				[SET_WIDTH]: (state: any, width: number) => state.screenWidth = width,
+				[SET_WIDTH]: (state: any, width: number) => state.width = width,
 			},
 		});
 	}
@@ -131,7 +131,7 @@ export class MediaQueryAPI {
 	 * @return 当前宽度是否匹配给定的查询字符串
 	 */
 	match(exp: string) {
-		return this.testMatchExp(exp, this.store.state.mediaQuery.screenWidth);
+		return this.testMatchExp(exp, this.store.state.mediaQuery.width);
 	}
 
 	/**
@@ -150,7 +150,7 @@ export class MediaQueryAPI {
 			if (nvMatch && !ovMatch && enter) enter();
 			if (ovMatch && !nvMatch && leave) leave();
 		};
-		return this.store.watch((state) => state.mediaQuery.screenWidth, callback);
+		return this.store.watch((state) => state.mediaQuery.width, callback);
 	}
 
 	private testMatchExp(exp: string, width: number) {

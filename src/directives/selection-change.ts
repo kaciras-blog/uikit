@@ -2,6 +2,7 @@
 import Vue, { VNode } from "vue";
 import { DirectiveBinding } from "vue/types/options";
 
+// TODO: 没有清理监听器
 export default {
 	inserted(el: HTMLElement, binding: DirectiveBinding, vnode: VNode) {
 		const vm = vnode.context as Vue;
