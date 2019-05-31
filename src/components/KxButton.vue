@@ -83,7 +83,7 @@ export default {
 
 	// 各种伪类下的样式
 	transition: ease-in-out .15s;
-	.psudo-style;
+	.pseudo-style;
 
 	// 混入主题颜色
 	&.primary {
@@ -131,7 +131,7 @@ export default {
 	}
 }
 
-.psudo-style() {
+.pseudo-style() {
 	&:hover {
 		color: white;
 		background-color: var(--background-highlight);
@@ -154,7 +154,7 @@ export default {
 	color: white;
 	border-color: var(--background);
 	background-color: var(--background);
-	.psudo-style;
+	.pseudo-style;
 }
 
 .outline-style() {
@@ -179,15 +179,4 @@ export default {
 	--background-highlight: @color-highlight;
 	--background-glass: @color-glass;
 }
-
-// 如果按钮在边缘，放大会导致滚动条出现
-/*@keyframes button-ripple {*/
-	/*from {*/
-		/*opacity: 1;*/
-	/*}*/
-	/*to {*/
-		/*opacity: 0;*/
-		/*transform: scale(1.1, 1.2);*/
-	/*}*/
-/*}*/
 </style>
