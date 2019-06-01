@@ -40,10 +40,7 @@ export class LoadTask {
 	}
 
 	complete(allLoaded = false) {
-		// 可能一次加载后空余高度仍达不到activeHeight，还得继续加载
-		if (!this._vm.tryLoadPage()) {
-			this.finish(allLoaded ? ALL_LOADED : FREE);
-		}
+		this.finish(allLoaded ? ALL_LOADED : FREE);
 	}
 
 	completeWithError() {
@@ -87,35 +84,30 @@ export default {
 		/* FREE, FAIL, LOADING, ALL_LOADED */
 		return { state: this.initState };
 	},
-	computed: {
-		loadable() {
-			return [ALL_LOADED, LOADING].indexOf(this.state) < 0;
-		},
-	},
 	methods: {
-		tryLoadPage() {
-			const { state, activeHeight, autoLoad } = this;
-			if (state !== FREE || !autoLoad) return;
-
-			// 网页高度 - 窗口高度 - 窗口之上部分的高度 = 窗口下面剩余的高度
-			const remain = document.body.offsetHeight - window.innerHeight - window.scrollY;
-
-			if (remain < activeHeight) {
-				this.loadPage();
-			}
-			return remain < activeHeight;
-		},
 		loadPage() {
-			if (!this.loadable) return;
+			if (this.state === ALL_LOADED || this.state === LOADING) {
+				return;
+			}
 			this.state = LOADING;
 			this.$emit("load-page", new LoadTask(this));
 		},
 	},
 	mounted() {
-		window.addEventListener("scroll", this.tryLoadPage);
+		this.$_observer = new IntersectionObserver(entries => {
+			if (entries[0].isIntersecting && this.state === FREE) this.loadPage();
+		});
+		const autoLoadWatcher = (value) => {
+			if (value) {
+				this.$_observer.observe(this.$el);
+			} else {
+				this.$_observer.disconnect();
+			}
+		};
+		this.$watch("autoLoad", autoLoadWatcher, { immediate: true });
 	},
 	destroyed() {
-		window.removeEventListener("scroll", this.tryLoadPage);
+		this.$_observer.disconnect();
 	},
 };
 </script>
