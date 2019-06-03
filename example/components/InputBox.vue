@@ -1,11 +1,11 @@
 <template>
 	<kx-base-dialog title="请输入一些信息">
 		<form id="result">
-			<label>你的名字</label>
-			<input v-model="name" placeholder="某某某"/>
+			<label for="name">你的名字</label>
+			<input id="name" v-model="name" placeholder="某某某"/>
 
-			<label>年龄</label>
-			<input type="number" v-model="age" value="0"/>
+			<label for="age">年龄</label>
+			<input id="age" type="number" v-model="age" value="0"/>
 		</form>
 		<kx-standard-dialog-buttons :cancel-button="true" @confirm="ok"/>
 	</kx-base-dialog>

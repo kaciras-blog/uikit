@@ -9,7 +9,8 @@ bilibili 的新评论是添加在第一页的最后
 			:init-state="drained ? 'ALL_LOADED' : 'FREE'"
 			:auto-load="autoLoad"
 			:next-page-url="nextLink && !drained ? nextLink(start + loadedCount, pageSize) : null"
-			@load-page="handleLoadTask"/>
+			@load-page="handleLoadTask"
+		/>
 	</div>
 </template>
 

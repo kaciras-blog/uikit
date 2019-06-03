@@ -10,7 +10,7 @@ export default {
 		value: {},
 		disabled: Boolean,
 	},
-	provide () {
+	provide() {
 		return { radioGroup: this };
 	},
 };

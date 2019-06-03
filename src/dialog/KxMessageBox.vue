@@ -1,12 +1,15 @@
 <template>
-	<kx-modal-wrapper @click.native.self="onOverlayClick" @keyup.native.esc="onOverlayClick">
+	<kx-modal-wrapper
+		@click.native.self="onOverlayClick"
+		@keyup.native.esc="onOverlayClick"
+	>
 		<div class="kx-msgbox"
 			 :class="{ shaking, dialogZoomIn }"
 			 tabindex="-1"
 			 v-autofocus
 			 role="dialog"
-			 aria-modal="true">
-
+			 aria-modal="true"
+		>
 			<kx-close-icon v-if="quickClose" :class="$style.closeIcon" @click="$dialog.close"/>
 			<dialog-icons :type="type"/>
 
@@ -52,7 +55,7 @@ export default {
 		shaking: false,
 	}),
 	computed: {
-		message () {
+		message() {
 			const { content } = this;
 			if (typeof (content) === "string") {
 				return content;
@@ -61,7 +64,7 @@ export default {
 		},
 	},
 	methods: {
-		onOverlayClick () {
+		onOverlayClick() {
 			if (this.quickClose) {
 				return this.$dialog.close();
 			}
@@ -119,9 +122,9 @@ export default {
 }
 
 @keyframes shaking {
-	0%   { transform: translateX(-4px);}
-	25%  {}
-	50%  { transform: translateX(4px); }
+	0% { transform: translateX(-4px);}
+	25% {}
+	50% { transform: translateX(4px); }
 	100% {}
 }
 </style>

@@ -14,19 +14,19 @@ export default {
 		preventScroll: {
 			type: Boolean,
 			default: false,
-		}
+		},
 		// TODO: ESC
 	},
-	mounted () {
+	mounted() {
 		if (this.preventScroll) {
 			this._restore = preventScroll();
 		}
 	},
-	destroyed () {
+	destroyed() {
 		if (this._restore) {
 			this._restore();
 		}
-	}
+	},
 };
 </script>
 

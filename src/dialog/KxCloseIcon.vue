@@ -1,9 +1,11 @@
 <template functional>
-	<button title="关闭"
-			:class="[data.class, data.staticClass, $style.iconBox]"
-			:style="[data.style, data.staticStyle]"
-			@mousedown.stop
-			v-on="listeners">
+	<button
+		title="关闭"
+		:class="[data.class, data.staticClass, $style.iconBox]"
+		:style="[data.style, data.staticStyle]"
+		v-on="listeners"
+		@mousedown.stop
+	>
 		<img src="../assets/icon-close.svg" alt="关闭">
 	</button>
 </template>

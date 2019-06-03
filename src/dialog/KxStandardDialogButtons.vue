@@ -29,7 +29,7 @@ export default {
 			default: true,
 		},
 	},
-	render (h, ctx) {
+	render(h, ctx) {
 		const { props, listeners } = ctx;
 		const buttons = [];
 
@@ -37,16 +37,16 @@ export default {
 		const vm = ctx.parent;
 
 		if (props.cancelButton) {
-			buttons.push(h("kx-button", { on: { click: vm.$dialog.close } }, "取消"))
+			buttons.push(h("kx-button", { on: { click: vm.$dialog.close } }, "取消"));
 		}
 		if (listeners.apply) {
-			buttons.push(h("kx-button", { on: { click: listeners.apply } }, "应用"))
+			buttons.push(h("kx-button", { on: { click: listeners.apply } }, "应用"));
 		}
 
 		const onConfirm = listeners.confirm || vm.$dialog.confirm;
 		buttons.push(h("kx-button", { staticClass: "primary", on: { click: onConfirm } }, "确定"));
 
-		return h("div", { class: ["btn-group", ctx.$style.container] }, buttons)
+		return h("div", { class: ["btn-group", ctx.$style.container] }, buttons);
 	},
 };
 </script>

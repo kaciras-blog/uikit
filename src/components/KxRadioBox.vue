@@ -6,18 +6,19 @@
 	<label class="kx-radio-box"
 		   :class="{ disabled: source.disabled }"
 		   :aria-checked="checked"
-		   :aria-disabled="source.disabled">
-
-		<input class="radio-box-input"
-			   type="radio"
-			   aria-hidden="true"
-			   :name="source.name"
-			   :value="value"
-			   :disabled="source.disabled"
-			   :checked="checked"
-			   @input="source.$emit('input', value)"
-			   @change="handleChange">
-
+		   :aria-disabled="source.disabled"
+	>
+		<input
+			class="radio-box-input"
+			type="radio"
+			aria-hidden="true"
+			:name="source.name"
+			:value="value"
+			:disabled="source.disabled"
+			:checked="checked"
+			@input="source.$emit('input', value)"
+			@change="handleChange"
+		>
 		<span class="radio-box-mark" :class="{ ckecked: checked }"></span>
 		<span class="radio-box-label"><slot/></span>
 	</label>
@@ -38,15 +39,15 @@ export default {
 	},
 	inject: ["radioGroup"],
 	computed: {
-		source () {
+		source() {
 			return this.radioGroup;
 		},
-		checked () {
+		checked() {
 			return this.value === this.source.value;
 		},
 	},
 	methods: {
-		handleChange (event) {
+		handleChange(event) {
 			this.source.$emit("change", event.target.checked);
 		},
 	},
@@ -67,6 +68,7 @@ export default {
 	&:not(.ckecked) {
 		background-color: rgba(255, 255, 255, 0.3);
 	}
+
 	&.ckecked {
 		border-color: rgba(255, 255, 255, .7);
 	}
@@ -108,6 +110,7 @@ export default {
 		background-color: #2196F3;
 		border-color: #2196F3;
 	}
+
 	&.ckecked::after {
 		display: block;
 	}

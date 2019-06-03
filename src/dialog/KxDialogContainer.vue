@@ -5,7 +5,8 @@
 			:key="options.id"
 			:is="options.component"
 			v-show="index === stack.length - 1"
-			v-bind="options.props"/>
+			v-bind="options.props"
+		/>
 	</div>
 </template>
 

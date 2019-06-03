@@ -27,6 +27,8 @@ export function openFile(multiple = false, accept: string = "*") {
  *
  * @param element 元素
  * @return 元素的绝对位置
+ *
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/getBoundingClientRect
  */
 export function getScrollTop(element: HTMLElement) {
 	const doc = document.documentElement || document.body.parentNode;
@@ -35,7 +37,7 @@ export function getScrollTop(element: HTMLElement) {
 }
 
 function scrollAnimation(element: HTMLElement, scrollTop: number) {
-	anime({ targets: "html,body", scrollTop, duration: 500, easing: "easeOutQuad" });
+	anime({ targets: document.scrollingElement, scrollTop, duration: 500, easing: "easeOutQuad" });
 }
 
 /**

@@ -3,14 +3,16 @@
 		   :class="{ disabled }"
 		   role="checkbox"
 		   :aria-checked="model"
-		   :aria-disabled="disabled">
-
-		<input class="check-box-input"
-			   type="checkbox"
-			   :disabled="disabled"
-			   v-model="model"
-			   aria-hidden="true"
-			   @change="handleChange">
+		   :aria-disabled="disabled"
+	>
+		<input
+			v-model="model"
+			type="checkbox"
+			class="check-box-input"
+			:disabled="disabled"
+			aria-hidden="true"
+			@change="handleChange"
+		>
 
 		<span class="check-box-mark" :class="{ ckecked: model }"></span>
 

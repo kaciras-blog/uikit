@@ -49,6 +49,7 @@ function messageBox(this: DialogManager,
 					options: MessageBoxOptions | string,
 					content?: string | string[],
 					type?: MessageBoxType) {
+
 	if (typeof options === "string") {
 		options = { title: options, content, type };
 	}

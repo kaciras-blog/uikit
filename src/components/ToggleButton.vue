@@ -15,7 +15,7 @@ export default {
 		},
 	},
 	methods: {
-		change (event) {
+		change(event) {
 			this.$emit("input", event.target.checked);
 		},
 	},
@@ -42,9 +42,11 @@ export default {
 	& > input:hover + .toggle-button-trench::after {
 		box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.25), 0 2px 1px 0 rgba(0, 0, 0, 0.15);
 	}
+
 	& > input:checked + .toggle-button-trench::after {
 		left: 2rem;
 	}
+
 	& > input:checked + .toggle-button-trench {
 		background: @color-input-active;
 	}

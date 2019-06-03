@@ -1,22 +1,27 @@
 <template>
-	<kx-modal-wrapper @click.native.self="onOverlayClick" @keyup.native.esc="onEscape">
+	<kx-modal-wrapper
+		@click.native.self="onOverlayClick"
+		@keyup.native.esc="onEscape"
+	>
 		<div ref="panel"
 			 class="kx-dialog dialogZoomIn"
 			 tabindex="-1"
 			 v-autofocus
 			 role="dialog"
-			 aria-modal="true">
-
-			<header class="kx-dialog-header" @mousedown="drag" @touchstart.prevent="drag">
+			 aria-modal="true"
+		>
+			<header
+				class="kx-dialog-header"
+				@mousedown="drag"
+				@touchstart.prevent="drag"
+			>
 				<slot name="title">
 					<h2 class="kx-dialog-title">{{title}}</h2>
 				</slot>
 				<kx-close-icon v-if="closeIcon" @click="close"/>
 			</header>
 
-			<div class="kx-dialog-body">
-				<slot/>
-			</div>
+			<div class="kx-dialog-body"><slot/></div>
 		</div>
 	</kx-modal-wrapper>
 </template>

@@ -6,7 +6,8 @@
 			:total-count="total"
 			:index="index"
 			:page-size="pageSize"
-			@load-page="switchPage"/>
+			@load-page="switchPage"
+		/>
 
 		<!-- 检查一下防止初始项目数量大于分页数量 -->
 		<slot :items="items.length > pageSize ? items.slice(0, pageSize) : items"/>
@@ -17,7 +18,8 @@
 			:total-count="total"
 			:index="index"
 			:page-size="pageSize"
-			@load-page="switchPage"/>
+			@load-page="switchPage"
+		/>
 	</div>
 </template>
 

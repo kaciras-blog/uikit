@@ -1,12 +1,15 @@
 <template>
 	<div class="swiper">
 		<template v-if="slides.length">
-			<div class="slide"
-				 ref="test"
+
+			<div ref="test"
+				 class="slide"
 				 :class="{ 'fade-in': scrolling }"
-				 :style="{ animationDuration: speed + 'ms' }">
+				 :style="{ animationDuration: speed + 'ms' }"
+			>
 				<slot :slide="slides[next]"/>
 			</div>
+
 			<div class="slide">
 				<slot :slide="slides[current]"/>
 			</div>
@@ -32,7 +35,7 @@ export default {
 		index: Number,
 		speed: Number,
 	},
-	data () {
+	data() {
 		return {
 			current: this.index,
 			next: 0,
@@ -40,7 +43,7 @@ export default {
 		};
 	},
 	watch: {
-		index (nv, ov) {
+		index(nv, ov) {
 			const startFade = () => {
 				// eslint-disable-next-line no-unused-expressions
 				this.$refs.test.offsetHeight; // tigger reflow to restart animation.

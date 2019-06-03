@@ -5,8 +5,8 @@
 			:index="index"
 			:speed="animation"
 			@mouseenter.native="handleEnter"
-			@mouseleave.native="handleLeave">
-
+			@mouseleave.native="handleLeave"
+		>
 			<template v-slot="{ slide }">
 				<slot :slide="slide"/>
 			</template>

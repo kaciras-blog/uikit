@@ -1,8 +1,8 @@
 <template>
 	<div class="dimmer"
 		 @contextmenu.self.prevent="handleClick"
-		 @click.self="handleClick">
-
+		 @click.self="handleClick"
+	>
 		<component
 			:is="component"
 			ref="menu"

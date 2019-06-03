@@ -49,7 +49,7 @@ hr {
 
 .input, input {
 	padding: .5em;
-	min-width: 0; //谷歌浏览器默认有一个最小宽度，这里给他去掉
+	min-width: 0; //去掉谷歌浏览器的最小宽度
 
 	outline: none;
 	border: solid 1px @color-border;
@@ -85,9 +85,7 @@ hr {
 .head {
 	.circle(5rem);
 
-	&.small {
-		.circle(3rem)
-	}
+	&.small { .circle(3rem); }
 }
 
 .highlight {
@@ -158,6 +156,7 @@ hr {
 			border-top-left-radius: 0;
 			border-top-right-radius: 0;
 
+			// TODO: 默认按钮是outline样式的却没有class
 			margin-top: 1px;
 
 			&.outline {
@@ -171,8 +170,8 @@ hr {
 	border-radius: 0 !important;
 }
 
-.cram {
-	.full-percent;
+.full-percent {
+	.size(100%);
 }
 
 .show-mobile {
