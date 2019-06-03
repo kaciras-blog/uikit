@@ -34,6 +34,6 @@ export default {
 		el.addEventListener("keyup", handleSelect);		// Home,End,PageUp,PageDown
 		el.addEventListener("keydown", handleSelect);	// 移动光标的键按住不放
 
-		el.addEventListener("blur", () => handlerFunction(0, 0));
+		// 没有焦点离开的监听，因为上层对离开的处理方式可能不一样
 	},
 };
