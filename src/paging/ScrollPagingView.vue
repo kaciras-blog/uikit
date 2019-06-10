@@ -1,6 +1,8 @@
 <!--
-新加项目的跳转显示问题：
-bilibili 的新评论是添加在第一页的最后
+这个组件仅仅封装了下请求的处理逻辑，基本是原样放置了 slot 和 scroll-pager 而已，这样的复用与 HTML 没啥
+关系，更适合 React Hooks，但是Vue2没有。
+
+新加项目的跳转显示问题：bilibili 的新评论是添加在第一页的最后
 -->
 <template>
 	<div>
