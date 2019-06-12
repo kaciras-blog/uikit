@@ -61,12 +61,13 @@ export function scrollToElementEnd(element: HTMLElement, offset: number = 0) {
 }
 
 /**
- * 禁止body的滚动条，返回一个取消禁止的函数。
+ * 禁止指定元素的滚动条，返回一个取消禁止的函数。
  *
+ * @param el 指定的元素
  * @return 取消禁止的函数
  */
-export function preventScroll() {
-	const { style } = document.body;
+export function preventScroll(el: HTMLElement = document.body) {
+	const { style } = el;
 	const oldHeight = style.height;
 	const oldOverflow = style.overflow;
 
@@ -77,3 +78,9 @@ export function preventScroll() {
 		style.overflow = oldOverflow;
 	};
 }
+
+/** 组件挂载之后禁止全局滚动条，销毁后恢复，可用于弹窗之类的组件 */
+export const PreventScrollMixin = {
+	mounted(this: any) { this.$_restoreScroll = preventScroll(); },
+	destroyed(this: any) { this.$_restoreScroll(); },
+};

@@ -14,19 +14,21 @@
 <script>
 import KxStandardDialogButtons from "../../src/dialog/KxStandardDialogButtons";
 import { MessageBoxType } from "../../src/dialog";
+import { PreventScrollMixin } from "../../src";
 
 export default {
 	name: "InputBox",
 	components: { KxStandardDialogButtons },
 	props: ["data"],
-	data () {
+	mixins: [PreventScrollMixin],
+	data() {
 		return Object.assign({
 			name: "",
 			age: "18",
 		}, this.data);
 	},
 	methods: {
-		async ok () {
+		async ok() {
 			let num = parseInt(this.age);
 			if (Number.isNaN(num)) {
 				await this.$dialog.messageBox({
