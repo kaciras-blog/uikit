@@ -26,7 +26,7 @@ export default {
 			return h("div", { staticClass: $style.active }, page);
 		}
 
-		// 下面都是按钮，前三个跟后三个是对称的，中间循环创建跳转按钮
+		// 下面都是按钮，前三个跟后三个是对称的，中间循环创建按钮
 		buttons.push(button(index - 1, "<", index <= 1));
 		buttons.push(indexButton(1));
 		if (index - omitPos > 1) {
@@ -42,7 +42,9 @@ export default {
 		if (index + omitPos < total) {
 			buttons.push(h("span", { staticClass: $style.omit }, "..."));
 		}
-		buttons.push(indexButton(total));
+		if (total > 1) {
+			buttons.push(indexButton(total));
+		}
 		buttons.push(button(index + 1, ">", index >= total));
 
 		function jumpToPage(event) {

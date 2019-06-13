@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<button-pager
-			v-if="showTopButtons && items.length"
+			v-if="showTopButtons && total"
 			:theme="theme"
 			:total-count="total"
 			:index="index"
@@ -13,7 +13,7 @@
 		<slot :items="items.length > pageSize ? items.slice(0, pageSize) : items"/>
 
 		<button-pager
-			v-if="items.length"
+			v-if="total"
 			:theme="theme"
 			:total-count="total"
 			:index="index"
