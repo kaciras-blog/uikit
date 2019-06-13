@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style module lang="less">
-@import "../css/mixin";
+@import "../css/Mixins";
 
 .container {
 	background-color: rgba(0, 0, 0, .8);

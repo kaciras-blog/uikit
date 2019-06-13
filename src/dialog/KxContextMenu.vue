@@ -24,12 +24,12 @@ export default {
 		style: {},
 	}),
 	methods: {
-		positionForCursor () {
+		positionForCursor() {
 			const rect = this.$refs.menu.$el.getBoundingClientRect();
 			const { width, height } = rect;
 			const { clientX, clientY } = this.event;
 
-			function computePosition (mouse, length, limit) {
+			function computePosition(mouse, length, limit) {
 				if (mouse + length < limit) {
 					return mouse;
 				}
@@ -46,7 +46,7 @@ export default {
 				left: computePosition(clientX, width, window.innerWidth) + "px",
 			};
 		},
-		handleClick (event) {
+		handleClick(event) {
 			this.$dialog.close();
 
 			// 重新触发点击事件，模拟点击穿透
@@ -60,7 +60,7 @@ export default {
 			this.$nextTick(() => document.elementFromPoint(ev.clientX, ev.clientY).dispatchEvent(ev));
 		},
 	},
-	mounted () {
+	mounted() {
 		if (window.innerWidth <= 768) {
 			const rect = this.$el.getBoundingClientRect();
 			this.style = {

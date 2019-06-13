@@ -45,7 +45,7 @@ export default {
 		this.$dialog.eventBus.$off("show", this.add);
 		this.$dialog.eventBus.$off("close", this.close);
 		this.$dialog.eventBus.$off("clear", this.clear);
-	}
+	},
 };
 </script>
 

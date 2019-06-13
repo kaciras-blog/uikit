@@ -14,7 +14,9 @@ import TestContextMenu from "../components/TestContextMenu";
 import ImageViewer from "../../src/dialog/KxImageViewer";
 
 export default {
-	components: { TestContextMenu },
+	components: {
+		TestContextMenu ,
+	},
 	methods: {
 		mainDialog() {
 			this.$dialog.show(LuckyNumber);
@@ -33,7 +35,3 @@ export default {
 	},
 };
 </script>
-
-<style scoped lang="less">
-
-</style>

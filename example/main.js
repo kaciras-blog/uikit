@@ -1,4 +1,4 @@
-import "../src/css/index.less";
+import "../src/css/Index.less";
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";

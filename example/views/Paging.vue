@@ -6,8 +6,8 @@
 			:loader="loadMockItems"
 			:viewport-offset="60"
 			:page-size="2"
-			:show-top-buttons="true">
-
+			:show-top-buttons="true"
+		>
 			<template v-slot="{ items }">
 				<p v-for="item of items" :key="item">{{item}}</p>
 			</template>
@@ -22,19 +22,21 @@
 			:loader="loadMockItems"
 			:viewport-offset="60"
 			:page-size="2"
-			:show-top-buttons="true">
-
+			:show-top-buttons="true"
+		>
 			<template v-slot="{ items }">
 				<p v-for="item of items" :key="item">{{item}}</p>
 			</template>
 		</button-paging-view>
 
 		<hr>
+
 		<scroll-paging-view
 			:auto-load="true"
 			:loader="loadScrollItems"
 			v-model="scrollList"
-			:next-link="() => '#'">
+			:next-link="() => '#'"
+		>
 			<template v-slot="{ items }">
 				<p v-for="item of items" :key="item">{{item}}</p>
 			</template>
