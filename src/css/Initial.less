@@ -19,7 +19,7 @@ body {
 	font-size: 14px;
 }
 
-//不能被选择的元素也不能高亮
+// 不能被选择的元素也不能高亮
 [tabindex="-1"]:focus {
 	outline: 0 !important;
 }
@@ -56,11 +56,6 @@ img, svg {
 	vertical-align: middle;
 }
 
-//干掉奇丑的默认边框
-table {
-	border-collapse: collapse;
-}
-
 button, select {
 	text-transform: none; // Remove the inheritance of text transform in Firefox
 }
@@ -88,14 +83,7 @@ textarea {
 	}
 }
 
-a {
-	color: inherit;
-	text-decoration: none;
-	outline: none;
-	cursor: pointer;
-
-	&:hover, &:focus {
-		color: @color-link;
-		text-decoration: underline;
-	}
+/** 去掉列表的边距，但其它两个属性保留，参考谷歌开发者网站的样式 */
+dd, ol, ul {
+	margin: 0;
 }

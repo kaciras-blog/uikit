@@ -1,0 +1,27 @@
+@import "variables";
+
+a {
+	color: inherit;
+	text-decoration: none;
+	outline: none;
+	cursor: pointer;
+
+	&:hover, &:focus {
+		color: @color-link;
+		text-decoration: underline;
+	}
+}
+
+// 清除链接元素的所有高亮样式
+.clean-link {
+	&:hover, &:focus, &:visited {
+		color: inherit;
+		text-decoration: none;
+	}
+}
+
+// Highlight dark link
+.hd-link {
+	color: @color-second;
+}
+
