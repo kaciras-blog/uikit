@@ -59,16 +59,20 @@ export default {
 	methods: {
 		handleLoadTask(task) {
 			return this.loadPage()
-				.then(() => task.complete(this.drained))
+				.then(finish => task.complete(finish))
 				.catch(e => task.completeWithError(e));
 		},
 		async loadPage() {
 			const { start, loader, value, pageSize, loadedCount } = this;
 			const { items = [] } = value || {};
+			const offset = start + loadedCount;
 
-			const data = await loader(start + loadedCount, pageSize);
+			const data = await loader(offset, pageSize);
 			this.loadedCount += pageSize;
 			this.$emit("input", { items: items.concat(data.items), total: data.total });
+
+			// handleLoadTask不在渲染函数里，无法获知value的更新导致其不能使用 this.drained 来判断结束
+			return offset + pageSize >= data.total;
 		},
 	},
 };
