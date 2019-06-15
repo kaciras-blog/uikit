@@ -14,7 +14,7 @@
 			<dialog-icons :type="type"/>
 
 			<h2 v-if="title">{{title}}</h2>
-			<pre :class="$style.messagePre">{{message}}</pre>
+			<pre :class="$style.messagePre">{{content}}</pre>
 
 			<kx-standard-dialog-buttons :cancel-button="cancelable"/>
 		</div>
@@ -33,10 +33,19 @@ export default {
 		KxModalWrapper,
 		KxCloseIcon,
 	},
-	// 详情见 index.ts MessageBoxOptions
 	props: {
-		title: String,
-		content: [String, Array],
+		/**
+		 * 消息框的内容，可以用换行符\n来换行，在超出宽度也会时自动换行。
+		 * 【更新】取消了数组方式的换行，因为可以用Vue的过滤器完成，或是应该自行处理。
+		 */
+		content: {
+			type: String,
+			required: true,
+		},
+		title: {
+			type: String,
+			default: "消息",
+		},
 		type: {
 			type: Number,
 			default: 0, // MessageBoxType.Info
@@ -54,15 +63,6 @@ export default {
 		dialogZoomIn: true,
 		shaking: false,
 	}),
-	computed: {
-		message() {
-			const { content } = this;
-			if (typeof (content) === "string") {
-				return content;
-			}
-			return content.join("\n");
-		},
-	},
 	methods: {
 		onOverlayClick() {
 			if (this.quickClose) {

@@ -13,8 +13,8 @@ export enum MessageBoxType {
 }
 
 export interface MessageBoxOptions {
+	content: string;
 	title?: string;
-	content?: string | string[];
 	type?: MessageBoxType;
 
 	/** 是否显示取消按钮 */
@@ -34,26 +34,38 @@ export interface KxDialogApi extends DialogManager {
 	messageBox(options: MessageBoxOptions): DialogSession<boolean>;
 
 	/**
-	 * 显示内置的消息框
+	 * 弹出一个消息框
 	 *
-	 * @param title 标题
-	 * @param content 内容
+	 * @param message 内容
+	 * @param title 标题，默认是 "消息"
 	 * @param type 类型
 	 */
-	messageBox(title: string, content?: string | string[], type?: MessageBoxType): DialogSession<boolean>;
+	messageBox(message: string, title?: string, type?: MessageBoxType): DialogSession<boolean>;
+
+	/**
+	 * 错误框用得很多，专门加个便捷方法
+	 *
+	 * @param message 错误消息
+	 * @param title 可选的标题，默认是 "错误"
+	 */
+	errorBox(message: string, title?: string): DialogSession<boolean>;
 
 	contextMenu(component: any, event: MouseEvent, data?: object): void;
 }
 
 function messageBox(this: DialogManager,
 					options: MessageBoxOptions | string,
-					content?: string | string[],
+					title?: string,
 					type?: MessageBoxType) {
 
 	if (typeof options === "string") {
-		options = { title: options, content, type };
+		options = { content: options, title, type };
 	}
 	return this.show(KxMessageBox, options);
+}
+
+function errorBox(this: KxDialogApi, message: string, title: string = "错误") {
+	return this.messageBox(message, title, MessageBoxType.Error);
 }
 
 function contextMenu(this: DialogManager, component: any, event: MouseEvent, data?: object) {
@@ -69,6 +81,7 @@ export default function install(Vue: VueConstructor) {
 	const commands = new DialogManager() as KxDialogApi;
 	commands.messageBox = messageBox.bind(commands);
 	commands.contextMenu = contextMenu.bind(commands);
+	commands.errorBox = errorBox.bind(commands);
 
 	// 指令不支持字面量，还得加个引号有点烦。
 	Vue.directive("context-menu", {

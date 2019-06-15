@@ -1,7 +1,6 @@
 <template>
 	<kx-base-dialog
 		title="算算你的幸运数字"
-		@close-button-clicked="close"
 		:draggable="true"
 		:click-to-close="true"
 	>
@@ -28,14 +27,14 @@ export default {
 		inputed: false,
 	}),
 	methods: {
-		async inputDialog () {
+		async inputDialog() {
 			const result = await this.$dialog.show(InputBox, this.$data);
 			if (result.isConfirm) {
 				this.inputed = true;
 				Object.assign(this.$data, result.data);
 			}
 		},
-		luckyNum () {
+		luckyNum() {
 			if (!this.inputed) {
 				return this.$dialog.messageBox({
 					title: "无法计算",
@@ -51,18 +50,9 @@ export default {
 			}
 			num = num % 11;
 
-			this.$dialog.messageBox({
-				title: "幸运数字",
-				content: [
-					"经过详细而周密的计算！",
-					"你的幸运数字是：" + num,
-				],
-				type: MessageBoxType.Success,
-			})
+			this.$dialog
+				.messageBox(`经过详细而周密的计算！\n你的幸运数字是：${num}`, "幸运数字")
 				.onConfirm(() => this.$dialog.close());
-		},
-		close () {
-			this.$dialog.close();
 		},
 	},
 };
