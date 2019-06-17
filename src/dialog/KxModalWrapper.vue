@@ -2,7 +2,9 @@
 TODO: 将MessageBox和DialogBase的最外层移到这里，如何方便地对面板设置属性而不是遮罩层？
 -->
 <template>
-	<div class="kx-dialog-background dimmer"><slot/></div>
+	<div class="kx-modal">
+		<slot/>
+	</div>
 </template>
 
 <script>
@@ -31,10 +33,17 @@ export default {
 </script>
 
 <style lang="less">
-.kx-dialog-background {
-	background-color: rgba(0, 0, 0, .2);
+.kx-modal {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	background-color: rgba(0, 0, 0, .2);
 }
 </style>
