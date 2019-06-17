@@ -14,12 +14,12 @@ export enum MessageBoxType {
 }
 
 export interface MessageBoxOptions {
-	content: string;
-	title?: string;
+	title: string;
+	content?: string;
 	type?: MessageBoxType;
 
 	/** 是否显示取消按钮，默认 false */
-	cancelable?: boolean;
+	showCancelButton?: boolean;
 
 	/**
 	 * 是否启用消息框默认的关闭方式，默认的关闭方式包括右上角的叉、ESC键和点击遮罩层，默认 true。
@@ -41,30 +41,30 @@ class KxDialogManagerExt extends DialogManager {
 	}
 
 	/**
-	 * 显示内置的消息框
+	 * 显示内置的消息框，请使用title来做一个简要的说明，如："操作失败"，内容部分可以省略
 	 *
 	 * @param options 选项
 	 */
-	alert(options: MessageBoxOptions): DialogSession<boolean> {
+	alert(options: MessageBoxOptions) {
 		return this.show(KxMessageBox, options);
 	}
 
 	// 下面4个都是便捷方法，其中成功的消息往往仅用于提醒一下用户，所以内容也有默认值。
 
-	alertInfo(content: string, title: string = "消息") {
-		return this.alert({ content, title, type: MessageBoxType.Info });
+	alertInfo(title: string, content?: string) {
+		return this.alert({ title, content, type: MessageBoxType.Info });
 	}
 
-	alertWarning(content: string, title: string = "警告") {
-		return this.alert({ content, title, type: MessageBoxType.Warning });
+	alertWarning(title: string, content?: string) {
+		return this.alert({ title, content, type: MessageBoxType.Warning });
 	}
 
-	alertError(content: string, title: string = "错误") {
-		return this.alert({ content, title, type: MessageBoxType.Error });
+	alertError(title: string, content?: string) {
+		return this.alert({ title, content, type: MessageBoxType.Error });
 	}
 
-	alertSuccess(content: string = "执行成功", title: string = "消息") {
-		return this.alert({ content, title, type: MessageBoxType.Success });
+	alertSuccess(title: string = "执行成功", content?: string) {
+		return this.alert({ title, content, type: MessageBoxType.Success });
 	}
 }
 

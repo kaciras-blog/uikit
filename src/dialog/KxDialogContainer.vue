@@ -1,5 +1,6 @@
 <template>
-	<div :class="$style.container">
+	<!-- Vue啥时候才能支持Fragment -->
+	<div>
 		<component
 			v-for="(options, index) in stack"
 			:key="options.id"

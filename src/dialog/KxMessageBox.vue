@@ -13,10 +13,10 @@
 			<kx-close-icon v-if="closable" :class="$style.closeIcon" @click="$dialog.close"/>
 			<dialog-icons :type="type"/>
 
-			<h2 v-if="title">{{title}}</h2>
-			<pre :class="$style.messagePre">{{content}}</pre>
+			<h2>{{title}}</h2>
+			<pre v-if="content" :class="$style.messagePre">{{content}}</pre>
 
-			<kx-standard-dialog-buttons :cancel-button="cancelable"/>
+			<kx-standard-dialog-buttons :cancel-button="showCancelButton"/>
 		</div>
 	</kx-modal-wrapper>
 </template>
@@ -40,7 +40,6 @@ export default {
 		 */
 		content: {
 			type: String,
-			required: true,
 		},
 		title: {
 			type: String,
@@ -51,7 +50,7 @@ export default {
 			default: 0, // MessageBoxType.Info
 		},
 
-		cancelable: {
+		showCancelButton: {
 			type: Boolean,
 			default: false,
 		},
@@ -94,7 +93,6 @@ export default {
 	white-space: pre-wrap;
 	word-wrap: break-word;
 	line-height: 20px;
-	margin-bottom: 20px;
 }
 </style>
 
@@ -105,7 +103,7 @@ export default {
 	max-width: 450px;
 	width: 80vw;
 	border-radius: 4px;
-	padding: 20px;
+	padding: 30px 20px 20px;
 
 	background-color: white;
 	font-size: 1rem;
