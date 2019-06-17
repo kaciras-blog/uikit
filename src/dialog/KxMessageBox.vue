@@ -1,7 +1,7 @@
 <template>
 	<kx-modal-wrapper
 		@click.native.self="onOverlayClick"
-		@keyup.native.esc="onOverlayClick"
+		@keyup.native.esc="closable && $dialog.close()"
 	>
 		<div class="kx-msgbox"
 			 :class="{ shaking, dialogZoomIn }"
@@ -10,7 +10,7 @@
 			 role="dialog"
 			 aria-modal="true"
 		>
-			<kx-close-icon v-if="quickClose" :class="$style.closeIcon" @click="$dialog.close"/>
+			<kx-close-icon v-if="closable" :class="$style.closeIcon" @click="$dialog.close"/>
 			<dialog-icons :type="type"/>
 
 			<h2 v-if="title">{{title}}</h2>
@@ -44,17 +44,22 @@ export default {
 		},
 		title: {
 			type: String,
-			default: "消息",
+			required: true,
 		},
 		type: {
 			type: Number,
 			default: 0, // MessageBoxType.Info
 		},
+
 		cancelable: {
+			type: Boolean,
+			default: false,
+		},
+		closable: {
 			type: Boolean,
 			default: true,
 		},
-		quickClose: {
+		overlayClose: {
 			type: Boolean,
 			default: true,
 		},
@@ -65,12 +70,14 @@ export default {
 	}),
 	methods: {
 		onOverlayClick() {
-			if (this.quickClose) {
-				return this.$dialog.close();
+			if (!this.closable) {
+				this.dialogZoomIn = false; // 一个元素不能有多个animation属性，要把进入动画去掉
+				this.shaking = true;
+				return setTimeout(() => this.shaking = false, 300);
 			}
-			this.dialogZoomIn = false; // 一个元素不能有多个animation属性，要把进入动画去掉
-			this.shaking = true;
-			setTimeout(() => this.shaking = false, 300);
+			if (this.overlayClose) {
+				this.$dialog.close();
+			}
 		},
 	},
 };

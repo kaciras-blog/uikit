@@ -5,6 +5,7 @@ import KxContextMenu from "./KxContextMenu.vue";
 import KxBaseDialog from "./KxBaseDialog.vue";
 import KxStandardDialogButtons from "./KxStandardDialogButtons.vue";
 import { DialogManager, DialogSession } from "./controller";
+import { boundClass } from "autobind-decorator";
 
 export { DialogManager, DialogSession };
 
@@ -17,60 +18,58 @@ export interface MessageBoxOptions {
 	title?: string;
 	type?: MessageBoxType;
 
-	/** 是否显示取消按钮 */
+	/** 是否显示取消按钮，默认 false */
 	cancelable?: boolean;
 
-	/** 是否启用点击遮罩关闭、Esc键关闭和右上角的关闭按钮 */
-	quickClose?: boolean;
+	/**
+	 * 是否启用消息框默认的关闭方式，默认的关闭方式包括右上角的叉、ESC键和点击遮罩层，默认 true。
+	 *
+	 * 该选项为 false 表明弹窗必须通过点击按钮来关闭，此时即使 overlayClose 为 true 也不能通过遮
+	 * 罩层关闭，并且在点击遮罩后会产生动效提示用户。
+	 */
+	closable?: boolean;
+
+	/** 是否在点击遮罩层时关闭,该选项只有在 closable 为 true 时才有效，默认 true */
+	overlayClose?: boolean;
 }
 
-export interface KxDialogApi extends DialogManager {
+@boundClass
+class KxDialogManagerExt extends DialogManager {
+
+	contextMenu(this: DialogManager, component: any, event: MouseEvent, data?: object) {
+		this.show(KxContextMenu, { component, event, data });
+	}
 
 	/**
 	 * 显示内置的消息框
 	 *
 	 * @param options 选项
 	 */
-	messageBox(options: MessageBoxOptions): DialogSession<boolean>;
-
-	/**
-	 * 弹出一个消息框
-	 *
-	 * @param message 内容
-	 * @param title 标题，默认是 "消息"
-	 * @param type 类型
-	 */
-	messageBox(message: string, title?: string, type?: MessageBoxType): DialogSession<boolean>;
-
-	/**
-	 * 错误框用得很多，专门加个便捷方法
-	 *
-	 * @param message 错误消息
-	 * @param title 可选的标题，默认是 "错误"
-	 */
-	errorBox(message: string, title?: string): DialogSession<boolean>;
-
-	contextMenu(component: any, event: MouseEvent, data?: object): void;
-}
-
-function messageBox(this: DialogManager,
-					options: MessageBoxOptions | string,
-					title?: string,
-					type?: MessageBoxType) {
-
-	if (typeof options === "string") {
-		options = { content: options, title, type };
+	alert(options: MessageBoxOptions): DialogSession<boolean> {
+		return this.show(KxMessageBox, options);
 	}
-	return this.show(KxMessageBox, options);
+
+	// 下面4个都是便捷方法，其中成功的消息往往仅用于提醒一下用户，所以内容也有默认值。
+
+	alertInfo(content: string, title: string = "消息") {
+		return this.alert({ content, title, type: MessageBoxType.Info });
+	}
+
+	alertWarning(content: string, title: string = "警告") {
+		return this.alert({ content, title, type: MessageBoxType.Warning });
+	}
+
+	alertError(content: string, title: string = "错误") {
+		return this.alert({ content, title, type: MessageBoxType.Error });
+	}
+
+	alertSuccess(content: string = "执行成功", title: string = "消息") {
+		return this.alert({ content, title, type: MessageBoxType.Success });
+	}
 }
 
-function errorBox(this: KxDialogApi, message: string, title: string = "错误") {
-	return this.messageBox(message, title, MessageBoxType.Error);
-}
-
-function contextMenu(this: DialogManager, component: any, event: MouseEvent, data?: object) {
-	this.show(KxContextMenu, { component, event, data });
-}
+// 只导出类型而不是整个class，避免暴露实现细节
+export type KxDialogApi = InstanceType<typeof KxDialogManagerExt>;
 
 export default function install(Vue: VueConstructor) {
 	Vue.component(KxBaseDialog.name, KxBaseDialog);
@@ -78,10 +77,7 @@ export default function install(Vue: VueConstructor) {
 	Vue.component(KxContextMenu.name, KxContextMenu);
 	Vue.component(KxStandardDialogButtons.name, KxStandardDialogButtons);
 
-	const commands = new DialogManager() as KxDialogApi;
-	commands.messageBox = messageBox.bind(commands);
-	commands.contextMenu = contextMenu.bind(commands);
-	commands.errorBox = errorBox.bind(commands);
+	const commands = new KxDialogManagerExt();
 
 	// 指令不支持字面量，还得加个引号有点烦。
 	Vue.directive("context-menu", {

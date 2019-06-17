@@ -1,6 +1,6 @@
 import { DialogResult, DialogSession } from "@/dialog/controller";
 
-describe('DialogSession', () => {
+describe("DialogSession", () => {
 
 	it("should't resolve confirmThen", (done) => {
 		const s = new DialogSession(Promise.resolve(DialogResult.CANCELED));
