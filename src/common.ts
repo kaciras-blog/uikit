@@ -64,7 +64,7 @@ export function isTouchEvent(e: MouseEvent | TouchEvent): e is TouchEvent {
  * @param func 被包装函数
  * @return 节流后的函数
  */
-export function throttleFirst<T, R>(func: (...args: any[]) => Promise<R>) {
+export function debounceFirst<T, R>(func: (...args: any[]) => Promise<R>) {
 	let task: Promise<R> | null = null;
 	return function (this: T, ...args: any[]) {
 		if (task) {
