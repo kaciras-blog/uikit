@@ -51,7 +51,7 @@ export class RippleEffect {
 		setTimeout(() => {
 			animation.classList.remove("v-ripple__animation--enter");
 			animation.classList.add("v-ripple__animation--in");
-			animation.style.opacity = "0.25";
+			animation.style.opacity = "0.1";
 			transform(animation, `translate(${centerX}, ${centerY}) scale3d(1,1,1)`);
 		});
 	}

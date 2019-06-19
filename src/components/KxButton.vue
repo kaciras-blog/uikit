@@ -170,7 +170,7 @@ export default {
 
 // 配置各主题色，less还不支运算作为CSS变量值，需要先用变量定义
 .color-mixin(@color) {
-	@color-active: @color - #0d0d0d;
+	@color-active: @color - #0C0C0C;
 	@color-highlight: lighten(@color, 5%);
 	@color-glass: fade(@color, 50%);
 
