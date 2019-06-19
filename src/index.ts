@@ -12,6 +12,7 @@ import KxTaskButton from "./components/KxTaskButton.vue";
 import KxCarousel from "./components/KxCarousel.vue";
 import KxRadioBox from "./components/KxRadioBox.vue";
 import KxRadioBoxGroup from "./components/KxRadioBoxGroup.vue";
+import KxPasswordInput from "./components/KxPasswordInput.vue";
 
 import SelectionBinding from "./directives/selection-bind";
 import SelectionChangeDirective from "./directives/selection-change";
@@ -39,6 +40,7 @@ function install(Vue: VueConstructor) {
 	Vue.component(KxCarousel.name, KxCarousel);
 	Vue.component(KxRadioBox.name, KxRadioBox);
 	Vue.component(KxRadioBoxGroup.name, KxRadioBoxGroup);
+	Vue.component(KxPasswordInput.name, KxPasswordInput);
 
 //	IDE 无法分析自动扫描的引用
 // 	const requireContext = require.context(".", false,  /.vue$/);

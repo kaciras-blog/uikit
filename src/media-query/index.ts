@@ -72,7 +72,7 @@ export class MediaQueryManager implements PluginObject<never> {
 			return;
 		}
 
-		// lib.dom.d.ts 里竟然有个叫 name 的全局变量，搞得TS检查不出 name 不在局部变量里
+		// 【坑】lib.dom.d.ts 里竟然有个叫 name 的全局变量，搞得TS检查不出 name 不在局部变量里
 		// 注意立即检查一下，以在后端误判时能立刻恢复到正确的宽度
 		function observe(width: number, query: string) {
 			const mql = window_.matchMedia(query);
