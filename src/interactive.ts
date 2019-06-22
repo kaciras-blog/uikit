@@ -14,9 +14,9 @@ export function openFile(multiple = false, accept: string = "*") {
 	if (multiple) {
 		input.setAttribute("multiple", "");
 	}
-	return new Promise(resolve => {
+	return new Promise<FileList>(resolve => {
 		// @ts-ignore
-		input.addEventListener("change", event => resolve(event.target["files"]));
+		input.addEventListener("change", event => resolve(event.target.files));
 		input.click();
 	});
 }
