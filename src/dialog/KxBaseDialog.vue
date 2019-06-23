@@ -1,5 +1,6 @@
 <template>
 	<kx-modal-wrapper
+		v-show="isTop"
 		@click.native.self="onOverlayClick"
 		@keyup.native.esc="onEscape"
 	>
@@ -21,7 +22,9 @@
 				<kx-close-icon v-if="closeIcon" @click="close"/>
 			</header>
 
-			<div class="kx-dialog-body"><slot/></div>
+			<div class="kx-dialog-body">
+				<slot/>
+			</div>
 		</div>
 	</kx-modal-wrapper>
 </template>
@@ -58,6 +61,9 @@ export default {
 			type: Boolean,
 			default: true,
 		},
+
+		/** 由挂载点传递，表明该弹出层是否是最顶层 */
+		isTop: Boolean,
 	},
 	methods: {
 		close() {

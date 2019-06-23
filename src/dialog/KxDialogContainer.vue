@@ -5,7 +5,7 @@
 			v-for="(options, index) in stack"
 			:key="options.id"
 			:is="options.component"
-			v-show="index === stack.length - 1"
+			:is-top="index === stack.length - 1"
 			v-bind="options.props"
 		/>
 	</div>
