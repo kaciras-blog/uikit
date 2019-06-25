@@ -40,26 +40,6 @@
 	margin-top: -(@h / 2);
 }
 
-.full-vertex() {
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-}
-
-// 居中, 不确定尺寸
-.center-absolute-auto() {
-	.full-vertex;
-	position: absolute;
-	margin: auto;
-}
-
-// 遮罩层, 全屏遮罩、区域遮罩
-.overlay-fixed() {
-	.full-vertex;
-	position: fixed;
-}
-
 // 扩展点击区域
 .extend-click(@left, @right, @top, @bottom) {
 	position: relative;
@@ -121,34 +101,6 @@
 	background: url(@url) no-repeat 50% 50%;
 	background-size: cover;
 }
-
-//------------------------------------- ├ 动效 ┆ └------------------------------------/
-
-// 链接默认无下划线，hover后有下划线的样式
-.hover-link() {
-	text-decoration: none;
-	&:hover {
-		text-decoration: underline;
-	}
-}
-
-// 将链接变成默认的文字样式
-.unstyled-link() {
-	color: inherit;
-	cursor: inherit;
-	text-decoration: inherit;
-	&:active, &:focus {
-		outline: none;
-	}
-}
-
-// 三维闪动 bug 处理
-.transform-fix() {
-	-webkit-backface-visibility: hidden;
-	-webkit-transform-style: preserve-3d;
-}
-
-//------------------------------------- ├ 功能 ┆ └------------------------------------/
 
 // 用于点击的元素，指针为手指样式、并禁止选取
 .click-item() {

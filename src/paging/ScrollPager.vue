@@ -93,9 +93,16 @@ export default {
 			this.state = LOADING;
 			this.$emit("load-page", new LoadTask(this));
 		},
+
+		/** 强制加载，该方法在加载完成时仍可以调用，用于HACK一些操作 */
+		forceLoad(loader) {
+			this.state = LOADING;
+			loader(new LoadTask(this));
+		},
 	},
 	mounted() {
 		this.$_observer = new IntersectionObserver(entries => {
+			// state === FREE 在出错时不自动加载
 			if (entries[0].isIntersecting && this.state === FREE) this.loadPage();
 		});
 		const autoLoadWatcher = (value) => {

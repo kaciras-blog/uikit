@@ -8,6 +8,7 @@
 	<div>
 		<slot :items="value ? value.items : []"/>
 		<scroll-pager
+			ref="scrollPager"
 			:init-state="drained ? 'ALL_LOADED' : 'FREE'"
 			:auto-load="autoLoad"
 			:next-page-url="nextLink && !drained ? nextLink(start + loadedCount, pageSize) : null"
@@ -73,6 +74,22 @@ export default {
 
 			// handleLoadTask不在渲染函数里，无法获知value的更新导致其不能使用 this.drained 来判断结束
 			return offset + pageSize >= data.total;
+		},
+		reload() {
+			const { start, pageSize } = this;
+
+			const doLoadPage = async () => {
+				const data = await this.loader(start, pageSize);
+				this.$emit("input", data);
+				this.loadedCount = pageSize;
+				return start + pageSize >= data.total;
+			};
+
+			this.$refs.scrollPager.forceLoad(task => {
+				doLoadPage()
+					.then(finish => task.complete(finish))
+					.catch(e => task.completeWithError(e));
+			});
 		},
 	},
 };

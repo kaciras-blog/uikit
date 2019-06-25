@@ -19,10 +19,10 @@
 		"vuex": "^3.1.1"
 	},
 	"devDependencies": {
-		"@storybook/vue": "^5.1.8",
+		"@storybook/vue": "^5.1.9",
 		"@types/animejs": "^2.0.2",
 		"@types/jest": "^24.0.15",
-		"@typescript-eslint/eslint-plugin": "^1.10.2",
+		"@typescript-eslint/eslint-plugin": "^1.11.0",
 		"@vue/cli-plugin-babel": "^3.8.0",
 		"@vue/cli-plugin-eslint": "^3.8.0",
 		"@vue/cli-plugin-typescript": "^3.8.1",
@@ -32,7 +32,7 @@
 		"@vue/test-utils": "^1.0.0-beta.29",
 		"babel-preset-vue": "^2.0.2",
 		"eslint": "^5.16.0",
-		"eslint-plugin-vue": "^5.2.2",
+		"eslint-plugin-vue": "^5.2.3",
 		"jest": "^24.8.0",
 		"less": "^3.9.0",
 		"less-loader": "^5.0.0",

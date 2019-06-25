@@ -2,9 +2,7 @@
 TODO: 将MessageBox和DialogBase的最外层移到这里，如何方便地对面板设置属性而不是遮罩层？
 -->
 <template>
-	<div class="kx-modal">
-		<slot/>
-	</div>
+	<div class="full-vertex kx-modal"><slot/></div>
 </template>
 
 <script>
@@ -17,7 +15,6 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-		// TODO: ESC
 	},
 	mounted() {
 		if (this.preventScroll) {
@@ -35,10 +32,6 @@ export default {
 <style lang="less">
 .kx-modal {
 	position: fixed;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
 	z-index: 1000;
 
 	display: flex;
