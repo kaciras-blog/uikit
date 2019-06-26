@@ -49,6 +49,21 @@ export default {
 			}
 		}
 
+		/*
+		 * 鼠标点击时屏蔽focus状态的边框，还需要在下面样式中 :active 伪类里移除边框。
+		 * 此操作可能的副作用有：
+		 * 可访问性：用鼠标聚焦元素然后再键盘操作的情况不常见，影响不大。
+		 * 事件处理：在真正的处理函数完成后才取消聚焦，对同步代码没有影响，而异步代码考虑到用户操作也可能取消聚焦，
+		 *           故在异步代码里访问event的聚焦属性应当考虑到该情况，这里不考虑。
+		 */
+		const rawMouseUp = data.on.mouseup;
+		data.on.mouseup = (event) => {
+			if (rawMouseUp) {
+				rawMouseUp(event);
+			}
+			event.currentTarget.blur();
+		};
+
 		return h(tag, data, children);
 	},
 };
@@ -136,16 +151,22 @@ export default {
 		color: white;
 		background-color: var(--background-highlight);
 		border-color: var(--background-highlight);
-		text-decoration: none; // <a>作为按钮时需要
+
+		// <a> 作为按钮时需要去掉默认样式
+		text-decoration: none;
+	}
+	&:focus {
+		box-shadow: 0 0 0 .2rem var(--background-glass);
+
+		// <a> 作为按钮时需要去掉默认样式
+		outline: 0;
+		text-decoration: none;
 	}
 	&:active {
 		color: white;
+		box-shadow: none;
 		background-color: var(--background-active);
 		border-color: var(--background-active);
-	}
-	&:focus {
-		outline: 0;
-		box-shadow: 0 0 0 .2rem var(--background-glass);
 	}
 }
 
