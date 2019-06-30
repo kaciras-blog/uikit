@@ -10,36 +10,6 @@ export class OperationCancelledError extends Error {
 
 export class CancelToken {
 
-	private readonly callbacks: Array<() => void> = [];
-
-	protected cancelled: boolean = false;
-
-	private lazyPromise?: Promise<void>;
-
-	cancel() {
-		if (!this.cancelled) {
-			this.cancelled = true;
-			this.callbacks.forEach(cb => cb());
-		}
-	}
-
-	/**
-	 * 注册一个回调函数，其将在该CancelToken取消时被调用，如果CancelToken已经取消则立即调用。
-	 *
-	 * @param callback 回调函数
-	 */
-	onCancel(callback: () => void) {
-		if (this.cancelled) {
-			callback();
-		} else {
-			this.callbacks.push(callback);
-		}
-	}
-
-	throwIfRequested() {
-		if (this.cancelled) throw new OperationCancelledError();
-	}
-
 	get isCancelled() {
 		return this.cancelled;
 	}
@@ -52,10 +22,13 @@ export class CancelToken {
 			return Promise.resolve();
 		}
 		if (!this.lazyPromise) {
-			this.lazyPromise = new Promise(resolve => this.callbacks.push(() => resolve()));
+			this.lazyPromise = new Promise((resolve) => this.callbacks.push(() => resolve()));
 		}
 		return this.lazyPromise;
 	}
+
+	/** 永远不会被取消的 CancelToken，该对象可以公用 */
+	public static readonly NEVER = new CancelToken();
 
 	/**
 	 * 创建CancelToken，其在指定的时间之后自动取消，当然也可以手动取消。
@@ -66,10 +39,35 @@ export class CancelToken {
 		return new TimeoutCancelToken(timeout);
 	}
 
+	protected cancelled: boolean = false;
+
+	private readonly callbacks: Array<() => void> = [];
+
+	private lazyPromise?: Promise<void>;
+
+	public cancel() {
+		if (!this.cancelled) {
+			this.cancelled = true;
+			this.callbacks.forEach((cb) => cb());
+		}
+	}
+
 	/**
-	 * 永远不会被取消的 CancelToken，该对象可以公用。
+	 * 注册一个回调函数，其将在该CancelToken取消时被调用，如果CancelToken已经取消则立即调用。
+	 *
+	 * @param callback 回调函数
 	 */
-	public static readonly NEVER = new CancelToken();
+	public onCancel(callback: () => void) {
+		if (this.cancelled) {
+			callback();
+		} else {
+			this.callbacks.push(callback);
+		}
+	}
+
+	public throwIfRequested() {
+		if (this.cancelled) { throw new OperationCancelledError(); }
+	}
 }
 
 CancelToken.NEVER.cancel = CancelToken.NEVER.onCancel = () => {};
@@ -86,7 +84,7 @@ class TimeoutCancelToken extends CancelToken {
 		this.timer = setTimeout(super.cancel.bind(this), timeout);
 	}
 
-	cancel() {
+	public cancel() {
 		if (!this.cancelled) {
 			super.cancel();
 			clearTimeout(this.timer);

@@ -86,7 +86,7 @@ export default function install(Vue: VueConstructor) {
 			if (typeof value === "string") {
 				value = vm.$options.components[value] || value;
 			}
-			el.addEventListener("contextmenu", event => {
+			el.addEventListener("contextmenu", (event) => {
 				event.preventDefault();
 				commands.contextMenu(value, event, arg && vm[arg]);
 			});

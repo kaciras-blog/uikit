@@ -22,7 +22,7 @@ function clientPosition(event: MouseEvent | TouchEvent): ClientPosition2D {
  * @return 不断发出鼠标坐标的Observable
  */
 export function observeMouseMove() {
-	return new Observable<Point2D>(subscriber => {
+	return new Observable<Point2D>((subscriber) => {
 
 		function onMove(event: MouseEvent | TouchEvent) {
 			const { clientX, clientY } = clientPosition(event);
@@ -52,16 +52,15 @@ export function observeMouseMove() {
 
 class InWindowPointFilter extends Subscriber<Point2D> {
 
-	/* eslint-disable curly */
-	public next(point: Point2D) {
+	/* tslint:disable:curly */
+	next(point: Point2D) {
 		if (point.x < 0 || point.x > window.innerWidth)
 			return;
 		if (point.y < 0 || point.y > window.innerHeight)
 			return;
 		super._next(point);
 	}
-
-	/* eslint-enable curly */
+	/* tslint:enable:curly */
 }
 
 /**
@@ -71,7 +70,7 @@ class InWindowPointFilter extends Subscriber<Point2D> {
  * @param source 原始Observable
  */
 export function limitInWindow(source: Observable<Point2D>) {
-	return new Observable<Point2D>(subscriber => source.subscribe(new InWindowPointFilter(subscriber)));
+	return new Observable<Point2D>((subscriber) => source.subscribe(new InWindowPointFilter(subscriber)));
 }
 
 
@@ -95,7 +94,7 @@ class ElementPositionMapper extends Subscriber<Point2D> {
 	}
 
 	// 新的坐标 = 元素开始位置 + 偏移
-	public next(value: Point2D) {
+	next(value: Point2D) {
 		super._next({ x: this.offsetX + value.x, y: this.offsetY + value.y });
 	}
 }
@@ -109,7 +108,8 @@ class ElementPositionMapper extends Subscriber<Point2D> {
  * @return 新的Observable，每个点将映射到元素的顶点
  */
 export function elementPosition(event: MouseEvent, el: HTMLElement) {
-	return (source: Observable<Point2D>) => new Observable<Point2D>(subscriber => source.subscribe(new ElementPositionMapper(subscriber, event, el)));
+	return (source: Observable<Point2D>) => new Observable<Point2D>((subscriber) =>
+		source.subscribe(new ElementPositionMapper(subscriber, event, el)));
 }
 
 
@@ -133,7 +133,7 @@ class MoveElementPipe extends Subscriber<Point2D> {
 		this.style = style;
 	}
 
-	public _next(value: Point2D) {
+	_next(value: Point2D) {
 		this.style.top = value.y + "px";
 		this.style.left = value.x + "px";
 		super._next(value);
@@ -148,5 +148,6 @@ class MoveElementPipe extends Subscriber<Point2D> {
  * @return 该函数不改变Observable
  */
 export function moveElement(el: HTMLElement) {
-	return (source: Observable<Point2D>) => new Observable<Point2D>(subscriber => source.subscribe(new MoveElementPipe(subscriber, el)));
+	return (source: Observable<Point2D>) => new Observable<Point2D>((subscriber) =>
+		source.subscribe(new MoveElementPipe(subscriber, el)));
 }

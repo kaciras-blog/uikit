@@ -23,7 +23,7 @@ describe("debounceFirst", () => {
 		task.resolve(123);
 
 		debounced(1, 2)
-			.then(v => expect(v).toBe(123))
+			.then((v) => expect(v).toBe(123))
 			.then(done);
 	});
 
@@ -31,8 +31,8 @@ describe("debounceFirst", () => {
 		const func = (x: number) => Promise.resolve(x * x);
 		const debounced = debounceFirst(func);
 
-		await debounced(3).then(v => expect(v).toBe(9));
-		await debounced(4).then(v => expect(v).toBe(16));
+		await debounced(3).then((v) => expect(v).toBe(9));
+		await debounced(4).then((v) => expect(v).toBe(16));
 	});
 
 	it("should reset after exception", async (done) => {

@@ -1,14 +1,14 @@
 /* 波浪效果，主要参考了Vuetify */
 
 function transform(el: HTMLElement, value: string) {
-	el.style["transform"] = value;
-	el.style["webkitTransform"] = value;
+	el.style.transform = value;
+	el.style.webkitTransform = value;
 }
 
 export class RippleEffect {
 
-	public centered: boolean;
-	public circle: boolean;
+	centered: boolean;
+	circle: boolean;
 
 	private readonly el: HTMLElement;
 
@@ -18,7 +18,7 @@ export class RippleEffect {
 		this.circle = circle;
 	}
 
-	public show(clientX: number, clientY: number) {
+	show(clientX: number, clientY: number) {
 		const { el } = this;
 		const { radius, scale, x, y, centerX, centerY } = this.calculate(clientX, clientY, el);
 
@@ -56,15 +56,20 @@ export class RippleEffect {
 		});
 	}
 
-	public hide() {
+	hide() {
 		const { el } = this;
 		const ripples = el.getElementsByClassName("v-ripple__animation");
 
-		if (ripples.length === 0) return;
+		if (ripples.length === 0) {
+			return;
+		}
 		const animation = ripples[ripples.length - 1] as HTMLElement;
 
-		if (animation.dataset.isHiding) return;
-		else animation.dataset.isHiding = "true";
+		if (animation.dataset.isHiding) {
+			return;
+		} else {
+			animation.dataset.isHiding = "true";
+		}
 
 		const diff = performance.now() - Number(animation.dataset.activated);
 		const delay = Math.max(250 - diff, 0);

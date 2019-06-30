@@ -6,19 +6,13 @@ import { boundClass } from "autobind-decorator";
 
 export class DialogResult<TData> {
 
-	public readonly isConfirm: boolean;
-	public readonly data: TData;
-
-	private constructor(isConfirm: boolean, data: TData) {
-		this.isConfirm = isConfirm;
-		this.data = data;
-	}
+	static CANCELED = new DialogResult<undefined>(false, undefined);
 
 	static confirm<TResult>(data: TResult) {
 		return new DialogResult(true, data);
 	}
 
-	static CANCELED = new DialogResult<undefined>(false, undefined);
+	private constructor(readonly isConfirm: boolean, readonly data: TData) {}
 }
 
 /**
@@ -32,18 +26,18 @@ export class DialogSession<TResult> extends PromiseDelegate<DialogResult<TResult
 
 	constructor(promise: Promise<DialogResult<TResult>>) {
 		super(promise);
-		promise.then(rv => this.dialogResult = rv);
+		promise.then((rv) => this.dialogResult = rv);
 	}
 
 	onConfirm(callback: (result: TResult) => void) {
-		this.promise.then(rv => {
+		this.promise.then((rv) => {
 			if (rv.isConfirm) callback(rv.data);
 		});
 		return this;
 	}
 
 	onCancel(callback: () => void) {
-		this.promise.then(rv => {
+		this.promise.then((rv) => {
 			if (!rv.isConfirm) callback();
 		});
 		return this;
@@ -59,13 +53,13 @@ export class DialogSession<TResult> extends PromiseDelegate<DialogResult<TResult
 	 */
 	confirmThen<R>(onFulfilled: OnFulfilled<TResult, R>) {
 		if (!this.confirmPromise) {
-			this.confirmPromise = new Promise<TResult>(resolve => this.onConfirm(resolve));
+			this.confirmPromise = new Promise<TResult>((resolve) => this.onConfirm(resolve));
 		}
 		return this.confirmPromise.then(onFulfilled);
 	}
 }
 
-type PropsData = { readonly [key: string]: any };
+interface PropsData { readonly [key: string]: any; }
 
 export interface DialogOptions {
 	component: Vue;
@@ -78,7 +72,7 @@ export interface DialogOptions {
 @boundClass
 export class DialogManager {
 
-	public readonly eventBus = new Vue();
+	readonly eventBus = new Vue();
 
 	/**
 	 * 弹出一个窗口。
@@ -88,7 +82,7 @@ export class DialogManager {
 	 * @return 弹窗会话，用于接收窗口的返回数据
 	 */
 	show(component: any, props?: PropsData) {
-		const promise = new Promise<DialogResult<any>>(resolve => {
+		const promise = new Promise<DialogResult<any>>((resolve) => {
 			this.eventBus.$emit("show", { component, props, resolve });
 		});
 		return new DialogSession(promise);

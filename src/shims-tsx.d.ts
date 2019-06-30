@@ -1,4 +1,4 @@
-import Vue, { VNode } from 'vue'
+import Vue, { VNode } from "vue";
 
 declare global {
 
@@ -7,7 +7,7 @@ declare global {
 		interface Element extends VNode {}
 
 		interface IntrinsicElements {
-			[elem: string]: any
+			[elem: string]: any;
 		}
 
 		// tslint:disable no-empty-interface

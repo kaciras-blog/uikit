@@ -10,13 +10,13 @@ export class VueMultiWatcher {
 	private readonly vm: Vue;
 	private readonly callback: (this: Vue, n: any, o: any) => void;
 	private readonly once: boolean;
-	private readonly unWatches: Array<Function>;
+	private readonly unWatches: Array<() => void>;
 
 	constructor(vm: Vue, paths: string[], callback: (this: Vue, n: any, o: any) => void, options: MultiWatchOptions) {
 		this.vm = vm;
 		this.callback = callback;
 		this.once = options.once;
-		this.unWatches = paths.map(path => vm.$watch(path, this.handleEvent.bind(this), options));
+		this.unWatches = paths.map((path) => vm.$watch(path, this.handleEvent.bind(this), options));
 	}
 
 	handleEvent(n: any, o: any) {
@@ -28,7 +28,7 @@ export class VueMultiWatcher {
 	}
 
 	unwatch() {
-		this.unWatches.forEach(unwatch => unwatch());
+		this.unWatches.forEach((unwatch) => unwatch());
 	}
 }
 
@@ -39,7 +39,7 @@ export class VueMultiWatcher {
  * @return 在指定的时间后完成的Promise
  */
 export function sleep(time: number) {
-	return new Promise(resolve => setTimeout(resolve, time));
+	return new Promise((resolve) => setTimeout(resolve, time));
 }
 
 /**
@@ -66,7 +66,7 @@ export function isTouchEvent(e: MouseEvent | TouchEvent): e is TouchEvent {
  */
 export function debounceFirst<T, R>(func: (...args: any[]) => Promise<R>) {
 	let task: Promise<R> | null = null;
-	return function (this: T, ...args: any[]) {
+	return function debounceWrapper(this: T, ...args: any[]) {
 		if (task) {
 			return task;
 		}

@@ -42,14 +42,14 @@ function install(Vue: VueConstructor) {
 	Vue.component(KxRadioBoxGroup.name, KxRadioBoxGroup);
 	Vue.component(KxPasswordInput.name, KxPasswordInput);
 
-//	IDE 无法分析自动扫描的引用
+	// IDE 无法分析自动扫描的引用
 // 	const requireContext = require.context(".", false,  /.vue$/);
 // 	requireContext.keys().forEach(file => {
 // 		const component = requireContext(file).default;
 // 		Vue.component(component.name, component);
 // 	});
 
-	Vue.directive("autofocus", { inserted: el => el.focus() });
+	Vue.directive("autofocus", { inserted: (el) => el.focus() });
 	Vue.directive("bind-selection", SelectionBinding);
 	Vue.directive("on-selection-changed", SelectionChangeDirective);
 	Vue.directive("ripple", Ripple);

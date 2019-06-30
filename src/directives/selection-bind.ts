@@ -10,7 +10,7 @@ export default {
 		if (!(el instanceof HTMLTextAreaElement || el instanceof HTMLInputElement)) {
 			throw new Error("v-bind-selection can only apply to HTMLTextAreaElement or HTMLInputElement");
 		}
-		vm.$watch(expression, nv => {
+		vm.$watch(expression, (nv) => {
 			const [s, e] = nv;
 			el.selectionStart = s;
 			el.selectionEnd = e;

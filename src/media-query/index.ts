@@ -35,7 +35,7 @@ export interface MediaBreakPoints {
 export class MediaQueryManager implements PluginObject<never> {
 
 	private readonly breakpoints: MediaBreakPoints;
-	private readonly entries: [string, number][];
+	private readonly entries: Array<[string, number]>;
 
 	constructor(breakpoints: MediaBreakPoints) {
 		this.breakpoints = breakpoints;

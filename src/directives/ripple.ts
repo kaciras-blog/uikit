@@ -12,8 +12,8 @@ import { RippleEffect } from "../ripple-effect";
 
 class RippleBinding extends RippleEffect {
 
-	public touched: boolean = false;
-	public enabled: boolean = true;
+	touched: boolean = false;
+	enabled: boolean = true;
 }
 
 interface RippledHtmlElement extends HTMLElement {
