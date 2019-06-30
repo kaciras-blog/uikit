@@ -41,7 +41,7 @@ export default {
 				return;
 			}
 			const task = this.onClick();
-			if (!task.then || !task.finally) {
+			if (typeof task.then === "function") {
 				throw new Error("TaskButton onclick handler must return a Promise");
 			}
 			this.running = true;

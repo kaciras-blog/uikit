@@ -28,14 +28,14 @@ export class CancelToken {
 	}
 
 	/** 永远不会被取消的 CancelToken，该对象可以公用 */
-	public static readonly NEVER = new CancelToken();
+	static readonly NEVER = new CancelToken();
 
 	/**
 	 * 创建CancelToken，其在指定的时间之后自动取消，当然也可以手动取消。
 	 *
 	 * @param timeout 超时时间（毫秒）
 	 */
-	public static timeout(timeout: number) {
+	static timeout(timeout: number) {
 		return new TimeoutCancelToken(timeout);
 	}
 
@@ -45,7 +45,7 @@ export class CancelToken {
 
 	private lazyPromise?: Promise<void>;
 
-	public cancel() {
+	cancel() {
 		if (!this.cancelled) {
 			this.cancelled = true;
 			this.callbacks.forEach((cb) => cb());
@@ -57,7 +57,7 @@ export class CancelToken {
 	 *
 	 * @param callback 回调函数
 	 */
-	public onCancel(callback: () => void) {
+	onCancel(callback: () => void) {
 		if (this.cancelled) {
 			callback();
 		} else {
@@ -65,7 +65,7 @@ export class CancelToken {
 		}
 	}
 
-	public throwIfRequested() {
+	throwIfRequested() {
 		if (this.cancelled) { throw new OperationCancelledError(); }
 	}
 }
@@ -74,7 +74,7 @@ CancelToken.NEVER.cancel = CancelToken.NEVER.onCancel = () => {};
 
 class TimeoutCancelToken extends CancelToken {
 
-	public readonly timeout: number;
+	readonly timeout: number;
 
 	private readonly timer: number;
 
@@ -84,7 +84,7 @@ class TimeoutCancelToken extends CancelToken {
 		this.timer = setTimeout(super.cancel.bind(this), timeout);
 	}
 
-	public cancel() {
+	cancel() {
 		if (!this.cancelled) {
 			super.cancel();
 			clearTimeout(this.timer);

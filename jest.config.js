@@ -21,17 +21,12 @@ module.exports = {
 	snapshotSerializers: [
 		"jest-serializer-vue",
 	],
-	testMatch: [
-		"**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)",
-	],
 	testURL: "http://localhost/",
 	watchPlugins: [
 		"jest-watch-typeahead/filename",
 		"jest-watch-typeahead/testname",
 	],
-	globals: {
-		"ts-jest": {
-			babelConfig: true,
-		},
-	},
+
+	// jest24 + te-jest24 必须用这个而不是 globals
+	preset: "ts-jest",
 };
