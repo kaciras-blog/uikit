@@ -1,48 +1,36 @@
 {
-	"name": "kx-ui",
+	"name": "kxui",
 	"version": "0.1.0",
-	"license": "MIT",
+	"private": true,
 	"scripts": {
 		"serve": "vue-cli-service serve",
 		"storybook": "start-storybook",
 		"build": "vue-cli-service build",
+		"lint": "vue-cli-service lint",
 		"test": "jest",
-		"lint": "vue-cli-service lint src test example",
 		"inspect": "vue-cli-service inspect > temp/webpack.dev.config.js && vue-cli-service inspect -production > temp/webpack.config.js"
 	},
 	"dependencies": {
 		"animejs": "^3.0.1",
 		"autobind-decorator": "^2.4.0",
+		"core-js": "^2.6.5",
 		"rxjs": "^6.5.2",
-		"vue": "^2.6.9",
-		"vue-router": "^3.0.6",
-		"vuex": "^3.1.1"
+		"vue": "^2.6.10",
+		"vue-router": "^3.0.3",
+		"vuex": "^3.0.1"
 	},
 	"devDependencies": {
-		"@storybook/vue": "^5.1.9",
-		"@types/animejs": "^2.0.2",
-		"@types/jest": "^24.0.15",
-		"@typescript-eslint/eslint-plugin": "^1.11.0",
+		"@types/jest": "^23.1.4",
 		"@vue/cli-plugin-babel": "^3.8.0",
-		"@vue/cli-plugin-eslint": "^3.8.0",
-		"@vue/cli-plugin-typescript": "^3.8.1",
-		"@vue/cli-service": "^3.8.4",
-		"@vue/eslint-config-standard": "^4.0.0",
-		"@vue/eslint-config-typescript": "^4.0.0",
-		"@vue/test-utils": "^1.0.0-beta.29",
-		"babel-preset-vue": "^2.0.2",
-		"eslint": "^5.16.0",
-		"eslint-plugin-vue": "^5.2.3",
-		"jest": "^24.8.0",
-		"less": "^3.9.0",
-		"less-loader": "^5.0.0",
-		"ts-jest": "^24.0.2",
-		"typescript": "^3.5.2",
-		"vue-template-compiler": "^2.6.9",
-		"webpack-bundle-analyzer": "^3.3.2"
-	},
-	"files": [
-		"src"
-	],
-	"main": "src/index.ts"
+		"@vue/cli-plugin-typescript": "^3.8.0",
+		"@vue/cli-plugin-unit-jest": "^3.8.0",
+		"@vue/cli-service": "^3.8.0",
+		"@vue/test-utils": "1.0.0-beta.29",
+		"babel-core": "7.0.0-bridge.0",
+		"less": "^3.0.4",
+		"less-loader": "^4.1.0",
+		"ts-jest": "^23.0.0",
+		"typescript": "^3.4.3",
+		"vue-template-compiler": "^2.6.10"
+	}
 }
