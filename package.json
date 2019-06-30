@@ -1,7 +1,11 @@
 {
 	"name": "kxui",
 	"version": "0.1.0",
-	"private": true,
+	"license": "MIT",
+	"files": [
+		"src"
+	],
+	"main": "src/index.ts",
 	"scripts": {
 		"serve": "vue-cli-service serve",
 		"storybook": "start-storybook",
