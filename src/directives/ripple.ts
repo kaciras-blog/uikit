@@ -74,7 +74,7 @@ function removeListeners(el: HTMLElement) {
 }
 
 export default {
-	bind(el: HTMLElement, binding: DirectiveBinding, node: VNode) {
+	bind(el: HTMLElement, binding: DirectiveBinding) {
 		const { centered, circle } = binding.modifiers;
 		(el as RippledHtmlElement)._ripple = new RippleBinding(el, centered, circle);
 		addListeners(el);
