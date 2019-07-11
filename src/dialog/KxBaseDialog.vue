@@ -13,7 +13,7 @@
 			<header
 				class="kx-dialog-header"
 				@mousedown="drag"
-				@touchstart.prevent="drag"
+				@touchstart.self.prevent="drag"
 			>
 				<slot name="title"><h2 class="kx-dialog-title">{{title}}</h2></slot>
 				<kx-close-icon v-if="closeIcon" @click="close"/>
