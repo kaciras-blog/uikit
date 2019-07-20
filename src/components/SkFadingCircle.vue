@@ -29,7 +29,7 @@ export default {
 @import "../css/exports";
 
 .sk-fading-circle {
-	margin: 1rem auto;
+	margin: 0 auto;
 	width: 3rem;
 	height: 3rem;
 	position: relative;

@@ -37,7 +37,7 @@ export function getScrollTop(element: HTMLElement) {
 }
 
 function scrollAnimation(element: HTMLElement, scrollTop: number) {
-	anime({ targets: document.scrollingElement, scrollTop, duration: 500, easing: "easeOutQuad" });
+	anime({ targets: document.scrollingElement, scrollTop, duration: 400, easing: "easeOutQuad" });
 }
 
 /**

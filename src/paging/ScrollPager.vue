@@ -125,6 +125,7 @@ export default {
 
 .container {
 	text-align: center;
+	padding: 20px;
 }
 
 @media screen and (max-width: @length-screen-mobile) {
