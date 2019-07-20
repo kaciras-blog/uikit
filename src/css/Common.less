@@ -106,6 +106,7 @@ hr {
 	}
 }
 
+// 下面的垂直按钮组display是flex，这里并不需要，但是统一下是否更好？
 .btn-group {
 
 	& > .kx-btn + .kx-btn {
@@ -134,6 +135,8 @@ hr {
 }
 
 .vertical-btn-group {
+	display: flex;
+	flex-direction: column;
 
 	& > .kx-btn + .kx-btn {
 		margin-top: 10px;
