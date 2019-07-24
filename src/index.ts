@@ -14,6 +14,7 @@ import KxRadioBox from "./components/KxRadioBox.vue";
 import KxRadioBoxGroup from "./components/KxRadioBoxGroup.vue";
 import KxPasswordInput from "./components/KxPasswordInput.vue";
 
+import AutoFocus from "./directives/autofocus";
 import ImeInput from "./directives/ime-input";
 import SelectionBinding from "./directives/selection-bind";
 import SelectionChangeDirective from "./directives/selection-change";
@@ -50,7 +51,7 @@ function install(Vue: VueConstructor) {
 // 		Vue.component(component.name, component);
 // 	});
 
-	Vue.directive("autofocus", { inserted: (el) => el.focus() });
+	Vue.directive("autofocus", AutoFocus);
 	Vue.directive("ime-input", ImeInput);
 	Vue.directive("bind-selection", SelectionBinding);
 	Vue.directive("on-selection-changed", SelectionChangeDirective);
