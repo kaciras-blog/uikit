@@ -15,7 +15,7 @@
 		"inspect": "vue-cli-service inspect > temp/webpack.dev.config.js && vue-cli-service inspect -production > temp/webpack.config.js"
 	},
 	"dependencies": {
-		"animejs": "^3.0.1",
+		"animejs": "^3.1.0",
 		"autobind-decorator": "^2.4.0",
 		"core-js": "^2.6.5",
 		"rxjs": "^6.5.2",
@@ -24,13 +24,13 @@
 		"vuex": "^3.0.1"
 	},
 	"devDependencies": {
-		"@storybook/vue": "^5.1.9",
+		"@storybook/vue": "^5.1.10",
 		"@types/animejs": "^2.0.2",
-		"@types/jest": "^24.0.15",
+		"@types/jest": "^24.0.16",
 		"@vue/cli-plugin-babel": "^3.9.2",
 		"@vue/cli-plugin-typescript": "^3.9.0",
 		"@vue/cli-plugin-unit-jest": "^3.9.0",
-		"@vue/cli-service": "^3.9.2",
+		"@vue/cli-service": "^3.9.3",
 		"@vue/test-utils": "1.0.0-beta.29",
 		"babel-core": "7.0.0-bridge.0",
 		"jest": "^24.8.0",
