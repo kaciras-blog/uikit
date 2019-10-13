@@ -18,7 +18,6 @@
 			tag="a"
 			class="primary"
 			:class="$style.button"
-			icon="fas fa-chevron-circle-down"
 			:href="nextPageUrl"
 			@click.prevent="loadPage"
 		>
