@@ -1,5 +1,6 @@
 {
-	"name": "kx-ui",
+	"name": "@kaciras-blog/uikit",
+	"description": "The component library of kaciras blog",
 	"version": "0.1.0",
 	"license": "MIT",
 	"files": [
