@@ -16,7 +16,8 @@
 
 		<span class="check-box-mark" :class="{ ckecked: model }"></span>
 
-		<slot/> <!-- 外面不套一层不知道行不行 -->
+		<!-- 如果有内容，则用 span 包裹住添加样式 -->
+		<span v-if="$slots.default" class="check-box-text"><slot/></span>
 	</label>
 </template>
 
@@ -72,7 +73,7 @@ export default {
 	height: 1.6em;
 	cursor: pointer;
 
-	// 竖直对齐以内部的input为基准，但input设了绝对定位切容器不是相对定位，没法调整
+	// 竖直对齐以内部的input为基准，但input设了绝对定位且容器不是相对定位，没法调整
 	// 内部input的位置，所以这里手动调下距离，14和16像素的字体刚好能对齐
 	vertical-align: -6px;
 }
@@ -91,7 +92,6 @@ export default {
 	display: inline-block;
 	position: relative;
 	.size(1.6em);
-	margin-right: 5px;
 
 	border: 1px solid @color-border;
 	border-radius: 4px;
@@ -114,5 +114,10 @@ export default {
 		width: 7px;
 		height: 13px;
 	}
+}
+
+// 这个边距不能放在框框上，因为会有无文字的复选框用法
+.check-box-text {
+	margin-left: 5px;
 }
 </style>

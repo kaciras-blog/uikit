@@ -2,6 +2,7 @@
 	<div v-context-menu="'TestContextMenu'">
 		<kx-button type="button" @click="mainDialog">算一下幸运数字</kx-button>
 		<kx-check-box>TestContextMenu</kx-check-box>
+		<kx-check-box/>
 		<kx-dialog-container></kx-dialog-container>
 	</div>
 </template>
