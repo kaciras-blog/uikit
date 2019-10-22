@@ -1,34 +1,5 @@
-# kxui
+# 项目说明
 
-## Project setup
-```
-yarn install
-```
+Kaciras个人博客的组件库，包含一些比较通用的组件。
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
-
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Run your unit tests
-```
-yarn run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+有问题请联系作者 [@Kaciras](https://github.com/Kaciras) <[Kaciras@outlook.com](mailto:Kaciras@outlook.com)>

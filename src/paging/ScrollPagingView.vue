@@ -60,7 +60,7 @@ export default {
 	methods: {
 		handleLoadTask(task) {
 			return this.loadPage()
-				.then(finish => task.complete(finish))
+				.then(isFinish => task.complete(isFinish))
 				.catch(e => task.completeWithError(e));
 		},
 		async loadPage() {
@@ -87,7 +87,7 @@ export default {
 
 			this.$refs.scrollPager.forceLoad(task => {
 				doLoadPage()
-					.then(finish => task.complete(finish))
+					.then(isFinish => task.complete(isFinish))
 					.catch(e => task.completeWithError(e));
 			});
 		},
