@@ -25,6 +25,8 @@
 		"vuex": "^3.0.1"
 	},
 	"devDependencies": {
+		"@storybook/addon-actions": "^5.2.5",
+		"@storybook/addon-knobs": "^5.2.5",
 		"@storybook/vue": "^5.2.5",
 		"@types/animejs": "^3.1.0",
 		"@types/jest": "^24.0.19",
@@ -34,6 +36,7 @@
 		"@vue/cli-service": "^4.0.4",
 		"@vue/test-utils": "1.0.0-beta.29",
 		"babel-core": "7.0.0-bridge.0",
+		"babel-preset-vue": "^2.0.2",
 		"jest": "^24.9.0",
 		"less": "^3.10.3",
 		"less-loader": "^5.0.0",
