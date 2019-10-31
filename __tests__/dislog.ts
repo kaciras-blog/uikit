@@ -3,10 +3,15 @@ import { createLocalVue, mount } from "@vue/test-utils";
 
 describe("DialogSession", () => {
 
-	it("should't resolve confirmThen", (done) => {
+	it("should't resolve confirmPromise on cancelled", (done) => {
 		const s = new DialogSession(Promise.resolve(DialogResult.CANCELED));
-		s.confirmThen(() => done.fail("DialogSession.confirmThen resolved"));
-		setTimeout(done, 20);
+		s.confirmPromise.then(() => done.fail("DialogSession.confirmThen resolved"));
+		setTimeout(done, 50);
+	});
+
+	it("should resolve confirmPromise with confirm", async () => {
+		const sess = new DialogSession(Promise.resolve(DialogResult.confirm(555)));
+		await sess.confirmPromise.then((value) => expect(value).toBe(555));
 	});
 });
 

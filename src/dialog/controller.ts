@@ -1,9 +1,15 @@
 // vue-jest 不支持 babel 7，所以必须把与vue文件相关的部分分开。
 // 该文件包含弹窗的核心API，index.ts里会增加一些具体的弹窗API。
-import Vue from "vue";
-import PromiseDelegate, { OnFulfilled } from "../PromiseDelegate";
+import Vue, { ComponentOptions } from "vue";
+import PromiseDelegate from "../PromiseDelegate";
 import { boundClass } from "autobind-decorator";
 
+/**
+ * 表示弹窗会话的结果，当弹窗关闭时会返回此对象。
+ *
+ * isConfirm === true 表示用户确认了该弹窗的，其结果应当被处理；
+ * 反之则代表该弹窗是意外关闭（切换页面等）或者用户忽略了弹窗。
+ */
 export class DialogResult<TData> {
 
 	static CANCELED = new DialogResult<undefined>(false, undefined);
@@ -21,8 +27,6 @@ export class DialogResult<TData> {
 export class DialogSession<TResult> extends PromiseDelegate<DialogResult<TResult>> {
 
 	private dialogResult?: DialogResult<TResult>;
-
-	private confirmPromise?: Promise<any>;
 
 	constructor(promise: Promise<DialogResult<TResult>>) {
 		super(promise);
@@ -43,23 +47,20 @@ export class DialogSession<TResult> extends PromiseDelegate<DialogResult<TResult
 		return this;
 	}
 
-	onClose(callback: () => void) {
-		this.promise.then(callback);
-		return this;
-	}
-
 	/**
-	 * 类似于 Promise.then 但是只在 confirm 状态下才会 resolve.
+	 * 仅在确认后resolve的Promise，如果是取消则永远不会resolve。
+	 * 可以用于仅关心确认情况的异步函数。
+	 *
+	 * 【实现】不缓存这个Promise，因为很少有多次等待同一个Promise的情况。
 	 */
-	confirmThen<R>(onFulfilled: OnFulfilled<TResult, R>) {
-		if (!this.confirmPromise) {
-			this.confirmPromise = new Promise<TResult>((resolve) => this.onConfirm(resolve));
-		}
-		return this.confirmPromise.then(onFulfilled);
+	get confirmPromise() {
+		return new Promise<TResult>((resolve) => this.onConfirm(resolve));
 	}
 }
 
-interface PropsData { readonly [key: string]: any; }
+interface PropsData {
+	readonly [key: string]: any;
+}
 
 export interface DialogOptions {
 	component: Vue;
@@ -68,20 +69,19 @@ export interface DialogOptions {
 	resolve(result: DialogResult<any>): void;
 }
 
-
 @boundClass
 export class DialogManager {
 
 	readonly eventBus = new Vue();
 
 	/**
-	 * 弹出一个窗口。
+	 * 弹出一个窗口，返回处理弹窗结果的会话对象。
 	 *
-	 * @param component 弹窗组件
-	 * @param props 传递给弹窗的数据
+	 * @param component 弹窗组件名或组件选项
+	 * @param props 传递给弹窗的Props
 	 * @return 弹窗会话，用于接收窗口的返回数据
 	 */
-	show(component: any, props?: PropsData) {
+	show(component: ComponentOptions<any> | string, props?: PropsData) {
 		const promise = new Promise<DialogResult<any>>((resolve) => {
 			this.eventBus.$emit("show", { component, props, resolve });
 		});
@@ -106,7 +106,9 @@ export class DialogManager {
 		this.eventBus.$emit("close", result);
 	}
 
-	/** 关闭所有弹窗，该方法不能传递结果，所有弹窗会话将返回 DialogResult.CANCELED */
+	/**
+	 * 强制关闭所有弹窗，所有弹窗会话将返回 DialogResult.CANCELED
+	 */
 	clear() {
 		this.eventBus.$emit("clear");
 	}
