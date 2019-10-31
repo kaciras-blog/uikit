@@ -49,7 +49,7 @@ class KxDialogManagerExt extends DialogManager {
 		return this.show(KxMessageBox, options);
 	}
 
-	// 下面4个都是便捷方法，其中成功的消息往往仅用于提醒一下用户，所以内容也有默认值。
+	// 下面4个都是便捷方法，其中成功的消息往往仅用于提醒一下用户，所以有个有默认标题。
 
 	alertInfo(title: string, content?: string) {
 		return this.alert({ title, content, type: MessageBoxType.Info });
@@ -93,6 +93,5 @@ export default function install(Vue: VueConstructor) {
 		},
 	});
 
-	// noinspection JSUnusedGlobalSymbols
 	Vue.prototype.$dialog = commands;
 }

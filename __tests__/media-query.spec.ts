@@ -1,5 +1,5 @@
 import "@/media-query/shims-media-query.d.ts";
-import { MediaBreakPoints, MediaQueryManager, SET_WIDTH } from "../src/media-query";
+import { MediaBreakPoints, MediaQueryManager, SET_WIDTH } from "@/media-query";
 import { createLocalVue, shallowMount } from "@vue/test-utils";
 import Vuex from "vuex";
 
