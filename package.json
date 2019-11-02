@@ -8,11 +8,10 @@
 	],
 	"main": "src/index.ts",
 	"scripts": {
-		"serve": "vue-cli-service serve",
 		"storybook": "start-storybook",
 		"build": "vue-cli-service build",
 		"lint": "vue-cli-service lint",
-		"test": "jest",
+		"test:unit": "jest",
 		"inspect": "vue-cli-service inspect > temp/webpack.dev.config.js && vue-cli-service inspect -production > temp/webpack.config.js"
 	},
 	"dependencies": {
