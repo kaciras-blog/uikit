@@ -12,13 +12,14 @@
 </template>
 
 <script>
-import KxStandardDialogButtons from "../../src/dialog/KxStandardDialogButtons";
-import { MessageBoxType } from "../../src/dialog";
-import { PreventScrollMixin } from "../../src";
+import KxStandardDialogButtons from "../src/dialog/KxStandardDialogButtons";
+import { PreventScrollMixin } from "../src";
 
 export default {
 	name: "InputBox",
-	components: { KxStandardDialogButtons },
+	components: {
+		KxStandardDialogButtons,
+	},
 	props: ["data"],
 	mixins: [PreventScrollMixin],
 	data() {
@@ -31,11 +32,7 @@ export default {
 		async ok() {
 			let num = parseInt(this.age);
 			if (Number.isNaN(num)) {
-				await this.$dialog.messageBox({
-					title: "输入错误",
-					content: "您输入的年龄不是数字",
-					type: MessageBoxType.Error,
-				});
+				await this.$dialog.alertError("输入错误", "您输入的年龄不是数字");
 				this.age = "18";
 			}
 			if (this.name.length === 0) {
