@@ -52,7 +52,7 @@ export function observeMouseMove() {
 
 class InWindowPointFilter extends Subscriber<Point2D> {
 
-	/* tslint:disable:curly */
+	/* eslint-disable curly */
 	next(point: Point2D) {
 		if (point.x < 0 || point.x > window.innerWidth)
 			return;
@@ -60,7 +60,7 @@ class InWindowPointFilter extends Subscriber<Point2D> {
 			return;
 		super._next(point);
 	}
-	/* tslint:enable:curly */
+	/* eslint-enable curly */
 }
 
 /**
@@ -72,7 +72,6 @@ class InWindowPointFilter extends Subscriber<Point2D> {
 export function limitInWindow(source: Observable<Point2D>) {
 	return new Observable<Point2D>((subscriber) => source.subscribe(new InWindowPointFilter(subscriber)));
 }
-
 
 class ElementPositionMapper extends Subscriber<Point2D> {
 
@@ -112,7 +111,6 @@ export function elementPosition(event: MouseEvent, el: HTMLElement) {
 		source.subscribe(new ElementPositionMapper(subscriber, event, el)));
 }
 
-
 class MoveElementPipe extends Subscriber<Point2D> {
 
 	private readonly style: CSSStyleDeclaration;
@@ -139,7 +137,6 @@ class MoveElementPipe extends Subscriber<Point2D> {
 		super._next(value);
 	}
 }
-
 
 /**
  * 将元素设为绝对定位，并根据观察到的点改变元素的 top 和 left.

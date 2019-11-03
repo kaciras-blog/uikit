@@ -71,7 +71,7 @@ export default {
 			observeMouseMove().pipe(
 				limitInWindow,
 				elementPosition(event, this.$refs.panel),
-				moveElement(this.$refs.panel)
+				moveElement(this.$refs.panel),
 			).subscribe();
 		},
 		onEscape() {

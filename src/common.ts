@@ -1,6 +1,5 @@
 import Vue, { WatchOptions } from "vue";
 
-
 interface MultiWatchOptions extends WatchOptions {
 	once: boolean;
 }

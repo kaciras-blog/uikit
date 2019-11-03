@@ -29,7 +29,7 @@ export default {
 		},
 		disabled: {
 			type: Boolean,
-			default: false
+			default: false,
 		},
 		id: String,
 		name: String,
@@ -43,9 +43,9 @@ export default {
 		},
 		handleChange(event) {
 			this.$emit("input", event.target.value);
-		}
-	}
-}
+		},
+	},
+};
 </script>
 
 <style lang="less">

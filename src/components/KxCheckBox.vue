@@ -1,9 +1,10 @@
 <template>
-	<label class="kx-check-box"
-		   :class="{ disabled }"
-		   role="checkbox"
-		   :aria-checked="model"
-		   :aria-disabled="disabled"
+	<label
+		class="kx-check-box"
+		:class="{ disabled }"
+		role="checkbox"
+		:aria-checked="model"
+		:aria-disabled="disabled"
 	>
 		<input
 			v-model="model"
@@ -14,7 +15,7 @@
 			@change="handleChange"
 		>
 
-		<span class="check-box-mark" :class="{ ckecked: model }"></span>
+		<span class="check-box-mark" :class="{ checked: model }"></span>
 
 		<!-- 如果有内容，则用 span 包裹住添加样式 -->
 		<span v-if="$slots.default" class="check-box-text"><slot/></span>
@@ -97,12 +98,12 @@ export default {
 	border-radius: 4px;
 	transition: all .15s;
 
-	&.ckecked {
+	&.checked {
 		background-color: @checked-color;
 		border-color: @checked-color;
 	}
 
-	&.ckecked::after {
+	&.checked::after {
 		content: "";
 		border: solid white;
 		border-width: 0 2px 2px 0;

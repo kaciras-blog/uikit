@@ -4,11 +4,9 @@
  *   centered - 波纹从元素中心发出，默认是从点击位置发出
  *   circle - 波纹最大宽度不超过元素，默认是要超过的
  */
-import { VNode } from "vue";
 import { DirectiveBinding } from "vue/types/options";
-import { isTouchEvent } from "../common";
-import { RippleEffect } from "../ripple-effect";
-
+import { isTouchEvent } from "@/common";
+import { RippleEffect } from "@/ripple-effect";
 
 class RippleBinding extends RippleEffect {
 
