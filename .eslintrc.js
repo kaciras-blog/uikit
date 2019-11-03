@@ -39,10 +39,10 @@ module.exports = {
 		// TS把字段写在构造方法参数里，而函数体空着，他认为是无用的？
 		"no-useless-constructor": "off",
 
-		// 我一版把类的第一行空着，但这条规则要么不空，要么最后一行也空
+		// 我一般把类的第一行空着，但这条规则要么不空，要么最后一行也空
 		"padded-blocks": "off",
 
-		// 单行Lambda表达式里的赋值语句是常见的，它也不能区分一下？
+		// 单行Lambda表达式的赋值语句是很常见的，它也不能区分一下？
 		"no-return-assign": "off",
 
 		"no-console": process.env.NODE_ENV === "production" ? "error" : "off",
