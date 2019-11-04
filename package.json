@@ -12,7 +12,7 @@
 		"build": "vue-cli-service build",
 		"lint": "vue-cli-service lint",
 		"test:unit": "jest",
-		"inspect": "vue-cli-service inspect > temp/webpack.dev.config.js && vue-cli-service inspect -production > temp/webpack.config.js"
+		"inspect": "node scripts/inspect-webpack.js"
 	},
 	"dependencies": {
 		"animejs": "^3.1.0",
@@ -48,6 +48,7 @@
 		"less-loader": "^5.0.0",
 		"ts-jest": "^24.1.0",
 		"typescript": "^3.6.4",
-		"vue-template-compiler": "^2.6.10"
+		"vue-template-compiler": "^2.6.10",
+		"webpack-chain": "^6.0.0"
 	}
 }
