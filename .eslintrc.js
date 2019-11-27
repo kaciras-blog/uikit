@@ -1,20 +1,20 @@
 module.exports = {
 	root: true,
 	env: {
-		es6: true,
+		es2020: true,
 		node: true,
 	},
 	"extends": [
 		"plugin:vue/essential",
-		"@vue/standard",
 		"@vue/typescript",
+		"eslint:recommended",
 	],
 	rules: {
 		// 我就是要用 TAB 缩进，可惜空格异端太多
 		"no-tabs": "off",
 		"indent": ["error", "tab", {
 			SwitchCase: 1,
-			FunctionDeclaration: { parameters: "off" }, // first 在 tab 缩进下有bug
+			FunctionDeclaration: { parameters: "off" },
 			ignoreComments: true, // IDE 自动注释直接加在开头
 		}],
 
@@ -34,7 +34,9 @@ module.exports = {
 		"no-mixed-spaces-and-tabs": ["warn", "smart-tabs"],
 
 		// 可能是我后端语言写多了，更喜欢双引号字符串
-		"quotes": ["warn", "double"],
+		"quotes": ["error", "double", {
+			avoidEscape: true,
+		}],
 
 		// TS把字段写在构造方法参数里，而函数体空着，他认为是无用的？
 		"no-useless-constructor": "off",
