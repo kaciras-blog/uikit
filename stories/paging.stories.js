@@ -4,18 +4,18 @@ export default {
 
 export const custom = () => ({
 	template: `
-		<button-paging-view
-ref="pagingView"
-v-model="list"
-:loader="loadMockItems"
-:viewport-offset="60"
-:page-size="2"
-:show-top-buttons="true"
->
-<template v-slot="{ items }">
-<p v-for="item of items" :key="item">{{item}}</p>
-</template>
-</button-paging-view>`,
+	<button-paging-view
+		ref="pagingView"
+		v-model="list"
+		:loader="loadMockItems"
+		:viewport-offset="60"
+		:page-size="2"
+		:show-top-buttons="true"
+		>
+			<template v-slot="{ items }">
+				<p v-for="item of items" :key="item">{{item}}</p>
+			</template>
+	</button-paging-view>`,
 	data: () => ({
 		list: undefined,
 		scrollList: undefined,

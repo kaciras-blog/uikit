@@ -72,7 +72,7 @@ export class MediaQueryManager implements PluginObject<never> {
 			return;
 		}
 
-		// 【坑】lib.dom.d.ts 里竟然有个叫 name 的全局变量，搞得TS检查不出 name 不在局部变量里
+		// 【坑】浏览器竟然有个叫 name 的全局变量，搞得TS检查不出 name 不在局部变量里
 		// 注意立即检查一下，以在后端误判时能立刻恢复到正确的宽度
 		function observe(width: number, query: string) {
 			const mql = window_.matchMedia(query);
@@ -107,7 +107,9 @@ export class MediaQueryManager implements PluginObject<never> {
 
 		// this.$mediaQuery.func(...) 里面访问不到Vue实例，所以得这么搞一下
 		Object.defineProperty(Vue.prototype, "$mediaQuery", {
-			get() { return new MediaQueryAPI(this.$store, breakpoints); },
+			get() {
+				return new MediaQueryAPI(this.$store, breakpoints);
+			},
 			enumerable: true,
 			configurable: true, // SSR 使用外置 Vue 模块时会重复加载插件
 		});
@@ -168,11 +170,12 @@ export class MediaQueryAPI {
 	private testMatchExp(exp: string, width: number) {
 		const { breakpoints } = this;
 		const modifier = exp[exp.length - 1];
+
 		if (modifier === "+") {
-			return width >= breakpoints[exp = exp.substring(0, exp.length - 1)];
+			return width >= breakpoints[exp.substring(0, exp.length - 1)];
 		}
 		if (modifier === "-") {
-			return width < breakpoints[exp = exp.substring(0, exp.length - 1)];
+			return width < breakpoints[exp.substring(0, exp.length - 1)];
 		}
 		return width === breakpoints[exp];
 	}

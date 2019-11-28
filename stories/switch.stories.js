@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/vue";
-import { withKnobs, boolean } from '@storybook/addon-knobs';
+import { withKnobs, boolean } from "@storybook/addon-knobs";
 import "../src/css/Index.less";
 import KxSwitch from "../src/components/KxSwitch.vue";
 
@@ -14,6 +14,10 @@ stories.add("switch", () => ({
 		},
 	},
 	components: { KxSwitch },
-	template: `<kx-switch v-model="value" :disabled="disabled"></kx-switch>`,
+	template: `
+	<div>
+		这是一个切换按钮
+		<kx-switch v-model="value" :disabled="disabled"></kx-switch>
+	</div>`,
 	data: () => ({ value: false }),
 }));

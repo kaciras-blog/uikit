@@ -1,4 +1,4 @@
-// noinspection ES6UnusedImports (1.确保在声明补充的类型之前导入 'vue')
+// noinspection ES6UnusedImports
 import Vue from "vue";
 import { MediaQueryAPI } from ".";
 

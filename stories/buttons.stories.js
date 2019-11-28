@@ -1,14 +1,14 @@
-import { action } from '@storybook/addon-actions';
+import { action } from "@storybook/addon-actions";
 import KxButton from "../src/components/KxButton.vue";
 import KxTaskButton from "../src/components/KxTaskButton.vue";
 import { sleep } from "../src/index";
 
 // link buttons?
 export default {
-	title: 'Buttons',
+	title: "Buttons",
 };
 
-export const plainButtons =() => ({
+export const plainButtons = () => ({
 	components: { KxButton },
 	template: `
 	<div>
@@ -29,9 +29,9 @@ export const plainButtons =() => ({
 		</p>
 	</div>
 	`,
-	methods:{
-		handleClick: action('button-click'),
-	}
+	methods: {
+		handleClick: action("button-click"),
+	},
 });
 
 plainButtons.story = { name: "Plain" };
