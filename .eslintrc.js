@@ -18,6 +18,9 @@ module.exports = {
 			ignoreComments: true, // IDE 自动注释直接加在开头
 		}],
 
+		// 这方面 IDE 的提示比 Eslint 智能多了
+		"no-unused-vars": "off",
+
 		// 末尾逗号保持跟前面的一致，这样调整顺序或是增删都不会忘了逗号
 		"comma-dangle": ["error", "always-multiline"],
 
@@ -37,15 +40,6 @@ module.exports = {
 		"quotes": ["error", "double", {
 			avoidEscape: true,
 		}],
-
-		// TS把字段写在构造方法参数里，而函数体空着，他认为是无用的？
-		"no-useless-constructor": "off",
-
-		// 我一般把类的第一行空着，但这条规则要么不空，要么最后一行也空
-		"padded-blocks": "off",
-
-		// 单行Lambda表达式的赋值语句是很常见的，它也不能区分一下？
-		"no-return-assign": "off",
 
 		"no-console": process.env.NODE_ENV === "production" ? "error" : "off",
 		"no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
