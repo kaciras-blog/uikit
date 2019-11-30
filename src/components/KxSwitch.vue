@@ -55,11 +55,11 @@ export default {
 
 .kx-switch {
 	display: inline-block;
-	width: 40px;
-	height: 20px;
-	padding: 2px;
+	width: 48px;
+	height: 24px;
+	padding: 4px;
 
-	border-radius: 8px;
+	border-radius: 12px;
 	cursor: pointer;
 	background: gray;
 
@@ -81,7 +81,7 @@ export default {
 	}
 
 	&.checked::after {
-		margin-left: 20px;
+		margin-left: 24px;
 	}
 
 	&.disabled {
@@ -93,5 +93,6 @@ export default {
 .kx-switch-input {
 	position: absolute;
 	opacity: 0;
+	z-index: -1;
 }
 </style>
