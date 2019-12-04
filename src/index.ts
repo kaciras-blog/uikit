@@ -77,7 +77,7 @@ if (GlobalVue) {
 }
 
 export * from "./common";
-export * from "./cancellation";
+export * from "./abort";
 export * from "./dragging";
 export * from "./interactive";
 
