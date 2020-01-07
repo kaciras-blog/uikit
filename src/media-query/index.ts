@@ -40,6 +40,7 @@ export class MediaQueryManager implements PluginObject<never> {
 	constructor(breakpoints: MediaBreakPoints) {
 		this.breakpoints = breakpoints;
 		this.entries = Object.entries(breakpoints);
+
 		if (!this.entries.length) {
 			throw new Error("至少要有一个断点");
 		}
