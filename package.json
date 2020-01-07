@@ -15,7 +15,6 @@
 		"inspect": "node scripts/inspect-webpack.js"
 	},
 	"dependencies": {
-		"abort-controller": "^3.0.0",
 		"animejs": "^3.1.0",
 		"autobind-decorator": "^2.4.0",
 		"core-js": "^3.6.2",
