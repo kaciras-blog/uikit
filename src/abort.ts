@@ -1,4 +1,5 @@
-import ThirdPartyAbortController from "abort-controller";
+/* eslint-disable indent */
+import Polyfill from "abort-controller";
 
 /*
  * 在浏览器环境（全局对象为window）和 WebWorker（全局对象为self）使用内置的 AbortController，
@@ -6,35 +7,36 @@ import ThirdPartyAbortController from "abort-controller";
  *
  * 如果在编译期能够得知全局对象的存在与否，就应该能 Tree-Shaking 优化掉 abort-controller 的导入。
  */
-const _AbortController: typeof AbortController =
-	typeof window !== "undefined" && typeof self !== "undefined"
-		? AbortController : ThirdPartyAbortController;
+const _global =
+	typeof self !== "undefined" ? self :
+	typeof window !== "undefined" ? window :
+	undefined;
 
-// @formatter:off
+type ACType = typeof window.AbortController;
+
+export const AbortController: ACType = _global ? _global.AbortController : Polyfill;
 
 /**
  * 永远不会被中断的AbortSignal，该对象可以重复使用。
  */
-export const NEVER_ABORT_SIGNAL: AbortSignal = {
+// @formatter:off
+export const NEVER_ABORT_SIGNAL: AbortSignal = Object.freeze({
 	aborted: false,
 	onabort() {},
 	dispatchEvent() { return false;	},
 	addEventListener() {},
 	removeEventListener() {},
-};
+});
 
-/**
- * 无法中断的AbortController，调用其abort方法不会产生任何效果，该对象可以重复使用。
- */
-export const NO_OP_CONTROLLER: AbortController = {
-	abort() {},
-	signal: NEVER_ABORT_SIGNAL,
-};
+export const ABORTED_SIGNAL: AbortSignal = Object.freeze({
+	aborted: true,
+	onabort() {},
+	dispatchEvent() { return false;	},
+	addEventListener() {},
+	removeEventListener() {},
+});
 
 // @formatter:on
-
-Object.freeze(NEVER_ABORT_SIGNAL);
-Object.freeze(NO_OP_CONTROLLER);
 
 /**
  * 创建一个在指定的时间之后自动取消的AbortController，当然也可以手动取消。
@@ -42,7 +44,7 @@ Object.freeze(NO_OP_CONTROLLER);
  * @param timeout 超时时间（毫秒）
  */
 export function abortTimeout(timeout: number) {
-	const controller = new _AbortController();
+	const controller = new AbortController();
 	setTimeout(controller.abort.bind(controller), timeout);
 	return controller;
 }
