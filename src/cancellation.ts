@@ -1,94 +1,106 @@
-// TODO: 是否可以用 AbortController
+/**
+ * 表示因取消而中断的异常，该异与DOM规范里的AbortError兼容。
+ */
+export class AbortError extends Error {
 
-/** 使用自定义的异常以便于其他异常做区分 */
-export class OperationCancelledError extends Error {
-	constructor() { super("The operation is cancelled"); }
+	name = "AbortError";
+
+	constructor(message = "The operation is cancelled") { super(message); }
 }
 
 /*
  * 【注意】CancelToken没有完成状态，无法感知操作是否已经完成，也就无法在完成时取消定时器。
  * 这要求注册的取消回调必须在操作完成后也能调用，并不会破坏结果。
  */
-export class CancelToken {
+export interface CancellationToken {
+
+	isCancelled: boolean;
+
+	promise(): Promise<void>;
+
+	cancel(): void;
+
+	addListener(listener: () => void): void
+
+	throwIfRequested(): void;
+}
+
+class MutableToken implements CancellationToken {
+
+	private readonly callbacks: Array<() => void> = [];
+
+	protected cancelled = false;
+	private lazyPromise?: Promise<void>;
 
 	get isCancelled() {
 		return this.cancelled;
 	}
 
-	/**
-	 * 获取一个Promise，在该CancelToken取消时resolve
-	 */
-	get promise() {
+	promise() {
 		if (this.cancelled) {
 			return Promise.resolve();
 		}
 		if (!this.lazyPromise) {
-			this.lazyPromise = new Promise((resolve) => this.callbacks.push(() => resolve()));
+			this.lazyPromise = new Promise((resolve) => this.callbacks.push(resolve));
 		}
 		return this.lazyPromise;
 	}
 
-	/** 永远不会被取消的 CancelToken，该对象可以公用 */
-	static readonly NEVER = new CancelToken();
-
-	/**
-	 * 创建CancelToken，其在指定的时间之后自动取消，当然也可以手动取消。
-	 *
-	 * @param timeout 超时时间（毫秒）
-	 */
-	static timeout(timeout: number) {
-		return new TimeoutCancelToken(timeout);
-	}
-
-	protected cancelled: boolean = false;
-
-	private readonly callbacks: Array<() => void> = [];
-
-	private lazyPromise?: Promise<void>;
-
 	cancel() {
 		if (!this.cancelled) {
 			this.cancelled = true;
-			this.callbacks.forEach((cb) => cb());
+			this.callbacks.forEach((cb) => setTimeout(cb, 0));
 		}
 	}
 
-	/**
-	 * 注册一个回调函数，其将在该CancelToken取消时被调用，如果CancelToken已经取消则立即调用。
-	 *
-	 * @param callback 回调函数
-	 */
-	onCancel(callback: () => void) {
+
+	addListener(callback: () => void) {
 		if (this.cancelled) {
-			callback();
+			setTimeout(callback, 0);
 		} else {
 			this.callbacks.push(callback);
 		}
 	}
 
 	throwIfRequested() {
-		if (this.cancelled) { throw new OperationCancelledError(); }
+		if (this.cancelled) {
+			throw new AbortError();
+		}
 	}
 }
 
-CancelToken.NEVER.cancel = CancelToken.NEVER.onCancel = () => {};
+export namespace CancellationToken {
 
-class TimeoutCancelToken extends CancelToken {
-
-	readonly timeout: number;
-
-	private readonly timer: number;
-
-	constructor(timeout: number) {
-		super();
-		this.timeout = timeout;
-		this.timer = setTimeout(super.cancel.bind(this), timeout);
-	}
-
-	cancel() {
-		if (!this.cancelled) {
-			super.cancel();
-			clearTimeout(this.timer);
+	/**
+	 * 创建一个 CancellationToken 的实例。
+	 */
+	export function create(parent?: CancellationToken) {
+		const token = new MutableToken();
+		if (parent) {
+			parent.addListener(token.cancel.bind(token));
 		}
+		return token;
 	}
+
+	/**
+	 * 永远不会被取消的 CancellationToken，该对象可以重复使用
+	 */
+	export const NEVER = Object.freeze<CancellationToken>({
+		isCancelled: false,
+		promise: () => new Promise<void>(() => {}),
+		cancel() {},
+		addListener() {},
+		throwIfRequested() {},
+	});
+
+	/**
+	 * 已经取消的 CancellationToken，该对象可以重复使用
+	 */
+	export const CANCELLED = Object.freeze<CancellationToken>({
+		isCancelled: true,
+		promise: Promise.resolve.bind(Promise),
+		cancel() {},
+		addListener(listener) { setTimeout(listener, 0); },
+		throwIfRequested() { throw new AbortError(); },
+	});
 }

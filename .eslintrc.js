@@ -41,6 +41,9 @@ module.exports = {
 			avoidEscape: true,
 		}],
 
+		// TypeScript 支持在 namespace 里声明成员
+		"no-inner-declarations": ["off"],
+
 		"no-console": process.env.NODE_ENV === "production" ? "error" : "off",
 		"no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
 	},
