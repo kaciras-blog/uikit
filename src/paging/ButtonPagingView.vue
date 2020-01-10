@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { CancelToken, scrollToElementEnd, scrollToElementStart } from "../index";
+import { CancellationToken, scrollToElementEnd, scrollToElementStart } from "../index";
 import { getScrollTop } from "../interactive";
 
 export default {
@@ -81,7 +81,7 @@ export default {
 			if (_loading) {
 				_loading.cancel();
 			}
-			const cancelToken = new CancelToken();
+			const cancelToken = CancellationToken.create();
 			this._loading = cancelToken;
 			this.index = index; // 先跳页再加载
 

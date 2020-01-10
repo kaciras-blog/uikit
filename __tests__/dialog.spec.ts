@@ -1,4 +1,4 @@
-import { DialogResult, DialogSession } from "@/dialog/controller";
+import { DialogResult, DialogSession } from "../src/dialog/controller";
 import { createLocalVue, mount } from "@vue/test-utils";
 
 describe("DialogSession", () => {

@@ -69,7 +69,7 @@ class KxDialogManagerExt extends DialogManager {
 }
 
 // 只导出类型而不是整个class，避免暴露实现细节
-export type KxDialogApi = InstanceType<typeof KxDialogManagerExt>;
+export type KxDialogAPI = InstanceType<typeof KxDialogManagerExt>;
 
 export default function install(Vue: VueConstructor) {
 	Vue.component(KxBaseDialog.name, KxBaseDialog);

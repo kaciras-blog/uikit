@@ -1,8 +1,8 @@
-import "@/media-query/shims-media-query.d.ts";
+import "../src/media-query/shims-media-query.d.ts";
 import { createLocalVue, shallowMount } from "@vue/test-utils";
 import Vue from "vue";
 import Vuex from "vuex";
-import { MediaBreakPoints, MediaQueryManager, SET_WIDTH } from "@/media-query";
+import { MediaBreakPoints, MediaQueryManager, SET_WIDTH } from "../src/media-query";
 
 const DEFAULT_POINTS = {
 	mobile: 768,
@@ -55,10 +55,9 @@ test("watch", async () => {
 	const suite = createVueSuite(DEFAULT_POINTS);
 	const wrapper = shallowMount({ render(h) { return h("div"); } }, suite);
 
-	const mq = wrapper.vm.$mediaQuery;
 	const enterCb = jest.fn();
 	const leaveCb = jest.fn();
-	const unwatch = mq.watch("tablet-", enterCb, leaveCb);
+	const unwatch = wrapper.vm.$mediaQuery.watch("tablet-", enterCb, leaveCb);
 
 	suite.store.commit(SET_WIDTH, 500);
 	await Vue.nextTick();
