@@ -16,7 +16,8 @@
 		<!-- TODO: 去除Font-Awesome的依赖 -->
 		<i class="fa"
 		   :class="[visible ? 'fa-eye' : 'fa-eye-slash', $style.toggle]"
-		   @click="visible = !visible"></i>
+		   @click="visible = !visible"
+		/>
 	</div>
 </template>
 
