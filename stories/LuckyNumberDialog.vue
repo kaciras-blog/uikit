@@ -6,7 +6,7 @@
 
 		<div :class="$style.buttons" class="btn-group">
 			<kx-button class="second outline" @click="inputDialog">输入信息</kx-button>
-			<kx-button class="primary outline" @click="luckyNum">计算！</kx-button>
+			<kx-button class="primary outline" @click="showLuckyNumber">计算！</kx-button>
 		</div>
 	</kx-base-dialog>
 </template>
@@ -17,25 +17,26 @@ import InputBox from "./InputBox.vue";
 export default {
 	name: "LuckyNumber",
 	data: () => ({
-		name: "未输入",
-		age: "0",
+		name: "小明",
+		age: 18,
 		hasInput: false,
 	}),
 	methods: {
 		async inputDialog() {
-			const result = await this.$dialog.show(InputBox, this.$data);
+			const result = await this.$dialog.show(InputBox, {
+				oldName: this.name,
+				oldAge: this.age,
+				hasInput: this.hasInput,
+			});
 			if (result.isConfirm) {
 				this.hasInput = true;
 				Object.assign(this.$data, result.data);
 			}
 		},
-		luckyNum() {
-			if (!this.hasInput) {
-				return this.$dialog.alertError("无法计算", "请先随意输入姓名和年龄");
-			}
-
-			let num = parseInt(this.age);
+		showLuckyNumber() {
 			const name = this.name;
+			let num = this.age;
+
 			for (let i = name.length - 1; i >= 0; i--) {
 				num += name.charCodeAt(i);
 			}

@@ -2,10 +2,10 @@
 	<kx-base-dialog title="请输入一些信息">
 		<form id="result">
 			<label for="name">你的名字</label>
-			<input id="name" v-model="name" placeholder="某某某"/>
+			<input id="name" v-model.trim="name" placeholder="某某某"/>
 
 			<label for="age">年龄</label>
-			<input id="age" type="number" v-model="age" value="0"/>
+			<input id="age" type="number" v-model.number="age"/>
 		</form>
 		<kx-standard-dialog-buttons :cancel-button="true" @confirm="ok"/>
 	</kx-base-dialog>
@@ -20,24 +20,32 @@ export default {
 	components: {
 		KxStandardDialogButtons,
 	},
-	props: ["data"],
-	mixins: [PreventScrollMixin],
+	props: [
+		"oldName",
+		"oldAge",
+		"hasInput",
+	],
+	mixins: [
+		PreventScrollMixin,
+	],
 	data() {
-		return Object.assign({
-			name: "",
-			age: "18",
-		}, this.data);
+		if (this.hasInput) {
+			return { name: this.oldName, age: this.oldAge };
+		}
+		return { name: "", age: 18 };
 	},
 	methods: {
-		async ok() {
-			let num = parseInt(this.age);
-			if (Number.isNaN(num)) {
-				await this.$dialog.alertError("输入错误", "您输入的年龄不是数字");
-				this.age = "18";
-			}
+		ok() {
 			if (this.name.length === 0) {
-				this.name = "某某某";
+				return this.$dialog.alertError("错误", "请输入一个名字");
 			}
+
+			if (!Number.isInteger(this.age)) {
+				return this.$dialog.alertError("错误", "您输入的年龄不是数字");
+			} else if (this.age <= 0) {
+				return this.$dialog.alertError("错误", "年龄不能为负数或零");
+			}
+
 			this.$dialog.confirm(this.$data);
 		},
 	},
