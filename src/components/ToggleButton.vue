@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../css/exports";
+@import "../css/Exports";
 
 .kx-toggle-button {
 	position: relative;

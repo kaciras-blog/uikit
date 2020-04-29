@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../css/exports";
+@import "../css/Exports";
 
 // 条纹宽度
 @stripeWidth: 32px;

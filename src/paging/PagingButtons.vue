@@ -74,7 +74,7 @@ export default {
 </script>
 
 <style module lang="less">
-@import "../css/exports";
+@import "../css/Exports";
 
 .wrapper {
 	display: flex;
