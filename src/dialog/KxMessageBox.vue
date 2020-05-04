@@ -14,7 +14,7 @@
 			<dialog-icons :type="type"/>
 
 			<h2>{{title}}</h2>
-			<pre v-if="content" :class="$style.messagePre">{{content}}</pre>
+			<pre v-if="content" :class="$style.content">{{content}}</pre>
 
 			<kx-standard-dialog-buttons :cancel-button="showCancelButton"/>
 		</div>
@@ -89,10 +89,12 @@ export default {
 	right: 0;
 }
 
-.messagePre {
+.content {
 	white-space: pre-wrap;
 	word-wrap: break-word;
 	line-height: 20px;
+	max-height: 40vh;
+	overflow-y: scroll;
 }
 </style>
 
