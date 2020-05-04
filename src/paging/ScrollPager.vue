@@ -120,7 +120,7 @@ export default {
 </script>
 
 <style module lang="less">
-@import "../css/Exports";
+@import "../css/exports";
 
 .container {
 	text-align: center;

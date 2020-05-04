@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import "../css/Exports";
+@import "../css/exports";
 
 .pagination {
 	position: absolute;

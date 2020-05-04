@@ -55,7 +55,6 @@ export default {
 </script>
 
 <style lang="less">
-
 .kx-radio-box {
 	padding-left: .5em;
 	padding-right: .5em;

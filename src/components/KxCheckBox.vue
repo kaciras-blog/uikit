@@ -60,7 +60,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../css/Exports";
+@import "../css/exports";
 
 @checked-color: #2196F3;
 

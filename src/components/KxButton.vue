@@ -73,7 +73,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../css/Exports";
+@import "../css/exports";
 
 // 园角按钮的圆角半径
 @radius: .25rem;

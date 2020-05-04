@@ -1,6 +1,5 @@
 import { storiesOf } from "@storybook/vue";
 import { withKnobs, boolean } from "@storybook/addon-knobs";
-import "../src/css/Index.less";
 import KxSwitch from "../src/components/KxSwitch.vue";
 
 const stories = storiesOf("Switch", module);
