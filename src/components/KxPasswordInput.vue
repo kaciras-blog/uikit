@@ -1,6 +1,6 @@
 <!-- 可惜没有 :hover-within 标签关联没法高亮 hover -->
 <template>
-	<div class="input" :class="$style.container">
+	<div class="input" :class="$style.container" :disabled="disabled">
 
 		<!--suppress HtmlFormInputWithoutLabel 标签在外面 -->
 		<input
@@ -10,6 +10,7 @@
 			:value="value"
 			:placeholder="placeholder"
 			:required="required"
+			:disabled="disabled"
 			@input="$emit('input', $event.target.value)"
 		>
 
@@ -29,6 +30,7 @@ export default {
 		required: {},
 		placeholder: String,
 		value: String,
+		disabled: {},
 	},
 	data: () => ({
 		visible: false,

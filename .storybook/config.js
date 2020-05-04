@@ -2,10 +2,11 @@ import { configure, addParameters } from "@storybook/vue";
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import Vue from "vue";
 import Vuex from "vuex";
-import KxUI from "../src/index";
+import "../src/css/index.less";
+import UIKit from "../src/index";
 
 Vue.use(Vuex);
-Vue.use(KxUI);
+Vue.use(UIKit);
 
 addParameters({
 	viewport: {
