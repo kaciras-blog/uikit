@@ -28,6 +28,11 @@ export default {
 			type: Boolean,
 			default: true,
 		},
+		/** 确定和应用按钮是否禁用 */
+		acceptable: {
+			type: Boolean,
+			default: true,
+		},
 	},
 	render(h, ctx) {
 		const { props, listeners } = ctx;
@@ -37,14 +42,33 @@ export default {
 		const vm = ctx.parent;
 
 		if (props.cancelButton) {
-			buttons.push(h("kx-button", { on: { click: vm.$dialog.close } }, "取消"));
-		}
-		if (listeners.apply) {
-			buttons.push(h("kx-button", { on: { click: listeners.apply } }, "应用"));
+			buttons.push(h("kx-button", {
+				on: {
+					click: listeners.cancel || vm.$dialog.close,
+				},
+			}, "取消"));
 		}
 
-		const onConfirm = listeners.confirm || vm.$dialog.confirm;
-		buttons.push(h("kx-button", { staticClass: "primary", on: { click: onConfirm } }, "确定"));
+		if (listeners.apply) {
+			buttons.push(h("kx-button", {
+				on: {
+					click: listeners.apply,
+				},
+				attrs: {
+					disabled: !props.acceptable,
+				},
+			}, "应用"));
+		}
+
+		buttons.push(h("kx-button", {
+			staticClass: "primary",
+			on: {
+				click: listeners.confirm || vm.$dialog.confirm,
+			},
+			attrs: {
+				disabled: !props.acceptable,
+			},
+		}, "确定"));
 
 		return h("div", { class: ["btn-group", ctx.$style.container] }, buttons);
 	},

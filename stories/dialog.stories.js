@@ -1,8 +1,7 @@
-import KxButton from "../src/components/KxButton.vue";
 import LuckyNumber from "./LuckyNumberDialog";
 
 export default {
-	title: 'Dialogs',
+	title: "Dialogs",
 };
 
 export const custom = () => ({
@@ -15,7 +14,7 @@ export const custom = () => ({
 		showDialog() {
 			this.$dialog.show(LuckyNumber);
 		},
-	}
+	},
 });
 
 custom.story = { name: "Custom dialog" };

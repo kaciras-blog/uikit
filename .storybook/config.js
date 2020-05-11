@@ -3,6 +3,7 @@ import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import Vue from "vue";
 import Vuex from "vuex";
 import "../src/css/index.less";
+import "./stories.less";
 import UIKit from "../src/index";
 
 Vue.use(Vuex);
