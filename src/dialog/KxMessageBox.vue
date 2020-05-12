@@ -3,14 +3,19 @@
 		@click.native.self="onOverlayClick"
 		@keyup.native.esc="closable && $dialog.close()"
 	>
-		<div class="kx-msgbox"
-			 :class="{ shaking, dialogZoomIn }"
-			 tabindex="-1"
-			 v-autofocus
-			 role="dialog"
-			 aria-modal="true"
+		<div
+			class="kx-msgbox"
+			:class="{ shaking, dialogZoomIn }"
+			tabindex="-1"
+			v-autofocus
+			role="dialog"
+			aria-modal="true"
 		>
-			<kx-close-icon v-if="closable" :class="$style.closeIcon" @click="$dialog.close"/>
+			<kx-close-icon
+				v-if="closable"
+				:class="$style.closeIcon"
+				@click="$dialog.close"
+			/>
 			<dialog-icons :type="type"/>
 
 			<h2>{{title}}</h2>
@@ -34,6 +39,10 @@ export default {
 		KxCloseIcon,
 	},
 	props: {
+		title: {
+			type: String,
+			required: true,
+		},
 		/**
 		 * 消息框的内容，可以用换行符\n来换行，在超出宽度也会时自动换行。
 		 * 【更新】取消了数组方式的换行，因为可以用Vue的过滤器完成，或是应该自行处理。
@@ -41,15 +50,10 @@ export default {
 		content: {
 			type: String,
 		},
-		title: {
-			type: String,
-			required: true,
-		},
 		type: {
 			type: Number,
 			default: 0, // MessageBoxType.Info
 		},
-
 		showCancelButton: {
 			type: Boolean,
 			default: false,
