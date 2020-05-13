@@ -1,3 +1,6 @@
+import "@fortawesome/fontawesome-free/css/all.css";
+import "./css/index.less";
+
 import { VueConstructor } from "vue";
 import ButtonPager from "./paging/ButtonPager.vue";
 import ScrollPager from "./paging/ScrollPager.vue";
