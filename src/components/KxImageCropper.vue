@@ -20,12 +20,12 @@
 			<kx-button
 				icon="fa fa-arrows-alt-h"
 				title="水平翻转"
-				@click="cropper.scaleX(-1)"
+				@click="cropper.scaleX(xScale = -xScale)"
 			/>
 			<kx-button
 				icon="fa fa-arrows-alt-v"
 				title="垂直翻转"
-				@click="cropper.scaleY(-1)"
+				@click="cropper.scaleY(yScale = -yScale)"
 			/>
 			<div :class="$style.right_buttons">
 				<kx-button @click="$dialog.close">取消</kx-button>
@@ -55,6 +55,11 @@ export default {
 			required: true,
 		},
 	},
+	data: () => ({
+		// cropper.scaleX() 始终相对于原图
+		xScale: 1,
+		yScale: 1,
+	}),
 	methods: {
 		ok() {
 			const canvas = this.cropper.getCroppedCanvas({
