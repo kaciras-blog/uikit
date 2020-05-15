@@ -56,7 +56,7 @@ export function isTouchEvent(e: MouseEvent | TouchEvent): e is TouchEvent {
  * 读取Blob对象，返回能够Data-URL字符串。
  *
  * 【其他方案】
- * 如果可能，使用 window.createObjectURL + window.revokeObjectURL 性能更好。
+ * 如果可能，使用 URL.createObjectURL + URL.revokeObjectURL 性能更好。
  *
  * @param blob Blob对象
  * @return Data-URL 字符串
