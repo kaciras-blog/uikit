@@ -7,16 +7,16 @@ stories.addDecorator(withKnobs);
 
 const applyAction = action("apply button click");
 
-stories.add("standard buttons", () => ({
+stories.add("simple", () => ({
 	props: {
-		hasApplyListener: {
-			default: boolean("has apply action", false),
-		},
 		cancelButton: {
 			default: boolean("cancelButton", true),
 		},
 		acceptable: {
 			default: boolean("acceptable", true),
+		},
+		hasApplyListener: {
+			default: boolean("has apply action", false),
 		},
 	},
 	template: `

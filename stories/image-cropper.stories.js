@@ -7,7 +7,7 @@ const stories = storiesOf("ImageCropper", module);
 stories.add("simple", () => ({
 	template: `
 		<div>
-			<kx-button @click="showCropper">弹出裁剪对话框</kx-button>
+			<kx-button icon="fa fa-upload" @click="showCropper"> 裁剪图片</kx-button>
 			<kx-dialog-container/>
 			<img v-if="result" :src="result" alt="Cropped image">
 		</div>

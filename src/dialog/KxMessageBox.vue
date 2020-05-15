@@ -94,11 +94,11 @@ export default {
 }
 
 .content {
+	max-height: 40vh;
+	overflow-y: auto;
 	white-space: pre-wrap;
 	word-wrap: break-word;
 	line-height: 20px;
-	max-height: 40vh;
-	overflow-y: scroll;
 }
 </style>
 
