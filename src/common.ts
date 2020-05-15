@@ -51,3 +51,21 @@ export function sleep(time: number) {
 export function isTouchEvent(e: MouseEvent | TouchEvent): e is TouchEvent {
 	return e.constructor.name === "TouchEvent";
 }
+
+/**
+ * 读取Blob对象，返回能够Data-URL字符串。
+ *
+ * 【其他方案】
+ * 如果可能，使用 window.createObjectURL + window.revokeObjectURL 性能更好。
+ *
+ * @param blob Blob对象
+ * @return Data-URL 字符串
+ */
+export function blobToString(blob: Blob) {
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader();
+		reader.onloadend = () => resolve(reader.result);
+		reader.onerror = reject;
+		reader.readAsDataURL(blob);
+	});
+}

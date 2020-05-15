@@ -57,6 +57,7 @@
 <script>
 import "cropperjs/dist/cropper.min.css";
 import Cropper from "cropperjs";
+import { preventScroll } from "../interactive";
 
 export default {
 	name: "KxImageCropper",
@@ -106,6 +107,10 @@ export default {
 				this.cropHeight = event.detail.height.toFixed(1);
 			},
 		});
+		this._restore = preventScroll();
+	},
+	destroyed() {
+		this._restore();
 	},
 };
 </script>
@@ -114,8 +119,9 @@ export default {
 @import "../css/index";
 
 .container {
-	position: fixed;
 	.full-vertex;
+	position: fixed;
+	z-index: 1000;
 
 	display: flex;
 	flex-direction: column;

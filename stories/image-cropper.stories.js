@@ -1,6 +1,6 @@
 import { storiesOf } from "@storybook/vue";
 import KxImageCropper from "../src/components/KxImageCropper";
-import { openFile } from "../src";
+import { blobToString, openFile } from "../src";
 
 const stories = storiesOf("ImageCropper", module);
 
@@ -18,20 +18,18 @@ stories.add("simple", () => ({
 	methods: {
 		async showCropper() {
 			const files = await openFile(false, "image/*");
-			const reader = new FileReader();
-			reader.addEventListener("load", async ev => {
-				const cropper = this.$dialog.show(KxImageCropper, {
-					image: ev.target.result,
-					mimeType: files[0].type,
-					aspectRatio: 10 / 9,
-				});
-				const blob = await cropper.confirmPromise;
-				if (this.result) {
-					URL.revokeObjectURL(this.result);
-				}
-				this.result = URL.createObjectURL(blob);
+
+			const cropper = this.$dialog.show(KxImageCropper, {
+				mimeType: files[0].type,
+				aspectRatio: 10 / 9,
+				image: await blobToString(files[0]), // createObjectURL 也行
 			});
-			reader.readAsDataURL(files[0]);
+			const blob = await cropper.confirmPromise;
+
+			if (this.result) {
+				URL.revokeObjectURL(this.result);
+			}
+			this.result = URL.createObjectURL(blob);
 		},
 	},
 }))
