@@ -2,7 +2,14 @@
 	<div :class="$style.container">
 		<header :class="$style.header">
 			<h1>裁剪图片</h1>
+			<kx-button
+				title="关闭"
+				:class="$style.close_button"
+				icon="fa fa-times"
+				@click="$dialog.close"
+			/>
 		</header>
+
 		<div :class="$style.image">
 			<img
 				ref="image"
@@ -11,12 +18,8 @@
 				alt="Image to crop"
 			>
 		</div>
+
 		<div :class="$style.toolbar">
-			<kx-button
-				icon="fa fa-redo-alt"
-				title="旋转"
-				@click="cropper.rotate(45)"
-			/>
 			<kx-button
 				icon="fa fa-arrows-alt-h"
 				title="水平翻转"
@@ -26,6 +29,16 @@
 				icon="fa fa-arrows-alt-v"
 				title="垂直翻转"
 				@click="cropper.scaleY(yScale = -yScale)"
+			/>
+			<kx-button
+				icon="fa fa-redo-alt"
+				title="旋转"
+				@click="cropper.rotate(90)"
+			/>
+			<kx-button
+				icon="fa fa-expand"
+				title="100%"
+				@click="cropper.zoomTo(1)"
 			/>
 			<div :class="$style.right_buttons">
 				<kx-button @click="$dialog.close">取消</kx-button>
@@ -46,11 +59,11 @@ export default {
 			type: String,
 			required: true,
 		},
-		width: {
-			type: Number,
+		mimeType: {
+			type: String,
 			required: true,
 		},
-		height: {
+		aspectRatio: {
 			type: Number,
 			required: true,
 		},
@@ -59,6 +72,7 @@ export default {
 		// cropper.scaleX() 始终相对于原图
 		xScale: 1,
 		yScale: 1,
+		cropper: undefined,
 	}),
 	methods: {
 		ok() {
@@ -66,13 +80,13 @@ export default {
 				maxWidth: this.width,
 				maxHeight: this.height,
 			});
-			this.$dialog.confirm(canvas);
+			canvas.toBlob(this.$dialog.confirm, this.mimeType);
 		},
 	},
 	mounted() {
-		const { width, height, $refs } = this;
+		const { aspectRatio, $refs } = this;
 		this.cropper = new Cropper($refs.image, {
-			aspectRatio: width / height,
+			aspectRatio,
 			viewMode: 2,
 			dragMode: "move",
 		});
@@ -94,6 +108,13 @@ export default {
 }
 
 .header {
+	display: flex;
+	align-items: flex-start;
+}
+
+.close_button {
+	margin-left: auto;
+	font-size: 2rem;
 }
 
 .image {

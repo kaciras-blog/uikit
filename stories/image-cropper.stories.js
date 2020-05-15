@@ -22,17 +22,17 @@ stories.add("simple", () => ({
 			reader.addEventListener("load", async ev => {
 				const cropper = this.$dialog.show(KxImageCropper, {
 					image: ev.target.result,
-					width: 500,
-					height: 450,
+					mimeType: files[0].type,
+					aspectRatio: 10 / 9,
 				});
-				(await cropper.confirmPromise).toBlob(blob => {
-					if (this.result) {
-						URL.revokeObjectURL(this.result);
-					}
-					this.result = URL.createObjectURL(blob);
-				});
+				const blob = await cropper.confirmPromise;
+				if (this.result) {
+					URL.revokeObjectURL(this.result);
+				}
+				this.result = URL.createObjectURL(blob);
 			});
 			reader.readAsDataURL(files[0]);
 		},
 	},
-}));
+}))
+;

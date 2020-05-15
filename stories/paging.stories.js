@@ -39,4 +39,4 @@ export const custom = () => ({
 	},
 });
 
-custom.story = { name: "Custom dialog" };
+custom.story = { name: "button paging view" };
