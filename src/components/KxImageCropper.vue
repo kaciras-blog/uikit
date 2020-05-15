@@ -40,6 +40,12 @@
 				title="100%"
 				@click="cropper.zoomTo(1)"
 			/>
+
+			<div :class="$style.stats">
+				{{cropX}} - {{cropY}} |
+				{{cropWidth}} x {{cropHeight}}
+			</div>
+
 			<div :class="$style.right_buttons">
 				<kx-button @click="$dialog.close">取消</kx-button>
 				<kx-button class="primary" @click="ok">确定</kx-button>
@@ -73,6 +79,10 @@ export default {
 		xScale: 1,
 		yScale: 1,
 		cropper: undefined,
+		cropX: 0,
+		cropY: 0,
+		cropWidth: 0,
+		cropHeight: 0,
 	}),
 	methods: {
 		ok() {
@@ -89,6 +99,12 @@ export default {
 			aspectRatio,
 			viewMode: 2,
 			dragMode: "move",
+			crop: (event) => {
+				this.cropX = event.detail.x.toFixed(1);
+				this.cropY = event.detail.y.toFixed(1);
+				this.cropWidth = event.detail.width.toFixed(1);
+				this.cropHeight = event.detail.height.toFixed(1);
+			},
 		});
 	},
 };
@@ -124,6 +140,12 @@ export default {
 .toolbar {
 	margin-top: 20px;
 	display: flex;
+	align-items: center;
+}
+
+.stats {
+	padding: 0 10px;
+	font-size: initial;
 }
 
 .right_buttons {
