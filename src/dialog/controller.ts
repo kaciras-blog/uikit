@@ -18,8 +18,7 @@ export class DialogResult<TData> {
 		return new DialogResult(true, data);
 	}
 
-	private constructor(readonly isConfirm: boolean, readonly data: TData) {
-	}
+	private constructor(readonly isConfirm: boolean, readonly data: TData) {}
 }
 
 /**
@@ -82,8 +81,8 @@ export class DialogManager {
 	 * @param props 传递给弹窗的Props
 	 * @return 弹窗会话，用于接收窗口的返回数据
 	 */
-	show(component: VueConstructor | string, props?: PropsData) {
-		const promise = new Promise<DialogResult<any>>((resolve) => {
+	show<T = any>(component: VueConstructor | string, props?: PropsData) {
+		const promise = new Promise<DialogResult<T>>((resolve) => {
 			this.eventBus.$emit("show", { component, props, resolve });
 		});
 		return new DialogSession(promise);

@@ -4,6 +4,7 @@ import KxMessageBox from "./KxMessageBox.vue";
 import KxContextMenu from "./KxContextMenu.vue";
 import KxBaseDialog from "./KxBaseDialog.vue";
 import KxStandardDialogButtons from "./KxStandardDialogButtons.vue";
+import KxImageCropper from "./KxImageCropper.vue";
 import { DialogManager, DialogSession } from "./controller";
 import { boundClass } from "autobind-decorator";
 
@@ -33,6 +34,12 @@ export interface MessageBoxOptions {
 	overlayClose?: boolean;
 }
 
+export interface ImageCopperProps {
+	image: Blob | string;
+	type?: string;
+	aspectRatio: number;
+}
+
 @boundClass
 class KxDialogManagerExt extends DialogManager {
 
@@ -46,7 +53,7 @@ class KxDialogManagerExt extends DialogManager {
 	 * @param options 选项
 	 */
 	alert(options: MessageBoxOptions) {
-		return this.show(KxMessageBox, options);
+		return this.show<void>(KxMessageBox, options);
 	}
 
 	// 下面4个都是便捷方法，其中成功的消息往往仅用于提醒一下用户，所以有个有默认标题。
@@ -65,6 +72,23 @@ class KxDialogManagerExt extends DialogManager {
 
 	alertSuccess(title: string = "执行成功", content?: string) {
 		return this.alert({ title, content, type: MessageBoxType.Success });
+	}
+
+	cropImage(options: ImageCopperProps) {
+		if (typeof options.image === "string") {
+			return this.show<Blob>(KxImageCropper, options);
+		}
+
+		const blob = options.image;
+		const imageURL = URL.createObjectURL(blob);
+
+		const session = this.show<Blob>(KxImageCropper, {
+			...options,
+			mimeType: options.type || blob.type,
+			image: imageURL,
+		});
+		session.finally(() => URL.revokeObjectURL(imageURL));
+		return session;
 	}
 }
 
