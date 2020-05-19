@@ -6,6 +6,7 @@
 	<label
 		class="kx-radio-box"
 		:class="{ disabled: source.disabled }"
+		role="radio"
 		:aria-checked="checked.toString()"
 		:aria-disabled="source.disabled"
 	>
@@ -57,6 +58,7 @@ export default {
 
 <style lang="less">
 .kx-radio-box {
+	display: inline-block;
 	padding-left: .5em;
 	padding-right: .5em;
 	height: 1.6em;
@@ -97,12 +99,11 @@ export default {
 		position: absolute;
 		top: 50%;
 		left: 50%;
-
-		margin-left: -5px;
-		margin-top: -5px;
 		width: 10px;
 		height: 10px;
-		border-radius: 5px;
+
+		border-radius: 50%;
+		transform: translate(-50%, -50%);
 		background-color: white;
 	}
 

@@ -22,13 +22,6 @@
 	min-height: @h;
 }
 
-// 块级元素水平居中
-.center-block() {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
-
 // 居中, 确定尺寸
 .center-absolute(@w, @h) {
 	width: @w;
@@ -67,22 +60,16 @@
 	border-radius: 50%;
 }
 
-//------------------------------------- ├ 字体 ┆ └------------------------------------/
-
-
-// 禁止换行, 文本溢出省略号显示 (一行)
-.ellipsis() {
-	white-space: normal;
-	word-break: break-all;
-	text-overflow: ellipsis;
+/**
+ * 使用 -webkit-line-clamp 属性限制文字的行数，多余的显示省略号。
+ * 这个属性的兼容性目前还不太好。
+ */
+.line-clamp(@count) {
+	display: -webkit-box;
+	-webkit-line-clamp: @count;
+	-webkit-box-orient: vertical;
 	overflow: hidden;
-}
-
-// 文字透明
-.transparent-text() {
-	font: 0/0 serif;
-	text-shadow: none;
-	color: transparent;
+	text-overflow: ellipsis;
 }
 
 //------------------------------------- ├ 图像 ┆ └------------------------------------/
@@ -100,10 +87,4 @@
 	height: 100vh;
 	background: url(@url) no-repeat 50% 50%;
 	background-size: cover;
-}
-
-// 用于点击的元素，指针为手指样式、并禁止选取
-.click-item() {
-	cursor: pointer;
-	user-select: none;
 }

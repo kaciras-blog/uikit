@@ -213,3 +213,17 @@ hr {
 	top: 0;
 	bottom: 0;
 }
+
+// 禁止换行, 文本溢出省略号显示 (一行)
+.ellipsis {
+	white-space: normal;
+	word-break: break-all;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+// 用于点击的元素，指针为手指样式、并禁止选取
+.click-item {
+	cursor: pointer;
+	user-select: none;
+}
