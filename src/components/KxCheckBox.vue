@@ -3,7 +3,7 @@
 		class="kx-check-box"
 		:class="{ disabled }"
 		role="checkbox"
-		:aria-checked="model"
+		:aria-checked="model.toString()"
 		:aria-disabled="disabled"
 	>
 		<input

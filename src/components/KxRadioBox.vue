@@ -3,10 +3,11 @@
 目前仅使用value来区分，即相同value的组件具有同样的选择状态，请确保同一组下Radio的value各不相同。
 -->
 <template>
-	<label class="kx-radio-box"
-		   :class="{ disabled: source.disabled }"
-		   :aria-checked="checked"
-		   :aria-disabled="source.disabled"
+	<label
+		class="kx-radio-box"
+		:class="{ disabled: source.disabled }"
+		:aria-checked="checked.toString()"
+		:aria-disabled="source.disabled"
 	>
 		<input
 			class="radio-box-input"

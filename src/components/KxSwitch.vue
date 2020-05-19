@@ -1,9 +1,13 @@
 <template>
+	<!--
+		注意 aria-checked 是 role="switch" 的必需属性，使用toString()防止为false时属性被省略。
+		详情见：https://www.w3.org/TR/wai-aria-1.1/#aria-checked
+	 -->
 	<div
 		class="kx-switch"
 		:class="{ checked: value, disabled: disabled }"
 		role="switch"
-		:aria-checked="value"
+		:aria-checked="value.toString()"
 		:aria-disabled="disabled"
 		@click.prevent="switchValue"
 	>
@@ -13,6 +17,7 @@
 			:id="id"
 			class="kx-switch-input"
 			type="checkbox"
+			aria-hidden="true"
 			@change="handleChange"
 			:disabled="disabled"
 		>
