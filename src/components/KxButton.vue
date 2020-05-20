@@ -23,7 +23,7 @@ export default {
 		data.attrs = data.attrs || {};
 		const { attrs } = data;
 
-		const clazz = ["kx-btn"];
+		const clazz = ["kx-btn", "click-item"];
 		if (data.class) {
 			clazz.push(data.class);
 		}
@@ -94,7 +94,6 @@ export default {
 	border: solid 1px #e0e0e0;
 	background-color: transparent;
 	border-radius: @radius;
-	.click-item;
 
 	// 默认的颜色变量
 	.color-mixin(@color-button-primary);

@@ -48,8 +48,8 @@ export default {
 }
 
 .title {
+	composes: ellipsis from global;
 	flex-grow: 1;
-	.ellipsis;
 }
 
 .buttons {
