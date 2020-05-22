@@ -40,11 +40,14 @@ export default {
 		},
 
 		/** 重置到进度为0并且不显示的状态，该过程是立即的没有动画 */
-		reset() {
+		async reset() {
 			this.transition = false;
 			this.progress = 0;
 			this.visible = false;
-			this.$nextTick(() => this.transition = true);
+
+			await this.$nextTick();
+			this.transition = true;
+			clearTimeout(this.$_timer);
 		},
 		finish() {
 			if (!this.visible) {
@@ -62,9 +65,9 @@ export default {
 			this._fadeout();
 		},
 		_fadeout() {
-			setTimeout(() => {
+			this.$_timer = setTimeout(() => {
 				this.visible = false;
-				setTimeout(this.reset, TRANSITION_TIME);
+				this.$_timer = setTimeout(this.reset, TRANSITION_TIME);
 			}, RESIDUAL_TIME);
 		},
 	},
@@ -83,7 +86,7 @@ export default {
 	height: 2px;
 
 	z-index: 99999;
-	background: #0064e6;
+	background: #0969e6;
 
 	&::before {
 		content: '';
@@ -99,7 +102,7 @@ export default {
 			transparent 100%
 		);
 
-		// 恒速
+		// 恒速运动
 		animation: highlight linear calc(@comet-speed * var(--progress)) infinite;
 	}
 }
@@ -108,7 +111,7 @@ export default {
 	background: #f74343;
 }
 
-//@formatter:off
+// @formatter:off
 @keyframes highlight {
 	from { right: 100%; }
 	to { right: @comet-size * -0.6 }
