@@ -1,6 +1,6 @@
 // vue-jest 不支持 babel 7，所以必须把与vue文件相关的部分分开。
 // 该文件包含弹窗的核心API，index.ts里会增加一些具体的弹窗API。
-import Vue, { VueConstructor } from "vue";
+import Vue, { ComponentOptions, VueConstructor } from "vue";
 import PromiseDelegate from "../PromiseDelegate";
 import { boundClass } from "autobind-decorator";
 
@@ -62,6 +62,9 @@ interface PropsData {
 	readonly [key: string]: any;
 }
 
+// <component :is="DialogComponent" /> is 参数能使用的类型都可以
+export type DialogComponent = VueConstructor | ComponentOptions<any> | string
+
 export interface DialogOptions {
 	component: Vue;
 	props: PropsData;
@@ -81,7 +84,7 @@ export class DialogManager {
 	 * @param props 传递给弹窗的Props
 	 * @return 弹窗会话，用于接收窗口的返回数据
 	 */
-	show<T = any>(component: VueConstructor | string, props?: PropsData) {
+	show<T = any>(component: DialogComponent, props?: PropsData) {
 		const promise = new Promise<DialogResult<T>>((resolve) => {
 			this.eventBus.$emit("show", { component, props, resolve });
 		});
