@@ -12,14 +12,14 @@ stories.add("default", () => ({
 		},
 	},
 	template: `
-	<div style="width: 300px">
-		<label for="input">请输入密码：</label>
-		<kx-password-input
-			style="margin-top: 10px"
-			input-id="input"
-			v-model="value"
-			:disabled="disabled"
-		/>
-	</div>`,
+		<div style="width: 300px">
+			<label for="input">请输入密码：</label>
+			<kx-password-input
+				style="margin-top: 10px"
+				input-id="input"
+				v-model="value"
+				:disabled="disabled"
+			/>
+		</div>`,
 	data: () => ({ value: "" }),
 }));
