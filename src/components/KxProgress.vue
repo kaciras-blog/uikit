@@ -7,7 +7,7 @@ const TRANSITION_TIME = 300;
 const RESIDUAL_TIME = 800;
 
 export default {
-	name: "TopProgressBar",
+	name: "KxProgress",
 	data: () => ({
 		visible: false,
 		hasError: false,
@@ -72,6 +72,9 @@ export default {
 </script>
 
 <style module lang="less">
+@comet-size: 100px;
+@comet-speed: 50ms;
+
 .progress {
 	position: fixed;
 	top: 0;
@@ -85,7 +88,7 @@ export default {
 	&::before {
 		content: '';
 		position: absolute;
-		width: 100px;
+		width: @comet-size;
 		height: 100%;
 
 		background-image: linear-gradient(
@@ -96,8 +99,8 @@ export default {
 			transparent 100%
 		);
 
-		// 恒定时间
-		animation: highlight linear calc(50ms * var(--progress)) infinite;
+		// 恒速
+		animation: highlight linear calc(@comet-speed * var(--progress)) infinite;
 	}
 }
 
@@ -108,6 +111,6 @@ export default {
 //@formatter:off
 @keyframes highlight {
 	from { right: 100%; }
-	to { right: 0 }
+	to { right: @comet-size * -0.6 }
 }
 </style>

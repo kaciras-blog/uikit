@@ -17,6 +17,7 @@ import KxCarousel from "./components/KxCarousel.vue";
 import KxRadioBox from "./components/KxRadioBox.vue";
 import KxRadioBoxGroup from "./components/KxRadioBoxGroup.vue";
 import KxPasswordInput from "./components/KxPasswordInput.vue";
+import KxProgress from "./components/KxProgress.vue";
 
 import AutoFocus from "./directives/autofocus";
 import ImeInput from "./directives/ime-input";
@@ -48,6 +49,7 @@ function install(Vue: VueConstructor) {
 	Vue.component(KxRadioBox.name, KxRadioBox);
 	Vue.component(KxRadioBoxGroup.name, KxRadioBoxGroup);
 	Vue.component(KxPasswordInput.name, KxPasswordInput);
+	Vue.component(KxProgress.name, KxProgress);
 
 	// IDE 无法分析自动扫描的引用
 // 	const requireContext = require.context(".", false,  /.vue$/);
