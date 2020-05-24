@@ -116,10 +116,9 @@ export default {
 </script>
 
 <style module lang="less">
-@import "../css/index";
-
 .container {
-	.full-vertex;
+	composes: full-vertex from global;
+
 	position: fixed;
 	z-index: 1000;
 

@@ -76,17 +76,17 @@ export default {
 
 <style module lang="less">
 @comet-size: 100px;
-@comet-speed: 50ms;
+@comet-speed: 40ms;
 
 .progress {
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: calc(var(--progress) * 1%);
-	height: 2px;
+	height: 3px;
 
 	z-index: 99999;
-	background: #0969e6;
+	background: #1EA7FD;
 
 	&::before {
 		content: '';
@@ -111,7 +111,6 @@ export default {
 	background: #f74343;
 }
 
-// @formatter:off
 @keyframes highlight {
 	from { right: 100%; }
 	to { right: @comet-size * -0.6 }
