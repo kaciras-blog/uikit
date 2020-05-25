@@ -28,6 +28,31 @@ export function openFile(accept: string, multiple = false) {
 }
 
 /**
+ * 获取图片的尺寸，该函数基于 HTMLImageElement 只能在浏览器端使用。
+ *
+ * @param image 图片文件或URL
+ * @return 尺寸 { width, height }，单位像素
+ */
+export function getImageSize(image: string | Blob) {
+	type Size = { width: number, height: number };
+
+	const el = document.createElement("img");
+
+	const promise = new Promise<Size>((resolve, reject) => {
+		el.onerror = reject;
+		el.onload = () => resolve({ width: el.width, height: el.height });
+	});
+
+	if (typeof image === "string") {
+		el.src = image;
+		return promise;
+	} else {
+		el.src = URL.createObjectURL(image);
+		return promise.finally(() => URL.revokeObjectURL(el.src));
+	}
+}
+
+/**
  * 获取元素的绝对位置（相对于文档的位置）。
  * getBoundingClientRect 获取的是相对于视口的偏移，需要再加上视口位置才是绝对位置。
  *
