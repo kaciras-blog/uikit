@@ -87,6 +87,15 @@ export default {
 		border-color: #32b3ff;
 		box-shadow: 0 0 0 .2rem #94dfff;
 	}
+
+	&[disabled] + .check-box-mark {
+		background-color: #F0F0F0;
+
+		&.checked {
+			border-color: #bababa;
+			background-color: #bababa;
+		}
+	}
 }
 
 .check-box-mark {
