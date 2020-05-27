@@ -84,6 +84,7 @@ if (GlobalVue) {
 export * from "./common";
 export * from "./cancellation";
 export * from "./dragging";
+export * from "./image-size";
 export * from "./interactive";
 
 export default install;
