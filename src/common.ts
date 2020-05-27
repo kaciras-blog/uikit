@@ -61,11 +61,11 @@ export function isTouchEvent(e: MouseEvent | TouchEvent): e is TouchEvent {
  * @param blob Blob对象
  * @return Data-URL 字符串
  */
-export function blobToString(blob: Blob) {
-	return new Promise((resolve, reject) => {
+export function blobToURL(blob: Blob) {
+	return new Promise<string>((resolve, reject) => {
 		const reader = new FileReader();
-		reader.onloadend = () => resolve(reader.result);
 		reader.onerror = reject;
+		reader.onloadend = () => resolve(reader.result as string);
 		reader.readAsDataURL(blob);
 	});
 }
