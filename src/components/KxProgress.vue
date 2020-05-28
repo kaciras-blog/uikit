@@ -75,6 +75,8 @@ export default {
 </script>
 
 <style module lang="less">
+@default-color: #1EA7FD;
+
 @comet-size: 100px;
 @comet-speed: 40ms;
 
@@ -86,7 +88,7 @@ export default {
 	height: 3px;
 
 	z-index: 99999;
-	background: #1EA7FD;
+	background: var(--color, @default-color);
 
 	&::before {
 		content: '';
@@ -97,8 +99,8 @@ export default {
 		background-image: linear-gradient(
 			90deg,
 			transparent 0,
-			rgba(255, 255, 255, .7) 20%,
-			#FFF 60%,
+			rgba(255, 255, 255, 0.7) 20%,
+			rgba(255, 255, 255, 0.9) 60%,
 			transparent 100%
 		);
 
