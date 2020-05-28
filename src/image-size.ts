@@ -1,6 +1,37 @@
 type Size = { width: number, height: number };
 
 /**
+ * 获取图片的尺寸，同时支持像素图和SVG图。
+ * 如果参数是URL，则根据响应的Content-Type头判断图片类型。
+ *
+ * 详细的说明请见 getRasterImageSize() 和 getSVGImageSize() 的文档。
+ *
+ * @param image 图片文件或URL
+ * @return 尺寸 { width, height }，单位像素
+ * @throw 如果参数是URL且响应缺少Content-Type头
+ */
+export async function getImageSize(image: string | Blob) {
+	if (typeof image === "string") {
+		const res = await fetch(image, { credentials: "include" });
+		const type = res.headers.get("Content-Type");
+
+		if(type === null) {
+			throw new Error("响应没有Content-Type头，请自己判断图片类型使用 getRasterImageSize 或 getSVGImageSize.");
+		}
+
+		if (type.indexOf("svg") === -1) {
+			return getRasterImageSize(await res.blob());
+		} else {
+			return getRasterImageSize(await res.text());
+		}
+	} else if (image.type.indexOf("svg") === -1) {
+		return getRasterImageSize(image);
+	} else {
+		return svgSizeOrViewBox(await image.text());
+	}
+}
+
+/**
  * 获取像素图的尺寸，该函数只能在浏览器端使用。
  *
  * @param image 图片文件或URL
@@ -35,16 +66,18 @@ export function getRasterImageSize(image: string | Blob) {
  * @param image 图片文件或URL
  * @return 尺寸 { width, height }，单位像素
  */
-export async function getSVGImageSize(image: string | Blob): Promise<Size> {
-	let svgText;
+export async function getSVGImageSize(image: string | Blob) {
 	if (typeof image === "string") {
-		svgText = await (await fetch(image)).text();
+		const res = await fetch(image, { credentials: "include" });
+		return svgSizeOrViewBox(await res.text());
 	} else {
-		svgText = await image.text();
+		return svgSizeOrViewBox(await image.text());
 	}
+}
 
+function svgSizeOrViewBox(text: string): Size {
 	const parser = new DOMParser();
-	const doc = parser.parseFromString(svgText, "image/svg+xml");
+	const doc = parser.parseFromString(text, "image/svg+xml");
 	const svg = doc.documentElement as unknown as SVGSVGElement;
 
 	/**

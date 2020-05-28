@@ -1,17 +1,11 @@
 import { storiesOf } from "@storybook/vue";
-import { boolean, withKnobs } from "@storybook/addon-knobs";
-import { openFile } from "../src";
-import { getRasterImageSize, getSVGImageSize } from "../src/image-size";
+import { withKnobs } from "@storybook/addon-knobs";
+import { getImageSize, openFile } from "../src";
 
 const stories = storiesOf("HelperFunctions", module);
 stories.addDecorator(withKnobs);
 
 stories.add("CheckBox", () => ({
-	props: {
-		disabled: {
-			default: boolean("Disabled", false),
-		},
-	},
 	template: `
 		<div>
 			<kx-button @click="showImageFileSize">选择文件</kx-button>
@@ -34,23 +28,12 @@ stories.add("CheckBox", () => ({
 	methods: {
 		async showImageURLSize() {
 			const { url } = this;
-
-			if (new URL(url).pathname.endsWith("svg")) {
-				this.size = await getSVGImageSize(url);
-			} else {
-				this.size = await getRasterImageSize(url);
-			}
-
+			this.size = await getImageSize(url);
 			this.image = url;
 		},
 		async showImageFileSize() {
 			const file = await openFile("image/*");
-
-			if (file.type.indexOf("svg") > -1) {
-				this.size = await getSVGImageSize(file);
-			} else {
-				this.size = await getRasterImageSize(file);
-			}
+			this.size = await getImageSize(file);
 
 			URL.revokeObjectURL(this.image);
 			this.image = URL.createObjectURL(file);
