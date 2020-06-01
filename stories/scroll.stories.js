@@ -6,7 +6,7 @@ const stories = storiesOf("Scroll", module);
 stories.addDecorator(withKnobs);
 
 stories.add("syncScroll", () => ({
-	props:{
+	props: {
 		enable: {
 			default: boolean("EnableSyncScroll", true),
 		},
@@ -23,7 +23,16 @@ stories.add("syncScroll", () => ({
 		}
 		return { content };
 	},
+	watch: {
+		enable(value) {
+			if (value) {
+				this.$_destroy = syncScroll(this.$refs.a, this.$refs.b);
+			} else {
+				this.$_destroy();
+			}
+		},
+	},
 	mounted() {
-		syncScroll(this.$refs.a, this.$refs.b);
+		this.$_destroy = syncScroll(this.$refs.a, this.$refs.b);
 	},
 }));

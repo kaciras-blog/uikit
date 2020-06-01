@@ -74,8 +74,14 @@ export const PreventScrollMixin = {
  * 按百分比同步滚动，注意原文与预览的对应内容并非一定在对应百分比的位置上。
  *
  * BUG: Firefox 有一个操蛋的平滑滚动功能
+ *
+ * @param elementA 要同步的一个元素
+ * @param elementB 要同步另一个的元素
+ * @return 取消同步的函数
  */
 export function syncScroll(elementA: HTMLElement, elementB: HTMLElement) {
+	let available = true;
+
 	elementA.addEventListener("scroll", syncScroll);
 	elementB.addEventListener("scroll", syncScroll);
 
@@ -91,7 +97,17 @@ export function syncScroll(elementA: HTMLElement, elementB: HTMLElement) {
 		const percentage = curr.scrollTop / (curr.scrollHeight - curr.offsetHeight);
 		other.scrollTop = Math.round(percentage * (other.scrollHeight - other.offsetHeight));
 
+		requestAnimationFrame(() => {
+			if (available) {
+				curr.addEventListener("scroll", syncScroll);
+			}
+		});
 		curr.removeEventListener("scroll", syncScroll);
-		requestAnimationFrame(() => curr.addEventListener("scroll", syncScroll));
 	}
+
+	return function destroy() {
+		available = false;
+		elementA.removeEventListener("scroll", syncScroll);
+		elementB.removeEventListener("scroll", syncScroll);
+	};
 }
