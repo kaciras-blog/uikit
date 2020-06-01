@@ -71,43 +71,34 @@ export const PreventScrollMixin = {
 };
 
 /**
- * 按百分比同步滚动，注意原文与预览的对应内容并非一定在对应百分比的位置上。
+ * 将多个元素的滚动条按百分比同步。
  *
- * BUG: Firefox 有一个操蛋的平滑滚动功能
- *
- * @param elementA 要同步的一个元素
- * @param elementB 要同步另一个的元素
+ * @param elements 要同步元素
  * @return 取消同步的函数
  */
-export function syncScroll(elementA: HTMLElement, elementB: HTMLElement) {
-	let available = true;
+export function syncScroll(...elements: HTMLElement[]) {
+	let skip = false;
 
-	elementA.addEventListener("scroll", syncScroll);
-	elementB.addEventListener("scroll", syncScroll);
+	elements.forEach(el => el.addEventListener("scroll", syncScroll));
 
 	function syncScroll(event: Event) {
-		let curr = elementA;
-		let other = elementB;
-
-		if (event.target !== curr) {
-			curr = elementB;
-			other = elementA;
+		if (skip) {
+			return;
 		}
-
-		const percentage = curr.scrollTop / (curr.scrollHeight - curr.offsetHeight);
-		other.scrollTop = Math.round(percentage * (other.scrollHeight - other.offsetHeight));
+		skip = true;
 
 		requestAnimationFrame(() => {
-			if (available) {
-				curr.addEventListener("scroll", syncScroll);
-			}
+			const curr = event.target as HTMLElement;
+			const p = curr.scrollTop / (curr.scrollHeight - curr.offsetHeight);
+
+			elements.forEach(el => {
+				el.scrollTop = p * (el.scrollHeight - el.offsetHeight);
+			});
+			requestAnimationFrame(() => skip = false);
 		});
-		curr.removeEventListener("scroll", syncScroll);
 	}
 
 	return function destroy() {
-		available = false;
-		elementA.removeEventListener("scroll", syncScroll);
-		elementB.removeEventListener("scroll", syncScroll);
+		elements.forEach(el => el.removeEventListener("scroll", syncScroll));
 	};
 }
