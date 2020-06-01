@@ -1,5 +1,4 @@
 import anime from "animejs";
-import { blobToURL } from "./common";
 
 export function openFile(accept: string, multiple?: false): Promise<File>;
 
@@ -97,3 +96,27 @@ export const PreventScrollMixin = {
 		this.$_restoreScroll();
 	},
 };
+
+export function syncScroll(elementA: HTMLElement, elementB: HTMLElement) {
+	elementA.addEventListener("scroll", syncScroll);
+	elementB.addEventListener("scroll", syncScroll);
+
+	/**
+	 * 按百分比同步滚动，注意原文与预览的对应内容并非一定在对应百分比的位置上。
+	 * BUG: Firefox 有一个操蛋的平滑滚动功能
+	 */
+	function syncScroll(event: Event) {
+		let el = elementA;
+		let other = elementB;
+
+		if (event.target !== el) {
+			el = elementB;
+			other = elementA;
+		}
+		const percentage = el.scrollTop / (el.scrollHeight - el.offsetHeight);
+		other.scrollTop = Math.round(percentage * (other.scrollHeight - other.offsetHeight));
+
+		el.removeEventListener("scroll", syncScroll);
+		requestAnimationFrame(() => el.addEventListener("scroll", syncScroll));
+	}
+}
