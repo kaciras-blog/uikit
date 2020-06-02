@@ -17,7 +17,6 @@
 			:id="id"
 			class="kx-switch-input"
 			type="checkbox"
-			aria-hidden="true"
 			@change="handleChange"
 			:disabled="disabled"
 		>

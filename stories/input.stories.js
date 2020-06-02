@@ -24,11 +24,11 @@ stories.add("Switch", () => ({
 		},
 	},
 	template: `
-		<div>
+		<label>
 			这是一个切换按钮
 			<kx-switch v-model="value" :disabled="disabled"></kx-switch>
-		</div>`,
-	data: () => ({ value: false }),
+		</label>`,
+	data: () => ({ value: true }),
 }));
 
 stories.add("Password", () => ({
