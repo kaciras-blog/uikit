@@ -9,7 +9,7 @@
 	"main": "src/index.ts",
 	"scripts": {
 		"storybook": "start-storybook",
-		"build": "vue-cli-service build",
+		"build-storybook": "build-storybook -o .out",
 		"lint": "vue-cli-service lint",
 		"test:unit": "jest",
 		"inspect": "node scripts/inspect-webpack.js"
