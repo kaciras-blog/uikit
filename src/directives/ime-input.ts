@@ -5,6 +5,9 @@ import { DirectiveBinding } from "vue/types/options";
  *
  * 浏览器将未上屏时的字符（如拼音输入法）也算作元素的内容并触发 input 事件，
  * 使用该指令来监听可以避免这个问题。
+ *
+ * @example
+ * <textarea v-ime-input="e => console.log(e.target.value)"/>
  */
 export default {
 	inserted(el: HTMLElement, binding: DirectiveBinding) {

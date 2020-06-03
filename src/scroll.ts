@@ -43,7 +43,7 @@ export function scrollToElementEnd(element: HTMLElement, offset: number = 0) {
  * 禁止指定元素的滚动条，返回一个取消禁止的函数。
  *
  * @param el 指定的元素
- * @return 取消禁止的函数
+ * @return 恢复滚动条的函数
  */
 export function preventScroll(el: HTMLElement = document.body) {
 	const { style } = el;
@@ -73,7 +73,7 @@ export const PreventScrollMixin = {
 /**
  * 将多个元素的滚动条按百分比同步。
  *
- * @param elements 要同步元素
+ * @param elements 要同步的元素
  * @return 取消同步的函数
  */
 export function syncScroll(...elements: HTMLElement[]) {
@@ -87,6 +87,7 @@ export function syncScroll(...elements: HTMLElement[]) {
 		}
 		skip = true;
 
+		// 必须要延迟到下一帧，否则在开启了平滑滚动的浏览器上会滚不动
 		requestAnimationFrame(() => {
 			const curr = event.target as HTMLElement;
 			const p = curr.scrollTop / (curr.scrollHeight - curr.offsetHeight);
