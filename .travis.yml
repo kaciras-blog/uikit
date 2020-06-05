@@ -8,7 +8,7 @@ git:
 
 cache: yarn
 
-script: yarn build-storybook
+script: yarn build-storybook --quiet
 
 deploy:
   github_token: $GITHUB_TOKEN
