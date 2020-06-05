@@ -11,6 +11,6 @@ module.exports = async ({ config, mode }) => {
 
 	config.resolve.alias = { ...custom.resolve.alias, ...config.resolve.alias };
 
-	// dump("storybook.js", config);
+	// require("../scripts/dump-webpack-config")("storybook.js", config);
 	return config;
 };

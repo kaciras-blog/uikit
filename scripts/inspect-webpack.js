@@ -16,6 +16,6 @@ if (mode) {
 	service.init(mode);
 	dump(name, service.resolveWebpackConfig());
 } else {
-	execFileSync(process.execPath, [__filename, "development", "webpack.js"]);
-	execFileSync(process.execPath, [__filename, "production", "webpack.prod.js"]);
+	execFileSync(process.execPath, [__filename, "development", "vue-cli.js"]);
+	execFileSync(process.execPath, [__filename, "production", "vue-cli.prod.js"]);
 }
