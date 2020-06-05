@@ -10,7 +10,7 @@ type SelectionChangeHandler = (start: number, end: number) => void;
  * <textarea v-on-selection-changed="handleSelect"/>
  */
 export default {
-	inserted(el: HTMLTextAreaElement | HTMLInputElement, binding: DirectiveBinding, vnode: VNode) {
+	inserted(el: HTMLElement, binding: DirectiveBinding, vnode: VNode) {
 		const vm = vnode.context as Vue;
 
 		if (!(el instanceof HTMLTextAreaElement || el instanceof HTMLInputElement)) {
@@ -27,7 +27,7 @@ export default {
 		let oldEnd = el.selectionEnd;
 
 		function handleSelect() {
-			const { selectionStart, selectionEnd } = el;
+			const { selectionStart, selectionEnd } = el as HTMLTextAreaElement | HTMLInputElement;
 			if (oldStart !== selectionStart || oldEnd !== selectionEnd) {
 				oldStart = selectionStart;
 				oldEnd = selectionEnd;
