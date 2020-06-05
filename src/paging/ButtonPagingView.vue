@@ -25,7 +25,7 @@
 
 <script>
 import { CancellationToken, scrollToElementEnd, scrollToElementStart } from "../index";
-import { getScrollTop } from "../interactive";
+import { getScrollTop } from "../scroll";
 
 export default {
 	name: "ButtonPagingView",

@@ -57,7 +57,7 @@
 <script>
 import "cropperjs/dist/cropper.min.css";
 import Cropper from "cropperjs";
-import { preventScroll } from "../interactive";
+import { preventScroll } from "../scroll";
 
 export default {
 	name: "KxImageCropper",
