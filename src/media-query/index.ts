@@ -80,7 +80,11 @@ export class MediaQueryManager implements PluginObject<never> {
 			if (mql.matches) {
 				store.commit(SET_WIDTH, width);
 			}
-			mql.addEventListener("change", (event) => event.matches && store.commit(SET_WIDTH, width));
+
+			// Safari 只有 addListener()
+			// https://developer.apple.com/documentation/webkitjs/mediaquerylist#declarations
+			// noinspection JSDeprecatedSymbols
+			mql.addListener(event => event.matches && store.commit(SET_WIDTH, width));
 		}
 
 		const first = entries[0];
