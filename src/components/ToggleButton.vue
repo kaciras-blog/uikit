@@ -55,7 +55,7 @@ export default {
 .toggle-button-trench {
 	width: 3rem;
 	height: 1rem;
-	background: @color-input-slient;
+	background: @color-input-silent;
 	position: relative;
 	display: inline-block;
 	border-radius: .5rem;

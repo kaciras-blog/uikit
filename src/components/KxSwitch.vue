@@ -55,8 +55,6 @@ export default {
 <style lang="less">
 @import "../css/exports";
 
-@checked-color: #2196F3;
-
 .kx-switch {
 	display: inline-block;
 	width: 48px;
@@ -81,7 +79,7 @@ export default {
 	}
 
 	&.checked {
-		background: @checked-color;
+		background: @color-input-active;
 	}
 
 	&.checked::after {

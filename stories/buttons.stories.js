@@ -1,6 +1,4 @@
 import { action } from "@storybook/addon-actions";
-import KxButton from "../src/components/KxButton.vue";
-import KxTaskButton from "../src/components/KxTaskButton.vue";
 import { sleep } from "../src/index";
 
 // link buttons?
@@ -9,7 +7,6 @@ export default {
 };
 
 export const plainButtons = () => ({
-	components: { KxButton },
 	template: `
 		<div>
 			<p>
@@ -18,13 +15,13 @@ export const plainButtons = () => ({
 			<p class="btn-group">
 				<kx-button class="primary">主要按钮</kx-button>
 				<kx-button class="second">次要按钮</kx-button>
-				<kx-button class="info">信息</kx-button>
+				<kx-button class="info">信息按钮</kx-button>
 				<kx-button class="dangerous">危险操作</kx-button>
 			</p>
 			<p class="btn-group">
 				<kx-button class="primary outline">主要按钮</kx-button>
 				<kx-button class="second outline">次要按钮</kx-button>
-				<kx-button class="info outline">信息</kx-button>
+				<kx-button class="info outline">信息按钮</kx-button>
 				<kx-button class="dangerous outline">危险操作</kx-button>
 			</p>
 		</div>
@@ -37,7 +34,6 @@ export const plainButtons = () => ({
 plainButtons.story = { name: "Plain" };
 
 export const taskButtons = () => ({
-	components: { KxTaskButton },
 	template: `
 		<div>
 			<p class="btn-group">

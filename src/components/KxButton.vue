@@ -158,7 +158,7 @@ export default {
 		text-decoration: none;
 	}
 	&:focus {
-		box-shadow: 0 0 0 .2rem var(--background-glass);
+		box-shadow: 0 0 0 4px var(--background-glass);
 
 		// <a> 作为按钮时需要去掉默认样式
 		outline: 0;

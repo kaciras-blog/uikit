@@ -62,8 +62,6 @@ export default {
 <style lang="less">
 @import "../css/exports";
 
-@checked-color: #2196F3;
-
 .kx-check-box {
 	display: inline-flex;
 
@@ -108,8 +106,8 @@ export default {
 	transition: all .15s;
 
 	&.checked {
-		background-color: @checked-color;
-		border-color: @checked-color;
+		background-color: @color-input-active;
+		border-color: @color-input-active;
 	}
 
 	&.checked::after {

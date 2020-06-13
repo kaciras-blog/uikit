@@ -67,9 +67,12 @@ export default {
 	}
 
 	background-image: linear-gradient(-45deg,
-	var(--background-highlight) 25%, transparent 25%,
-	transparent 50%, var(--background-highlight) 50%,
-	var(--background-highlight) 75%, transparent 75%);
+		var(--background-highlight) 25%,
+		transparent 25%,
+		transparent 50%,
+		var(--background-highlight) 50%,
+		var(--background-highlight) 75%,
+		transparent 75%);
 
 	animation: barbershop linear .4s infinite;
 }

@@ -57,6 +57,8 @@ export default {
 </script>
 
 <style lang="less">
+@import "../css/exports";
+
 .kx-radio-box {
 	display: inline-block;
 	padding-left: .5em;
@@ -108,8 +110,8 @@ export default {
 	}
 
 	&.ckecked {
-		background-color: #2196F3;
-		border-color: #2196F3;
+		background-color: @color-input-active;
+		border-color: @color-input-active;
 	}
 
 	&.ckecked::after {

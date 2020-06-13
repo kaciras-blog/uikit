@@ -4,9 +4,9 @@
 
 /*
 <div class="tag-group">
-	<a>Last</a>
-	<a>Second</a>
-	<a>First</a>
+	<a class="tag-group-item">Last</a>
+	<a class="tag-group-item">Second</a>
+	<a class="tag-group-item">First</a>
 </div>
  */
 
@@ -21,7 +21,7 @@
 
 .tag-group-item {
 	position: relative;
-	border: solid 1px @color-tags;
+	border: solid 1px @color-input-active;
 	padding: .2em .4em;
 
 	&:last-child {
@@ -51,18 +51,18 @@
 			border-right-color: @color-tag-background;
 
 			transform: translate(-50%, -50%) rotate(45deg);
-			box-shadow: 1px -1px 0 0 @color-tags;
+			box-shadow: 1px -1px 0 0 @color-input-active;
 		}
 	}
 
 	&:hover, &:focus {
 		color: @color-tag-background;
-		background-color: @color-tags;
+		background-color: @color-input-active;
 		text-decoration: none;
 
 		&:after {
-			border-top-color: @color-tags;
-			border-right-color: @color-tags;
+			border-top-color: @color-input-active;
+			border-right-color: @color-input-active;
 		}
 	}
 }
