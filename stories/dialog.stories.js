@@ -1,5 +1,7 @@
-import LuckyNumber from "./LuckyNumberDialog";
+import { action } from "@storybook/addon-actions";
+import { boolean } from "@storybook/addon-knobs";
 import { MessageBoxType } from "../src/dialog";
+import LuckyNumber from "./LuckyNumberDialog";
 
 export default {
 	title: "Dialogs",
@@ -60,3 +62,45 @@ export const custom = () => ({
 });
 
 custom.story = { name: "Custom" };
+
+const applyAction = action("apply button click");
+
+export const buttons = () => ({
+	props: {
+		cancelButton: {
+			default: boolean("cancelButton", true),
+		},
+		acceptable: {
+			default: boolean("acceptable", true),
+		},
+		hasApplyListener: {
+			default: boolean("has apply action", false),
+		},
+	},
+	template: `
+		<div class="mock-dialog">
+			<h1 class="mock-dialog-content">
+				对话框框
+			</h1>
+			<kx-standard-dialog-buttons
+				:acceptable="acceptable"
+				:cancel-button="cancelButton"
+				@confirm="ok"
+				@apply="apply"
+				@cancel="cancel"
+			/>
+		</div>
+	`,
+	computed: {
+		// 不能写在模板里，否则会被当作函数的内容
+		apply() {
+			return this.hasApplyListener && applyAction;
+		},
+	},
+	methods: {
+		cancel: action("cancel button click"),
+		ok: action("accept button click"),
+	},
+});
+
+buttons.story = { name: "DialogButtons" };

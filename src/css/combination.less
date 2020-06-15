@@ -3,13 +3,16 @@
 @color-tag-background: white;
 
 /*
-<div class="tag-group">
-	<a class="tag-group-item">Last</a>
-	<a class="tag-group-item">Second</a>
-	<a class="tag-group-item">First</a>
-</div>
+ * 类似面包屑导航，效果见 StoryBook Others > TagGroup。
+ *
+ * 标签元素的顺序是反的，对TAB切换选取有影响，但可以当作特性。
+ *
+ * <div class="tag-group">
+ *   <a class="tag-group-item">Last</a>
+ *   <a class="tag-group-item">Second</a>
+ *   <a class="tag-group-item">First</a>
+ * </div>
  */
-
 .tag-group {
 	display: flex;
 	flex-direction: row-reverse;
@@ -69,7 +72,7 @@
 
 /*
  * TODO: 排行列表。暂时没想到怎么搞成组件，如果用slot子元素的class没法设置；用
- * component又强制子元素必须单独写成组件。
+ *  component又强制子元素必须单独写成组件。
  */
 .rank-list {
 	padding-left: 0;

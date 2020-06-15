@@ -12,4 +12,4 @@ export const tagGroup = () => ({
 	`,
 });
 
-tagGroup.story = { name: "tagGroup" };
+tagGroup.story = { name: "TagGroup" };
