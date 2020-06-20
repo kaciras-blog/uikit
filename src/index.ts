@@ -6,7 +6,6 @@ import ButtonPager from "./paging/ButtonPager.vue";
 import ScrollPager from "./paging/ScrollPager.vue";
 import SkFadingCircle from "./components/SkFadingCircle.vue";
 import FadeCarousel from "./components/FadeCarousel.vue";
-import ToggleButton from "./components/ToggleButton.vue";
 import ScrollPagingView from "./paging/ScrollPagingView.vue";
 import ButtonPagingView from "./paging/ButtonPagingView.vue";
 import KxCheckBox from "./components/KxCheckBox.vue";
@@ -38,7 +37,6 @@ function install(Vue: VueConstructor) {
 	Vue.component(ButtonPager.name, ButtonPager);
 	Vue.component(ScrollPager.name, ScrollPager);
 	Vue.component(FadeCarousel.name, FadeCarousel);
-	Vue.component(ToggleButton.name, ToggleButton);
 	Vue.component(ScrollPagingView.name, ScrollPagingView);
 	Vue.component(ButtonPagingView.name, ButtonPagingView);
 	Vue.component(KxCheckBox.name, KxCheckBox);
