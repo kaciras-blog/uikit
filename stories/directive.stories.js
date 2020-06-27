@@ -71,3 +71,28 @@ stories.add("section-change", () => ({
 		},
 	},
 }));
+
+stories.add("section-model", () => ({
+	template: `
+		<div>
+			<textarea
+				v-selection-model.focus="selection"
+				v-model="value"
+				class="directive-textarea"
+			/>
+			<div>选择范围：{{selection[0]}} - {{selection[1]}}</div>
+			<kx-button @click="randomSelection">随机选择</kx-button>
+		</div>`,
+	data: () => ({
+		value: "调整下面的start和end，改变文本框的选择区域",
+		selection: [0, 0],
+	}),
+	methods: {
+		randomSelection() {
+			const n = this.value.length;
+			const s = Math.floor(Math.random() * n);
+			const e = s + Math.floor(Math.random() * (n - s));
+			this.selection = [s, e];
+		},
+	},
+}));

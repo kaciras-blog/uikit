@@ -21,7 +21,8 @@ import KxProgress from "./components/KxProgress.vue";
 import AutoFocus from "./directives/autofocus";
 import ImeInput from "./directives/ime-input";
 import SelectionBinding from "./directives/selection-bind";
-import SelectionChangeDirective from "./directives/selection-change";
+import SelectionChange from "./directives/selection-change";
+import SelectionModel from "./directives/selection-model";
 import Ripple from "./directives/ripple";
 
 import KxDialog from "./dialog";
@@ -58,9 +59,10 @@ function install(Vue: VueConstructor) {
 
 	Vue.directive("autofocus", AutoFocus);
 	Vue.directive("ime-input", ImeInput);
-	Vue.directive("bind-selection", SelectionBinding);
-	Vue.directive("on-selection-change", SelectionChangeDirective);
 	Vue.directive("ripple", Ripple);
+	Vue.directive("bind-selection", SelectionBinding);
+	Vue.directive("on-selection-change", SelectionChange);
+	Vue.directive("selection-model", SelectionModel);
 
 	Vue.use(KxDialog);
 }
