@@ -1,3 +1,6 @@
+/**
+ * 二维尺寸对象，包含宽高，单位是像素，可能有小数。
+ */
 type Size = { width: number, height: number };
 
 /**
@@ -7,7 +10,7 @@ type Size = { width: number, height: number };
  * 详细的说明请见 getRasterImageSize() 和 getSVGImageSize() 的文档。
  *
  * @param image 图片文件或URL
- * @return 尺寸 { width, height }，单位像素
+ * @return 尺寸信息
  * @throw 如果参数是URL且响应缺少Content-Type头
  */
 export async function getImageSize(image: string | Blob) {
@@ -15,7 +18,7 @@ export async function getImageSize(image: string | Blob) {
 		const res = await fetch(image, { credentials: "include" });
 		const type = res.headers.get("Content-Type");
 
-		if(type === null) {
+		if (type === null) {
 			throw new Error("响应没有Content-Type头，请自己判断图片类型使用 getRasterImageSize 或 getSVGImageSize.");
 		}
 
@@ -32,10 +35,37 @@ export async function getImageSize(image: string | Blob) {
 }
 
 /**
+ * 获取视频的原始尺寸，该函数只能在浏览器端使用。
+ *
+ * 【输入兼容性】
+ * 浏览器不一定支持所有的视频编码，不支持的视频会抛异常。
+ *
+ * @param video 视频文件或URL
+ * @return 尺寸信息
+ * @throws 如果视频不受支持
+ */
+export function getVideoSize(video: string | Blob) {
+	const el = document.createElement("video");
+
+	const promise = new Promise<Size>((resolve, reject) => {
+		el.onerror = reject;
+		el.onloadedmetadata = () => resolve({ width: el.videoWidth, height: el.videoHeight });
+	});
+
+	if (typeof video === "string") {
+		el.src = video;
+		return promise;
+	} else {
+		el.src = URL.createObjectURL(video);
+		return promise.finally(() => URL.revokeObjectURL(el.src));
+	}
+}
+
+/**
  * 获取像素图的尺寸，该函数只能在浏览器端使用。
  *
  * @param image 图片文件或URL
- * @return 尺寸 { width, height }，单位像素
+ * @return 尺寸信息
  */
 export function getRasterImageSize(image: string | Blob) {
 	const el = document.createElement("img");
@@ -64,7 +94,7 @@ export function getRasterImageSize(image: string | Blob) {
  * SVG的长宽值可能含有小数，在转换为JS Number时可能产生精度误差。
  *
  * @param image 图片文件或URL
- * @return 尺寸 { width, height }，单位像素
+ * @return 尺寸信息
  */
 export async function getSVGImageSize(image: string | Blob) {
 	if (typeof image === "string") {
@@ -81,7 +111,7 @@ function svgSizeOrViewBox(text: string): Size {
 	const svg = doc.documentElement as unknown as SVGSVGElement;
 
 	/**
-	 * 仅支持px单位和不带单位，因为其它单位与上下文有关，
+	 * 仅支持px单位和不带单位的值，因为其它单位都与上下文有关
 	 *
 	 * @param length SVG长度
 	 * @throws 如果是不支持的单位

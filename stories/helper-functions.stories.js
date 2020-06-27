@@ -1,42 +1,66 @@
 import { storiesOf } from "@storybook/vue";
 import { withKnobs } from "@storybook/addon-knobs";
-import { getImageSize, openFile } from "../src";
+import { getImageSize, getVideoSize, openFile } from "../src";
 
 const stories = storiesOf("HelperFunctions", module);
 stories.addDecorator(withKnobs);
 
-stories.add("CheckBox", () => ({
+stories.add("MediaSize", () => ({
 	template: `
 		<div>
 			<kx-button @click="showImageFileSize">选择文件</kx-button>
-			<input v-model="url" placeholder="图片URL">
+
+			<input v-model="urlInput" placeholder="URL">
 			<kx-button @click="showImageURLSize">获取大小</kx-button>
 
 			<div v-if="size">width: {{size.width}}, height: {{size.height}}</div>
-			<img v-if="image" :src="image" alt="preview" :style="imgStyle">
-		</div>`,
+
+			<component
+				v-if="source"
+				:is="mediaType"
+				:src="source"
+				controls
+				alt="preview"
+				style="display: block"
+			/>
+		</div>
+	`,
 	data: () => ({
-		url: "",
+		urlInput: "",
 		size: null,
-		image: null,
+
+		mediaType: null,
+		source: null,
 	}),
-	computed: {
-		imgStyle() {
-			return { width: this.size.width + "px", height: this.size.height + "px" };
-		},
-	},
 	methods: {
 		async showImageURLSize() {
-			const { url } = this;
-			this.size = await getImageSize(url);
-			this.image = url;
+			const { urlInput } = this;
+
+			// 先HEAD确定资源类型
+			const head = await fetch(urlInput, { method: "HEAD" });
+			if(head.headers.get("Content-Type").indexOf("image") > 0) {
+				this.mediaType = "img";
+				this.size = await getImageSize(urlInput);
+			} else {
+				this.mediaType = "video";
+				this.size = await getVideoSize(urlInput);
+			}
+
+			this.source = urlInput;
 		},
 		async showImageFileSize() {
-			const file = await openFile("image/*");
-			this.size = await getImageSize(file);
+			const file = await openFile("image/*; video/*");
 
-			URL.revokeObjectURL(this.image);
-			this.image = URL.createObjectURL(file);
+			if (file.type.indexOf("image") > 0) {
+				this.mediaType = "img";
+				this.size = await getImageSize(file);
+			} else {
+				this.mediaType = "video";
+				this.size = await getVideoSize(file);
+			}
+
+			URL.revokeObjectURL(this.source);
+			this.source = URL.createObjectURL(file);
 		},
 	},
 }));
