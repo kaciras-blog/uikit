@@ -59,7 +59,7 @@ function install(Vue: VueConstructor) {
 	Vue.directive("autofocus", AutoFocus);
 	Vue.directive("ime-input", ImeInput);
 	Vue.directive("bind-selection", SelectionBinding);
-	Vue.directive("on-selection-changed", SelectionChangeDirective);
+	Vue.directive("on-selection-change", SelectionChangeDirective);
 	Vue.directive("ripple", Ripple);
 
 	Vue.use(KxDialog);

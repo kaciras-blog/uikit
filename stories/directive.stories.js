@@ -50,27 +50,24 @@ stories.add("section-bind", () => ({
 	},
 }));
 
-stories.add("section-bind", () => ({
-	props: {
-		start: {
-			default: number("selectionStart", 0),
-		},
-		end: {
-			default: number("selectionEnd", 0),
-		},
-	},
+stories.add("section-change", () => ({
 	template: `
-		<textarea
-			v-bind-selection.focus="selection"
-			v-model="value"
-			class="directive-textarea"
-		/>`,
+		<div>
+			<textarea
+				v-on-selection-change="setSelectionRange"
+				v-model="value"
+				class="directive-textarea"
+			/>
+			<div>选择范围：{{start}} - {{end}}</div>
+		</div>`,
 	data: () => ({
 		value: "调整下面的start和end，改变文本框的选择区域",
+		start: 0, end: 0,
 	}),
-	computed: {
-		selection() {
-			return [this.start, this.end];
+	methods: {
+		setSelectionRange(s, e) {
+			this.start = s;
+			this.end = e;
 		},
 	},
 }));
