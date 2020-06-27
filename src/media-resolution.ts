@@ -1,41 +1,54 @@
+/*
+ * 获取媒体尺寸（分辨率）的函数集合，支持像素图、矢量图和视频，该模块只能在浏览器端使用。
+ *
+ * 常用函数：
+ * await getImageResolution(); // 获取图片尺寸
+ * await getVideoResolution(); // 获取视频尺寸
+ *
+ * 【尺寸的单词】
+ * size			- 似乎跟文件大小有歧义。
+ * dimensions	- 似乎跟二维/三维有歧义
+ * resolution	- 比较合适
+ */
+
 /**
  * 二维尺寸对象，包含宽高，单位是像素，可能有小数。
  */
-type Size = { width: number, height: number };
+type Resolution = { width: number, height: number };
 
 /**
  * 获取图片的尺寸，同时支持像素图和SVG图。
  * 如果参数是URL，则根据响应的Content-Type头判断图片类型。
  *
- * 详细的说明请见 getRasterImageSize() 和 getSVGImageSize() 的文档。
+ * 详细的说明请见 getRasterImageResolution() 和 getSVGImageResolution() 的文档。
  *
  * @param image 图片文件或URL
  * @return 尺寸信息
  * @throw 如果参数是URL且响应缺少Content-Type头
  */
-export async function getImageSize(image: string | Blob) {
+export async function getImageResolution(image: string | Blob) {
 	if (typeof image === "string") {
 		const res = await fetch(image, { credentials: "include" });
 		const type = res.headers.get("Content-Type");
 
 		if (type === null) {
-			throw new Error("响应没有Content-Type头，请自己判断图片类型使用 getRasterImageSize 或 getSVGImageSize.");
+			throw new Error("响应没有Content-Type头，请自己判断图片类型使用 getRasterImageResolution 或 getSVGImageResolution.");
 		}
 
 		if (type.indexOf("svg") === -1) {
-			return getRasterImageSize(await res.blob());
+			return getRasterImageResolution(await res.blob());
 		} else {
-			return getRasterImageSize(await res.text());
+			return getRasterImageResolution(await res.text());
 		}
 	} else if (image.type.indexOf("svg") === -1) {
-		return getRasterImageSize(image);
+		return getRasterImageResolution(image);
 	} else {
 		return svgSizeOrViewBox(await image.text());
 	}
 }
 
 /**
- * 获取视频的原始尺寸，该函数只能在浏览器端使用。
+ * 获取视频的原始尺寸。
  *
  * 【输入兼容性】
  * 浏览器不一定支持所有的视频编码，不支持的视频会抛异常。
@@ -44,10 +57,10 @@ export async function getImageSize(image: string | Blob) {
  * @return 尺寸信息
  * @throws 如果视频不受支持
  */
-export function getVideoSize(video: string | Blob) {
+export function getVideoResolution(video: string | Blob) {
 	const el = document.createElement("video");
 
-	const promise = new Promise<Size>((resolve, reject) => {
+	const promise = new Promise<Resolution>((resolve, reject) => {
 		el.onerror = reject;
 		el.onloadedmetadata = () => resolve({ width: el.videoWidth, height: el.videoHeight });
 	});
@@ -62,15 +75,15 @@ export function getVideoSize(video: string | Blob) {
 }
 
 /**
- * 获取像素图的尺寸，该函数只能在浏览器端使用。
+ * 获取像素图的尺寸。
  *
  * @param image 图片文件或URL
  * @return 尺寸信息
  */
-export function getRasterImageSize(image: string | Blob) {
+export function getRasterImageResolution(image: string | Blob) {
 	const el = document.createElement("img");
 
-	const promise = new Promise<Size>((resolve, reject) => {
+	const promise = new Promise<Resolution>((resolve, reject) => {
 		el.onerror = reject;
 		el.onload = () => resolve({ width: el.width, height: el.height });
 	});
@@ -85,7 +98,7 @@ export function getRasterImageSize(image: string | Blob) {
 }
 
 /**
- * 获取SVG图片的尺寸，该函数只能在浏览器端使用。
+ * 获取SVG图片的尺寸。
  *
  * 有些SVG没有设置width和height属性，比如AI导出时选择了“响应”选项，
  * 此时无法通过<img>来获取尺寸，应选用SVG的viewBox属性。
@@ -96,7 +109,7 @@ export function getRasterImageSize(image: string | Blob) {
  * @param image 图片文件或URL
  * @return 尺寸信息
  */
-export async function getSVGImageSize(image: string | Blob) {
+export async function getSVGImageResolution(image: string | Blob) {
 	if (typeof image === "string") {
 		const res = await fetch(image, { credentials: "include" });
 		return svgSizeOrViewBox(await res.text());
@@ -105,7 +118,7 @@ export async function getSVGImageSize(image: string | Blob) {
 	}
 }
 
-function svgSizeOrViewBox(text: string): Size {
+function svgSizeOrViewBox(text: string): Resolution {
 	const parser = new DOMParser();
 	const doc = parser.parseFromString(text, "image/svg+xml");
 	const svg = doc.documentElement as unknown as SVGSVGElement;

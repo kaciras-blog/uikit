@@ -5,7 +5,7 @@ import { getImageSize, getVideoSize, openFile } from "../src";
 const stories = storiesOf("HelperFunctions", module);
 stories.addDecorator(withKnobs);
 
-stories.add("MediaSize", () => ({
+stories.add("MediaResolution", () => ({
 	template: `
 		<div>
 			<kx-button @click="showImageFileSize">选择文件</kx-button>
