@@ -32,7 +32,8 @@ export async function getImageResolution(image: string | Blob) {
 		const type = res.headers.get("Content-Type");
 
 		if (type === null) {
-			throw new Error("响应没有Content-Type头，请自己判断图片类型使用 getRasterImageResolution 或 getSVGImageResolution.");
+			throw new Error("响应没有 Content-Type 头，" +
+				"请自己判断图片类型使用 getRasterImageResolution 或 getSVGImageResolution.");
 		}
 
 		if (type.indexOf("svg") === -1) {
@@ -98,16 +99,21 @@ export function getRasterImageResolution(image: string | Blob) {
 }
 
 /**
- * 获取SVG图片的尺寸。
+ * 获取 SVG 图片的尺寸。
  *
+ * 【为何不用 <img> 来实现】
  * 有些SVG没有设置width和height属性，比如AI导出时选择了“响应”选项，
  * 此时无法通过<img>来获取尺寸，应选用SVG的viewBox属性。
+ *
+ * 若是只有我自己上传图片倒是能保证有 width & height，
+ * 但第三方输入的话就不好说了，所以需要提升下输入的兼容性。
  *
  * 【注意】
  * SVG的长宽值可能含有小数，在转换为JS Number时可能产生精度误差。
  *
  * @param image 图片文件或URL
  * @return 尺寸信息
+ * @throws 如果SVG加载失败，或是使用了相对尺寸
  */
 export async function getSVGImageResolution(image: string | Blob) {
 	if (typeof image === "string") {

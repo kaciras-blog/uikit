@@ -1,6 +1,6 @@
 import { storiesOf } from "@storybook/vue";
 import { withKnobs } from "@storybook/addon-knobs";
-import { getImageSize, getVideoSize, openFile } from "../src";
+import { getImageResolution, getVideoResolution, openFile } from "../src";
 
 const stories = storiesOf("HelperFunctions", module);
 stories.addDecorator(withKnobs);
@@ -21,7 +21,7 @@ stories.add("MediaResolution", () => ({
 				:src="source"
 				controls
 				alt="preview"
-				style="display: block"
+				:style="previewStyle"
 			/>
 		</div>
 	`,
@@ -32,35 +32,42 @@ stories.add("MediaResolution", () => ({
 		mediaType: null,
 		source: null,
 	}),
+	computed: {
+		previewStyle() {
+			const { width, height } = this.size || {};
+			return {
+				display: "block",
+				width: width + "px",
+				height: height + "px",
+			};
+		},
+	},
 	methods: {
 		async showImageURLSize() {
 			const { urlInput } = this;
 
 			// 先HEAD确定资源类型
 			const head = await fetch(urlInput, { method: "HEAD" });
-			if(head.headers.get("Content-Type").indexOf("image") > 0) {
-				this.mediaType = "img";
-				this.size = await getImageSize(urlInput);
-			} else {
-				this.mediaType = "video";
-				this.size = await getVideoSize(urlInput);
-			}
+			await this.parse(head.headers.get("Content-Type"), urlInput);
 
 			this.source = urlInput;
 		},
 		async showImageFileSize() {
-			const file = await openFile("image/*; video/*");
+			const file = await openFile("image/*,video/*");
 
-			if (file.type.indexOf("image") > 0) {
-				this.mediaType = "img";
-				this.size = await getImageSize(file);
-			} else {
-				this.mediaType = "video";
-				this.size = await getVideoSize(file);
-			}
+			await this.parse(file.type, file);
 
 			URL.revokeObjectURL(this.source);
 			this.source = URL.createObjectURL(file);
+		},
+		async parse(type, source) {
+			if (type.indexOf("image") === -1) {
+				this.mediaType = "video";
+				this.size = await getVideoResolution(source);
+			} else {
+				this.mediaType = "img";
+				this.size = await getImageResolution(source);
+			}
 		},
 	},
 }));
