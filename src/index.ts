@@ -5,14 +5,12 @@ import { VueConstructor } from "vue";
 import ButtonPager from "./paging/ButtonPager.vue";
 import ScrollPager from "./paging/ScrollPager.vue";
 import SkFadingCircle from "./components/SkFadingCircle.vue";
-import FadeCarousel from "./components/FadeCarousel.vue";
 import ScrollPagingView from "./paging/ScrollPagingView.vue";
 import ButtonPagingView from "./paging/ButtonPagingView.vue";
 import KxCheckBox from "./components/KxCheckBox.vue";
 import KxButton from "./components/KxButton.vue";
 import KxSwitch from "./components/KxSwitch.vue";
 import KxTaskButton from "./components/KxTaskButton.vue";
-import KxCarousel from "./components/KxCarousel.vue";
 import KxRadioBox from "./components/KxRadioBox.vue";
 import KxRadioBoxGroup from "./components/KxRadioBoxGroup.vue";
 import KxPasswordInput from "./components/KxPasswordInput.vue";
@@ -37,14 +35,12 @@ function install(Vue: VueConstructor) {
 	Vue.component(SkFadingCircle.name, SkFadingCircle);
 	Vue.component(ButtonPager.name, ButtonPager);
 	Vue.component(ScrollPager.name, ScrollPager);
-	Vue.component(FadeCarousel.name, FadeCarousel);
 	Vue.component(ScrollPagingView.name, ScrollPagingView);
 	Vue.component(ButtonPagingView.name, ButtonPagingView);
 	Vue.component(KxCheckBox.name, KxCheckBox);
 	Vue.component(KxButton.name, KxButton);
 	Vue.component(KxSwitch.name, KxSwitch);
 	Vue.component(KxTaskButton.name, KxTaskButton);
-	Vue.component(KxCarousel.name, KxCarousel);
 	Vue.component(KxRadioBox.name, KxRadioBox);
 	Vue.component(KxRadioBoxGroup.name, KxRadioBoxGroup);
 	Vue.component(KxPasswordInput.name, KxPasswordInput);
@@ -84,7 +80,7 @@ if (GlobalVue) {
 export * from "./common";
 export * from "./cancellation";
 export * from "./dragging";
-export * from "./image-size";
+export * from "./media-resolution";
 export * from "./scroll";
 export * from "./interactive";
 
