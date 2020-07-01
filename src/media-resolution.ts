@@ -6,9 +6,13 @@
  * await getVideoResolution(); // 获取视频尺寸
  *
  * 【尺寸的单词】
- * size			- 似乎跟文件大小有歧义。
+ * size			- 似乎跟文件大小有歧义
  * dimensions	- 似乎跟二维/三维有歧义
  * resolution	- 比较合适
+ *
+ * 【客户端实现 vs 服务端实现】
+ * 在客户端里获取尺寸可以用于第三方图源，这个过程难以用在服务端，另外还能用于需要交互的场景。
+ * 在服务端实现更利于代码复用，运维脚本、以及各种预处理过程都可以使用。
  */
 
 /**
@@ -102,8 +106,8 @@ export function getRasterImageResolution(image: string | Blob) {
  * 获取 SVG 图片的尺寸。
  *
  * 【为何不用 <img> 来实现】
- * 有些SVG没有设置width和height属性，比如AI导出时选择了“响应”选项，
- * 此时无法通过<img>来获取尺寸，应选用SVG的viewBox属性。
+ * 有些SVG没有设置 width 和 height 属性，比如 Adobe Illustrator 导出时选择了“响应”选项，
+ * 此时无法通过 <img> 来获取尺寸，应选用 viewBox 属性。
  *
  * 若是只有我自己上传图片倒是能保证有 width & height，
  * 但第三方输入的话就不好说了，所以需要提升下输入的兼容性。

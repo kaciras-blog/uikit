@@ -71,7 +71,7 @@ export const PreventScrollMixin = {
 };
 
 /**
- * 将多个元素的滚动条按百分比同步。
+ * 将多个元素的垂直滚动条按百分比同步。
  *
  * @param elements 要同步的元素
  * @return 取消同步的函数
@@ -79,9 +79,9 @@ export const PreventScrollMixin = {
 export function syncScroll(...elements: HTMLElement[]) {
 	let skip = false;
 
-	elements.forEach(el => el.addEventListener("scroll", syncScroll));
+	elements.forEach(el => el.addEventListener("scroll", updateScrollHeights));
 
-	function syncScroll(event: Event) {
+	function updateScrollHeights(event: Event) {
 		if (skip) {
 			return;
 		}
@@ -99,7 +99,5 @@ export function syncScroll(...elements: HTMLElement[]) {
 		});
 	}
 
-	return function destroy() {
-		elements.forEach(el => el.removeEventListener("scroll", syncScroll));
-	};
+	return () => elements.forEach(el => el.removeEventListener("scroll", updateScrollHeights));
 }
