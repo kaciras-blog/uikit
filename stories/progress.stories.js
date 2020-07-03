@@ -10,15 +10,21 @@ stories.add("top-progress", () => ({
 			<kx-button @click="fail">失败</kx-button>
 			<kx-button @click="reset">重置</kx-button>
 		</div>`,
+	data: () => ({
+		value: 0,
+	}),
 	methods: {
 		increase() {
 			this.$refs.progress.start();
-			this.$refs.progress.setProgress(70);
+			this.value = Math.min(this.value + 10, 100);
+			this.$refs.progress.setProgress(this.value);
 		},
 		fail() {
+			this.value = 0;
 			this.$refs.progress.fail();
 		},
 		reset() {
+			this.value = 0;
 			this.$refs.progress.reset();
 		},
 	},

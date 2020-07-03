@@ -75,7 +75,7 @@ export default {
 </script>
 
 <style module lang="less">
-@default-color: #1EA7FD;
+@default-color: #1084ff;
 
 @comet-size: 100px;
 @comet-speed: 40ms;
