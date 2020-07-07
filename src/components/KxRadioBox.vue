@@ -59,11 +59,11 @@ export default {
 <style lang="less">
 @import "../css/exports";
 
+@height: 24px;
+
 .kx-radio-box {
 	display: inline-block;
-	padding-left: .5em;
-	padding-right: .5em;
-	height: 1.6em;
+	margin-right: 1em;
 	cursor: pointer;
 }
 
@@ -86,31 +86,30 @@ export default {
 .radio-box-mark {
 	display: inline-block;
 	position: relative;
-	height: 1.6em;
-	width: 1.6em;
+	height: @height;
+	width: @height;
 	vertical-align: top;
 
-	border: 1px solid #dbdbdb;
-	border-radius: .8em;
-
-	transition: all .15s;
+	border: 1px solid #ccc;
+	border-radius: 50%;
 
 	&::after {
 		content: "";
 		display: none;
+
 		position: absolute;
-		top: 50%;
-		left: 50%;
-		width: 10px;
-		height: 10px;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
 
 		border-radius: 50%;
-		transform: translate(-50%, -50%);
-		background-color: white;
+		transform: scale(.6);
+		background-color: @color-input-active;
 	}
 
 	&.ckecked {
-		background-color: @color-input-active;
+		border-width: 2px;
 		border-color: @color-input-active;
 	}
 
@@ -122,7 +121,6 @@ export default {
 .radio-box-label {
 	display: inline-block;
 	padding-left: .5rem;
-	padding-top: 1px; // 微调下上边距跟勾对齐
-	line-height: 19px;
+	line-height: @height;
 }
 </style>
