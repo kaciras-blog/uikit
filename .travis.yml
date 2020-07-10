@@ -8,7 +8,7 @@ git:
 
 cache: yarn
 
-script: yarn build-storybook --quiet
+script: yarn build-storybook --quiet && touch .out/.nojekyll
 
 deploy:
   github_token: $GITHUB_TOKEN
