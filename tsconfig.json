@@ -1,15 +1,17 @@
 {
 	"compilerOptions": {
-		"target": "esnext",
-		"module": "esnext",
+		"target": "ESNext",
+		"module": "CommonJS",
 		"jsx": "preserve",
-		"moduleResolution": "node",
+		"moduleResolution": "Node",
 
 		"esModuleInterop": true,
 		"strict": true,
 		"sourceMap": true,
 		"experimentalDecorators": true,
 
+		"newLine": "LF",
+		"removeComments": true,
 		"baseUrl": ".",
 		"types": [
 			"webpack-env",
@@ -20,17 +22,16 @@
 //			"@/*": ["src/*"]
 //		},
 		"lib": [
-			"esnext",
-			"dom",
-			"dom.iterable",
-			"scripthost"
+			"ESNext",
+			"DOM",
+			"DOM.Iterable",
+			"ScriptHost"
 		]
 	},
 	"include": [
-		"src/**/*.vue",
 		"src/**/*.ts",
 		"src/**/*.tsx",
-		"tests/**/*.ts",
-		"tests/**/*.tsx"
+		"__tests__/**/*.ts",
+		"__tests__/**/*.tsx"
 	]
 }
