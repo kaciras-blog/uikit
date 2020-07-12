@@ -2,13 +2,14 @@
 	"compilerOptions": {
 		"target": "esnext",
 		"module": "esnext",
-		"strict": true,
 		"jsx": "preserve",
-		"importHelpers": true,
 		"moduleResolution": "node",
-		"experimentalDecorators": true,
+
 		"esModuleInterop": true,
+		"strict": true,
 		"sourceMap": true,
+		"experimentalDecorators": true,
+
 		"baseUrl": ".",
 		"types": [
 			"webpack-env",
@@ -31,8 +32,5 @@
 		"src/**/*.tsx",
 		"tests/**/*.ts",
 		"tests/**/*.tsx"
-	],
-	"exclude": [
-		"node_modules"
 	]
 }

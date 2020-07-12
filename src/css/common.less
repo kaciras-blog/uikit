@@ -177,18 +177,6 @@ hr {
 	.size(100%);
 }
 
-.show-mobile {
-	@media screen and (min-width: @length-screen-mobile) {
-		display: none;
-	}
-}
-
-.hide-mobile {
-	@media screen and (max-width: @length-screen-mobile) {
-		display: none;
-	}
-}
-
 // Vue2 没有 Fragment，所以只能用 display: contents 来模拟了
 .fragment {
 	display: contents;
