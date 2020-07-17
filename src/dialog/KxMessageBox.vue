@@ -108,8 +108,10 @@ export default {
 
 	max-width: 450px;
 	width: 80vw;
-	border-radius: 4px;
 	padding: 30px 20px 20px;
+
+	border-radius: 4px;
+	overflow: hidden;
 
 	background-color: white;
 	font-size: 1rem;

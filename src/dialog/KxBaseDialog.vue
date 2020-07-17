@@ -94,6 +94,7 @@ export default {
 
 	min-width: 300px;
 	max-width: 80vw;
+	overflow: hidden;
 
 	border-radius: 4px;
 	background-color: white;
@@ -113,15 +114,11 @@ export default {
 
 	height: 3rem;
 	border-bottom: solid 1px #d5d5d5;
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
 
 	user-select: none;
 }
 
 .kx-dialog-body {
 	padding: 20px;
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
 }
 </style>
