@@ -3,19 +3,22 @@
 		@click.native.self="onOverlayClick"
 		@keyup.native.esc="onEscape"
 	>
-		<div ref="panel"
-			 class="kx-dialog dialogZoomIn"
-			 tabindex="-1"
-			 v-autofocus
-			 role="dialog"
-			 aria-modal="true"
+		<div
+			class="kx-dialog dialogZoomIn"
+			ref="panel"
+			tabindex="-1"
+			v-autofocus
+			role="dialog"
+			aria-modal="true"
 		>
 			<header
 				class="kx-dialog-header"
 				@mousedown="drag"
 				@touchstart.self.prevent="drag"
 			>
-				<slot name="title"><h2 class="kx-dialog-title">{{title}}</h2></slot>
+				<slot name="title">
+					<h2 class="kx-dialog-title">{{title}}</h2>
+				</slot>
 				<kx-close-icon v-if="closeIcon" @click="close"/>
 			</header>
 
