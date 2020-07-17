@@ -86,7 +86,9 @@ export default {
 
 	&::after {
 		content: "";
-		display: inline-block;
+
+		// inline-block 会受 font-size 影响
+		display: block;
 		width: 16px;
 		height: 100%;
 
