@@ -24,10 +24,10 @@ stories.add("Switch", () => ({
 		},
 	},
 	template: `
-		<label>
-			这是一个切换按钮
-			<kx-switch v-model="value" :disabled="disabled"></kx-switch>
-		</label>`,
+		<div style="width: 300px">
+			<kx-switch-box v-model="value" :disabled="disabled">这是一个切换按钮</kx-switch-box>
+		</div>
+	`,
 	data: () => ({ value: true }),
 }));
 

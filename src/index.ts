@@ -8,11 +8,11 @@ import SkFadingCircle from "./components/SkFadingCircle.vue";
 import ScrollPagingView from "./paging/ScrollPagingView.vue";
 import ButtonPagingView from "./paging/ButtonPagingView.vue";
 import KxCheckBox from "./components/KxCheckBox.vue";
-import KxButton from "./components/KxButton.vue";
-import KxSwitch from "./components/KxSwitch.vue";
-import KxTaskButton from "./components/KxTaskButton.vue";
+import KxSwitchBox from "./components/KxSwitchBox.vue";
 import KxRadioBox from "./components/KxRadioBox.vue";
 import KxRadioBoxGroup from "./components/KxRadioBoxGroup.vue";
+import KxButton from "./components/KxButton.vue";
+import KxTaskButton from "./components/KxTaskButton.vue";
 import KxPasswordInput from "./components/KxPasswordInput.vue";
 import KxProgress from "./components/KxProgress.vue";
 
@@ -39,7 +39,7 @@ function install(Vue: VueConstructor) {
 	Vue.component(ButtonPagingView.name, ButtonPagingView);
 	Vue.component(KxCheckBox.name, KxCheckBox);
 	Vue.component(KxButton.name, KxButton);
-	Vue.component(KxSwitch.name, KxSwitch);
+	Vue.component(KxSwitchBox.name, KxSwitchBox);
 	Vue.component(KxTaskButton.name, KxTaskButton);
 	Vue.component(KxRadioBox.name, KxRadioBox);
 	Vue.component(KxRadioBoxGroup.name, KxRadioBoxGroup);
