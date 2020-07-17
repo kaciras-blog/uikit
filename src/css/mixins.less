@@ -1,5 +1,5 @@
 /*
- * 常用 Less 公共样式封装，修改自：
+ * 常用 Less 公共样式封装，部分取自：
  * https://blog.csdn.net/boyit0/article/details/78802385
  */
 
@@ -36,6 +36,7 @@
 // 扩展点击区域
 .extend-click(@left, @right, @top, @bottom) {
 	position: relative;
+
 	&:before {
 		content: '';
 		position: absolute;
@@ -54,7 +55,7 @@
 }
 
 // 圆形
-.circle(@diameter){
+.circle(@diameter) {
 	width: @diameter;
 	height: @diameter;
 	border-radius: 50%;
