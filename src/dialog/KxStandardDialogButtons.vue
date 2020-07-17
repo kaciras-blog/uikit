@@ -1,18 +1,26 @@
 <!--
-	<div class="btn-group" :class="$style.container">
+	<div
+		:class="$style.container"
+		class="btn-group"
+	>
 		<kx-button
 			v-if="cancelButton"
-			@click="$dialog.close">
+			@click="$dialog.close"
+		>
 			取消
 		</kx-button>
 		<kx-button
 			v-if="applyHook"
-			@click="applyHook">
+			:disabled="acceptable"
+			@click="applyHook"
+		>
 			应用
 		</kx-button>
 		<kx-button
 			class="primary"
-			@click="confirm">
+			:disabled="acceptable"
+			@click="confirm"
+		>
 			确定
 		</kx-button>
 	</div>
