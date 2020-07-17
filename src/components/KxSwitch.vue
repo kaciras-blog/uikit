@@ -3,7 +3,7 @@
 		注意 aria-checked 是 role="switch" 的必需属性，使用toString()防止为false时属性被省略。
 		详情见：https://www.w3.org/TR/wai-aria-1.1/#aria-checked
 	 -->
-	<div
+	<span
 		class="kx-switch"
 		:class="{ checked: value, disabled: disabled }"
 		role="switch"
@@ -20,7 +20,7 @@
 			@change="handleChange"
 			:disabled="disabled"
 		>
-	</div>
+	</span>
 </template>
 
 <script>
