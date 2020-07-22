@@ -1,3 +1,4 @@
+// 俺也来玩玩RxJS
 import { Observable, Subscriber } from "rxjs";
 import { isTouchEvent } from "./common";
 
@@ -84,8 +85,8 @@ class ElementPositionMapper extends Subscriber<Point2D> {
 		const clientRect = el.getBoundingClientRect();
 
 		// 拖动开始时元素的左上角坐标
-		const originX = clientRect.left;
-		const originY = clientRect.top;
+		const originX = clientRect.left + pageXOffset;
+		const originY = clientRect.top + pageYOffset;
 
 		const { clientX, clientY } = clientPosition(event);
 		this.offsetX = originX - clientX;
@@ -99,7 +100,8 @@ class ElementPositionMapper extends Subscriber<Point2D> {
 }
 
 /**
- * 将鼠标位置映射到元素的顶点坐标。
+ * 将鼠标位置映射到元素的顶点坐标，相对于文档。
+ *
  * 配合 moveElement 可以实现拖动元素，之所以拆开因为一些框架有自己的dom更新机制，不一定要直接修改元素样式。
  *
  * @param event 鼠标事件
