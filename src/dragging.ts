@@ -53,19 +53,16 @@ export function observeMouseMove() {
 
 class InWindowPointFilter extends Subscriber<Point2D> {
 
-	/* eslint-disable curly */
 	next(point: Point2D) {
-		if (point.x < 0 || point.x > window.innerWidth)
-			return;
-		if (point.y < 0 || point.y > window.innerHeight)
-			return;
-		super._next(point);
+		const x = Math.max(0, Math.min(point.x, window.innerWidth));
+		const y = Math.max(0, Math.min(point.y, window.innerHeight));
+		super._next({ x, y });
 	}
-	/* eslint-enable curly */
 }
 
 /**
- * 过滤掉超出浏览器窗口的点。
+ * 将坐标点限制在窗口内。
+ *
  * 用法：Observable.pipe(limitInWindow)。
  *
  * @param source 原始Observable
