@@ -79,9 +79,16 @@ export const PreventScrollMixin = {
 export function syncScroll(...elements: HTMLElement[]) {
 	let skip = false;
 
-	elements.forEach(el => el.addEventListener("scroll", updateScrollHeights));
+	if (elements.length) {
+		sync(elements[0]);
+	}
 
-	function updateScrollHeights(event: Event) {
+	function sync(target: HTMLElement) {
+		const p = target.scrollTop / (target.scrollHeight - target.offsetHeight);
+		elements.forEach(el => el.scrollTop = p * (el.scrollHeight - el.offsetHeight));
+	}
+
+	function scrollHandler(event: Event) {
 		if (skip) {
 			return;
 		}
@@ -89,15 +96,12 @@ export function syncScroll(...elements: HTMLElement[]) {
 
 		// 必须要延迟到下一帧，否则在开启了平滑滚动的浏览器上会滚不动
 		requestAnimationFrame(() => {
-			const curr = event.target as HTMLElement;
-			const p = curr.scrollTop / (curr.scrollHeight - curr.offsetHeight);
-
-			elements.forEach(el => {
-				el.scrollTop = p * (el.scrollHeight - el.offsetHeight);
-			});
+			sync(event.target as HTMLElement);
 			requestAnimationFrame(() => skip = false);
 		});
 	}
 
-	return () => elements.forEach(el => el.removeEventListener("scroll", updateScrollHeights));
+	elements.forEach(el => el.addEventListener("scroll", scrollHandler));
+
+	return () => elements.forEach(el => el.removeEventListener("scroll", scrollHandler));
 }
