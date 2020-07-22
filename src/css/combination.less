@@ -86,28 +86,26 @@
 	& > li {
 		position: relative;
 		counter-increment: index;
-		margin-bottom: .8em;
+		margin-bottom: .75em;
 
 		&:first-child::before { background: @color-second; }
+
 		&:nth-child(2)::before { background: lighten(@color-second, 6%); }
+
 		&:nth-child(3)::before { background: lighten(@color-second, 12%); }
 
 		&::before {
 			content: counter(index);
 			position: absolute;
-			top: .1em;
-			padding: 0 .3em;
-			border-radius: .3em;
+			padding: 0 .4em;
+			border-radius: 4px;
 			font-weight: 600;
 			color: white;
 			background: #CDCDCD;
 		}
 
 		& > .item {
-			position: relative;
-			display: block;
-			margin-left: 1.5em;
-			line-height: 1.4;
+			margin-left: 1.75em;
 		}
 	}
 }
