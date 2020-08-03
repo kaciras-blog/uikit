@@ -55,3 +55,49 @@
 	margin: 90vh auto;
 	border: blue dashed;
 }
+
+#drag-demo {
+	position: relative;
+	width: 1000vw;
+	height: 1000vh;
+
+	background-size: 40px 40px;
+	background-image:
+			linear-gradient(to right, lightgray 1px, transparent 1px),
+			linear-gradient(to bottom, lightgray 1px, transparent 1px);
+
+	&::before, &::after {
+		content: "";
+		position: fixed;
+		z-index: 10;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		border-color: red;
+		pointer-events: none;
+	}
+
+	&::before {
+		width: calc(100vw - var(--edge-size) * 2);
+		height: 100vh;
+		border-left-style: dashed;
+		border-right-style: dashed;
+	}
+
+	&::after {
+		height: calc(100vh - var(--edge-size) * 2);
+		width: 100vw;
+		border-top-style: dashed;
+		border-bottom-style: dashed;
+	}
+}
+
+#drag-demo-el {
+	position: absolute;
+	width: 400px;
+	height: 250px;
+
+	background: whitesmoke;
+	border: solid #0000ee;
+	cursor: grab;
+}
