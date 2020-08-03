@@ -144,17 +144,23 @@ export function moveElement(el: HTMLElement) {
 		source.subscribe(new MoveElementPipe(subscriber, el)));
 }
 
-export function edgeScroll(margin: number = 120, speed: number = 0.6) {
-	let stopFlag = false;
+/**
+ * 当鼠标靠近屏幕的边缘时自动向外滚动，越靠近边缘速度越快。
+ *
+ * 可以用于在超出屏幕范围的容器内拖动时，自动调整可视区位置。
+ *
+ * @param size 触发宽度
+ * @param speed 速度
+ */
+export function edgeScroll(size: number = 100, speed: number = 0.5) {
+	let animationFrame: number;
 	let dx = 0, dy = 0;
 
 	function animationLoop() {
-		if (stopFlag) {
-			return;
-		}
-		document.scrollingElement!.scrollLeft += dx;
-		document.scrollingElement!.scrollTop += dy;
-		requestAnimationFrame(animationLoop);
+		const { scrollingElement } = document;
+		scrollingElement!.scrollLeft += dx;
+		scrollingElement!.scrollTop += dy;
+		animationFrame = requestAnimationFrame(animationLoop);
 	}
 
 	animationLoop();
@@ -164,7 +170,7 @@ export function edgeScroll(margin: number = 120, speed: number = 0.6) {
 
 	function calc(pos: number, middle: number) {
 		const offset = pos - middle;
-		const v = Math.max(0, Math.abs(offset) + margin - middle);
+		const v = Math.max(0, Math.abs(offset) + size - middle);
 		return speed * v * Math.sign(offset);
 	}
 
@@ -174,7 +180,7 @@ export function edgeScroll(margin: number = 120, speed: number = 0.6) {
 			dy = calc(y, yMiddle);
 		},
 		complete() {
-			stopFlag = true;
+			cancelAnimationFrame(animationFrame);
 		},
 	});
 }
