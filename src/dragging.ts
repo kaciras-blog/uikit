@@ -1,5 +1,5 @@
 // 俺也来玩玩RxJS
-import { Observable, Subscriber } from "rxjs";
+import { Observable } from "rxjs";
 import { map, tap } from "rxjs/operators";
 import { isTouchEvent } from "./common";
 
@@ -52,6 +52,7 @@ export function observeMouseMove() {
 		}
 
 		subscriber.add(cleanListeners);
+
 		document.addEventListener("mousemove", onMouseMove);
 		document.addEventListener("touchmove", onTouchMove);
 		document.addEventListener("mouseup", onUp);
@@ -67,7 +68,7 @@ export function observeMouseMove() {
  * @param event 鼠标事件
  * @param el 映射的目标元素
  */
-export function elementPosition(event: MouseEvent, el: HTMLElement) {
+export function toElementPosition(event: MouseEvent, el: HTMLElement) {
 	const clientRect = el.getBoundingClientRect();
 	const { clientX, clientY } = cursorPosition(event);
 
@@ -82,66 +83,85 @@ export function elementPosition(event: MouseEvent, el: HTMLElement) {
 /**
  * 将相对于窗口的坐标加上窗口的滚动位置，使其变为相对于文档的坐标。
  */
-export function absolute() {
+export function toAbsolute() {
 	return map<Point2D, Point2D>(({ x, y }) => ({ x: x + pageXOffset, y: y + pageYOffset }));
-}
-
-class InWindowPointFilter extends Subscriber<Point2D> {
-
-	next(point: Point2D) {
-		const x = Math.max(0, Math.min(point.x, window.innerWidth));
-		const y = Math.max(0, Math.min(point.y, window.innerHeight));
-		super._next({ x, y });
-	}
 }
 
 /**
  * 将坐标点限制在窗口内。
- *
- * 用法：Observable.pipe(limitInWindow)。
- *
- * @param source 原始Observable
  */
-export function limitInWindow(source: Observable<Point2D>) {
-	return new Observable<Point2D>((subscriber) => source.subscribe(new InWindowPointFilter(subscriber)));
-}
-
-class MoveElementPipe extends Subscriber<Point2D> {
-
-	private readonly style: CSSStyleDeclaration;
-
-	constructor(destination: Subscriber<Point2D>, el: HTMLElement) {
-		super(destination);
-
-		// 拖动开始时元素的左上角坐标
-		const clientRect = el.getBoundingClientRect();
-		const originY = clientRect.top;
-		const originX = clientRect.left;
-
-		const { style } = el;
-		style.position = "absolute";
-		style.top = originY + "px";
-		style.left = originX + "px";
-
-		this.style = style;
-	}
-
-	_next(value: Point2D) {
-		this.style.top = value.y + "px";
-		this.style.left = value.x + "px";
-		super._next(value);
-	}
+export function limitInWindow() {
+	return map<Point2D, Point2D>(({ x, y }) => ({
+		x: Math.max(0, Math.min(x, window.innerWidth)),
+		y: Math.max(0, Math.min(y, window.innerHeight)),
+	}));
 }
 
 /**
  * 将元素设为绝对定位，并根据观察到的点改变元素的 top 和 left.
  *
  * @param el 被移动的元素
- * @return 该函数不改变Observable
  */
 export function moveElement(el: HTMLElement) {
-	return (source: Observable<Point2D>) => new Observable<Point2D>((subscriber) =>
-		source.subscribe(new MoveElementPipe(subscriber, el)));
+	const { style } = el;
+	const clientRect = el.getBoundingClientRect();
+
+	const originY = clientRect.top;
+	const originX = clientRect.left;
+
+	style.position = "absolute";
+	style.top = originY + "px";
+	style.left = originX + "px";
+
+	return tap<Point2D>(({ x, y }) => {
+		style.top = y + "px";
+		style.left = x + "px";
+	});
+}
+
+class EdgeScrollObserver {
+
+	private readonly size: number;
+	private readonly speed: number;
+
+	private dx = 0;
+	private dy = 0
+
+	private animationFrame!: number;
+
+	constructor(size: number, speed: number) {
+		this.size = size;
+		this.speed = speed;
+		this.loop = this.loop.bind(this);
+		this.loop();
+	}
+
+	next({ x, y }: Point2D) {
+		this.dx = this.calc(x, window.innerWidth / 2);
+		this.dy = this.calc(y, window.innerHeight / 2);
+	}
+
+	complete() {
+		cancelAnimationFrame(this.animationFrame);
+	}
+
+	private loop() {
+		const { scrollingElement } = document;
+		const { dx, dy, loop } = this;
+
+		scrollingElement!.scrollLeft += dx;
+		scrollingElement!.scrollTop += dy;
+
+		this.animationFrame = requestAnimationFrame(loop);
+	}
+
+	private calc(pos: number, middle: number) {
+		const { size, speed } = this;
+
+		const offset = pos - middle;
+		const v = Math.max(0, Math.abs(offset) + size - middle);
+		return speed * v * Math.sign(offset);
+	}
 }
 
 /**
@@ -153,34 +173,5 @@ export function moveElement(el: HTMLElement) {
  * @param speed 速度
  */
 export function edgeScroll(size: number = 100, speed: number = 0.5) {
-	let animationFrame: number;
-	let dx = 0, dy = 0;
-
-	function animationLoop() {
-		const { scrollingElement } = document;
-		scrollingElement!.scrollLeft += dx;
-		scrollingElement!.scrollTop += dy;
-		animationFrame = requestAnimationFrame(animationLoop);
-	}
-
-	animationLoop();
-
-	const xMiddle = window.innerWidth / 2;
-	const yMiddle = window.innerHeight / 2;
-
-	function calc(pos: number, middle: number) {
-		const offset = pos - middle;
-		const v = Math.max(0, Math.abs(offset) + size - middle);
-		return speed * v * Math.sign(offset);
-	}
-
-	return tap<Point2D>({
-		next({ x, y }) {
-			dx = calc(x, xMiddle);
-			dy = calc(y, yMiddle);
-		},
-		complete() {
-			cancelAnimationFrame(animationFrame);
-		},
-	});
+	return tap<Point2D>(new EdgeScrollObserver(size, speed));
 }

@@ -5,7 +5,7 @@
 	>
 		<div
 			class="kx-dialog dialogZoomIn"
-			ref="panel"
+			ref="dialog"
 			tabindex="-1"
 			v-autofocus
 			role="dialog"
@@ -17,7 +17,7 @@
 				@touchstart.self.prevent="drag"
 			>
 				<slot name="title">
-					<h2 class="kx-dialog-title">{{title}}</h2>
+					<h2 class="kx-dialog-title">{{ title }}</h2>
 				</slot>
 				<kx-close-icon v-if="closeIcon" @click="close"/>
 			</header>
@@ -28,9 +28,9 @@
 </template>
 
 <script>
-import KxModalWrapper from "./KxModalWrapper";
+import { limitInWindow, moveElement, observeMouseMove, toElementPosition } from "@/dragging";
 import KxCloseIcon from "./KxCloseIcon";
-import { elementPosition, limitInWindow, moveElement, observeMouseMove } from "../dragging";
+import KxModalWrapper from "./KxModalWrapper";
 
 export default {
 	name: "KxBaseDialog",
@@ -71,11 +71,11 @@ export default {
 			if (!event.touches && event.button !== 0) {
 				return; // 鼠标右键不拖动
 			}
-			observeMouseMove().pipe(
-				limitInWindow,
-				elementPosition(event, this.$refs.panel),
-				moveElement(this.$refs.panel),
-			).subscribe();
+			const { dialog } = this.$refs;
+
+			observeMouseMove()
+				.pipe(limitInWindow(), toElementPosition(event, dialog), moveElement(dialog))
+				.subscribe();
 		},
 		onEscape() {
 			if (this.closeIcon) this.close();
