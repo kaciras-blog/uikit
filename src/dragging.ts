@@ -1,18 +1,21 @@
 // 俺也来玩玩RxJS
 import { Observable, Subscriber } from "rxjs";
+import { map } from "rxjs/operators";
 import { isTouchEvent } from "./common";
 
 interface Point2D {
-	x: number;
-	y: number;
+	readonly x: number;
+	readonly y: number;
 }
 
-interface ClientPosition2D {
-	clientX: number;
-	clientY: number;
-}
-
-function clientPosition(event: MouseEvent | TouchEvent): ClientPosition2D {
+/**
+ * 统一触摸和鼠标事件，返回包含指针位置的对象。
+ * 触摸以第一个点击为准。
+ *
+ * @param event 事件对象
+ * @return 包含指针位置的对象
+ */
+function cursorPosition(event: MouseEvent | TouchEvent) {
 	return isTouchEvent(event) ? event.touches[0] : event;
 }
 
@@ -25,14 +28,19 @@ function clientPosition(event: MouseEvent | TouchEvent): ClientPosition2D {
 export function observeMouseMove() {
 	return new Observable<Point2D>((subscriber) => {
 
-		function onMove(event: MouseEvent | TouchEvent) {
-			const { clientX, clientY } = clientPosition(event);
+		function onMouseMove(event: MouseEvent) {
+			const { clientX, clientY } = event;
+			subscriber.next({ x: clientX, y: clientY });
+		}
+
+		function onTouchMove(event: TouchEvent) {
+			const { clientX, clientY } = event.touches[0];
 			subscriber.next({ x: clientX, y: clientY });
 		}
 
 		function cleanListeners() {
-			document.removeEventListener("mousemove", onMove);
-			document.removeEventListener("touchmove", onMove);
+			document.removeEventListener("mousemove", onMouseMove);
+			document.removeEventListener("touchmove", onTouchMove);
 			document.removeEventListener("mouseup", onUp);
 			document.removeEventListener("touchend", onUp);
 		}
@@ -44,11 +52,38 @@ export function observeMouseMove() {
 		}
 
 		subscriber.add(cleanListeners);
-		document.addEventListener("mousemove", onMove);
-		document.addEventListener("touchmove", onMove);
+		document.addEventListener("mousemove", onMouseMove);
+		document.addEventListener("touchmove", onTouchMove);
 		document.addEventListener("mouseup", onUp);
 		document.addEventListener("touchend", onUp);
 	});
+}
+
+/**
+ * 将鼠标位置映射到元素的左上角坐标，相对于窗口。
+ *
+ * 配合 moveElement 可以实现拖动元素，之所以拆开因为一些框架有自己的dom更新机制，不一定要直接修改元素样式。
+ *
+ * @param event 鼠标事件
+ * @param el 映射的目标元素
+ */
+export function elementPosition(event: MouseEvent, el: HTMLElement) {
+	const clientRect = el.getBoundingClientRect();
+	const { clientX, clientY } = cursorPosition(event);
+
+	// 拖动开始时，元素的左上角坐标 - 鼠标的坐标，以后每个鼠标坐标加上该值即为元素左上角坐标。
+	// 我就是要用符号来做变量
+	const Δx = clientRect.left - clientX;
+	const Δy = clientRect.top - clientY;
+
+	return map<Point2D, Point2D>(({ x, y }) => ({ x: x + Δx, y: y + Δy }));
+}
+
+/**
+ * 将相对于窗口的坐标加上窗口的滚动位置，使其变为相对于文档的坐标。
+ */
+export function absolute() {
+	return map<Point2D, Point2D>(({ x, y }) => ({ x: x + pageXOffset, y: y + pageYOffset }));
 }
 
 class InWindowPointFilter extends Subscriber<Point2D> {
@@ -69,45 +104,6 @@ class InWindowPointFilter extends Subscriber<Point2D> {
  */
 export function limitInWindow(source: Observable<Point2D>) {
 	return new Observable<Point2D>((subscriber) => source.subscribe(new InWindowPointFilter(subscriber)));
-}
-
-class ElementPositionMapper extends Subscriber<Point2D> {
-
-	// 元素顶点相对于鼠标（或触摸点）位置的偏移 = 元素位置 - 鼠标位置
-	private readonly offsetX: number;
-	private readonly offsetY: number;
-
-	constructor(destination: Subscriber<Point2D>, event: MouseEvent | TouchEvent, el: HTMLElement) {
-		super(destination);
-		const clientRect = el.getBoundingClientRect();
-
-		// 拖动开始时元素的左上角坐标
-		const originX = clientRect.left + pageXOffset;
-		const originY = clientRect.top + pageYOffset;
-
-		const { clientX, clientY } = clientPosition(event);
-		this.offsetX = originX - clientX;
-		this.offsetY = originY - clientY;
-	}
-
-	// 新的坐标 = 元素开始位置 + 偏移
-	next(value: Point2D) {
-		super._next({ x: this.offsetX + value.x, y: this.offsetY + value.y });
-	}
-}
-
-/**
- * 将鼠标位置映射到元素的顶点坐标，相对于文档。
- *
- * 配合 moveElement 可以实现拖动元素，之所以拆开因为一些框架有自己的dom更新机制，不一定要直接修改元素样式。
- *
- * @param event 鼠标事件
- * @param el 映射的目标元素
- * @return 新的Observable，每个点将映射到元素的顶点
- */
-export function elementPosition(event: MouseEvent, el: HTMLElement) {
-	return (source: Observable<Point2D>) => new Observable<Point2D>((subscriber) =>
-		source.subscribe(new ElementPositionMapper(subscriber, event, el)));
 }
 
 class MoveElementPipe extends Subscriber<Point2D> {
