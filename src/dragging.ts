@@ -1,6 +1,6 @@
 // 俺也来玩玩RxJS
 import { Observable, Subscriber } from "rxjs";
-import { map } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 import { isTouchEvent } from "./common";
 
 interface Point2D {
@@ -142,4 +142,39 @@ class MoveElementPipe extends Subscriber<Point2D> {
 export function moveElement(el: HTMLElement) {
 	return (source: Observable<Point2D>) => new Observable<Point2D>((subscriber) =>
 		source.subscribe(new MoveElementPipe(subscriber, el)));
+}
+
+export function edgeScroll(margin: number = 120, speed: number = 0.6) {
+	let stopFlag = false;
+	let dx = 0, dy = 0;
+
+	function animationLoop() {
+		if (stopFlag) {
+			return;
+		}
+		document.scrollingElement!.scrollLeft += dx;
+		document.scrollingElement!.scrollTop += dy;
+		requestAnimationFrame(animationLoop);
+	}
+
+	animationLoop();
+
+	const xMiddle = window.innerWidth / 2;
+	const yMiddle = window.innerHeight / 2;
+
+	function calc(pos: number, middle: number) {
+		const offset = pos - middle;
+		const v = Math.max(0, Math.abs(offset) + margin - middle);
+		return speed * v * Math.sign(offset);
+	}
+
+	return tap<Point2D>({
+		next({ x, y }) {
+			dx = calc(x, xMiddle);
+			dy = calc(y, yMiddle);
+		},
+		complete() {
+			stopFlag = true;
+		},
+	});
 }
