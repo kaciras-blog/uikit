@@ -61,33 +61,6 @@ export function observeMouseMove() {
 }
 
 /**
- * 将鼠标位置映射到元素的左上角坐标，相对于窗口。
- *
- * 配合 moveElement 可以实现拖动元素，之所以拆开因为一些框架有自己的dom更新机制，不一定要直接修改元素样式。
- *
- * @param event 鼠标事件
- * @param el 映射的目标元素
- */
-export function toElementPosition(event: MouseEvent, el: HTMLElement) {
-	const clientRect = el.getBoundingClientRect();
-	const { clientX, clientY } = cursorPosition(event);
-
-	// 拖动开始时，元素的左上角坐标 - 鼠标的坐标，以后每个鼠标坐标加上该值即为元素左上角坐标。
-	// 我就是要用符号来做变量
-	const Δx = clientRect.left - clientX;
-	const Δy = clientRect.top - clientY;
-
-	return map<Point2D, Point2D>(({ x, y }) => ({ x: x + Δx, y: y + Δy }));
-}
-
-/**
- * 将相对于窗口的坐标加上窗口的滚动位置，使其变为相对于文档的坐标。
- */
-export function toAbsolute() {
-	return map<Point2D, Point2D>(({ x, y }) => ({ x: x + pageXOffset, y: y + pageYOffset }));
-}
-
-/**
  * 将坐标点限制在窗口内。
  */
 export function limitInWindow() {
@@ -100,22 +73,27 @@ export function limitInWindow() {
 /**
  * 将元素设为绝对定位，并根据观察到的点改变元素的 top 和 left.
  *
+ * @param event 鼠标事件
  * @param el 被移动的元素
  */
-export function moveElement(el: HTMLElement) {
+export function moveElement(event: MouseEvent, el: HTMLElement) {
+	const { clientX, clientY } = cursorPosition(event);
 	const { style } = el;
 	const clientRect = el.getBoundingClientRect();
 
-	const originY = clientRect.top;
-	const originX = clientRect.left;
+	// 拖动开始时，元素的左上角坐标 - 鼠标的坐标，以后每个鼠标坐标加上该值即为元素左上角坐标。
+	// 我就是要用符号来做变量
+	const Δx = clientRect.left - clientX;
+	const Δy = clientRect.top - clientY;
 
-	style.position = "absolute";
-	style.top = originY + "px";
-	style.left = originX + "px";
+	// 设置 Fixed 定位及坐标
+	style.position = "fixed";
+	style.top = clientRect.top + "px";
+	style.left = clientRect.left + "px";
 
 	return tap<Point2D>(({ x, y }) => {
-		style.top = y + "px";
-		style.left = x + "px";
+		style.top = y + Δy + "px";
+		style.left = x + Δx + "px";
 	});
 }
 

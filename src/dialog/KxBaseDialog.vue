@@ -23,13 +23,15 @@
 				<kx-close-icon v-if="closeIcon" @click="close"/>
 			</header>
 
-			<div class="kx-dialog-body"><slot/></div>
+			<div class="kx-dialog-body">
+				<slot/>
+			</div>
 		</div>
 	</kx-modal-wrapper>
 </template>
 
 <script>
-import { limitInWindow, moveElement, observeMouseMove, toElementPosition } from "../dragging";
+import { limitInWindow, moveElement, observeMouseMove } from "../dragging";
 import KxCloseIcon from "./KxCloseIcon";
 import KxModalWrapper from "./KxModalWrapper";
 
@@ -75,7 +77,7 @@ export default {
 			const { dialog } = this.$refs;
 
 			observeMouseMove()
-				.pipe(limitInWindow(), toElementPosition(event, dialog), moveElement(dialog))
+				.pipe(limitInWindow(), moveElement(event, dialog))
 				.subscribe();
 		},
 		onEscape() {

@@ -1,6 +1,6 @@
 import { storiesOf } from "@storybook/vue";
 import { number, withKnobs } from "@storybook/addon-knobs";
-import { edgeScroll, moveElement, observeMouseMove, toAbsolute, toElementPosition } from "@/dragging";
+import { edgeScroll, limitInWindow, moveElement, observeMouseMove } from "@/dragging";
 
 const stories = storiesOf("Dragging", module);
 stories.addDecorator(withKnobs);
@@ -16,7 +16,7 @@ stories.add("Demo", () => ({
 	},
 	template: `
 		<div id="drag-demo" :style="style">
-			<div id="drag-demo-el" @mousedown="drag" @touchstart.prevent="drag">拖动示例</div>
+		<div id="drag-demo-el" @mousedown="drag" @touchstart.prevent="drag">拖动示例</div>
 		</div>
 	`,
 	computed: {
@@ -32,7 +32,7 @@ stories.add("Demo", () => ({
 			el.style.cursor = "grabbing";
 
 			observeMouseMove()
-				.pipe(edgeScroll(size, speed), toElementPosition(event, el), toAbsolute(), moveElement(el))
+				.pipe(limitInWindow(), edgeScroll(size, speed), moveElement(event, el))
 				.subscribe({ complete: () => el.style.cursor = null });
 		},
 	},
