@@ -16,7 +16,7 @@ stories.add("Demo", () => ({
 	},
 	template: `
 		<div id="drag-demo" :style="style">
-			<div id="drag-demo-el" @mousedown="drag" @touchstart.prevent="drag"></div>
+			<div id="drag-demo-el" @mousedown="drag" @touchstart.prevent="drag">拖动示例</div>
 		</div>
 	`,
 	computed: {

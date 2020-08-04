@@ -35,7 +35,7 @@ type SelectionChangeHandler = (start: number, end: number) => void;
  * 监听文本框光标位置和选区的改变。
  *
  * 【焦点离开的处理】
- * 没有监听焦点离开事件，因为使用方对离开的处理方式可能不一样。
+ * 没有监听焦点离开事件，因为调用方对离开的处理方式可能不一样。
  *
  * @param el 文本框元素
  * @param handler 监听处理函数

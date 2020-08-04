@@ -57,7 +57,6 @@
 }
 
 #drag-demo {
-	position: relative;
 	width: 1000vw;
 	height: 1000vh;
 
@@ -93,11 +92,17 @@
 }
 
 #drag-demo-el {
-	position: absolute;
-	width: 400px;
-	height: 250px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
+	position: absolute;
+	width: 300px;
+	height: 200px;
+
+	cursor: grab;
+	user-select: none;
 	background: whitesmoke;
 	border: solid #0000ee;
-	cursor: grab;
+	font-size: 40px;
 }

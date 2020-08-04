@@ -20,7 +20,7 @@ function scrollAnimation(element: HTMLElement, scrollTop: number) {
 }
 
 /**
- * 滚动到元素顶部，浏览器可视区域的上端滚到元素的顶端。
+ * 滚动到元素顶部，浏览器可视区域的上端对齐到元素的顶端。
  *
  * @param element HTML元素
  * @param offset 可以附加一个偏移（往下）
@@ -30,7 +30,7 @@ export function scrollToElementStart(element: HTMLElement, offset: number = 0) {
 }
 
 /**
- * 滚动到元素底部，浏览器可视区域的最下面对其到元素的底端。
+ * 滚动到元素底部，浏览器可视区域的最下面对齐到元素的底端。
  *
  * @param element HTML元素
  * @param offset 可以附加一个偏移（往下）

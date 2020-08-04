@@ -119,6 +119,12 @@ export function moveElement(el: HTMLElement) {
 	});
 }
 
+/**
+ * 实例化时会启动动画循环，不断给滚动条的位置加上 dx 和 dy。
+ * 这两个变量表示两个方向上的滚动速度，默认为0，当鼠标进入边缘区域时它们被设置为非0值。
+ *
+ * 拖动结束后清除动画帧回调，停止循环。
+ */
 class EdgeScrollObserver {
 
 	private readonly size: number;
@@ -127,13 +133,13 @@ class EdgeScrollObserver {
 	private dx = 0;
 	private dy = 0
 
-	private animationFrame!: number;
+	private animationFrame: number;
 
 	constructor(size: number, speed: number) {
 		this.size = size;
 		this.speed = speed;
 		this.loop = this.loop.bind(this);
-		this.loop();
+		this.animationFrame = requestAnimationFrame(this.loop);
 	}
 
 	next({ x, y }: Point2D) {
@@ -169,8 +175,8 @@ class EdgeScrollObserver {
  *
  * 可以用于在超出屏幕范围的容器内拖动时，自动调整可视区位置。
  *
- * @param size 触发宽度
- * @param speed 速度
+ * @param size 触发宽度，离边缘距离小于该值时开始滚动
+ * @param speed 速度，值越大滚动得越快
  */
 export function edgeScroll(size: number = 100, speed: number = 0.5) {
 	return tap<Point2D>(new EdgeScrollObserver(size, speed));
