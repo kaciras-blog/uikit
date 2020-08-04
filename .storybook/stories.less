@@ -70,7 +70,7 @@
 	&::before, &::after {
 		content: "";
 		position: fixed;
-		z-index: 10;
+		z-index: 2;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
@@ -110,4 +110,16 @@
 	background: whitesmoke;
 	border: solid #0000ee;
 	font-size: 40px;
+}
+
+#drag-demo-labels {
+	position: fixed;
+	top: 40px;
+	left: 40px;
+	z-index: 3;
+	padding: 10px;
+
+	pointer-events: none;
+	color: white;
+	background: rgba(0, 0, 0, 0.4);
 }

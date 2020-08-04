@@ -102,21 +102,32 @@ export function moveElement(event: MouseEvent, el: HTMLElement) {
 }
 
 /**
- * 实例化时会启动动画循环，不断给滚动条的位置加上 vX 和 vY。
+ * 当鼠标靠近屏幕的边缘时自动向外滚动，越靠近边缘速度越快。
+ * 可以用于在超出屏幕范围的容器内拖动时，自动调整可视区位置。
+ *
+ * 【实现原理】
+ * 实例化时会启动动画循环（requireAnimationFrame），不断给滚动条的位置加上 vX 和 vY。
  * 这两个变量表示两个方向上的滚动速度，默认为0，当鼠标进入边缘区域时它们被设置为非0值。
  *
  * 拖动结束后清除动画帧回调，停止循环。
  */
-class EdgeScrollObserver {
+export class EdgeScrollObserver {
 
 	private readonly size: number;
 	private readonly speed: number;
 
-	private vX = 0;
-	private vY = 0
+	// 为了方便直接 public 了，但是不要再外部修改它们
+	public vX = 0;
+	public vY = 0
 
 	private animationFrame: number;
 
+	/**
+	 * 创建 EdgeScrollObserver 的实例，并启动循环。
+	 *
+	 * @param size 触发宽度，离边缘距离小于该值时开始滚动
+	 * @param speed 速度因子，值越大滚动得越快
+	 */
 	constructor(size: number, speed: number) {
 		this.size = size;
 		this.speed = speed;
@@ -153,12 +164,10 @@ class EdgeScrollObserver {
 }
 
 /**
- * 当鼠标靠近屏幕的边缘时自动向外滚动，越靠近边缘速度越快。
+ * 创建 EdgeScrollObserver 的便捷函数，使用 tap 来附加到 Observable 上。
  *
- * 可以用于在超出屏幕范围的容器内拖动时，自动调整可视区位置。
- *
- * @param size 触发宽度，离边缘距离小于该值时开始滚动
- * @param speed 速度因子，值越大滚动得越快
+ * @example
+ * observeMouseMove().pipe(..., edgeScroll(), ...).subscribe(...)
  */
 export function edgeScroll(size: number = 80, speed: number = 0.4) {
 	return tap<Point2D>(new EdgeScrollObserver(size, speed));
