@@ -156,6 +156,6 @@ class EdgeScrollObserver {
  * @param size 触发宽度，离边缘距离小于该值时开始滚动
  * @param speed 速度，值越大滚动得越快
  */
-export function edgeScroll(size: number = 100, speed: number = 0.4) {
+export function edgeScroll(size: number = 80, speed: number = 0.4) {
 	return tap<Point2D>(new EdgeScrollObserver(size, speed));
 }
