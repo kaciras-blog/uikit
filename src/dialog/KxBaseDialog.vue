@@ -1,3 +1,4 @@
+<!--suppress ES6PreferShortImport -->
 <template>
 	<kx-modal-wrapper
 		@click.native.self="onOverlayClick"
@@ -28,7 +29,7 @@
 </template>
 
 <script>
-import { limitInWindow, moveElement, observeMouseMove, toElementPosition } from "@/dragging";
+import { limitInWindow, moveElement, observeMouseMove, toElementPosition } from "../dragging";
 import KxCloseIcon from "./KxCloseIcon";
 import KxModalWrapper from "./KxModalWrapper";
 
