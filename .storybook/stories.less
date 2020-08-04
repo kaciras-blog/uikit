@@ -57,10 +57,12 @@
 }
 
 #drag-demo {
-	width: 1000vw;
-	height: 1000vh;
+	--grid-size: 100px;
 
-	background-size: 40px 40px;
+	width: 500vw;
+	height: 500vh;
+
+	background-size: var(--grid-size) var(--grid-size);
 	background-image:
 			linear-gradient(to right, lightgray 1px, transparent 1px),
 			linear-gradient(to bottom, lightgray 1px, transparent 1px);
@@ -72,6 +74,7 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
+
 		border-color: red;
 		pointer-events: none;
 	}
@@ -97,6 +100,8 @@
 	align-items: center;
 
 	position: absolute;
+	top: calc(50% - 100px);
+	left: calc(50% - 150px);
 	width: 300px;
 	height: 200px;
 

@@ -1,4 +1,8 @@
-// 俺也来玩玩RxJS
+/**
+ * 拖动相关的工具函数集合，包含统一鼠标和触摸事件、防止超出窗口、移动元素、靠近边缘自动滚动等功能。
+ *
+ * 因为无聊所以用RxJS写了，其实这种逻辑并不算特别复杂，可以不用RxJS的。
+ */
 import { Observable } from "rxjs";
 import { map, tap } from "rxjs/operators";
 import { isTouchEvent } from "./common";
@@ -20,7 +24,7 @@ function cursorPosition(event: MouseEvent | TouchEvent) {
 }
 
 /**
- * 监听鼠标的移动，不断产生鼠标的位置，请保证调用该函数时鼠标处于按下状态，或触摸状态，
+ * 监听鼠标的移动，不断产生鼠标的位置，请保证调用该函数时鼠标处于按下状态或触摸状态，
  * 比如在 mousedown 和 touchstart 事件里调用此函数。
  *
  * @return 不断发出鼠标坐标的Observable
@@ -71,7 +75,7 @@ export function limitInWindow() {
 }
 
 /**
- * 将元素设为绝对定位，并根据观察到的点改变元素的 top 和 left.
+ * 将元素设为 fixed 定位，并根据观察到的点改变元素的 top 和 left 实现拖动效果。
  *
  * @param event 鼠标事件
  * @param el 被移动的元素
@@ -86,7 +90,7 @@ export function moveElement(event: MouseEvent, el: HTMLElement) {
 	const Δx = clientRect.left - clientX;
 	const Δy = clientRect.top - clientY;
 
-	// 设置 Fixed 定位及坐标
+	// 设置 fixed 定位及初始坐标
 	style.position = "fixed";
 	style.top = clientRect.top + "px";
 	style.left = clientRect.left + "px";
@@ -98,7 +102,7 @@ export function moveElement(event: MouseEvent, el: HTMLElement) {
 }
 
 /**
- * 实例化时会启动动画循环，不断给滚动条的位置加上 dx 和 dy。
+ * 实例化时会启动动画循环，不断给滚动条的位置加上 vX 和 vY。
  * 这两个变量表示两个方向上的滚动速度，默认为0，当鼠标进入边缘区域时它们被设置为非0值。
  *
  * 拖动结束后清除动画帧回调，停止循环。
@@ -108,8 +112,8 @@ class EdgeScrollObserver {
 	private readonly size: number;
 	private readonly speed: number;
 
-	private dx = 0;
-	private dy = 0
+	private vX = 0;
+	private vY = 0
 
 	private animationFrame: number;
 
@@ -121,8 +125,8 @@ class EdgeScrollObserver {
 	}
 
 	next({ x, y }: Point2D) {
-		this.dx = this.calc(x, window.innerWidth / 2);
-		this.dy = this.calc(y, window.innerHeight / 2);
+		this.vX = this.calc(x, window.innerWidth / 2);
+		this.vY = this.calc(y, window.innerHeight / 2);
 	}
 
 	complete() {
@@ -131,10 +135,10 @@ class EdgeScrollObserver {
 
 	private loop() {
 		const { scrollingElement } = document;
-		const { dx, dy, loop } = this;
+		const { vX, vY, loop } = this;
 
-		scrollingElement!.scrollLeft += dx;
-		scrollingElement!.scrollTop += dy;
+		scrollingElement!.scrollLeft += vX;
+		scrollingElement!.scrollTop += vY;
 
 		this.animationFrame = requestAnimationFrame(loop);
 	}
@@ -154,7 +158,7 @@ class EdgeScrollObserver {
  * 可以用于在超出屏幕范围的容器内拖动时，自动调整可视区位置。
  *
  * @param size 触发宽度，离边缘距离小于该值时开始滚动
- * @param speed 速度，值越大滚动得越快
+ * @param speed 速度因子，值越大滚动得越快
  */
 export function edgeScroll(size: number = 80, speed: number = 0.4) {
 	return tap<Point2D>(new EdgeScrollObserver(size, speed));
