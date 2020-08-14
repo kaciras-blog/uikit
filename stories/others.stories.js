@@ -11,7 +11,7 @@ export const tagGroup = () => ({
 		</div>
 	`,
 });
-tagGroup.story = { name: "TagGroup" };
+tagGroup.storyName = "TagGroup";
 
 
 const defaultText = `
@@ -29,4 +29,4 @@ export const lineClamp = () => ({
 		<div class="line-clamp"><article>{{text}}</article></div>
 	`,
 });
-lineClamp.story = { name: "LineClamp" };
+lineClamp.storyName = "LineClamp";

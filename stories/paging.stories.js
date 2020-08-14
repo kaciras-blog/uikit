@@ -39,4 +39,4 @@ export const custom = () => ({
 	},
 });
 
-custom.story = { name: "button paging view" };
+custom.storyName = "button paging view";

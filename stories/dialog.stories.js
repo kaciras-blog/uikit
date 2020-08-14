@@ -46,7 +46,7 @@ export const MessageBox = () => ({
 	},
 });
 
-MessageBox.story = { name: "MessageBox" };
+MessageBox.storyName = "MessageBox";
 
 export const custom = () => ({
 	template: `
@@ -61,7 +61,7 @@ export const custom = () => ({
 	},
 });
 
-custom.story = { name: "Custom" };
+custom.storyName = "Custom";
 
 const applyAction = action("apply button click");
 
@@ -103,4 +103,4 @@ export const buttons = () => ({
 	},
 });
 
-buttons.story = { name: "DialogButtons" };
+buttons.storyName = "DialogButtons";

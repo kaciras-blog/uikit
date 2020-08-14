@@ -31,7 +31,7 @@ export const plainButtons = () => ({
 	},
 });
 
-plainButtons.story = { name: "Plain" };
+plainButtons.storyName = "Plain";
 
 export const taskButtons = () => ({
 	template: `
@@ -62,4 +62,4 @@ export const taskButtons = () => ({
 	},
 });
 
-taskButtons.story = { name: "Task" };
+taskButtons.storyName = "Task";
