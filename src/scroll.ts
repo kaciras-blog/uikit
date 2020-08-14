@@ -22,6 +22,8 @@ function scrollAnimation(element: HTMLElement, scrollTop: number) {
 /**
  * 滚动到元素顶部，浏览器可视区域的上端对齐到元素的顶端。
  *
+ * TODO: Element.scrollTo 可以替代，但是 Safari 不支持 smooth
+ *
  * @param element HTML元素
  * @param offset 可以附加一个偏移（往下）
  */

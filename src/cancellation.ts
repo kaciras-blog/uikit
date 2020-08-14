@@ -11,6 +11,8 @@ export class AbortError extends Error {
 /*
  * 【注意】CancelToken没有完成状态，无法感知操作是否已经完成，也就无法在完成时取消定时器。
  * 这要求注册的取消回调必须在操作完成后也能调用，并不会破坏结果。
+ *
+ * TODO: 已经有 AbortController 了
  */
 export interface CancellationToken {
 

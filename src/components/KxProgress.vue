@@ -87,7 +87,9 @@ export default {
 	width: calc(var(--progress) * 1%);
 	height: 3px;
 
-	z-index: 99999;
+	// 全局加载条在样式上是比页面更外层的元素，设置最大的 z-index 值
+	z-index: 999999;
+
 	background: var(--color, @default-color);
 
 	&::before {
