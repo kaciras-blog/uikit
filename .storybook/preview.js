@@ -1,5 +1,5 @@
-import { configure, addParameters } from "@storybook/vue";
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+import { addParameters } from "@storybook/vue";
+import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
 import Vue from "vue";
 import Vuex from "vuex";
 import "../src/css/index.less";
@@ -14,5 +14,3 @@ addParameters({
 		viewports: INITIAL_VIEWPORTS,
 	},
 });
-
-configure(require.context("../stories", true, /\.stories\.(js|mdx)$/), module);

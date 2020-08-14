@@ -1,8 +1,7 @@
 import { storiesOf } from "@storybook/vue";
-import { number, withKnobs } from "@storybook/addon-knobs";
+import { number } from "@storybook/addon-knobs";
 
 const stories = storiesOf("Directive", module);
-stories.addDecorator(withKnobs);
 
 stories.add("ime-input", () => ({
 	template: `

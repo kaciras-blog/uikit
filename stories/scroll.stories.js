@@ -1,9 +1,8 @@
 import { storiesOf } from "@storybook/vue";
 import { scrollToElementEnd, scrollToElementStart, syncScroll } from "../src";
-import { boolean, button, withKnobs } from "@storybook/addon-knobs";
+import { boolean, button } from "@storybook/addon-knobs";
 
 const stories = storiesOf("Scroll", module);
-stories.addDecorator(withKnobs);
 
 stories.add("syncScroll", () => ({
 	props: {

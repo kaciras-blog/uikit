@@ -1,8 +1,7 @@
 import { storiesOf } from "@storybook/vue";
-import { boolean, withKnobs } from "@storybook/addon-knobs";
+import { boolean } from "@storybook/addon-knobs";
 
 const stories = storiesOf("Input", module);
-stories.addDecorator(withKnobs);
 
 stories.add("CheckBox", () => ({
 	props: {

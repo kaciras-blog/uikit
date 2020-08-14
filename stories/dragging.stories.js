@@ -1,10 +1,9 @@
 import { storiesOf } from "@storybook/vue";
-import { number, withKnobs } from "@storybook/addon-knobs";
+import { number } from "@storybook/addon-knobs";
 import { EdgeScrollObserver, limitInWindow, moveElement, observeMouseMove } from "@/dragging";
 import { tap } from "rxjs/operators";
 
 const stories = storiesOf("Dragging", module);
-stories.addDecorator(withKnobs);
 
 stories.add("Demo", () => ({
 	props: {

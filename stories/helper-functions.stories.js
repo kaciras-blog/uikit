@@ -1,9 +1,7 @@
 import { storiesOf } from "@storybook/vue";
-import { withKnobs } from "@storybook/addon-knobs";
 import { getImageResolution, getVideoResolution, openFile } from "../src";
 
 const stories = storiesOf("HelperFunctions", module);
-stories.addDecorator(withKnobs);
 
 stories.add("MediaResolution", () => ({
 	template: `
