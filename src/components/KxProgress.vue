@@ -85,7 +85,7 @@ export default {
 	top: 0;
 	left: 0;
 	width: calc(var(--progress) * 1%);
-	height: 3px;
+	height: 2px;
 
 	// 全局加载条在样式上是比页面更外层的元素，设置最大的 z-index 值
 	z-index: 999999;
