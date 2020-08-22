@@ -18,9 +18,9 @@ export default {
 	render(h, ctx) {
 		let { data, children } = ctx;
 
-		// Vue 为啥不标准化一些这些属性，这点性能很重要吗？
-		data.on = data.on || {};
-		data.attrs = data.attrs || {};
+		// Vue 为啥不标准化一下这些属性？
+		data.on ||= {};
+		data.attrs ||= {};
 		const { attrs } = data;
 
 		const clazz = ["kx-btn", "click-item"];

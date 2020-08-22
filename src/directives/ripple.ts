@@ -9,19 +9,18 @@ import { isTouchEvent } from "../common";
 import { RippleEffect } from "../ripple-effect";
 
 class RippleBinding extends RippleEffect {
-
 	touched: boolean = false;
 	enabled: boolean = true;
 }
 
 interface RippledHtmlElement extends HTMLElement {
-	_ripple: RippleBinding;
+	_ripple?: RippleBinding;
 }
 
 function rippleShow(e: MouseEvent | TouchEvent) {
-	const el = e.currentTarget as RippledHtmlElement;
+	const el = e.currentTarget as RippledHtmlElement | null;
 
-	if (!el || !el._ripple || el._ripple.touched) {
+	if (!el?._ripple || el._ripple.touched) {
 		return;
 	}
 	if (isTouchEvent(e)) {
@@ -33,15 +32,17 @@ function rippleShow(e: MouseEvent | TouchEvent) {
 
 function rippleHide(e: MouseEvent | TouchEvent) {
 	const el = e.currentTarget as RippledHtmlElement | null;
-	if (!el) return;
+	if (!el) {
+		return;
+	}
+	const { _ripple } = el;
 
 	window.setTimeout(() => {
-		if (el._ripple) {
-			el._ripple.touched = false;
+		if (_ripple) {
+			_ripple.touched = false;
 		}
 	});
-	if (!el || !el._ripple || !el._ripple.enabled) return;
-	el._ripple.hide();
+	if (_ripple?.enabled) _ripple.hide();
 }
 
 /**

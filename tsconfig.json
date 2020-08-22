@@ -13,19 +13,21 @@
 		"newLine": "LF",
 		"removeComments": true,
 		"baseUrl": ".",
+
 		"types": [
 			"webpack-env",
 			"jest"
 		],
+
 //		被第三方引入时可能造成编译问题
 //		"paths": {
 //			"@/*": ["src/*"]
 //		},
+
 		"lib": [
 			"ESNext",
 			"DOM",
-			"DOM.Iterable",
-			"ScriptHost"
+			"DOM.Iterable"
 		]
 	},
 	"include": [
