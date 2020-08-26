@@ -99,7 +99,7 @@ export default {
 			await this.loadPage(index);
 			const top = this.$el.getBoundingClientRect().top - this.viewportOffset;
 			if (top < 0) {
-				document.documentElement.scrollTop = getScrollTop(this.$el) - this.viewportOffset;
+				document.documentElement.scrollTop = top + getScrollTop();
 			}
 		},
 

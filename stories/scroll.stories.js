@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/vue";
-import { scrollToElementEnd, scrollToElementStart, syncScroll } from "../src";
+import { scrollToElement, scrollToElementEnd, scrollToElementStart, syncScroll } from "../src";
 import { boolean, button } from "@storybook/addon-knobs";
 
 const stories = storiesOf("Scroll", module);
@@ -42,6 +42,9 @@ stories.add("ScrollTo", () => ({
 		<div style="height: 200vh"><div ref="target" class="scroll-to-box"/></div>
 	`,
 	methods: {
+		scrollToElement() {
+			scrollToElement(this.$refs.target);
+		},
 		scrollToStart() {
 			scrollToElementStart(this.$refs.target);
 		},
@@ -52,5 +55,6 @@ stories.add("ScrollTo", () => ({
 	created() {
 		button("ScrollToStart", this.scrollToStart);
 		button("ScrollToEnd", this.scrollToEnd);
+		button("scrollToElement", this.scrollToElement);
 	},
 }));

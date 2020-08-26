@@ -9,12 +9,12 @@ export const custom = () => ({
 			v-model="list"
 			:loader="loadMockItems"
 			:viewport-offset="60"
-			:page-size="2"
+			:page-size="10"
 			:show-top-buttons="true"
 		>
-			<template v-slot="{ items }">
-				<p v-for="item of items" :key="item">{{item}}</p>
-			</template>
+		<template v-slot="{ items }">
+			<p v-for="item of items" :key="item">{{ item }}</p>
+		</template>
 		</button-paging-view>`,
 	data: () => ({
 		list: undefined,
@@ -31,7 +31,10 @@ export const custom = () => ({
 			return Promise.resolve({ items, total: 100 });
 		},
 		async loadMockItems(index, size) {
-			return { items: [0, 0].map((_, i) => index * 2 + i), total: 100 };
+			const items = new Array(size)
+				.fill(0)
+				.map((_, i) => index * size + i);
+			return { items, total: 1000 };
 		},
 	},
 	mounted() {

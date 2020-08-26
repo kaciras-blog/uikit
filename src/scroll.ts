@@ -1,18 +1,14 @@
 import anime from "animejs";
 
 /**
- * 获取元素的绝对位置（相对于文档的位置）。
- * getBoundingClientRect 获取的是相对于视口的偏移，需要再加上视口位置才是绝对位置。
+ * 获取文档当前的的滚动高度，兼容各种浏览器。
  *
- * @param element 元素
- * @return 元素的绝对位置
- *
+ * @return 滚动高度
  * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/getBoundingClientRect
  */
-export function getScrollTop(element: HTMLElement) {
+export function getScrollTop() {
 	const doc = document.documentElement || document.body.parentNode;
-	const viewport = (typeof doc.scrollTop === "number" ? doc : document.body).scrollTop;
-	return element.getBoundingClientRect().top + viewport;
+	return (typeof doc.scrollTop === "number" ? doc : document.body).scrollTop;
 }
 
 function scrollAnimation(element: HTMLElement, scrollTop: number) {
@@ -28,7 +24,8 @@ function scrollAnimation(element: HTMLElement, scrollTop: number) {
  * @param offset 可以附加一个偏移（往下）
  */
 export function scrollToElementStart(element: HTMLElement, offset: number = 0) {
-	scrollAnimation(element, getScrollTop(element) + offset);
+	const { top } = element.getBoundingClientRect();
+	scrollAnimation(element, top + getScrollTop() + offset);
 }
 
 /**
@@ -38,7 +35,24 @@ export function scrollToElementStart(element: HTMLElement, offset: number = 0) {
  * @param offset 可以附加一个偏移（往下）
  */
 export function scrollToElementEnd(element: HTMLElement, offset: number = 0) {
-	scrollAnimation(element, getScrollTop(element) + element.clientHeight - window.innerHeight + offset);
+	const { bottom } = element.getBoundingClientRect();
+	const vTop = getScrollTop();
+	scrollAnimation(element, vTop + bottom - window.innerHeight + offset);
+}
+
+/**
+ * 滚动到元素能显示在窗口中，相当于 scrollToElementStart 和 scrollToElementEnd 的结合版。
+ * 如果元素已经在窗口里则不做任何动作。
+ *
+ * @param element 元素
+ */
+export function scrollToElement(element: HTMLElement) {
+	const { top, bottom } = element.getBoundingClientRect();
+	if (bottom < 0) {
+		scrollAnimation(element, top + getScrollTop());
+	} else if (top > window.innerHeight) {
+		scrollAnimation(element, bottom + getScrollTop() - window.innerHeight);
+	}
 }
 
 /**
