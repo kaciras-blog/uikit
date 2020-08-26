@@ -90,9 +90,9 @@
 
 		&:first-child::before { background: @color-second; }
 
-		&:nth-child(2)::before { background: lighten(@color-second, 6%); }
+		&:nth-child(2)::before { background: lighten(@color-second, 10%); }
 
-		&:nth-child(3)::before { background: lighten(@color-second, 12%); }
+		&:nth-child(3)::before { background: lighten(@color-second, 20%); }
 
 		&::before {
 			content: counter(index);
@@ -101,7 +101,7 @@
 			border-radius: 4px;
 			font-weight: 600;
 			color: white;
-			background: #CDCDCD;
+			background: #c0c0c0;
 		}
 
 		& > .item {
