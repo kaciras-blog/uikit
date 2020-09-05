@@ -1,22 +1,22 @@
 import { storiesOf } from "@storybook/vue";
-import { number } from "@storybook/addon-knobs";
+import { boolean, number } from "@storybook/addon-knobs";
 
 const stories = storiesOf("Directive", module);
 
 stories.add("ime-input", () => ({
 	template: `
 		<div>
-			<label>
-				<div>使用输入法输入一些文本：</div>
-				<textarea
-					@input="e => value = e.target.value"
-					v-ime-input="e => imeValue = e.target.value"
-				/>
-			</label>
-			<div class="ime-input-result">
-				<p>input事件：{{value}}</p>
-				<p>v-ime-input：{{imeValue}}</p>
-			</div>
+		<label>
+			<div>使用输入法输入一些文本：</div>
+			<textarea
+				@input="e => value = e.target.value"
+				v-ime-input="e => imeValue = e.target.value"
+			/>
+		</label>
+		<div class="ime-input-result">
+			<p>input事件：{{ value }}</p>
+			<p>v-ime-input：{{ imeValue }}</p>
+		</div>
 		</div>`,
 	data: () => ({
 		value: "",
@@ -52,12 +52,12 @@ stories.add("section-bind", () => ({
 stories.add("section-change", () => ({
 	template: `
 		<div>
-			<textarea
-				v-on-selection-change="setSelectionRange"
-				v-model="value"
-				class="directive-textarea"
-			/>
-			<div>选择范围：{{start}} - {{end}}</div>
+		<textarea
+			v-on-selection-change="setSelectionRange"
+			v-model="value"
+			class="directive-textarea"
+		/>
+		<div>选择范围：{{ start }} - {{ end }}</div>
 		</div>`,
 	data: () => ({
 		value: "调整下面的start和end，改变文本框的选择区域",
@@ -74,13 +74,13 @@ stories.add("section-change", () => ({
 stories.add("section-model", () => ({
 	template: `
 		<div>
-			<textarea
-				v-selection-model.focus="selection"
-				v-model="value"
-				class="directive-textarea"
-			/>
-			<div>选择范围：{{selection[0]}} - {{selection[1]}}</div>
-			<kx-button @click="randomSelection">随机选择</kx-button>
+		<textarea
+			v-selection-model.focus="selection"
+			v-model="value"
+			class="directive-textarea"
+		/>
+		<div>选择范围：{{ selection[0] }} - {{ selection[1] }}</div>
+		<kx-button @click="randomSelection">随机选择</kx-button>
 		</div>`,
 	data: () => ({
 		value: "调整下面的start和end，改变文本框的选择区域",
@@ -94,4 +94,22 @@ stories.add("section-model", () => ({
 			this.selection = [s, e];
 		},
 	},
+}));
+
+stories.add("ripple", () => ({
+	props: {
+		centered: {
+			default: boolean("centered", false),
+		},
+		circle: {
+			default: boolean("circle", false),
+		},
+	},
+	// 用 key 防止复用元素导致指令更新失败
+	template: `
+		<div v-if="centered && circle" :key="0" class="mock-dialog" v-ripple.centered.circle></div>
+		<div v-else-if="circle" :key="1" class="mock-dialog" v-ripple.circle></div>
+		<div v-else-if="centered" :key="2" class="mock-dialog" v-ripple.centered></div>
+		<div v-else class="mock-dialog" :key="3"  v-ripple></div>
+	`,
 }));
