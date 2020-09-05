@@ -18,9 +18,10 @@ export default {
 	render(h, ctx) {
 		let { data, children } = ctx;
 
+		// 坑爹又忘了服务端渲染不过 Babel
 		// Vue 为啥不标准化一下这些属性？
-		data.on ||= {};
-		data.attrs ||= {};
+		data.on = data.on || {};
+		data.attrs = data.attrs || {};
 		const { attrs } = data;
 
 		const clazz = ["kx-btn", "click-item"];
