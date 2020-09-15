@@ -5,13 +5,14 @@ table {
 	border-collapse: collapse;
 	width: 100%;
 	margin-bottom: 1rem;
-	background-color: white; // Reset for nesting within parents with `background-color`.
+	border: solid 1px @table-border-color;
+	background-color: white;
 }
 
 th, td {
 	padding: .75rem;
 	vertical-align: top;
-	border-top: @table-border-width solid @table-border-color;
+	border-bottom: @table-border-width solid @table-border-color;
 }
 
 thead th {
@@ -23,6 +24,6 @@ tbody + tbody {
 	border-top: (2 * @table-border-width) solid @table-border-color;
 }
 
-tr:hover {
+tbody > tr:hover {
 	background-color: rgba(0, 0, 0, 0.04);
 }

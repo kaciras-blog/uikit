@@ -13,7 +13,6 @@ export const tagGroup = () => ({
 });
 tagGroup.storyName = "TagGroup";
 
-
 const defaultText = `
 Proprietary and undocumented CSS property that will contain text to a
 given amount of lines when used in combination with display: -webkit-box.
@@ -26,7 +25,46 @@ export const lineClamp = () => ({
 		},
 	},
 	template: `
-		<div class="line-clamp"><article>{{text}}</article></div>
+		<div class="line-clamp">
+		<article>{{ text }}</article>
+		</div>
 	`,
 });
 lineClamp.storyName = "LineClamp";
+
+export const Table = () => ({
+	template: `
+		<table style="width: 600px">
+		<thead>
+		<tr v-for="row of head">
+			<th v-for="data of row">{{data}}</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr v-for="row of body">
+			<td v-for="data of row">{{data}}</td>
+		</tr>
+		</tbody>
+		<tfoot>
+		<tr>
+			<td colspan="3">厉害耶我以前还不知道有个 tfoot 元素</td>
+		</tr>
+		</tfoot>
+		</table>
+	`,
+	data: () => ({
+		head: [[
+			"特特特特特特特特特特特特特特特特特特特特特特特特特特特特特特别长的的一格",
+			"第二列", "Column",
+		]],
+		body: [
+			["1e-16", 2.125, "log(36) / log(64) = ?"],
+			["1e-16", 2.125, "log(36) / log(64) = ?"],
+			["1e-16", 2.125, "log(36) / log(64) = ?"],
+			["1e-16", 2.125, "log(36) / log(64) = ?"],
+			["1e-16", 2.125, "log(36) / log(64) = ?"],
+			["1e-16", 2.125, "log(36) / log(64) = ?"],
+		],
+	}),
+});
+Table.storyName = "Table";
