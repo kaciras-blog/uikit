@@ -21,7 +21,7 @@
 			@input="source.$emit('input', value)"
 			@change="handleChange"
 		>
-		<span class="radio-box-mark" :class="{ ckecked: checked }"></span>
+		<span class="radio-box-mark" :class="{ checked }"></span>
 		<span class="radio-box-label"><slot/></span>
 	</label>
 </template>
@@ -69,11 +69,11 @@ export default {
 
 .kx-radio-box:hover > .check-radio-mark,
 .check-radio-input:focus + .check-radio-mark {
-	&:not(.ckecked) {
+	&:not(.checked) {
 		background-color: rgba(255, 255, 255, 0.3);
 	}
 
-	&.ckecked {
+	&.checked {
 		border-color: rgba(255, 255, 255, .7);
 	}
 }
@@ -108,12 +108,12 @@ export default {
 		background-color: @color-input-active;
 	}
 
-	&.ckecked {
+	&.checked {
 		border-width: 2px;
 		border-color: @color-input-active;
 	}
 
-	&.ckecked::after {
+	&.checked::after {
 		display: block;
 	}
 }
