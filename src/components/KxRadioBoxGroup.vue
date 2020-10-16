@@ -11,7 +11,7 @@ export default {
 		disabled: Boolean,
 	},
 	provide() {
-		return { radioGroup: this };
+		return { group: this };
 	},
 };
 </script>

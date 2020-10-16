@@ -1,6 +1,6 @@
 <!--
-该组件必须与KxRadioBoxGroup搭配使用。
-目前仅使用value来区分，即相同value的组件具有同样的选择状态，请确保同一组下Radio的value各不相同。
+该组件必须与 KxRadioBoxGroup 搭配使用。
+目前仅使用 value 来区分，即相同 value 的组件具有同样的选择状态，请确保同一组下 Radio 的 value 各不相同。
 -->
 <template>
 	<label
@@ -40,11 +40,8 @@ export default {
 			default: false,
 		},
 	},
-	inject: ["radioGroup"],
+	inject: ["group"],
 	computed: {
-		group() {
-			return this.radioGroup;
-		},
 		checked() {
 			return this.value === this.group.value;
 		},
