@@ -5,23 +5,24 @@
 <template>
 	<label
 		class="kx-radio-box"
-		:class="{ disabled: source.disabled }"
 		role="radio"
 		:aria-checked="checked.toString()"
-		:aria-disabled="source.disabled"
+		:aria-disabled="group.disabled"
 	>
 		<input
 			class="radio-box-input"
 			type="radio"
-			aria-hidden="true"
-			:name="source.name"
+			:name="group.name"
 			:value="value"
-			:disabled="source.disabled"
+			:disabled="group.disabled"
 			:checked="checked"
-			@input="source.$emit('input', value)"
+			@input="group.$emit('input', value)"
 			@change="handleChange"
 		>
-		<span class="radio-box-mark" :class="{ checked }"></span>
+		<span
+			class="radio-box-mark"
+			:class="{ checked, disabled: group.disabled }"
+		/>
 		<span class="radio-box-label"><slot/></span>
 	</label>
 </template>
@@ -41,16 +42,16 @@ export default {
 	},
 	inject: ["radioGroup"],
 	computed: {
-		source() {
+		group() {
 			return this.radioGroup;
 		},
 		checked() {
-			return this.value === this.source.value;
+			return this.value === this.group.value;
 		},
 	},
 	methods: {
 		handleChange(event) {
-			this.source.$emit("change", event.target.checked);
+			this.group.$emit("change", event.target.checked);
 		},
 	},
 };
@@ -59,23 +60,12 @@ export default {
 <style lang="less">
 @import "../css/exports";
 
-@height: 24px;
+@size: 24px;
 
 .kx-radio-box {
 	display: inline-block;
 	margin-right: 1em;
 	cursor: pointer;
-}
-
-.kx-radio-box:hover > .check-radio-mark,
-.check-radio-input:focus + .check-radio-mark {
-	&:not(.checked) {
-		background-color: rgba(255, 255, 255, 0.3);
-	}
-
-	&.checked {
-		border-color: rgba(255, 255, 255, .7);
-	}
 }
 
 .radio-box-input {
@@ -86,13 +76,15 @@ export default {
 .radio-box-mark {
 	display: inline-block;
 	position: relative;
-	height: @height;
-	width: @height;
+	height: @size;
+	width: @size;
 	vertical-align: top;
 
-	border: 1px solid #ccc;
+	border: 1px solid #bbb;
 	border-radius: 50%;
+	--color: @color-input-active;
 
+	// 选中状态下圆框内的小圆点
 	&::after {
 		content: "";
 		display: none;
@@ -105,12 +97,12 @@ export default {
 
 		border-radius: 50%;
 		transform: scale(.6);
-		background-color: @color-input-active;
+		background-color: var(--color);
 	}
 
 	&.checked {
 		border-width: 2px;
-		border-color: @color-input-active;
+		border-color: var(--color);
 	}
 
 	&.checked::after {
@@ -118,9 +110,14 @@ export default {
 	}
 }
 
+.disabled {
+	--color: #bbb;
+	background-color: #f7f7f7;
+}
+
 .radio-box-label {
 	display: inline-block;
 	padding-left: .5rem;
-	line-height: @height;
+	line-height: @size;
 }
 </style>
