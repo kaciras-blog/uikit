@@ -44,8 +44,8 @@ export function observeMouseMove() {
 
 		function cleanListeners() {
 			document.removeEventListener("mousemove", onMouseMove);
-			document.removeEventListener("touchmove", onTouchMove);
 			document.removeEventListener("mouseup", onUp);
+			document.removeEventListener("touchmove", onTouchMove);
 			document.removeEventListener("touchend", onUp);
 		}
 
@@ -58,8 +58,8 @@ export function observeMouseMove() {
 		subscriber.add(cleanListeners);
 
 		document.addEventListener("mousemove", onMouseMove);
-		document.addEventListener("touchmove", onTouchMove);
 		document.addEventListener("mouseup", onUp);
+		document.addEventListener("touchmove", onTouchMove);
 		document.addEventListener("touchend", onUp);
 	});
 }

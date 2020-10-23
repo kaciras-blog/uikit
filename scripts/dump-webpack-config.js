@@ -21,9 +21,9 @@ const outDir = join(__dirname, "../temp");
 fs.mkdirSync(outDir, { recursive: true });
 
 /**
- * 转储webpack的配置到 temp 目录下，可用于调试。
+ * 转储webpack的配置到 temp 目录下，可用于调试和参考。
  *
- * 输出的文件仅用于调试参考，其并不是一个合法的配置文件，动态内容如函数将被省略。
+ * 输出的并不是一个有效的配置文件，动态内容如函数将被省略。
  *
  * @param name 输出的文件名
  * @param config 要输出的webpack配置

@@ -44,6 +44,8 @@ export function scrollToElementEnd(element: HTMLElement, offset: number = 0) {
  * 滚动到元素能显示在窗口中，相当于 scrollToElementStart 和 scrollToElementEnd 的结合版。
  * 如果元素已经在窗口里则不做任何动作。
  *
+ * TODO: 需不需要吧 if 里的 top 和 bottom 交换下？
+ *
  * @param element 元素
  */
 export function scrollToElement(element: HTMLElement) {
