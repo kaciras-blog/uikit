@@ -105,11 +105,11 @@ export default {
 	&.checked::after {
 		display: block;
 	}
-}
 
-.disabled {
-	--color: #bbb;
-	background-color: #f7f7f7;
+	&.disabled {
+		--color: #bbb;
+		background-color: #f7f7f7;
+	}
 }
 
 .radio-box-label {
