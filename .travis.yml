@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - 14
+  - 15
 
 git:
   depth: false
@@ -8,7 +8,7 @@ git:
 
 cache: yarn
 
-script: yarn build-storybook --quiet && touch .out/.nojekyll
+after_success: yarn build-storybook --quiet && touch .out/.nojekyll
 
 # https://docs.travis-ci.com/user/deployment/pages/
 deploy:
