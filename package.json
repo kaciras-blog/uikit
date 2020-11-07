@@ -15,7 +15,7 @@
 		"storybook": "start-storybook",
 		"build-storybook": "build-storybook -o .out",
 		"lint": "vue-cli-service lint",
-		"test:unit": "jest",
+		"test": "jest",
 		"inspect": "node scripts/inspect-webpack.js"
 	},
 	"dependencies": {
