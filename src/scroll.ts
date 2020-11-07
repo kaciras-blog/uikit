@@ -91,6 +91,8 @@ export const PreventScrollMixin = {
 /**
  * 将多个元素的垂直滚动条按百分比同步。
  *
+ * 该函调用时会立即进行一次同步，以第一个参数的元素为基准。
+ *
  * @param elements 要同步的元素
  * @return 取消同步的函数
  */

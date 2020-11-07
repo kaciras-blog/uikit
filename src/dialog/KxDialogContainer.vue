@@ -1,5 +1,8 @@
+<!--
+因为 Vue 冇得 Portals，所以需要一个全局组件来挂载弹窗。
+-->
 <template>
-	<!-- Vue啥时候才能支持Fragment -->
+	<!-- Vue 啥时候才能支持 Fragment -->
 	<div>
 		<component
 			v-for="(options, index) in stack"
