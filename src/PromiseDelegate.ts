@@ -32,7 +32,7 @@ export default abstract class PromiseDelegate<T> implements Promise<T> {
 
 export class PromiseCompletionSource<T> implements Promise<T> {
 
-	resolve!: (value?: T | PromiseLike<T>) => void;
+	resolve!: (value: T | PromiseLike<T>) => void;
 	reject!: (reason?: any) => void;
 
 	protected readonly promise: Promise<T>;
