@@ -22,8 +22,15 @@ import SelectionBinding from "./directives/selection-bind";
 import SelectionChange from "./directives/selection-change";
 import SelectionModel from "./directives/selection-model";
 import Ripple from "./directives/ripple";
+import { MediaQueryAPI } from "./media-query";
+import KxDialog, { KxDialogAPI } from "./dialog";
 
-import KxDialog from "./dialog";
+declare module "vue/types/vue" {
+	export interface Vue {
+		$dialog: KxDialogAPI;
+		$mediaQuery: MediaQueryAPI;
+	}
+}
 
 /**
  * 自动注册目录下的Vue组件。
