@@ -2,6 +2,7 @@ import { action } from "@storybook/addon-actions";
 import { boolean } from "@storybook/addon-knobs";
 import { MessageBoxType } from "../src/dialog";
 import LuckyNumber from "./LuckyNumberDialog";
+import DemoFrame from "./DemoFrame";
 
 export default {
 	title: "Dialogs",
@@ -104,3 +105,18 @@ export const buttons = () => ({
 });
 
 buttons.storyName = "DialogButtons";
+
+export const Frame = () => ({
+	template: `
+		<div>
+			<kx-button @click="show">弹出层</kx-button>
+			<kx-dialog-container></kx-dialog-container>
+		</div>`,
+	methods: {
+		show() {
+			this.$dialog.showFrame(DemoFrame);
+		},
+	},
+});
+
+Frame.storyName = "Frame";

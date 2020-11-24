@@ -66,16 +66,23 @@ interface PropsData {
 export type DialogComponent = VueConstructor | ComponentOptions<any> | string
 
 export interface DialogOptions {
-	component: Vue;
+	component: DialogComponent;
 	props: PropsData;
-
-	resolve(result: DialogResult<any>): void;
+	isolation?: boolean;
 }
 
 @boundClass
 export class DialogManager {
 
 	readonly eventBus = new Vue();
+
+	private pushSession<T>(options: DialogOptions) {
+		const promise = new Promise<DialogResult<T>>(resolve => {
+			(options as any).resolve = resolve;
+			this.eventBus.$emit("show", options);
+		});
+		return new DialogSession<T>(promise);
+	}
 
 	/**
 	 * 弹出一个窗口，返回处理弹窗结果的会话对象。
@@ -84,11 +91,15 @@ export class DialogManager {
 	 * @param props 传递给弹窗的Props
 	 * @return 弹窗会话，用于接收窗口的返回数据
 	 */
-	show<T = any>(component: DialogComponent, props?: PropsData) {
-		const promise = new Promise<DialogResult<T>>((resolve) => {
-			this.eventBus.$emit("show", { component, props, resolve });
-		});
-		return new DialogSession(promise);
+	show<T = any>(component: DialogComponent, props: PropsData = {}) {
+		return this.pushSession({ component, props });
+	}
+
+	/**
+	 * 跟 show() 差不多，但是弹出层不即使不在顶部也不会隐藏，可用于构建多层界面。
+	 */
+	showFrame<T = any>(component: DialogComponent, props: PropsData = {}) {
+		return this.pushSession({ component, props, isolation: true });
 	}
 
 	/**
