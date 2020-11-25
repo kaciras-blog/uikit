@@ -21,7 +21,7 @@
 			<h2>{{title}}</h2>
 			<pre v-if="content" :class="$style.content">{{content}}</pre>
 
-			<kx-standard-dialog-buttons :cancel-button="showCancelButton"/>
+			<kx-dialog-buttons :cancel-button="showCancelButton"/>
 		</div>
 	</kx-modal-wrapper>
 </template>

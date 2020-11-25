@@ -3,7 +3,7 @@ import { boundClass } from "autobind-decorator";
 import KxDialogContainer from "./KxDialogContainer.vue";
 import KxMessageBox from "./KxMessageBox.vue";
 import KxBaseDialog from "./KxBaseDialog.vue";
-import KxStandardDialogButtons from "./KxStandardDialogButtons.vue";
+import KxDialogButtons from "./KxDialogButtons.vue";
 import KxImageCropper from "./KxImageCropper.vue";
 import { DialogManager, DialogSession } from "./controller";
 
@@ -93,6 +93,6 @@ export type KxDialogAPI = InstanceType<typeof KxDialogManagerExt>;
 export default function install(Vue: VueConstructor) {
 	Vue.component(KxBaseDialog.name, KxBaseDialog);
 	Vue.component(KxDialogContainer.name, KxDialogContainer);
-	Vue.component(KxStandardDialogButtons.name, KxStandardDialogButtons);
+	Vue.component(KxDialogButtons.name, KxDialogButtons);
 	Vue.prototype.$dialog = new KxDialogManagerExt();
 }

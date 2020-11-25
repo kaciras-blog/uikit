@@ -7,19 +7,15 @@
 			<label for="age">年龄</label>
 			<input id="age" type="number" v-model.number="age"/>
 		</form>
-		<kx-standard-dialog-buttons :cancel-button="true" @confirm="ok"/>
+		<kx-dialog-buttons :cancel-button="true" @confirm="ok"/>
 	</kx-base-dialog>
 </template>
 
 <script>
-import KxStandardDialogButtons from "../src/dialog/KxStandardDialogButtons";
 import { PreventScrollMixin } from "../src";
 
 export default {
 	name: "InputBox",
-	components: {
-		KxStandardDialogButtons,
-	},
 	props: [
 		"oldName",
 		"oldAge",

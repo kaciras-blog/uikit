@@ -1,21 +1,9 @@
+<!-- 常用的对话框按钮组，包含确定、取消、应用三个按钮 -->
 <!--
 	<div
 		:class="$style.container"
 		class="btn-group"
 	>
-		<kx-button
-			v-if="cancelButton"
-			@click="$dialog.close"
-		>
-			取消
-		</kx-button>
-		<kx-button
-			v-if="applyHook"
-			:disabled="acceptable"
-			@click="applyHook"
-		>
-			应用
-		</kx-button>
 		<kx-button
 			class="primary"
 			:disabled="acceptable"
@@ -23,12 +11,25 @@
 		>
 			确定
 		</kx-button>
+		<kx-button
+			v-if="cancelButton"
+			@click="$dialog.close"
+		>
+			取消
+		</kx-button>
+		<kx-button
+			v-if="listeners.apply"
+			:disabled="acceptable"
+			@click="listeners.apply"
+		>
+			应用
+		</kx-button>
 	</div>
 -->
 
 <script>
 export default {
-	name: "KxStandardDialogButtons",
+	name: "KxDialogButtons",
 	functional: true,
 	props: {
 		/** 是否显示取消按钮，默认true */
@@ -46,13 +47,23 @@ export default {
 		const { props, listeners } = ctx;
 		const buttons = [];
 
-		// TODO: 函数组件没法引用到Vue.prototype？如果父组件也是函数组件？
-		const vm = ctx.parent;
+		// TODO: 函数组件没法引用到 Vue.prototype？如果父组件也是函数组件？
+		const { $dialog } = ctx.parent;
+
+		buttons.push(h("kx-button", {
+			staticClass: "primary",
+			on: {
+				click: listeners.confirm || $dialog.confirm,
+			},
+			attrs: {
+				disabled: !props.acceptable,
+			},
+		}, "确定"));
 
 		if (props.cancelButton) {
 			buttons.push(h("kx-button", {
 				on: {
-					click: listeners.cancel || vm.$dialog.close,
+					click: listeners.cancel || $dialog.close,
 				},
 			}, "取消"));
 		}
@@ -67,16 +78,6 @@ export default {
 				},
 			}, "应用"));
 		}
-
-		buttons.push(h("kx-button", {
-			staticClass: "primary",
-			on: {
-				click: listeners.confirm || vm.$dialog.confirm,
-			},
-			attrs: {
-				disabled: !props.acceptable,
-			},
-		}, "确定"));
 
 		return h("div", { class: ["btn-group", ctx.$style.container] }, buttons);
 	},

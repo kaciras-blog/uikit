@@ -83,7 +83,7 @@ export const buttons = () => ({
 			<h1 class="mock-dialog-content">
 				对话框框
 			</h1>
-			<kx-standard-dialog-buttons
+			<kx-dialog-buttons
 				:acceptable="acceptable"
 				:cancel-button="cancelButton"
 				@confirm="ok"
