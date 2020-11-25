@@ -1,12 +1,11 @@
 import { VueConstructor } from "vue";
+import { boundClass } from "autobind-decorator";
 import KxDialogContainer from "./KxDialogContainer.vue";
 import KxMessageBox from "./KxMessageBox.vue";
-import KxContextMenu from "./KxContextMenu.vue";
 import KxBaseDialog from "./KxBaseDialog.vue";
 import KxStandardDialogButtons from "./KxStandardDialogButtons.vue";
 import KxImageCropper from "./KxImageCropper.vue";
 import { DialogManager, DialogSession } from "./controller";
-import { boundClass } from "autobind-decorator";
 
 export { DialogManager, DialogSession };
 
@@ -42,10 +41,6 @@ export interface ImageCopperProps {
 
 @boundClass
 class KxDialogManagerExt extends DialogManager {
-
-	contextMenu(this: DialogManager, component: any, event: MouseEvent, data?: object) {
-		this.show(KxContextMenu, { component, event, data });
-	}
 
 	/**
 	 * 显示内置的消息框，请使用title来做一个简要的说明，如："操作失败"，内容部分可以省略
@@ -98,24 +93,6 @@ export type KxDialogAPI = InstanceType<typeof KxDialogManagerExt>;
 export default function install(Vue: VueConstructor) {
 	Vue.component(KxBaseDialog.name, KxBaseDialog);
 	Vue.component(KxDialogContainer.name, KxDialogContainer);
-	Vue.component(KxContextMenu.name, KxContextMenu);
 	Vue.component(KxStandardDialogButtons.name, KxStandardDialogButtons);
-
-	const commands = new KxDialogManagerExt();
-
-	// 指令不支持字面量，还得加个引号有点烦。
-	Vue.directive("context-menu", {
-		bind(el, { arg, value }, vnode) {
-			const vm = vnode.context as any; // 烦人
-			if (typeof value === "string") {
-				value = vm.$options.components[value] || value;
-			}
-			el.addEventListener("contextmenu", (event) => {
-				event.preventDefault();
-				commands.contextMenu(value, event, arg && vm[arg]);
-			});
-		},
-	});
-
-	Vue.prototype.$dialog = commands;
+	Vue.prototype.$dialog = new KxDialogManagerExt();
 }
