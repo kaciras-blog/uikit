@@ -25,19 +25,12 @@ export default {
 @headerHeight: 48px;
 
 .header {
-	position: relative;
+	display: flex;
 	height: @headerHeight;
-
-	text-align: center;
 	border-bottom: 1px solid #eee;
 }
 
 .back_button {
-	position: absolute;
-	left: 0;
-	top: 2px; // 不知道咋的箭头位置就是有点高了
-	bottom: 0;
-
 	width: @headerHeight;
 	padding: 0 !important; // 屏蔽按钮点击凹陷效果
 
@@ -52,5 +45,7 @@ export default {
 .title {
 	font-size: 16px;
 	line-height: @headerHeight;
+	margin-left: 16px;
+	margin-right: auto;
 }
 </style>
