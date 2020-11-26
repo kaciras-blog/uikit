@@ -2,7 +2,6 @@
 因为 Vue 冇得 Portals，所以需要一个全局组件来挂载弹窗。
 -->
 <template>
-	<!-- Vue 啥时候才能支持 Fragment -->
 	<div>
 		<component
 			v-for="(options, i) in stack"
@@ -26,6 +25,11 @@ export default {
 		stack: [],
 		counter: 0,
 	}),
+	computed: {
+		isMobile() {
+			return window.innerWidth < 768;
+		},
+	},
 	methods: {
 		/**
 		 * 判断弹出层是否显示，为了防止遮罩堆太多所以要隐藏非顶部的弹窗。
@@ -39,6 +43,13 @@ export default {
 			return config.isolation || (index === this.stack.length - 1);
 		},
 
+		/**
+		 * 同步历史记录，实现手机上后退键关闭弹出层的功能。
+		 *
+		 * 由于设计上弹出层可能依赖父组件状态，故不支持历史前进时重开。
+		 *
+		 * 同步的方式可以支持多级跳，但好像实际的手机浏览器没法这么做。
+		 */
 		syncHistory() {
 			if (this.$_preventHistory) {
 				this.$_preventHistory = false;
@@ -60,11 +71,19 @@ export default {
 			list.forEach(c => c.resolve(DialogResult.CANCELED));
 		},
 
+		/**
+		 * 向栈里添加一个弹出层，如果需要还会插入一条历史。
+		 *
+		 * @param config 弹出层会话
+		 */
 		handleAdd(config) {
 			const id = ++this.counter;
 			config.id = id;
 			this.stack.push(config);
-			history.pushState({ flag: FLAG, id }, "");
+
+			if (this.isMobile) {
+				history.pushState({ flag: FLAG, id }, "");
+			}
 		},
 
 		handleClose(result) {
@@ -72,18 +91,23 @@ export default {
 			if (!config) {
 				throw new Error("当前没有可关闭的弹窗");
 			}
-			this.$_preventHistory = true;
-			history.back();
+			if (this.isMobile) {
+				this.$_preventHistory = true;
+				history.back();
+			}
 			config.resolve(result);
 		},
 
+		// 目前仅在切换路由时使用，所以没法清除历史
 		handleClear() {
 			this.closeAll(this.stack);
 			this.stack = [];
 		},
 	},
 	beforeMount() {
-		window.addEventListener("popstate", this.syncHistory);
+		if (this.isMobile) {
+			window.addEventListener("popstate", this.syncHistory);
+		}
 	},
 	created() {
 		this.$dialog.eventBus.$on("show", this.handleAdd);
