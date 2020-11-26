@@ -17,6 +17,9 @@
 <script>
 import { DialogResult } from "./controller";
 
+/** 用于标记历史记录是弹窗所产生的 */
+const FLAG = "__KX_DIALOG__";
+
 export default {
 	name: "KxDialogContainer",
 	data: () => ({
@@ -35,31 +38,63 @@ export default {
 		isVisible(config, index) {
 			return config.isolation || (index === this.stack.length - 1);
 		},
-		add(config) {
-			config.id = ++this.counter;
-			this.stack.push(config);
+
+		syncHistory() {
+			if (this.$_preventHistory) {
+				this.$_preventHistory = false;
+				return;
+			}
+			const { flag, id } = history.state || {};
+			const { stack } = this;
+
+			if (flag !== FLAG) {
+				this.closeAll(stack);
+				this.stack = [];
+			} else {
+				const i = stack.findIndex(c => c.id === id);
+				this.closeAll(stack.splice(i + 1));
+			}
 		},
-		close(result) {
+
+		closeAll(list) {
+			list.forEach(c => c.resolve(DialogResult.CANCELED));
+		},
+
+		handleAdd(config) {
+			const id = ++this.counter;
+			config.id = id;
+			this.stack.push(config);
+			history.pushState({ flag: FLAG, id }, "");
+		},
+
+		handleClose(result) {
 			const config = this.stack.pop();
 			if (!config) {
 				throw new Error("当前没有可关闭的弹窗");
 			}
+			this.$_preventHistory = true;
+			history.back();
 			config.resolve(result);
 		},
-		clear() {
-			this.stack.forEach(c => c.resolve(DialogResult.CANCELED));
+
+		handleClear() {
+			this.closeAll(this.stack);
 			this.stack = [];
 		},
 	},
+	beforeMount() {
+		window.addEventListener("popstate", this.syncHistory);
+	},
 	created() {
-		this.$dialog.eventBus.$on("show", this.add);
-		this.$dialog.eventBus.$on("close", this.close);
-		this.$dialog.eventBus.$on("clear", this.clear);
+		this.$dialog.eventBus.$on("show", this.handleAdd);
+		this.$dialog.eventBus.$on("close", this.handleClose);
+		this.$dialog.eventBus.$on("clear", this.handleClear);
 	},
 	beforeDestroy() {
-		this.$dialog.eventBus.$off("show", this.add);
-		this.$dialog.eventBus.$off("close", this.close);
-		this.$dialog.eventBus.$off("clear", this.clear);
+		window.removeEventListener("popstate", this.syncHistory);
+		this.$dialog.eventBus.$off("show", this.handleAdd);
+		this.$dialog.eventBus.$off("close", this.handleClose);
+		this.$dialog.eventBus.$off("clear", this.handleClear);
 	},
 };
 </script>
