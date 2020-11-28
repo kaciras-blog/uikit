@@ -17,7 +17,12 @@
 <script>
 export default {
 	name: "KxFrameHeader",
-	props: ["title"],
+	props: {
+		title: {
+			type: String,
+			required: false,
+		},
+	},
 };
 </script>
 

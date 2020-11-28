@@ -15,16 +15,10 @@
 </template>
 
 <script>
-import KxFrame from "@/dialog/KxFrame";
-import KxFrameHeader from "@/dialog/KxFrameHeader";
 import LuckyNumber from "./LuckyNumberDialog";
 
 export default {
 	name: "DemoFrame",
-	components: {
-		KxFrame,
-		KxFrameHeader,
-	},
 	methods: {
 		showDialog() {
 			this.$dialog.show(LuckyNumber);

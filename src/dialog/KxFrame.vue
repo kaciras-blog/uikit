@@ -3,7 +3,8 @@
 </template>
 
 <script>
-import { PreventScrollMixin } from "..";
+// noinspection ES6PreferShortImport 好像循环引用有点问题
+import { PreventScrollMixin } from "../scroll";
 
 export default {
 	name: "KxFrame",

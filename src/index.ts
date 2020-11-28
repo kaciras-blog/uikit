@@ -32,13 +32,19 @@ declare module "vue/types/vue" {
 	}
 }
 
+export * from "./common";
+export * from "./cancellation";
+export * from "./dragging";
+export * from "./media-resolution";
+export * from "./scroll";
+export * from "./interactive";
+
 /**
  * 自动注册目录下的Vue组件。
  *
  * @param Vue Vue类型，使用Vue.use()来注册该插件
  */
-function install(Vue: VueConstructor) {
-
+export default function install(Vue: VueConstructor) {
 	Vue.component(SkFadingCircle.name, SkFadingCircle);
 	Vue.component(ButtonPager.name, ButtonPager);
 	Vue.component(ScrollPager.name, ScrollPager);
@@ -69,26 +75,3 @@ function install(Vue: VueConstructor) {
 
 	Vue.use(KxDialog);
 }
-
-// Auto-install
-declare const window: Window & { Vue?: VueConstructor };
-declare const global: any;
-
-let GlobalVue = null;
-if (typeof window !== "undefined") {
-	GlobalVue = window.Vue;
-} else if (typeof global !== "undefined") {
-	GlobalVue = global.Vue;
-}
-if (GlobalVue) {
-	GlobalVue.use(install);
-}
-
-export * from "./common";
-export * from "./cancellation";
-export * from "./dragging";
-export * from "./media-resolution";
-export * from "./scroll";
-export * from "./interactive";
-
-export default install;

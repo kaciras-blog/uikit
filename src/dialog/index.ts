@@ -5,6 +5,8 @@ import KxMessageBox from "./KxMessageBox.vue";
 import KxBaseDialog from "./KxBaseDialog.vue";
 import KxDialogButtons from "./KxDialogButtons.vue";
 import KxImageCropper from "./KxImageCropper.vue";
+import KxFrame from "./KxFrame.vue";
+import KxFrameHeader from "./KxFrameHeader.vue";
 import { DialogManager, DialogSession } from "./controller";
 
 export { DialogManager, DialogSession };
@@ -91,8 +93,12 @@ class KxDialogManagerExt extends DialogManager {
 export type KxDialogAPI = InstanceType<typeof KxDialogManagerExt>;
 
 export default function install(Vue: VueConstructor) {
+	Vue.prototype.$dialog = new KxDialogManagerExt();
+
+	// 为了方便，把这些基础组件也注册了
 	Vue.component(KxBaseDialog.name, KxBaseDialog);
+	Vue.component(KxFrame.name, KxFrame);
+	Vue.component(KxFrameHeader.name, KxFrameHeader);
 	Vue.component(KxDialogContainer.name, KxDialogContainer);
 	Vue.component(KxDialogButtons.name, KxDialogButtons);
-	Vue.prototype.$dialog = new KxDialogManagerExt();
 }
