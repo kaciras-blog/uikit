@@ -96,13 +96,6 @@ export class DialogManager {
 	}
 
 	/**
-	 * 跟 show() 差不多，但是弹出层不即使不在顶部也不会隐藏，可用于构建多层界面。
-	 */
-	showFrame<T = any>(component: DialogComponent, props: PropsData = {}) {
-		return this.pushSession({ component, props, isolation: true });
-	}
-
-	/**
 	 * 确认并关闭最上层的弹窗，并返回一个结果。相当于 {@code close(DialogResult.confirm(data))}
 	 *
 	 * @param data 返回给调用方的数据。

@@ -33,14 +33,14 @@ export default {
 	methods: {
 		/**
 		 * 判断弹出层是否显示，为了防止遮罩堆太多所以要隐藏非顶部的弹窗。
-		 * 只有用 showFrame 弹出的和最上层的一个能够显示。
+		 * 只有 isolation:true 的组件和最上层的一个能够显示。
 		 *
 		 * @param config 选项
 		 * @param index 序号
 		 * @returns {boolean} 弹出层是否显示
 		 */
 		isVisible(config, index) {
-			return config.isolation || (index === this.stack.length - 1);
+			return (index === this.stack.length - 1) || config.component.isolation;
 		},
 
 		/**

@@ -19,6 +19,7 @@ import LuckyNumber from "./LuckyNumberDialog";
 
 export default {
 	name: "DemoFrame",
+	isolation: true,
 	methods: {
 		showDialog() {
 			this.$dialog.show(LuckyNumber);

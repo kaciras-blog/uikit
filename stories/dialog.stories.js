@@ -1,8 +1,8 @@
 import { action } from "@storybook/addon-actions";
 import { boolean } from "@storybook/addon-knobs";
-import { MessageBoxType } from "../src/dialog";
-import LuckyNumber from "./LuckyNumberDialog";
+import { MessageBoxType } from "@/dialog";
 import DemoFrame from "./DemoFrame";
+import LuckyNumber from "./LuckyNumberDialog";
 
 export default {
 	title: "Dialogs",
@@ -116,7 +116,7 @@ export const Frame = () => ({
 		</div>`,
 	methods: {
 		show() {
-			this.$dialog.showFrame(DemoFrame);
+			this.$dialog.show(DemoFrame);
 		},
 	},
 });
