@@ -17,6 +17,7 @@ export default {
 @default-active: rgba(160, 160, 160, 0.1);
 
 .button {
+	// 去你妈的 inline-block，还是 flex 好用
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;

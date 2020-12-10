@@ -1,8 +1,12 @@
 <template>
 	<kx-frame>
 		<kx-frame-header title="标题">
-			<i class="fas fa-search" :class="$style.icon"></i>
-			<i class="far fa-question-circle" :class="$style.icon"></i>
+			<kx-tool-button :class="$style.icon">
+				<i class="fas fa-search"/>
+			</kx-tool-button>
+			<kx-tool-button :class="$style.icon">
+				<i class="far fa-question-circle"/>
+			</kx-tool-button>
 		</kx-frame-header>
 		<div class="kx-frame-body" :class="$style.body">
 			<kx-button class="primary" @click="showDialog">
@@ -35,7 +39,6 @@ export default {
 }
 
 .icon {
-	padding: 14px;
 	font-size: 20px;
 }
 </style>
