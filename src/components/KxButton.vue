@@ -1,14 +1,10 @@
 <script>
+import KxBaseButton from "./KxBaseButton";
+
 export default {
 	name: "KxButton",
 	functional: true,
 	props: {
-		// 按钮的标签可以为任何HTML标签，比如可以把<a>作为按钮。
-		tag: {
-			type: String,
-			default: "button",
-		},
-
 		// 设置该按钮为 router-link，其to属性等于此属性的值，其tag属性等于prop中的tag
 		route: String,
 
@@ -17,31 +13,10 @@ export default {
 	},
 	render(h, ctx) {
 		let { data, children } = ctx;
+		let { route, icon } = ctx.props;
 
-		// 坑爹又忘了服务端渲染不过 Babel
-		// Vue 为啥不标准化一下这些属性？
-		data.on = data.on || {};
-		data.attrs = data.attrs || {};
-		const { attrs } = data;
-
-		const clazz = ["kx-btn", "click-item"];
-		if (data.class) {
-			clazz.push(data.class);
-		}
-		data.class = clazz;
-
-		let { tag, route, icon } = ctx.props;
-		if (tag === "button") {
-			attrs.type = "button"; // 防止表单里的按钮点击刷新
-		} else {
-			attrs.role = "button"; // 如果不是button元素则添加ARIA属性
-		}
-
-		// 按钮样式的路由连接
-		if (route) {
-			data.props = { tag, to: route, ...data.props };
-			tag = "router-link";
-		}
+		data.props = { route };
+		data.class = [data.class, "kx-btn"];
 
 		if (icon) {
 			const el = h("i", { staticClass: icon });
@@ -53,26 +28,7 @@ export default {
 			}
 		}
 
-		/*
-		 * 鼠标点击时屏蔽focus状态的边框，还需要在下面样式中 :active 伪类里移除边框。
-		 *
-		 * 【可能的副作用】
-		 * 可访问性：用鼠标聚焦元素然后再键盘操作的情况不常见，影响不大。
-		 * 事件处理：在真正的处理函数完成后才取消聚焦，对同步代码没有影响，而异步代码考虑到用户操作也可能取消聚焦，
-		 *           故在异步代码里访问event的聚焦属性应当考虑到该情况，这里不考虑。
-		 *
-		 * 【无法处理的情况】
-		 * 如果鼠标保持按下状态移动到元素之外，则 mouseup 事件无法触发，这种情况很少不用管。
-		 */
-		const rawMouseUp = data.on.mouseup;
-		data.on.mouseup = (event) => {
-			if (rawMouseUp) {
-				rawMouseUp(event);
-			}
-			event.currentTarget.blur();
-		};
-
-		return h(tag, data, children);
+		return h(KxBaseButton, data, children);
 	},
 };
 </script>
@@ -99,6 +55,9 @@ export default {
 	border: solid 1px #e0e0e0;
 	background-color: transparent;
 	border-radius: @radius;
+
+	cursor: pointer;
+	user-select: none;
 
 	// 默认的颜色变量
 	.color-mixin(@color-button-primary);

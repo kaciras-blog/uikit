@@ -3,14 +3,14 @@ import { sleep } from "../src/index";
 
 // link buttons?
 export default {
-	title: "Buttons",
+	title: "Button",
 };
 
 export const plainButtons = () => ({
 	template: `
 		<div>
 			<p>
-				<kx-button @click="handleClick">默认样式</kx-button>
+				<kx-button icon="far fa-paper-plane" @click="handleClick">默认样式</kx-button>
 			</p>
 			<p class="btn-group">
 				<kx-button class="primary">主要按钮</kx-button>
@@ -63,3 +63,33 @@ export const taskButtons = () => ({
 });
 
 taskButtons.storyName = "Task";
+
+export const toolButtons = () => ({
+	template: `
+		<div class="toolbar">
+			<kx-tool-button class="tool-button" @click="handleClick">
+				<i class="far fa-question-circle"></i>
+			</kx-tool-button>
+			<kx-tool-button class="tool-button" @click="handleClick">
+				<i class="far fa-edit"></i>
+			</kx-tool-button>
+			<kx-tool-button class="tool-button" @click="handleClick">
+				<i class="fas fa-eye"></i>
+			</kx-tool-button>
+			<kx-tool-button class="tool-button" @click="handleClick">
+				<i class="far fa-trash-alt"></i>
+			</kx-tool-button>
+			<kx-tool-button class="tool-button" href="#" @click="handleClick">
+				<i class="far fa-paper-plane"></i>
+			</kx-tool-button>
+			<kx-tool-button class="tool-button" route="#" @click="handleClick">
+				Vue路由
+			</kx-tool-button>
+		</div>
+	`,
+	methods: {
+		handleClick: action("button-click"),
+	},
+});
+
+toolButtons.storyName = "Tool";
