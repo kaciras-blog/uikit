@@ -13,6 +13,7 @@ import KxRadioBox from "./components/KxRadioBox.vue";
 import KxRadioBoxGroup from "./components/KxRadioBoxGroup.vue";
 import KxButton from "./components/KxButton.vue";
 import KxTaskButton from "./components/KxTaskButton.vue";
+import KxToolButton from "./components/KxToolButton.vue";
 import KxPasswordInput from "./components/KxPasswordInput.vue";
 import KxProgress from "./components/KxProgress.vue";
 
@@ -54,6 +55,7 @@ export default function install(Vue: VueConstructor) {
 	Vue.component(KxButton.name, KxButton);
 	Vue.component(KxSwitchBox.name, KxSwitchBox);
 	Vue.component(KxTaskButton.name, KxTaskButton);
+	Vue.component(KxToolButton.name, KxToolButton);
 	Vue.component(KxRadioBox.name, KxRadioBox);
 	Vue.component(KxRadioBoxGroup.name, KxRadioBoxGroup);
 	Vue.component(KxPasswordInput.name, KxPasswordInput);

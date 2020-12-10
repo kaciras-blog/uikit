@@ -50,7 +50,7 @@ export default {
 .title {
 	font-size: 16px;
 	line-height: @headerHeight;
-	margin-left: 16px;
+	margin-left: 10px;
 	margin-right: auto;
 }
 </style>

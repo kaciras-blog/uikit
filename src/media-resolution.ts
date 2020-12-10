@@ -6,8 +6,8 @@
  * await getVideoResolution(); // 获取视频尺寸
  *
  * 【尺寸的单词】
- * size			- 似乎跟文件大小有歧义
- * dimensions	- 似乎跟二维/三维有歧义
+ * size			- 跟文件大小有歧义
+ * dimensions	- 跟二维/三维有歧义
  * resolution	- 比较合适
  *
  * 【客户端实现 vs 服务端实现】

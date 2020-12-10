@@ -98,7 +98,7 @@ export class RippleEffect {
 		const localX = clientX - offset.left;
 		const localY = clientY - offset.top;
 
-		let radius = 0;
+		let radius;
 		let scale = 0.3;
 
 		if (this.circle) {

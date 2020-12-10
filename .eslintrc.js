@@ -21,6 +21,8 @@ module.exports = {
 		// 这方面 IDE 的提示比 Eslint 智能多了
 		"no-unused-vars": "off",
 
+		"no-redeclare": "off",
+
 		// 末尾逗号保持跟前面的一致，这样调整顺序或是增删都不会忘了逗号
 		"comma-dangle": ["error", "always-multiline"],
 
