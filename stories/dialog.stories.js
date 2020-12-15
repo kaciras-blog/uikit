@@ -3,6 +3,7 @@ import { boolean } from "@storybook/addon-knobs";
 import { MessageBoxType } from "@/dialog";
 import DemoFrame from "./DemoFrame";
 import LuckyNumber from "./LuckyNumberDialog";
+import HookedDialog from "./HookedDialog";
 
 export default {
 	title: "Dialogs",
@@ -122,3 +123,20 @@ export const Frame = () => ({
 });
 
 Frame.storyName = "Frame";
+
+export const CloseHook = () => ({
+	template: `
+		<div>
+			<kx-button class="primary" @click="show">
+				显示
+			</kx-button>
+			<kx-dialog-container></kx-dialog-container>
+		</div>`,
+	methods: {
+		show() {
+			this.$dialog.show(HookedDialog);
+		},
+	},
+});
+
+CloseHook.storyName = "CloseHook";

@@ -5,6 +5,7 @@
 	<div>
 		<component
 			v-for="(options, i) in stack"
+			ref="instances"
 			:key="options.id"
 			:is="options.component"
 			v-show="isVisible(options, i)"
@@ -46,7 +47,7 @@ export default {
 		/**
 		 * 同步历史记录，实现手机上后退键关闭弹出层的功能。
 		 *
-		 * 由于设计上弹出层可能依赖父组件状态，故不支持历史前进时重开。
+		 * 由于设计上弹出层可能依赖父组件状态，故不支持重开。
 		 *
 		 * 同步的方式可以支持多级跳，但好像实际的手机浏览器没法这么做。
 		 */
@@ -59,16 +60,36 @@ export default {
 			const { stack } = this;
 
 			if (flag !== FLAG) {
-				this.closeAll(stack);
-				this.stack = [];
+				stack.forEach(this.closeDialog);
 			} else {
 				const i = stack.findIndex(c => c.id === id);
-				this.closeAll(stack.splice(i + 1));
+				stack.slice(i + 1).forEach(this.closeDialog);
 			}
 		},
 
-		closeAll(list) {
-			list.forEach(c => c.resolve(DialogResult.CANCELED));
+		/**
+		 * 从弹窗栈中移除指定的弹窗，弹窗可以不存在。
+		 */
+		remove(config, result) {
+			this.stack = this.stack.filter(c => c !== config);
+			config.resolve(result);
+		},
+
+		closeDialog(config, result = DialogResult.CANCELED) {
+			if (config.closed) {
+				return;
+			}
+			config.closed = true;
+
+			const { beforeDialogClose } = config.component;
+			if (typeof beforeDialogClose !== "function") {
+				this.remove(config, result);
+			} else {
+				const i = this.stack.findIndex(c => c === config);
+				const rv = beforeDialogClose.call(this.$refs.instances[i]);
+				Promise.resolve(rv)
+					.finally(() => this.remove(config, result));
+			}
 		},
 
 		/**
@@ -87,7 +108,7 @@ export default {
 		},
 
 		handleClose(result) {
-			const config = this.stack.pop();
+			const config = this.stack[this.stack.length - 1];
 			if (!config) {
 				throw new Error("当前没有可关闭的弹窗");
 			}
@@ -95,12 +116,12 @@ export default {
 				this.$_preventHistory = true;
 				history.back();
 			}
-			config.resolve(result);
+			this.closeDialog(config, result);
 		},
 
 		// 目前仅在切换路由时使用，所以没法清除历史
 		handleClear() {
-			this.closeAll(this.stack);
+			this.stack.forEach(this.closeDialog);
 			this.stack = [];
 		},
 	},
