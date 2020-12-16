@@ -52,10 +52,6 @@ export default {
 		 * 同步的方式可以支持多级跳，但好像实际的手机浏览器没法这么做。
 		 */
 		syncHistory() {
-			if (this.$_preventHistory) {
-				this.$_preventHistory = false;
-				return;
-			}
 			const { flag, id } = history.state || {};
 			const { stack } = this;
 
@@ -107,16 +103,22 @@ export default {
 			}
 		},
 
+		/**
+		 * 手动关闭顶层的弹窗，并同步历史。
+		 *
+		 * @param result 弹窗返回的结果
+		 */
 		handleClose(result) {
 			const config = this.stack[this.stack.length - 1];
 			if (!config) {
-				throw new Error("当前没有可关闭的弹窗");
+				throw new Error("没有可关闭的弹窗");
 			}
-			if (this.isMobile) {
-				this.$_preventHistory = true;
+			const { flag, id } = history.state || {};
+			if (flag === FLAG && id === config.id) {
 				history.back();
+			} else {
+				this.closeDialog(config, result);
 			}
-			this.closeDialog(config, result);
 		},
 
 		// 目前仅在切换路由时使用，所以没法清除历史
