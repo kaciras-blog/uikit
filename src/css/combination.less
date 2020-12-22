@@ -23,7 +23,7 @@
 	flex-direction: row-reverse;
 	justify-content: flex-end;
 
-	border-radius: 4px;
+	border-radius: @radius;
 	background-color: @color-tag-background;
 }
 
@@ -48,6 +48,10 @@
 	}
 
 	&:not(:first-child) {
+
+		// 这个边框老穿出来，得透明处理下，hover 再改回颜色
+		border-right-color: transparent;
+
 		&:after {
 			content: "";
 			position: absolute;
@@ -67,6 +71,7 @@
 		color: @color-tag-background;
 		background-color: @color-input-active;
 		text-decoration: none;
+		border-right-color: @color-input-active;
 
 		&:after {
 			border-top-color: @color-input-active;
