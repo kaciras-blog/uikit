@@ -64,31 +64,31 @@ export default {
 
 	// 各种伪类下的样式
 	transition: ease-in-out .15s;
-	.pseudo-style;
+	.pseudo-style();
 
 	// 混入主题颜色
 	&.primary {
-		.flat-style;
+		.flat-style();
 	}
 
 	&.second {
 		.color-mixin(@color-button-second);
-		.flat-style;
+		.flat-style();
 	}
 
 	&.info {
 		.color-mixin(@color-button-info);
-		.flat-style;
+		.flat-style();
 	}
 
 	&.dangerous {
 		.color-mixin(@color-button-dangerous);
-		.flat-style;
+		.flat-style();
 	}
 
 	// 镂空按钮样式
 	&.outline {
-		.outline-style;
+		.outline-style();
 	}
 
 	// 禁用按钮样式，所有颜色按钮禁用样式都一样
@@ -141,7 +141,7 @@ export default {
 	color: white;
 	border-color: var(--background);
 	background-color: var(--background);
-	.pseudo-style;
+	.pseudo-style();
 }
 
 .outline-style() {

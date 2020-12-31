@@ -79,7 +79,7 @@ export default {
 	margin-left: auto;
 	padding: 4px;
 
-	border-radius: @height / 2;
+	border-radius: (@height / 2);
 	background: gray;
 
 	transition: background .2s ease-out;
