@@ -60,8 +60,9 @@ stories.add("section-change", () => ({
 		<div>选择范围：{{ start }} - {{ end }}</div>
 		</div>`,
 	data: () => ({
-		value: "调整下面的start和end，改变文本框的选择区域",
-		start: 0, end: 0,
+		value: "选择文字，下面显示被选中部分的起止位置",
+		start: 0,
+		end: 0,
 	}),
 	methods: {
 		setSelectionRange(s, e) {
@@ -110,6 +111,6 @@ stories.add("ripple", () => ({
 		<div v-if="centered && circle" :key="0" class="mock-dialog" v-ripple.centered.circle></div>
 		<div v-else-if="circle" :key="1" class="mock-dialog" v-ripple.circle></div>
 		<div v-else-if="centered" :key="2" class="mock-dialog" v-ripple.centered></div>
-		<div v-else class="mock-dialog" :key="3"  v-ripple></div>
+		<div v-else class="mock-dialog" :key="3" v-ripple></div>
 	`,
 }));
