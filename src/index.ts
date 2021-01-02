@@ -40,6 +40,9 @@ export * from "./media-resolution";
 export * from "./scroll";
 export * from "./interactive";
 
+export { default as PromiseDelegate } from "./PromiseDelegate";
+export { default as PromiseSource } from "./PromiseSource";
+
 /**
  * 自动注册目录下的Vue组件。
  *
