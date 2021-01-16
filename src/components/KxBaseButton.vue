@@ -11,7 +11,6 @@ export default {
 		route: String,
 	},
 	render(h, context) {
-		console.log(context);
 		const { data, children } = context;
 		const { route } = context.props;
 
