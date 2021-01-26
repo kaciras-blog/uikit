@@ -47,12 +47,13 @@ export default {
 		}
 		buttons.push(button(index + 1, ">", index >= total));
 
-		function jumpToPage(event) {
-			const page = event.target.value;
-			if (page > 0 && page < total) {
-				showPage(page);
+		// 坑：type="text" 的输入框没有 valueAsNumber
+		function jumpToPage({ target }) {
+			const i = parseInt(target.value);
+			if (i > 0 && i < total) {
+				showPage(i);
 			}
-			event.target.value = "";
+			target.value = "";
 		}
 
 		/*
