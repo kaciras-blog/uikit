@@ -23,7 +23,7 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Unit Test
-        run: yarn test --quiet
+        run: yarn test --silent
 
       - name: Build StoryBook
         run: yarn build-storybook --quiet
