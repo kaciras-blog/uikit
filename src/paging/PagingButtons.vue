@@ -117,6 +117,6 @@ export default {
 }
 
 .margin_fix {
-	margin-left: -1px !important;
+	margin: 0 0 0 -1px !important;
 }
 </style>
