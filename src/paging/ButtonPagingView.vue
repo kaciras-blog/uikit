@@ -24,13 +24,13 @@
 </template>
 
 <script>
-import { CancellationToken, scrollToElementEnd, scrollToElementStart } from "../index";
+import { scrollToElementEnd, scrollToElementStart } from "../index";
 import { getScrollTop } from "../scroll";
 
 export default {
 	name: "ButtonPagingView",
 	props: {
-		/** index, size, cancelToken => Promise<{ items, total }> */
+		/** index, size, abortSignal => Promise<{ items, total }> */
 		loader: {
 			type: Function,
 			required: true,
@@ -79,16 +79,18 @@ export default {
 		loadPage(index) {
 			const { start, pageSize, _loading, loader } = this;
 			if (_loading) {
-				_loading.cancel();
+				_loading.abort();
 			}
-			const cancelToken = CancellationToken.create();
-			this._loading = cancelToken;
+			this._loading = new AbortController();
+			const { signal } = this._loading;
+
 			this.index = index; // 先跳页再加载
 
-			return loader(start + index * pageSize, pageSize, cancelToken)
-				.then(res => !cancelToken.isCancelled && this.$emit("input", res))
+			return loader(start + index * pageSize, pageSize, signal)
+				.then(res => !signal.aborted && this.$emit("input", res))
 				.finally(() => this._loading = null);
 		},
+
 		/**
 		 * 用户点击按钮后切换页面，同时如果视口无法看到第一项，则会滚动到刚好能看到第一项的位置。
 		 * 这个滚动不要用动画，否则会让人觉得磨叽。

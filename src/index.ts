@@ -34,7 +34,6 @@ declare module "vue/types/vue" {
 }
 
 export * from "./common";
-export * from "./cancellation";
 export * from "./dragging";
 export * from "./media-resolution";
 export * from "./scroll";
