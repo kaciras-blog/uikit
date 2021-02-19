@@ -864,7 +864,7 @@ tbody > tr:hover {
   margin-left: auto;
 }
 .PagingButtons_margin_fix_3HbYK {
-  margin-left: -1px !important;
+  margin: 0 0 0 -1px !important;
 }
 
 /*
@@ -1402,6 +1402,44 @@ to {
 }
 }
 
+/*
+ * 在.vue文件的<style>中导入的样式会重复输出，为了避免此问题
+ * 在其中导入时仅允许导入变量和函数，不允许导入样式，该文件
+ * 已经导入了所有的变量和函数，用于在.vue文件中导入。
+ */
+/*
+ * 常用 Less 公共样式封装，部分取自：
+ * https://blog.csdn.net/boyit0/article/details/78802385
+ */
+/**
+ * 使用 -webkit-line-clamp 属性限制文字的行数，多余的显示省略号。
+ * 这个属性的兼容性目前还不太好。
+ */
+.PopupAlert_enter_before_1uSXd {
+  opacity: 0;
+}
+.PopupAlert_container_2YhUB {
+  position: fixed;
+  left: 50%;
+  bottom: 10vh;
+  z-index: 5000;
+  -webkit-transition: opacity 0.25s;
+  transition: opacity 0.25s;
+  padding: 5px 12px;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  color: white;
+  background-color: #4eaf4b;
+}
+@media screen and (min-width: 768px) {
+.PopupAlert_container_2YhUB {
+    padding: 0.5em 1em;
+}
+}
+
 .kx-modal {
   position: fixed;
   z-index: 1000;
@@ -1817,4 +1855,4 @@ to {
 }
 
 
-/*# sourceMappingURL=main.65076a73.css.map*/
+/*# sourceMappingURL=main.a8490030.css.map*/
