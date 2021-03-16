@@ -39,7 +39,7 @@ stories.add("syncScroll", () => ({
 
 stories.add("ScrollTo", () => ({
 	template: `
-		<div style="height: 200vh"><div ref="target" class="scroll-to-box"/></div>
+		<div style="height: 300vh"><div ref="target" class="scroll-to-box"/></div>
 	`,
 	methods: {
 		scrollToElement() {
@@ -55,6 +55,6 @@ stories.add("ScrollTo", () => ({
 	created() {
 		button("ScrollToStart", this.scrollToStart);
 		button("ScrollToEnd", this.scrollToEnd);
-		button("scrollToElement", this.scrollToElement);
+		button("ScrollToElement", this.scrollToElement);
 	},
 }));
