@@ -1,20 +1,20 @@
-const fs = require("fs");
 const { join } = require("path");
+const fs = require("fs");
 const { toString } = require("webpack-chain");
-const { linter } = require("eslint");
+const { Linter } = require("eslint");
 const lintConfig = require("../.eslintrc");
 
 function format(text) {
 	text = text.replace(/\[native code];?/g, "/* native code */");
 	text = "module.exports = " + text;
 
-	const lintResult = linter.verifyAndFix(text, lintConfig);
-	if (!lintResult.fixed) {
-		console.error("[webpack-dump] 生成配置文件失败，详细信息见生成的文件");
-		return lintResult.messages.map(m => JSON.stringify(m)).join("\n");
+	const result = new Linter().verifyAndFix(text, lintConfig);
+	if (result.fixed) {
+		return result.output;
 	}
 
-	return lintResult.output;
+	console.error("[webpack-dump] 生成配置文件失败，详细信息见生成的文件");
+	return result.messages.map(m => JSON.stringify(m)).join("\n");
 }
 
 const outDir = join(__dirname, "../temp");
