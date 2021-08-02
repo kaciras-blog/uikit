@@ -1,9 +1,14 @@
 module.exports = {
-	stories: ["../stories/**/*.stories.js"],
+	core: {
+		"builder": "webpack5"
+	},
+	stories: [
+		"../stories/**/dialog.stories.js",
+	],
 	addons: [
-		"@storybook/addon-knobs",
 		"@storybook/addon-actions",
-		"@storybook/addon-notes",
+		"@storybook/addon-docs",
+		"@storybook/addon-essentials",
 		"@storybook/addon-viewport",
 	],
 };

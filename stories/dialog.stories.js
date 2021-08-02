@@ -1,5 +1,4 @@
 import { action } from "@storybook/addon-actions";
-import { boolean } from "@storybook/addon-knobs";
 import { MessageBoxType } from "@/dialog";
 import DemoFrame from "./DemoFrame";
 import LuckyNumber from "./LuckyNumberDialog";
@@ -67,18 +66,7 @@ custom.storyName = "Custom";
 
 const applyAction = action("apply button click");
 
-export const buttons = () => ({
-	props: {
-		cancelButton: {
-			default: boolean("cancelButton", true),
-		},
-		acceptable: {
-			default: boolean("acceptable", true),
-		},
-		hasApplyListener: {
-			default: boolean("has apply action", false),
-		},
-	},
+export const buttons = (cancelButton,acceptable,hasApplyListener) => ({
 	template: `
 		<div class="mock-dialog">
 			<h1 class="mock-dialog-content">
@@ -106,6 +94,12 @@ export const buttons = () => ({
 });
 
 buttons.storyName = "DialogButtons";
+
+buttons.args = {
+	cancelButton: true,
+	acceptable: true,
+	hasApplyListener: false,
+};
 
 export const Frame = () => ({
 	template: `
