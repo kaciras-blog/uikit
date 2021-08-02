@@ -3,7 +3,6 @@ import KxButton from "../components/KxButton";
 
 export default {
 	name: "PagingButtons",
-	functional: true,
 	render(h, context) {
 		const { $style } = context;
 		const { index, total, omitPos } = context.props;

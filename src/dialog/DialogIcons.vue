@@ -1,4 +1,4 @@
-<template functional>
+<template>
 	<div v-if="props.type === 0" class="kx-dialog-icon info"></div>
 	<div v-else-if="props.type === 1" class="kx-dialog-icon success"></div>
 	<div v-else-if="props.type === 2" class="kx-dialog-icon warning"></div>

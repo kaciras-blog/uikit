@@ -2,7 +2,6 @@
 <script>
 export default {
 	name: "TextPagingButtons",
-	functional: true,
 	render(h, context) {
 		const { $style } = context;
 		const { index, total, omitPos } = context.props;

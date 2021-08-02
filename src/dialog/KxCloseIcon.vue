@@ -1,4 +1,4 @@
-<template functional>
+<template>
 	<button
 		title="关闭"
 		:class="[data.class, data.staticClass, $style.iconBox]"

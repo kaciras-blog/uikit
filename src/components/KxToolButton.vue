@@ -3,7 +3,6 @@ import KxBaseButton from "./KxBaseButton";
 
 export default {
 	name: "KxToolButton",
-	functional: true,
 	render(createElement, context) {
 		const { $style, data, children } = context;
 		data.class = [data.class, $style.button];

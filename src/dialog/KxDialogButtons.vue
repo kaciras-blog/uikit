@@ -30,7 +30,6 @@
 <script>
 export default {
 	name: "KxDialogButtons",
-	functional: true,
 	props: {
 		/** 是否显示取消按钮，默认true */
 		cancelButton: {

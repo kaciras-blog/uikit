@@ -3,7 +3,6 @@ import KxBaseButton from "./KxBaseButton";
 
 export default {
 	name: "KxButton",
-	functional: true,
 	props: {
 		// 设置该按钮为 router-link，其to属性等于此属性的值，其tag属性等于prop中的tag
 		route: String,

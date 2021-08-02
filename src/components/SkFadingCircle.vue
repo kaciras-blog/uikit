@@ -1,5 +1,5 @@
 <!-- 加载动画效果, 抄自 http://tobiasahlin.com/spinkit/ -->
-<template functional>
+<template>
 	<div class="sk-fading-circle"
 		 :class="[data.class, data.staticClass]"
 		 :style="[data.style, data.staticStyle]"

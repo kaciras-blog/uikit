@@ -5,7 +5,6 @@
 <script>
 export default {
 	name: "KxBaseButton",
-	functional: true,
 	props: {
 		// 设置该按钮为 router-link，其 to 等于此属性
 		route: String,
