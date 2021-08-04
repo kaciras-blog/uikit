@@ -137,7 +137,7 @@ export default {
 		this.$dialog.eventBus.$on("close", this.handleClose);
 		this.$dialog.eventBus.$on("clear", this.handleClear);
 	},
-	beforeDestroy() {
+	beforeUnmount() {
 		window.removeEventListener("popstate", this.syncHistory);
 		this.$dialog.eventBus.$off("show", this.handleAdd);
 		this.$dialog.eventBus.$off("close", this.handleClose);

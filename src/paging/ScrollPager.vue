@@ -113,7 +113,7 @@ export default {
 		};
 		this.$watch("autoLoad", autoLoadWatcher, { immediate: true });
 	},
-	destroyed() {
+	unmouted() {
 		this.$_observer.disconnect();
 	},
 };

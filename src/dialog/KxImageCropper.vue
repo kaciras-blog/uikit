@@ -109,7 +109,7 @@ export default {
 		});
 		this._restore = preventScroll();
 	},
-	destroyed() {
+	unmouted() {
 		this._restore();
 	},
 };

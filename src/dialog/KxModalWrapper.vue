@@ -21,7 +21,7 @@ export default {
 			this._restore = preventScroll();
 		}
 	},
-	destroyed() {
+	unmouted() {
 		if (this._restore) {
 			this._restore();
 		}
