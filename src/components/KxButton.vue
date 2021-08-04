@@ -1,56 +1,68 @@
 <script>
-import KxBaseButton from "./KxBaseButton";
+import { defineComponent, h, useCssModule } from "vue";
+import { RouterLink } from "vue-router";
 
-export default {
+export default defineComponent({
 	name: "KxButton",
-	props: {
-		// 设置该按钮为 router-link，其to属性等于此属性的值，其tag属性等于prop中的tag
-		route: String,
+	setup(props, context) {
+		const { slots, attrs, emit } = context;
+		const { type, route } = props;
 
-		// 在按钮的内容的开头加上一个图标
-		icon: String,
-	},
-	render(h, ctx) {
-		let { data, children } = ctx;
-		let { route, icon } = ctx.props;
+		const children = slots.default();
+		const $style = useCssModule();
 
-		data.props = { route };
-		data.class = [data.class, "kx-btn"];
+		const data = {
+			class: [$style.button, $style[type], attrs.class],
+		};
 
-		if (icon) {
-			const el = h("i", { staticClass: icon });
-			if (!children) {
-				data.class.push("icon"); // 仅有一个图标，给加一个样式
-				children = [el];
+		/*
+		 * 鼠标点击时屏蔽focus状态的边框，还需要在下面样式中 :active 伪类里移除边框。
+		 *
+		 * 【可能的副作用】
+		 * 可访问性：用鼠标聚焦元素然后再键盘操作的情况不常见，影响不大。
+		 * 事件处理：在真正的处理函数完成后才取消聚焦，对同步代码没有影响，而异步代码考虑到用户操作也可能取消聚焦，
+		 *           故在异步代码里访问event的聚焦属性应当考虑到该情况，这里不考虑。
+		 *
+		 * 【无法处理的情况】
+		 * 如果鼠标保持按下状态移动到元素之外，则 mouseup 事件无法触发，这种情况很少不用管。
+		 */
+		data.onMouseup = (event) => {
+			emit("mouseup", event);
+			event.currentTarget.blur();
+		};
+
+		return () => {
+			if (attrs.href !== undefined) {
+				data.href = attrs.href;
+				return h("a", data, children);
+			} else if (route !== undefined) {
+				data.to = route;
+				return h(RouterLink, data, children);
 			} else {
-				children.unshift(el);
+				data.type = "button";
+				return h("button", data, children);
 			}
-		}
-
-		return h(KxBaseButton, data, children);
+		};
 	},
-};
+});
 </script>
 
-<style lang="less">
+<style module lang="less">
 @import "../css/exports";
 
 // 园角按钮的圆角半径
-@radius: .25rem;
+@radius: 4px;
 
-.kx-btn {
-	display: inline-block;
-	position: relative;
-	vertical-align: top;
+// 基础样式，也是默认类型
+.button {
+	display: inline-flex;
+	align-items: center;
 
-	// 内部布局
-	padding: .5rem 1.2rem;
-	font-size: 1rem;
-	line-height: 1;
-	text-align: center;
-	white-space: nowrap;
+	padding: 8px 16px;
+	font-size: initial;
 
-	// 基本样式
+	//white-space: nowrap;
+
 	border: solid 1px #e0e0e0;
 	background-color: transparent;
 	border-radius: @radius;
@@ -59,35 +71,30 @@ export default {
 	user-select: none;
 
 	// 默认的颜色变量
-	.color-mixin(@color-button-primary);
+	.color-mixin(initial, @color-button-primary);
 
 	// 各种伪类下的样式
 	transition: ease-in-out .15s;
 	.pseudo-style();
 
 	// 混入主题颜色
-	&.primary {
+	&:global(.primary) {
 		.flat-style();
 	}
 
-	&.second {
-		.color-mixin(@color-button-second);
+	&:global(.second) {
+		.color-mixin(white, @color-button-second);
 		.flat-style();
 	}
 
-	&.info {
-		.color-mixin(@color-button-info);
+	&:global(.info) {
+		.color-mixin(white, @color-button-info);
 		.flat-style();
 	}
 
-	&.dangerous {
-		.color-mixin(@color-button-dangerous);
+	&:global(.dangerous) {
+		.color-mixin(white, @color-button-dangerous);
 		.flat-style();
-	}
-
-	// 镂空按钮样式
-	&.outline {
-		.outline-style();
 	}
 
 	// 禁用按钮样式，所有颜色按钮禁用样式都一样
@@ -108,6 +115,18 @@ export default {
 		border: none;
 		padding: .3rem .8rem;
 		font-size: 1.2rem;
+	}
+}
+
+// 镂空按钮样式
+.outline {
+	background-color: transparent;
+	color: var(--background);
+
+	&:hover {
+		color: white;
+		background-color: var(--background);
+		border-color: var(--background);
 	}
 }
 
@@ -143,23 +162,13 @@ export default {
 	.pseudo-style();
 }
 
-.outline-style() {
-	background-color: transparent;
-	color: var(--background);
-
-	&:hover {
-		color: white;
-		background-color: var(--background);
-		border-color: var(--background);
-	}
-}
-
 // 配置各主题色，less还不支运算作为CSS变量值，需要先用变量定义
-.color-mixin(@color) {
+.color-mixin(@text, @color) {
 	@color-active: @color - #0C0C0C;
 	@color-highlight: lighten(@color, 5%);
 	@color-glass: fade(@color, 50%);
 
+	--color: @text;
 	--background: @color;
 	--background-active: @color-active;
 	--background-highlight: @color-highlight;
