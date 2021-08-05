@@ -1,4 +1,4 @@
-import { DirectiveBinding } from "vue/types/options";
+import { DirectiveBinding } from "vue";
 
 /**
  * 类似 input 事件，额外处理了输入法问题。
@@ -10,7 +10,7 @@ import { DirectiveBinding } from "vue/types/options";
  * <textarea v-ime-input="e => console.log(e.target.value)"/>
  */
 export default {
-	inserted(el: HTMLElement, binding: DirectiveBinding) {
+	mounted(el: HTMLElement, binding: DirectiveBinding) {
 		let completed = true;
 		el.addEventListener("compositionstart", () => {
 			completed = false;

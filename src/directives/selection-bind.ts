@@ -1,5 +1,4 @@
-import Vue, { VNode } from "vue";
-import { DirectiveBinding } from "vue/types/options";
+import { DirectiveBinding } from "vue";
 
 /**
  * 文本选区绑定，当给定的选区数据改变时设置元素的 selectionStart 和 selectionEnd。
@@ -12,21 +11,21 @@ import { DirectiveBinding } from "vue/types/options";
  * <input v-bind-selection="selection">
  */
 export default {
-	inserted(el: HTMLElement, binding: DirectiveBinding, vnode: VNode) {
-		const vm = vnode.context as Vue;
-		const { expression, modifiers } = binding;
+	mounted(el: HTMLElement, binding: DirectiveBinding) {
+		// TODO: expression 没了，用 value 似乎得加额外的引号
+		const { value, instance, modifiers } = binding;
 
 		if (!(el instanceof HTMLTextAreaElement || el instanceof HTMLInputElement)) {
 			throw new Error("v-bind-selection can only apply to HTMLTextAreaElement or HTMLInputElement");
 		}
 
-		(el as any)._vSelectionUnwatch = vm.$watch(expression, (nv) => {
-			const [s, e] = nv;
+		(el as any)._vSelectionUnwatch = instance!.$watch(value, (range: [number, number]) => {
+			const [s, e] = range;
 			el.selectionStart = s;
 			el.selectionEnd = e;
 			if (modifiers.focus) el.focus();
 		});
 	},
 
-	unbind: (el: any) => el._vSelectionUnwatch(),
+	unmounted: (el: any) => el._vSelectionUnwatch(),
 };

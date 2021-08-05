@@ -1,22 +1,13 @@
 import "@fortawesome/fontawesome-free/css/all.css";
 import "./css/index.less";
 
-import { VueConstructor } from "vue";
-import ButtonPager from "./paging/ButtonPager.vue";
-import ScrollPager from "./paging/ScrollPager.vue";
-import SkFadingCircle from "./components/SkFadingCircle.vue";
-import ScrollPagingView from "./paging/ScrollPagingView.vue";
-import ButtonPagingView from "./paging/ButtonPagingView.vue";
+import { App } from "vue";
 import KxCheckBox from "./components/KxCheckBox.vue";
-import KxSwitchBox from "./components/KxSwitchBox.vue";
 import KxRadioBox from "./components/KxRadioBox.vue";
 import KxRadioBoxGroup from "./components/KxRadioBoxGroup.vue";
 import KxButton from "./components/KxButton.vue";
 import KxTaskButton from "./components/KxTaskButton.vue";
-import KxToolButton from "./components/KxToolButton.vue";
 import KxPasswordInput from "./components/KxPasswordInput.vue";
-import KxProgress from "./components/KxProgress.vue";
-import PopupAlertContainer from "./components/PopupAlertContainer.vue";
 
 import AutoFocus from "./directives/autofocus";
 import ImeInput from "./directives/ime-input";
@@ -25,7 +16,7 @@ import SelectionChange from "./directives/selection-change";
 import SelectionModel from "./directives/selection-model";
 import Ripple from "./directives/ripple";
 import { MediaQueryAPI } from "./media-query";
-import KxDialog, { KxDialogAPI } from "./dialog";
+import { KxDialogAPI } from "./dialog";
 
 declare module "vue/types/vue" {
 	export interface Vue {
@@ -44,40 +35,31 @@ export { default as PromiseDelegate } from "./PromiseDelegate";
 export { default as PromiseSource } from "./PromiseSource";
 
 /**
- * 自动注册目录下的Vue组件。
- *
- * @param Vue Vue类型，使用Vue.use()来注册该插件
+ * 自动注册目录下的 Vue 组件。
  */
-export default function install(Vue: VueConstructor) {
-	Vue.component(SkFadingCircle.name, SkFadingCircle);
-	Vue.component(ButtonPager.name, ButtonPager);
-	Vue.component(ScrollPager.name, ScrollPager);
-	Vue.component(ScrollPagingView.name, ScrollPagingView);
-	Vue.component(ButtonPagingView.name, ButtonPagingView);
-	Vue.component(KxCheckBox.name, KxCheckBox);
-	Vue.component(KxButton.name, KxButton);
-	Vue.component(KxSwitchBox.name, KxSwitchBox);
-	Vue.component(KxTaskButton.name, KxTaskButton);
-	Vue.component(KxToolButton.name, KxToolButton);
-	Vue.component(KxRadioBox.name, KxRadioBox);
-	Vue.component(KxRadioBoxGroup.name, KxRadioBoxGroup);
-	Vue.component(KxPasswordInput.name, KxPasswordInput);
-	Vue.component(KxProgress.name, KxProgress);
-	Vue.component(PopupAlertContainer.name, PopupAlertContainer);
+export default function install(app: App) {
+	// app.component(SkFadingCircle.name, SkFadingCircle);
+	// app.component(ButtonPager.name, ButtonPager);
+	// app.component(ScrollPager.name, ScrollPager);
+	// app.component(ScrollPagingView.name, ScrollPagingView);
+	// app.component(ButtonPagingView.name, ButtonPagingView);
+	app.component(KxButton.name, KxButton);
+	app.component(KxTaskButton.name, KxTaskButton);
+	// app.component(KxToolButton.name, KxToolButton);
+	// app.component(KxSwitchBox.name, KxSwitchBox);
+	app.component(KxCheckBox.name, KxCheckBox);
+	app.component(KxRadioBox.name, KxRadioBox);
+	app.component(KxRadioBoxGroup.name, KxRadioBoxGroup);
+	app.component(KxPasswordInput.name, KxPasswordInput);
+	// app.component(KxProgress.name, KxProgress);
+	// app.component(PopupAlertContainer.name, PopupAlertContainer);
 
-	// IDE 无法分析自动扫描的引用
-// 	const requireContext = require.context(".", false,  /.vue$/);
-// 	requireContext.keys().forEach(file => {
-// 		const component = requireContext(file).default;
-// 		Vue.component(component.name, component);
-// 	});
+	app.directive("autofocus", AutoFocus);
+	app.directive("ime-input", ImeInput);
+	app.directive("ripple", Ripple);
+	app.directive("bind-selection", SelectionBinding);
+	app.directive("on-selection-change", SelectionChange);
+	app.directive("selection-model", SelectionModel);
 
-	Vue.directive("autofocus", AutoFocus);
-	Vue.directive("ime-input", ImeInput);
-	Vue.directive("ripple", Ripple);
-	Vue.directive("bind-selection", SelectionBinding);
-	Vue.directive("on-selection-change", SelectionChange);
-	Vue.directive("selection-model", SelectionModel);
-
-	Vue.use(KxDialog);
+	// app.use(KxDialog);
 }

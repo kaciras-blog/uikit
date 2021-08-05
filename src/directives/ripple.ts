@@ -4,7 +4,7 @@
  *   centered - 波纹从元素中心发出，默认是从点击位置发出
  *   circle - 波纹最大宽度不超过元素，默认是要超过的
  */
-import { DirectiveBinding } from "vue/types/options";
+import { DirectiveBinding } from "vue";
 import { isTouchEvent } from "../common";
 import { RippleEffect } from "../ripple-effect";
 
@@ -73,12 +73,12 @@ function removeListeners(el: HTMLElement) {
 }
 
 export default {
-	bind(el: HTMLElement, binding: DirectiveBinding) {
+	beforeMount(el: HTMLElement, binding: DirectiveBinding) {
 		const { centered, circle } = binding.modifiers;
 		(el as RippledHtmlElement)._ripple = new RippleBinding(el, centered, circle);
 		addListeners(el);
 	},
-	unbind(el: HTMLElement) {
+	unmounted(el: HTMLElement) {
 		delete (el as RippledHtmlElement)._ripple;
 		removeListeners(el);
 	},

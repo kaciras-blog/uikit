@@ -29,7 +29,7 @@ export function openFile(accept: string, multiple = false) {
 
 type SelectionElement = HTMLTextAreaElement | HTMLInputElement;
 
-type SelectionChangeHandler = (start: number, end: number) => void;
+export type SelectionChangeHandler = (start: number, end: number) => void;
 
 /**
  * 监听文本框光标位置和选区的改变。

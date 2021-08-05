@@ -1,41 +1,33 @@
-import { storiesOf } from "@storybook/vue";
-import { boolean, number } from "@storybook/addon-knobs";
+export default {
+	title: "Directive",
+};
 
-const stories = storiesOf("Directive", module);
-
-stories.add("ime-input", () => ({
+export const ImeInput = () => ({
 	template: `
 		<div>
-		<label>
-			<div>使用输入法输入一些文本：</div>
-			<textarea
-				@input="e => value = e.target.value"
-				v-ime-input="e => imeValue = e.target.value"
-			/>
-		</label>
-		<div class="ime-input-result">
-			<p>input事件：{{ value }}</p>
-			<p>v-ime-input：{{ imeValue }}</p>
-		</div>
+			<label>
+				<div>使用输入法输入一些文本：</div>
+				<textarea
+					@input="e => value = e.target.value"
+					v-ime-input="e => imeValue = e.target.value"
+				/>
+			</label>
+			<div class="ime-input-result">
+				<p>input事件：{{ value }}</p>
+				<p>v-ime-input：{{ imeValue }}</p>
+			</div>
 		</div>`,
 	data: () => ({
 		value: "",
 		imeValue: "",
 	}),
-}));
+});
 
-stories.add("section-bind", () => ({
-	props: {
-		start: {
-			default: number("selectionStart", 0),
-		},
-		end: {
-			default: number("selectionEnd", 0),
-		},
-	},
+export const SectionBind = (args, { argTypes }) => ({
+	props: Object.keys(argTypes),
 	template: `
 		<textarea
-			v-bind-selection.focus="selection"
+			v-bind-selection.focus="'selection'"
 			v-model="value"
 			class="directive-textarea"
 		/>`,
@@ -47,9 +39,11 @@ stories.add("section-bind", () => ({
 			return [this.start, this.end];
 		},
 	},
-}));
+});
 
-stories.add("section-change", () => ({
+SectionBind.args = { start: 0, end: 0 };
+
+export const SectionChange = () => ({
 	template: `
 		<div>
 		<textarea
@@ -70,13 +64,14 @@ stories.add("section-change", () => ({
 			this.end = e;
 		},
 	},
-}));
+});
 
-stories.add("section-model", () => ({
+
+export const SectionModel = () => ({
 	template: `
 		<div>
 		<textarea
-			v-selection-model.focus="selection"
+			v-selection-model.focus="'selection'"
 			v-model="value"
 			class="directive-textarea"
 		/>
@@ -95,17 +90,10 @@ stories.add("section-model", () => ({
 			this.selection = [s, e];
 		},
 	},
-}));
+});
 
-stories.add("ripple", () => ({
-	props: {
-		centered: {
-			default: boolean("centered", false),
-		},
-		circle: {
-			default: boolean("circle", false),
-		},
-	},
+export const Ripple = (args, { argTypes }) => ({
+	props: Object.keys(argTypes),
 	// 用 key 防止复用元素导致指令更新失败
 	template: `
 		<div v-if="centered && circle" :key="0" class="mock-dialog" v-ripple.centered.circle></div>
@@ -113,4 +101,9 @@ stories.add("ripple", () => ({
 		<div v-else-if="centered" :key="2" class="mock-dialog" v-ripple.centered></div>
 		<div v-else class="mock-dialog" :key="3" v-ripple></div>
 	`,
-}));
+});
+
+Ripple.arge = {
+	circle: false,
+	centered: false,
+};
