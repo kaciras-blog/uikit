@@ -5,7 +5,7 @@
 			:type="visible ? 'text': 'password'"
 			:id="inputId"
 			:class="$style.input"
-			:value="value"
+			:value="modelValue"
 			:placeholder="placeholder"
 			:required="required"
 			:disabled="disabled"
@@ -27,17 +27,17 @@ export default {
 		inputId: String, // 用于跟label关联
 		required: {},
 		placeholder: String,
-		value: String,
+		modelValue: String,
 		disabled: {},
 	},
-	emits: ["change"],
+	emits: ["update:modelValue"],
 	data: () => ({
 		visible: false,
 	}),
 	methods: {
 		handleInput(event) {
 			const { value } = event.target;
-			this.$emit("change", value);
+			this.$emit("update:modelValue", value);
 		},
 	},
 };

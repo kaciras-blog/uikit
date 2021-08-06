@@ -1,44 +1,55 @@
-import { storiesOf } from "@storybook/vue";
-import { boolean } from "@storybook/addon-knobs";
-
-const stories = storiesOf("Input", module);
-
-stories.add("CheckBox", () => ({
-	props: {
+export default {
+	title: "Input",
+	argTypes: {
 		disabled: {
-			default: boolean("Disabled", false),
+			control: { type: "boolean" },
 		},
 	},
+};
+
+export const CheckBox = (args, { argTypes }) => ({
+	props: Object.keys(argTypes),
 	template: `
 		<div>
-			<kx-check-box v-model="value" :disabled="disabled">复选框</kx-check-box>
+			<kx-check-box
+				v-model="value"
+				:disabled="disabled"
+			>
+				复选框
+			</kx-check-box>
 		</div>`,
 	data: () => ({ value: false }),
-}));
+});
 
-stories.add("Switch", () => ({
-	props: {
-		disabled: {
-			default: boolean("Disabled", false),
-		},
-	},
+CheckBox.args = {
+	disabled: false,
+};
+
+export const Switch = () => ({
 	template: `
 		<div style="width: 300px">
-			<kx-switch-box v-model="value" :disabled="disabled">这是一个切换按钮</kx-switch-box>
+			<kx-switch-box
+				v-model="value"
+				:disabled="disabled"
+			>
+				这是一个切换按钮
+			</kx-switch-box>
 		</div>
 	`,
 	data: () => ({ value: true }),
-}));
+});
 
-stories.add("Password", () => ({
-	props: {
-		disabled: {
-			default: boolean("Disabled", false),
-		},
-	},
+Switch.args = {
+	disabled: false,
+};
+
+export const Password = (args, { argTypes }) => ({
+	props: Object.keys(argTypes),
 	template: `
 		<div style="width: 300px">
-			<label for="input">请输入密码：</label>
+			<label for="input">
+				请输入密码：
+			</label>
 			<kx-password-input
 				style="margin-top: 10px"
 				input-id="input"
@@ -47,14 +58,13 @@ stories.add("Password", () => ({
 			/>
 		</div>`,
 	data: () => ({ value: "" }),
-}));
+});
 
-stories.add("Radio", () => ({
-	props: {
-		disabled: {
-			default: boolean("Disabled", false),
-		},
-	},
+Password.args = {
+	disabled: false,
+};
+
+export const Radio = () => ({
 	template: `
 		<kx-radio-box-group v-model="value" :disabled="disabled">
 			<h1>Selected: {{value}}</h1>
@@ -64,6 +74,8 @@ stories.add("Radio", () => ({
 			<kx-radio-box :value="3">3: WindowsPhone</kx-radio-box>
 		</kx-radio-box-group>`,
 	data: () => ({ value: 1 }),
-}), {
-	notes: "My notes on some bold text",
 });
+
+Radio.args = {
+	disabled: false,
+};

@@ -7,9 +7,10 @@ export default {
 	name: "KxRadioBoxGroup",
 	props: {
 		name: String,
-		value: {},
+		modelValue: {},
 		disabled: Boolean,
 	},
+	emits: ["update:modelValue"],
 	provide() {
 		return { group: this };
 	},

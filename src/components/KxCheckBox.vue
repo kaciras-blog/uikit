@@ -38,19 +38,18 @@ export default defineComponent({
 			default: false,
 		},
 	},
-	emits: ["input", "change"],
+	emits: ["update:modelValue"],
 	data: () => ({
 		selfValue: false,
 	}),
 	computed: {
 		model: {
 			get() {
-				const { selfValue, value } = this;
-				return typeof value === "undefined" ? selfValue : value;
+				return this.modelValue ?? this.selfValue;
 			},
 			set(value) {
 				this.selfValue = value;
-				this.$emit("input", value);
+				this.$emit("update:modelValue", value);
 			},
 		},
 	},

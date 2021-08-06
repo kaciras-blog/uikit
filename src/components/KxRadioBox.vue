@@ -40,16 +40,15 @@ export default {
 			default: false,
 		},
 	},
-	emits: ["change"],
 	inject: ["group"],
 	computed: {
 		checked() {
-			return this.value === this.group.value;
+			return this.value === this.group.modelValue;
 		},
 	},
 	methods: {
-		handleChange(event) {
-			this.group.$emit("change", event.target.checked);
+		handleChange() {
+			this.group.$emit("update:modelValue", this.value);
 		},
 	},
 };

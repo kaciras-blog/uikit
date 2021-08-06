@@ -2,7 +2,7 @@
 	<label
 		class="kx-switch-box"
 		role="switch"
-		:aria-checked="value.toString()"
+		:aria-checked="modelValue.toString()"
 		:aria-disabled="disabled"
 		:class="{ disabled }"
 		@click.prevent="switchValue"
@@ -15,12 +15,13 @@
 		 -->
 		<span
 			class="kx-switch"
-			:class="{ checked: value }"
+			:class="{ checked: modelValue }"
 		>
 			<input
 				:name="name"
 				class="kx-switch-input"
 				type="checkbox"
+				:checked="modelValue"
 				@change="handleChange"
 				:disabled="disabled"
 			>
@@ -32,7 +33,7 @@
 export default {
 	name: "KxSwitchBox",
 	props: {
-		value: {
+		modelValue: {
 			type: Boolean,
 			default: false,
 		},
@@ -42,16 +43,16 @@ export default {
 		},
 		name: String,
 	},
-	emits: ["change"],
+	emits: ["update:modelValue"],
 	methods: {
 		switchValue() {
 			if (this.disabled) {
 				return;
 			}
-			this.$emit("change", !this.value);
+			this.$emit("update:modelValue", !this.modelValue);
 		},
 		handleChange(event) {
-			this.$emit("change", event.target.value);
+			this.$emit("update:modelValue", event.target.value);
 		},
 	},
 };
