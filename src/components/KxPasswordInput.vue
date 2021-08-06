@@ -1,8 +1,6 @@
 <!-- 可惜没有 :hover-within 标签关联没法高亮 hover -->
 <template>
 	<div class="input" :class="$style.container" :disabled="disabled">
-
-		<!--suppress HtmlFormInputWithoutLabel 标签在外面 -->
 		<input
 			:type="visible ? 'text': 'password'"
 			:id="inputId"
@@ -11,7 +9,7 @@
 			:placeholder="placeholder"
 			:required="required"
 			:disabled="disabled"
-			@input="$emit('input', $event.target.value)"
+			@input="handleInput"
 		>
 
 		<!-- TODO: 去除Font-Awesome的依赖 -->
@@ -32,9 +30,16 @@ export default {
 		value: String,
 		disabled: {},
 	},
+	emits: ["change"],
 	data: () => ({
 		visible: false,
 	}),
+	methods: {
+		handleInput(event) {
+			const { value } = event.target;
+			this.$emit("change", value);
+		},
+	},
 };
 </script>
 

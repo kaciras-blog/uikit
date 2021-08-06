@@ -23,7 +23,9 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
 	name: "KxCheckBox",
 	props: {
 		// 可能没有设置，使用 undefined 区分
@@ -36,6 +38,7 @@ export default {
 			default: false,
 		},
 	},
+	emits: ["input", "change"],
 	data: () => ({
 		selfValue: false,
 	}),
@@ -53,10 +56,10 @@ export default {
 	},
 	methods: {
 		handleChange(event) {
-			this.$emit("changed", event.target.checked);
+			this.$emit("change", event.target.checked);
 		},
 	},
-};
+});
 </script>
 
 <style lang="less">

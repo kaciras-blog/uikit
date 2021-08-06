@@ -26,6 +26,7 @@ export default {
 			required: true,
 		},
 	},
+	emits: ["close"],
 	methods: {
 		handleHover() {
 			this.preventClose = true;

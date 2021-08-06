@@ -1,18 +1,17 @@
 <template>
 	<kx-button
-		:class="{ running }"
-		:tag="tag"
+		:class="{ [$style.running]: running }"
 		@click="handleClick"
 	>
-		<slot v-if="running" name="running">
-			<slot/>
-		</slot>
-		<slot v-else/>
+		<slot v-if="!running"/>
+		<slot v-else name="running"><slot/></slot>
 	</kx-button>
 </template>
 
 <script>
 import KxButton from "./KxButton";
+
+// TODO: abort support
 
 export default {
 	name: "KxTaskButton",
@@ -28,9 +27,6 @@ export default {
 			type: Boolean,
 			default: true,
 		},
-		// 直接代理到下层按钮组件
-		tag: String,
-		icon: String,
 	},
 	data: () => ({
 		running: false,
@@ -43,7 +39,7 @@ export default {
 			const task = this.onClick(event);
 
 			if (typeof task.then !== "function") {
-				throw new Error("TaskButton onclick handler must return a Promise");
+				throw new Error("Click handler must return a Promise");
 			}
 
 			this.running = true;
@@ -53,14 +49,14 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style module lang="less">
 @import "../css/exports";
 
 // 条纹宽度
 @stripeWidth: 32px;
 
 // 正在运行的按钮样式，因为需要长时间运行的任务并不一定是加载，所以没用.loading而是.running
-&.kx-btn.running {
+.running {
 	&, &:hover {
 		color: white;
 		background-color: var(--background-active);
@@ -69,12 +65,12 @@ export default {
 	}
 
 	background-image: linear-gradient(-45deg,
-		var(--background-highlight) 25%,
-		transparent 25%,
-		transparent 50%,
-		var(--background-highlight) 50%,
-		var(--background-highlight) 75%,
-		transparent 75%);
+	var(--background-highlight) 25%,
+	transparent 25%,
+	transparent 50%,
+	var(--background-highlight) 50%,
+	var(--background-highlight) 75%,
+	transparent 75%);
 
 	animation: barbershop linear .4s infinite;
 }

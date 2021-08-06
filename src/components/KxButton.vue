@@ -16,7 +16,8 @@ export default defineComponent({
 		const $style = useCssModule();
 
 		const data = {
-			class: [$style.button, $style[type], attrs.class],
+			...attrs,
+			class :[$style.button, $style[type], attrs.class],
 		};
 
 		/*
@@ -38,7 +39,6 @@ export default defineComponent({
 
 		return () => {
 			if (attrs.href !== undefined) {
-				data.href = attrs.href;
 				return h("a", data, children);
 			} else if (route !== undefined) {
 				data.to = route;

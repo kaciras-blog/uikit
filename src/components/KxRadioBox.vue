@@ -40,6 +40,7 @@ export default {
 			default: false,
 		},
 	},
+	emits: ["change"],
 	inject: ["group"],
 	computed: {
 		checked() {

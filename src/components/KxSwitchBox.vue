@@ -10,7 +10,7 @@
 		<slot></slot>
 
 		<!--
-			注意 aria-checked 是 role="switch" 的必需属性，使用toString()防止为false时属性被省略。
+			aria-checked 是 role="switch" 的必需属性，使用 toString() 防止 false 时属性被省略。
 			详情见：https://www.w3.org/TR/wai-aria-1.1/#aria-checked
 		 -->
 		<span
@@ -42,15 +42,16 @@ export default {
 		},
 		name: String,
 	},
+	emits: ["change"],
 	methods: {
 		switchValue() {
 			if (this.disabled) {
 				return;
 			}
-			this.$emit("input", !this.value);
+			this.$emit("change", !this.value);
 		},
 		handleChange(event) {
-			this.$emit("input", event.target.value);
+			this.$emit("change", event.target.value);
 		},
 	},
 };
