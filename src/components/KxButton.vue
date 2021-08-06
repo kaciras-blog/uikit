@@ -4,6 +4,10 @@ import { RouterLink } from "vue-router";
 
 export default defineComponent({
 	name: "KxButton",
+	props: {
+		route: String,
+		type: String,
+	},
 	setup(props, context) {
 		const { slots, attrs, emit } = context;
 		const { type, route } = props;
@@ -16,7 +20,8 @@ export default defineComponent({
 		};
 
 		/*
-		 * 鼠标点击时屏蔽focus状态的边框，还需要在下面样式中 :active 伪类里移除边框。
+		 * 鼠标点击时屏蔽 focus 状态的边框，还需要在下面样式中 :active 伪类里移除边框。
+		 * 因为苹果不支持 :focus-visible 所以只能这样搞了。
 		 *
 		 * 【可能的副作用】
 		 * 可访问性：用鼠标聚焦元素然后再键盘操作的情况不常见，影响不大。
@@ -50,51 +55,64 @@ export default defineComponent({
 <style module lang="less">
 @import "../css/exports";
 
-// 园角按钮的圆角半径
 @radius: 4px;
 
 // 基础样式，也是默认类型
 .button {
 	display: inline-flex;
 	align-items: center;
-
 	padding: 8px 16px;
-	font-size: initial;
 
-	//white-space: nowrap;
-
-	border: solid 1px #e0e0e0;
-	background-color: transparent;
+	border: solid 1px var(--background);
 	border-radius: @radius;
+	background-color: transparent;
 
 	cursor: pointer;
 	user-select: none;
 
 	// 默认的颜色变量
-	.color-mixin(initial, @color-button-primary);
 
-	// 各种伪类下的样式
 	transition: ease-in-out .15s;
-	.pseudo-style();
+
+	&:hover {
+		color: white;
+		background-color: var(--bg-highlight);
+		border-color: var(--bg-highlight);
+
+		// <a> 作为按钮时需要去掉默认样式
+		text-decoration: none;
+	}
+
+	&:focus {
+		box-shadow: 0 0 0 4px var(--bg-glass);
+
+		// <a> 作为按钮时需要去掉默认样式
+		outline: 0;
+		text-decoration: none;
+	}
+
+	&:active {
+		color: white;
+		box-shadow: none;
+		background-color: var(--bg-active);
+		border-color: var(--bg-active);
+	}
 
 	// 混入主题颜色
 	&:global(.primary) {
-		.flat-style();
+		.color-mixin(white, @color-button-primary);
 	}
 
 	&:global(.second) {
 		.color-mixin(white, @color-button-second);
-		.flat-style();
 	}
 
 	&:global(.info) {
 		.color-mixin(white, @color-button-info);
-		.flat-style();
 	}
 
 	&:global(.dangerous) {
 		.color-mixin(white, @color-button-dangerous);
-		.flat-style();
 	}
 
 	// 禁用按钮样式，所有颜色按钮禁用样式都一样
@@ -122,44 +140,18 @@ export default defineComponent({
 .outline {
 	background-color: transparent;
 	color: var(--background);
+	border-color:  var(--background);
 
 	&:hover {
-		color: white;
+		color: var(--color);
 		background-color: var(--background);
 		border-color: var(--background);
 	}
 }
 
-.pseudo-style() {
-	&:hover {
-		color: white;
-		background-color: var(--background-highlight);
-		border-color: var(--background-highlight);
-
-		// <a> 作为按钮时需要去掉默认样式
-		text-decoration: none;
-	}
-	&:focus {
-		box-shadow: 0 0 0 4px var(--background-glass);
-
-		// <a> 作为按钮时需要去掉默认样式
-		outline: 0;
-		text-decoration: none;
-	}
-	&:active {
-		color: white;
-		box-shadow: none;
-		background-color: var(--background-active);
-		border-color: var(--background-active);
-	}
-}
-
-// 填充样式
-.flat-style() {
-	color: white;
-	border-color: var(--background);
-	background-color: var(--background);
-	.pseudo-style();
+// 未激活状态只有文字的样式
+.text {
+	line-height: 1;
 }
 
 // 配置各主题色，less还不支运算作为CSS变量值，需要先用变量定义
@@ -170,8 +162,8 @@ export default defineComponent({
 
 	--color: @text;
 	--background: @color;
-	--background-active: @color-active;
-	--background-highlight: @color-highlight;
-	--background-glass: @color-glass;
+	--bg-active: @color-active;
+	--bg-highlight: @color-highlight;
+	--bg-glass: @color-glass;
 }
 </style>
