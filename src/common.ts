@@ -10,7 +10,7 @@ export function sleep(time: number) {
 
 /**
  * 判断事件是触摸事件还是鼠标事件。
- * 桌面模式的 Firefox 中没有 TouchEvent，故不能用 instanceof 判断。
+ * 桌面的 Firefox 中没有 TouchEvent，故不能用 instanceof。
  *
  * @param e 事件对象
  * @return 如果是触摸事件则为true，否则false
@@ -20,12 +20,12 @@ export function isTouchEvent(e: MouseEvent | TouchEvent): e is TouchEvent {
 }
 
 /**
- * 读取Blob对象，返回能够Data-URL字符串。
+ * 将 Blob 对象转为 base64 编码的 Data-URL 字符串。
  *
  * 【其他方案】
- * 如果可能，使用 URL.createObjectURL + URL.revokeObjectURL 性能更好。
+ * 如果不需要持久化，使用 URL.createObjectURL + URL.revokeObjectURL 性能更好。
  *
- * @param blob Blob对象
+ * @param blob Blob 对象
  * @return Data-URL 字符串
  */
 export function blobToURL(blob: Blob) {

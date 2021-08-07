@@ -3,13 +3,12 @@ export function openFile(accept: string, multiple?: false): Promise<File>;
 export function openFile(accept: string, multiple: true): Promise<FileList>;
 
 /**
- * 弹出文件选择框，在用户点确定之后resolve。
- *
- * TODO: 取消事件有点难办
+ * 弹出文件选择框并等待，当用户点击确定后返回选中的文件。
+ * 如果选择被取消，则返回的 Promise 将永远不会 resolve
  *
  * @param accept 文件类型
  * @param multiple 是否多选，如果为true返回文件列表，否则返回单个文件
- * @return 一个Promise，将在用户点击确定时完成
+ * @return 一个 Promise，将在用户点击确定时完成
  */
 export function openFile(accept: string, multiple = false) {
 	const input = document.createElement("input");
@@ -18,12 +17,12 @@ export function openFile(accept: string, multiple = false) {
 	input.multiple = multiple;
 	input.click();
 
-	return new Promise<File | FileList>((resolve) => {
-		input.addEventListener("change", event => {
-			// @ts-ignore
-			const files = event.target.files;
+	return new Promise<File | FileList>((resolve, reject) => {
+		input.onerror = reject;
+		input.onchange = (event) => {
+			const { files } = event.target;
 			resolve(multiple ? files : files[0]);
-		});
+		};
 	});
 }
 
@@ -54,7 +53,7 @@ export function addSelectionChangeListener(el: SelectionElement, handler: Select
 		}
 	}
 
-	el.addEventListener("select", handleSelect);	// 移动端和PC端的选择结束
+	el.addEventListener("select", handleSelect);	// 移动端和 PC 端的选择结束
 	el.addEventListener("click", handleSelect);		// 点击改变光标位置
 	el.addEventListener("input", handleSelect);		// 增删内容改变光标位置
 	el.addEventListener("keydown", handleSelect);	// 移动光标的键按住不放

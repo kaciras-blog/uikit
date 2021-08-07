@@ -5,7 +5,6 @@
 
 function transform(el: HTMLElement, value: string) {
 	el.style.transform = value;
-	el.style.webkitTransform = value;
 }
 
 export class RippleEffect {

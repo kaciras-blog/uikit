@@ -83,7 +83,7 @@ export const PreventScrollMixin = {
 	mounted(this: any) {
 		this.$_restoreScroll = preventScroll();
 	},
-	destroyed(this: any) {
+	unmouted(this: any) {
 		this.$_restoreScroll();
 	},
 };
