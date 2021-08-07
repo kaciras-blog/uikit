@@ -1,5 +1,5 @@
+import { App } from "vue";
 import { Store } from "vuex";
-import { PluginObject, VueConstructor } from "vue";
 
 export const SET_WIDTH = "SET_WIDTH";
 
@@ -23,18 +23,10 @@ export interface MediaBreakPoints {
 }
 
 /**
- * 因为本插件依赖Vuex，所以要同时注册到Vue和Vuex的Store实例。
- *
- * @example
- * const mediaQueryPlugin = new MediaQueryManager(breakpoints);
- * Vue.use(mediaQueryPlugin);
- *
- * const store = new Vuex.Store(...);
- * mediaQueryPlugin.registerToStore(store);
- *
- * const vue = new Vue({ ..., store });
+ * 本插件依赖 Vuex，所以要同时注册到 Vue 和 Vuex 的 Store 实例。
+ * TODO: 插件接口也没有……
  */
-export class MediaQueryManager implements PluginObject<never> {
+export class MediaQueryManager {
 
 	private readonly breakpoints: MediaBreakPoints;
 	private readonly entries: Array<[string, number]>;
@@ -75,10 +67,10 @@ export class MediaQueryManager implements PluginObject<never> {
 			return;
 		}
 
-		// 【坑】浏览器竟然有个叫 name 的全局变量，搞得TS检查不出 name 不在局部变量里
-		// 注意立即检查一下，以在后端误判时能立刻恢复到正确的宽度
 		function observe(width: number, query: string) {
 			const mql = window_.matchMedia(query);
+
+			// 立即检查一下，在后端误判时立刻恢复到正确的宽度
 			if (mql.matches) {
 				store.commit(SET_WIDTH, width);
 			}
@@ -107,13 +99,14 @@ export class MediaQueryManager implements PluginObject<never> {
 	/**
 	 * 注册为Vue的插件，别忘了还要注册一个Vuex的模块。
 	 *
-	 * @param Vue Vue对象
+	 * @param app Vue对象
 	 */
-	install(Vue: VueConstructor) {
+	install(app: App) {
 		const { breakpoints } = this;
+		const { config } = app;
 
 		// this.$mediaQuery.func(...) 里面访问不到Vue实例，所以得这么搞一下
-		Object.defineProperty(Vue.prototype, "$mediaQuery", {
+		Object.defineProperty(config.globalProperties, "$mediaQuery", {
 			get() {
 				return new MediaQueryAPI(this.$store, breakpoints);
 			},
@@ -123,7 +116,7 @@ export class MediaQueryManager implements PluginObject<never> {
 	}
 }
 
-/** 供组件使用的API，在组件内部通过 this.$mediaQuery 访问 */
+/** 供组件使用的 API，在组件内部通过 this.$mediaQuery 访问 */
 export class MediaQueryAPI {
 
 	private readonly store: Store<any>;
