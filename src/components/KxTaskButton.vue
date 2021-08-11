@@ -8,45 +8,41 @@
 	</kx-button>
 </template>
 
-<script>
-import KxButton from "./KxButton";
+<script setup lang="ts">
+import { defineProps, ref } from "vue";
 
 // TODO: abort support
 
-export default {
-	name: "KxTaskButton",
-	components: { KxButton },
-	props: {
-		// 因为事件无法获取返回值所以用props
-		onClick: {
-			type: Function,
-			required: true,
-		},
-		// 在运行状态下是否屏蔽点击事件
-		waiting: {
-			type: Boolean,
-			default: true,
-		},
-	},
-	data: () => ({
-		running: false,
-	}),
-	methods: {
-		handleClick(event) {
-			if (this.running && this.waiting) {
-				return;
-			}
-			const task = this.onClick(event);
+const { waiting, onClick } = defineProps({
 
-			if (typeof task.then !== "function") {
-				throw new Error("Click handler must return a Promise");
-			}
-
-			this.running = true;
-			task.finally(() => this.running = false);
-		},
+	// 在运行状态下是否屏蔽点击事件
+	waiting: {
+		type: Boolean,
+		default: true,
 	},
-};
+
+	// 因为事件无法获取返回值所以用 props
+	onClick: {
+		type: Function,
+		required: true,
+	},
+});
+
+const running = ref(false);
+
+function handleClick(event: MouseEvent) {
+	if (running.value && waiting) {
+		return;
+	}
+	const task = onClick!(event);
+
+	if (typeof task.then !== "function") {
+		throw new Error("Click handler must return a Promise");
+	}
+
+	running.value = true;
+	task.finally(() => running.value = false);
+}
 </script>
 
 <style module lang="less">
@@ -55,22 +51,24 @@ export default {
 // 条纹宽度
 @stripeWidth: 32px;
 
-// 正在运行的按钮样式，因为需要长时间运行的任务并不一定是加载，所以没用.loading而是.running
+// 正在运行的按钮样式，因为需要长时间运行的任务并不一定是加载，所以没用 loading 而是 running
 .running {
 	&, &:hover {
 		color: white;
-		background-color: var(--background-active);
-		border-color: var(--background-highlight);
+		background-color: var(--bg-active);
+		border-color: var(--bg-highlight);
 		background-size: @stripeWidth @stripeWidth;
 	}
 
-	background-image: linear-gradient(-45deg,
-	var(--background-highlight) 25%,
-	transparent 25%,
-	transparent 50%,
-	var(--background-highlight) 50%,
-	var(--background-highlight) 75%,
-	transparent 75%);
+	background-image: linear-gradient(
+		-45deg,
+		var(--bg-highlight) 25%,
+		transparent 25%,
+		transparent 50%,
+		var(--bg-highlight) 50%,
+		var(--bg-highlight) 75%,
+		transparent 75%
+	);
 
 	animation: barbershop linear .4s infinite;
 }

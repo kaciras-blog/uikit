@@ -49,7 +49,7 @@ export default function install(app: App) {
 	// app.component(ScrollPagingView.name, ScrollPagingView);
 	// app.component(ButtonPagingView.name, ButtonPagingView);
 	app.component(KxButton.name, KxButton);
-	app.component(KxTaskButton.name, KxTaskButton);
+	app.component("KxTaskButton", KxTaskButton);
 	app.component(KxSwitchBox.name, KxSwitchBox);
 	app.component(KxCheckBox.name, KxCheckBox);
 	app.component(KxRadioBox.name, KxRadioBox);
