@@ -4,9 +4,7 @@
 		@click="handleClick"
 	>
 		<slot v-if="!running"/>
-		<slot v-else name="running">
-			<slot/>
-		</slot>
+		<slot v-else name="running"><slot/></slot>
 	</kx-button>
 </template>
 
@@ -18,12 +16,12 @@ interface Props {
 	// 因为事件无法获取返回值所以用 props
 	onClick: (event: Event, signal: AbortSignal) => Promise<any>;
 
-	// 在运行状态下是否屏蔽点击事件
-	waiting?: boolean;
+	// 在运行状态下点击时是否取消当前操作
+	abortable?: boolean;
 }
 
-const { waiting, onClick } = withDefaults(defineProps<Props>(), {
-	waiting: true,
+const { abortable, onClick } = withDefaults(defineProps<Props>(), {
+	abortable: false,
 });
 
 const running = ref(false);
@@ -31,7 +29,7 @@ const controller = ref(new AbortController());
 
 function handleClick(event: MouseEvent) {
 	if (running.value) {
-		if (!waiting) {
+		if (abortable) {
 			running.value = false;
 			controller.value.abort();
 		}
