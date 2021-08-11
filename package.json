@@ -25,9 +25,9 @@
 		"core-js": "^3.16.1",
 		"cropperjs": "^1.5.11",
 		"rxjs": "^7.1.0",
-		"vue": "^3.0.4",
-		"vue-router": "^4.0.3",
-		"vuex": "^4.0.0"
+		"vue": "next",
+		"vue-router": "next",
+		"vuex": "next"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.15.0",
