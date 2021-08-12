@@ -2,7 +2,7 @@ export default {
 	title: "Others",
 };
 
-export const tagGroup = () => ({
+export const TagGroup = () => ({
 	template: `
 		<div class="tag-group">
 			<a class="tag-group-item">Last</a>
@@ -11,14 +11,13 @@ export const tagGroup = () => ({
 		</div>
 	`,
 });
-tagGroup.storyName = "TagGroup";
 
 const defaultText = `
 Proprietary and undocumented CSS property that will contain text to a
 given amount of lines when used in combination with display: -webkit-box.
 It will end with ellipsis when text-overflow: ellipsis is included.`;
 
-export const lineClamp = () => ({
+export const LineClamp = () => ({
 	props: {
 		text: {
 			default: defaultText,
@@ -30,7 +29,6 @@ export const lineClamp = () => ({
 		</div>
 	`,
 });
-lineClamp.storyName = "LineClamp";
 
 export const Table = () => ({
 	template: `
@@ -67,4 +65,3 @@ export const Table = () => ({
 		],
 	}),
 });
-Table.storyName = "Table";

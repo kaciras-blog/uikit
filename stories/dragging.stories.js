@@ -1,19 +1,12 @@
-import { storiesOf } from "@storybook/vue";
-import { number } from "@storybook/addon-knobs";
-import { EdgeScrollObserver, limitInWindow, moveElement, observeMouseMove } from "@/dragging";
 import { tap } from "rxjs/operators";
+import { ref } from "vue";
+import { EdgeScrollObserver, limitInWindow, moveElement, observeMouseMove } from "@/dragging";
 
-const stories = storiesOf("Dragging", module);
+export default {
+	title: "Dragging",
+};
 
-stories.add("Demo", () => ({
-	props: {
-		size: {
-			default: number("Size", 80, { step: 10 }),
-		},
-		speed: {
-			default: number("Speed", 0.4, { step: 0.1 }),
-		},
-	},
+export const Demo = (args) => ({
 	template: `
 		<div id="drag-demo" :style="style">
 			<aside id="drag-demo-labels">
@@ -23,18 +16,14 @@ stories.add("Demo", () => ({
 			<div id="drag-demo-el" @mousedown="drag" @touchstart.prevent="drag">拖动示例</div>
 		</div>
 	`,
-	data: () => ({
-		vX: "0.0",
-		vY: "0.0",
-	}),
-	computed: {
-		style() {
-			return { "--edge-size": this.size + "px" };
-		},
-	},
-	methods: {
-		drag(event) {
-			const { size, speed } = this;
+	setup() {
+		const vX = ref("0.0");
+		const vY = ref("0.0");
+
+		const style = () => ({ "--edge-size": args.size + "px" });
+
+		function drag(event) {
+			const { size, speed } = args;
 			const el = event.target;
 
 			const eso = new EdgeScrollObserver(size, speed);
@@ -43,11 +32,18 @@ stories.add("Demo", () => ({
 
 			observeMouseMove().pipe(limitInWindow(), tap(eso), moveElement(event, el)).subscribe({
 				next: () => {
-					this.vX = eso.vX.toFixed(1);
-					this.vY = eso.vY.toFixed(1);
+					vX.value = eso.vX.toFixed(1);
+					vY.value = eso.vY.toFixed(1);
 				},
 				complete: () => el.style.cursor = null,
 			});
-		},
+		}
+
+		return { vX, vY, style, drag };
 	},
-}));
+});
+
+Demo.args = {
+	size: 80,
+	speed: 0.4,
+};

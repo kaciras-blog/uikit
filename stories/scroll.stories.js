@@ -1,10 +1,10 @@
-import { storiesOf } from "@storybook/vue";
 import { scrollToElement, scrollToElementEnd, scrollToElementStart, syncScroll } from "../src";
-import { boolean, button } from "@storybook/addon-knobs";
 
-const stories = storiesOf("Scroll", module);
+export default {
+	title: "Scroll",
+};
 
-stories.add("syncScroll", () => ({
+export const SyncScroll = () => ({
 	props: {
 		enable: {
 			default: boolean("Enabled", true),
@@ -12,8 +12,8 @@ stories.add("syncScroll", () => ({
 	},
 	template: `
 		<div class="sync-scroll">
-			<textarea ref="a" :value="content"/>
-			<textarea ref="b" :value="content"/>
+		<textarea ref="a" :value="content"/>
+		<textarea ref="b" :value="content"/>
 		</div>
 	`,
 	data() {
@@ -35,11 +35,13 @@ stories.add("syncScroll", () => ({
 	mounted() {
 		this.$_destroy = syncScroll(this.$refs.a, this.$refs.b);
 	},
-}));
+});
 
-stories.add("ScrollTo", () => ({
+export const ScrollTo = () => ({
 	template: `
-		<div style="height: 300vh"><div ref="target" class="scroll-to-box"/></div>
+		<div style="height: 300vh">
+		<div ref="target" class="scroll-to-box"/>
+		</div>
 	`,
 	methods: {
 		scrollToElement() {
@@ -57,4 +59,4 @@ stories.add("ScrollTo", () => ({
 		button("ScrollToEnd", this.scrollToEnd);
 		button("ScrollToElement", this.scrollToElement);
 	},
-}));
+});

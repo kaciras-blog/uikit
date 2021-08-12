@@ -1,15 +1,14 @@
-import { storiesOf } from "@storybook/vue";
-import { openFile } from "../src";
+import { openFile } from "@";
 
-const stories = storiesOf("ImageCropper", module);
+export default {
+	title: "ImageCropper",
+};
 
-stories.add("simple", () => ({
+export const Simple = () => ({
 	template: `
-		<div>
-			<kx-button icon="fa fa-upload" @click="showCropper"> 裁剪图片</kx-button>
-			<kx-dialog-container/>
-			<img v-if="result" :src="result" alt="Cropped image">
-		</div>
+		<kx-button icon="fa fa-upload" @click="showCropper"> 裁剪图片</kx-button>
+		<kx-dialog-container/>
+		<img v-if="result" :src="result" alt="Cropped image">
 	`,
 	data: () => ({
 		result: null,
@@ -28,5 +27,4 @@ stories.add("simple", () => ({
 			this.result = URL.createObjectURL(blob);
 		},
 	},
-}))
-;
+});

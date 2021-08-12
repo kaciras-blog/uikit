@@ -1,33 +1,32 @@
-import { storiesOf } from "@storybook/vue";
-import { getImageResolution, getVideoResolution, openFile } from "../src";
+import { getImageResolution, getVideoResolution, openFile } from "@";
 
-const stories = storiesOf("HelperFunctions", module);
+export default {
+	title: "HelperFunctions",
+};
 
-stories.add("MediaResolution", () => ({
+export const MediaResolution = () => ({
 	template: `
-		<div>
-			<input v-model="urlInput" placeholder="媒体的URL" style="min-width: 500px">
-			<kx-button @click="showImageURLSize">读取URL</kx-button>
+		<input v-model="urlInput" placeholder="媒体的URL" style="min-width: 500px">
+		<kx-button @click="showImageURLSize">读取URL</kx-button>
 
-			<kx-button @click="showImageFileSize">选择文件...</kx-button>
+		<kx-button @click="showImageFileSize">选择文件...</kx-button>
 
-			<div v-if="error" class="error">错误：{{error}}</div>
+		<div v-if="error" class="error">错误：{{ error }}</div>
 
-			<template v-else>
-				<div v-if="size">
-					width: {{size.width}}, height: {{size.height}}
-				</div>
+		<template v-else>
+			<div v-if="size">
+				width: {{ size.width }}, height: {{ size.height }}
+			</div>
 
-				<component
-					v-if="source"
-					:is="mediaType"
-					:src="source"
-					controls
-					alt="preview"
-					:style="previewStyle"
-				/>
-			</template>
-		</div>
+			<component
+				v-if="source"
+				:is="mediaType"
+				:src="source"
+				controls
+				alt="preview"
+				:style="previewStyle"
+			/>
+		</template>
 	`,
 	data: () => ({
 		urlInput: "",
@@ -83,4 +82,4 @@ stories.add("MediaResolution", () => ({
 			}
 		},
 	},
-}));
+});

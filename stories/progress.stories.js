@@ -1,8 +1,8 @@
-import { storiesOf } from "@storybook/vue";
+export default {
+	title:"Progress",
+};
 
-const stories = storiesOf("Progress", module);
-
-stories.add("top-progress", () => ({
+export const TopProgress =() => ({
 	template: `
 		<div>
 			<kx-progress ref="progress"></kx-progress>
@@ -28,4 +28,4 @@ stories.add("top-progress", () => ({
 			this.$refs.progress.reset();
 		},
 	},
-}));
+});
