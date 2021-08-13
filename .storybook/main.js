@@ -3,12 +3,10 @@ module.exports = {
 		"builder": "webpack5"
 	},
 	stories: [
-		"../stories/**/dialog.stories.js",
+		"../stories/**/*.stories.js",
 	],
 	addons: [
-		"@storybook/addon-actions",
-		"@storybook/addon-docs",
+		// 这个包含了 actions、docs、viewports 等模块
 		"@storybook/addon-essentials",
-		"@storybook/addon-viewport",
 	],
 };

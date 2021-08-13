@@ -2,7 +2,7 @@ export default {
 	title: "Paging",
 };
 
-export const custom = () => ({
+export const Custom = () => ({
 	template: `
 		<button-paging-view
 			ref="pagingView"
@@ -12,9 +12,9 @@ export const custom = () => ({
 			:page-size="10"
 			:show-top-buttons="true"
 		>
-		<template v-slot="{ items }">
-			<p v-for="item of items" :key="item">{{ item }}</p>
-		</template>
+			<template v-slot="{ items }">
+				<p v-for="item of items" :key="item">{{ item }}</p>
+			</template>
 		</button-paging-view>`,
 	data: () => ({
 		list: undefined,
@@ -42,4 +42,4 @@ export const custom = () => ({
 	},
 });
 
-custom.storyName = "button paging view";
+Custom.storyName = "button paging view";

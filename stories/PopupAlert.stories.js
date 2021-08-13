@@ -4,7 +4,7 @@ export default {
 	title: "PopupAlert",
 };
 
-export const popupAlert = () => ({
+export const PopupAlert = () => ({
 	components: {
 		PopupAlertContainer,
 	},
@@ -19,4 +19,4 @@ export const popupAlert = () => ({
 	},
 });
 
-popupAlert.storyName = "PopupAlert";
+PopupAlert.storyName = "PopupAlert";

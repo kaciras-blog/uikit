@@ -5,25 +5,22 @@
 	</kx-base-dialog>
 </template>
 
-<script>
-export default {
-	name: "HookedDialog",
-	data: () => ({
-		time: 0,
-	}),
-	methods: {
-		countdown(callback) {
-			if (--this.time === 0) {
-				callback();
-			}
-			setTimeout(() => this.countdown(callback), 1000);
-		},
-	},
-	beforeDialogClose() {
-		this.time = 4;
-		return new Promise(this.countdown);
-	},
-};
+<script setup lang="ts">
+import { ref } from "vue";
+
+const time = ref(0);
+
+function countdown(callback) {
+	if (--time.value === 0) {
+		callback();
+	}
+	setTimeout(() => countdown(callback), 1000);
+}
+
+function beforeDialogClose() {
+	time.value = 4;
+	return new Promise(countdown);
+}
 </script>
 
 <style module lang="less">

@@ -11,41 +11,30 @@
 	</kx-base-dialog>
 </template>
 
-<script>
-import { PreventScrollMixin } from "../src";
+<script setup>
+import { defineProps, reactive } from "vue";
 
-export default {
-	name: "InputBox",
-	props: [
-		"oldName",
-		"oldAge",
-		"hasInput",
-	],
-	mixins: [
-		PreventScrollMixin,
-	],
-	data() {
-		if (this.hasInput) {
-			return { name: this.oldName, age: this.oldAge };
-		}
-		return { name: "", age: 18 };
-	},
-	methods: {
-		ok() {
-			if (this.name.length === 0) {
-				return this.$dialog.alertError("错误", "请输入一个名字");
-			}
+const { oldName, oldAge, hasInput } = defineProps([
+	"oldName",
+	"oldAge",
+	"hasInput",
+]);
 
-			if (!Number.isInteger(this.age)) {
-				return this.$dialog.alertError("错误", "您输入的年龄不是数字");
-			} else if (this.age <= 0) {
-				return this.$dialog.alertError("错误", "年龄不能为负数或零");
-			}
+const data = reactive(hasInput ? { name: oldName, age: oldAge } : { name: "", age: 18 });
 
-			this.$dialog.confirm(this.$data);
-		},
-	},
-};
+function ok() {
+	if (this.name.length === 0) {
+		return this.$dialog.alertError("错误", "请输入一个名字");
+	}
+
+	if (!Number.isInteger(this.age)) {
+		return this.$dialog.alertError("错误", "您输入的年龄不是数字");
+	} else if (this.age <= 0) {
+		return this.$dialog.alertError("错误", "年龄不能为负数或零");
+	}
+
+	this.$dialog.confirm(this.$data);
+}
 </script>
 
 <style lang="less">

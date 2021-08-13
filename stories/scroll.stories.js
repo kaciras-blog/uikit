@@ -1,4 +1,4 @@
-import { scrollToElement, scrollToElementEnd, scrollToElementStart, syncScroll } from "../src";
+import { scrollToElement, scrollToElementEnd, scrollToElementStart, syncScroll } from "@";
 
 export default {
 	title: "Scroll",
@@ -12,8 +12,8 @@ export const SyncScroll = () => ({
 	},
 	template: `
 		<div class="sync-scroll">
-		<textarea ref="a" :value="content"/>
-		<textarea ref="b" :value="content"/>
+			<textarea ref="a" :value="content"/>
+			<textarea ref="b" :value="content"/>
 		</div>
 	`,
 	data() {
@@ -40,7 +40,7 @@ export const SyncScroll = () => ({
 export const ScrollTo = () => ({
 	template: `
 		<div style="height: 300vh">
-		<div ref="target" class="scroll-to-box"/>
+			<div ref="target" class="scroll-to-box"/>
 		</div>
 	`,
 	methods: {

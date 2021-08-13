@@ -1,9 +1,23 @@
+import { computed, ref } from "vue";
 import { tap } from "rxjs/operators";
-import { ref } from "vue";
 import { EdgeScrollObserver, limitInWindow, moveElement, observeMouseMove } from "@/dragging";
 
 export default {
 	title: "Dragging",
+	argTypes: {
+		size: {
+			control: {
+				type: "number",
+				step: 1,
+			},
+		},
+		speed: {
+			control: {
+				type: "number",
+				step: 0.1,
+			},
+		},
+	},
 };
 
 export const Demo = (args) => ({
@@ -20,7 +34,7 @@ export const Demo = (args) => ({
 		const vX = ref("0.0");
 		const vY = ref("0.0");
 
-		const style = () => ({ "--edge-size": args.size + "px" });
+		const style = computed(() => ({ "--edge-size": args.size + "px" }));
 
 		function drag(event) {
 			const { size, speed } = args;

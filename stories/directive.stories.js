@@ -4,19 +4,18 @@ export default {
 
 export const ImeInput = () => ({
 	template: `
-		<div>
-			<label>
-				<div>使用输入法输入一些文本：</div>
-				<textarea
-					@input="e => value = e.target.value"
-					v-ime-input="e => imeValue = e.target.value"
-				/>
-			</label>
-			<div class="ime-input-result">
-				<p>input事件：{{ value }}</p>
-				<p>v-ime-input：{{ imeValue }}</p>
-			</div>
-		</div>`,
+		<label>
+			<div>使用输入法输入一些文本：</div>
+			<textarea
+				@input="e => value = e.target.value"
+				v-ime-input="e => imeValue = e.target.value"
+			/>
+		</label>
+		<div class="ime-input-result">
+			<p>input事件：{{ value }}</p>
+			<p>v-ime-input：{{ imeValue }}</p>
+		</div>
+	`,
 	data: () => ({
 		value: "",
 		imeValue: "",
@@ -45,14 +44,13 @@ SectionBind.args = { start: 0, end: 0 };
 
 export const SectionChange = () => ({
 	template: `
-		<div>
 		<textarea
 			v-on-selection-change="setSelectionRange"
 			v-model="value"
 			class="directive-textarea"
 		/>
 		<div>选择范围：{{ start }} - {{ end }}</div>
-		</div>`,
+	`,
 	data: () => ({
 		value: "选择文字，下面显示被选中部分的起止位置",
 		start: 0,
@@ -69,7 +67,6 @@ export const SectionChange = () => ({
 
 export const SectionModel = () => ({
 	template: `
-		<div>
 		<textarea
 			v-selection-model.focus="'selection'"
 			v-model="value"
@@ -77,7 +74,7 @@ export const SectionModel = () => ({
 		/>
 		<div>选择范围：{{ selection[0] }} - {{ selection[1] }}</div>
 		<kx-button @click="randomSelection">随机选择</kx-button>
-		</div>`,
+	`,
 	data: () => ({
 		value: "调整下面的start和end，改变文本框的选择区域",
 		selection: [0, 0],

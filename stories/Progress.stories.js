@@ -1,15 +1,14 @@
 export default {
-	title:"Progress",
+	title: "Progress",
 };
 
-export const TopProgress =() => ({
+export const TopProgress = () => ({
 	template: `
-		<div>
-			<kx-progress ref="progress"></kx-progress>
-			<kx-button @click="increase">增加10%</kx-button>
-			<kx-button @click="fail">失败</kx-button>
-			<kx-button @click="reset">重置</kx-button>
-		</div>`,
+		<kx-progress ref="progress"></kx-progress>
+		<kx-button @click="increase">增加10%</kx-button>
+		<kx-button @click="fail">失败</kx-button>
+		<kx-button @click="reset">重置</kx-button>
+	`,
 	data: () => ({
 		value: 0,
 	}),

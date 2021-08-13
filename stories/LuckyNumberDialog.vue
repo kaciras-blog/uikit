@@ -1,5 +1,11 @@
 <template>
-	<kx-base-dialog title="算算你的幸运数字" :draggable="true" :click-to-close="true">
+	<kx-base-dialog
+		v-if="open"
+		title="算算你的幸运数字"
+		:click-to-close="true"
+		:draggable="true"
+		@close="$emit('update:open', false)"
+	>
 		<p><span>姓名：</span>{{ name }}</p>
 		<p><span>年龄：</span>{{ age }}</p>
 		<p :class="$style.tip">(点击背景可以关闭窗口)</p>
@@ -13,9 +19,17 @@
 
 <script>
 import InputBox from "./InputBox.vue";
+import KxBaseDialog from "@/dialog/KxBaseDialog.vue";
 
 export default {
 	name: "LuckyNumber",
+	components:{
+		KxBaseDialog,
+	},
+	props: {
+		open: Boolean,
+	},
+	emits: ["update:open"],
 	data: () => ({
 		name: "小明",
 		age: 18,
