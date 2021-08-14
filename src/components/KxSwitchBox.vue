@@ -5,7 +5,6 @@
 		:aria-checked="modelValue.toString()"
 		:aria-disabled="disabled"
 		:class="{ disabled }"
-		@click.prevent="switchValue"
 	>
 		<slot></slot>
 
@@ -22,40 +21,28 @@
 				class="kx-switch-input"
 				type="checkbox"
 				:checked="modelValue"
-				@change="handleChange"
+				@input="handleChange"
 				:disabled="disabled"
 			>
 		</span>
 	</label>
 </template>
 
-<script>
-export default {
-	name: "KxSwitchBox",
-	props: {
-		modelValue: {
-			type: Boolean,
-			default: false,
-		},
-		disabled: {
-			type: Boolean,
-			default: false,
-		},
-		name: String,
-	},
-	emits: ["update:modelValue"],
-	methods: {
-		switchValue() {
-			if (this.disabled) {
-				return;
-			}
-			this.$emit("update:modelValue", !this.modelValue);
-		},
-		handleChange(event) {
-			this.$emit("update:modelValue", event.target.value);
-		},
-	},
-};
+<script setup lang="ts">
+import { defineEmits, defineProps } from "vue";
+
+interface Props {
+	modelValue: boolean;
+	name?: string;
+	disabled?: boolean;
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits(["update:modelValue"]);
+
+function handleChange(event) {
+	emit("update:modelValue", event.target.checked);
+}
 </script>
 
 <style lang="less">

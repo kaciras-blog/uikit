@@ -1,64 +1,46 @@
+<!--
+	Vue 跟 React 不同，它支持监视深层属性，没有保持 Data 不变的约束，
+	处理复杂表单时也不需要 immer 之类的辅助工具。
+	所以本项目不打算支持非受控模式，所有输入组件必须绑定 model。
+-->
 <template>
 	<label
 		class="kx-check-box"
 		:class="{ disabled }"
 		role="checkbox"
-		:aria-checked="model.toString()"
+		:aria-checked="modelValue.toString()"
 		:aria-disabled="disabled"
 	>
 		<input
-			v-model="model"
 			type="checkbox"
 			class="check-box-input"
 			:disabled="disabled"
 			aria-hidden="true"
-			@change="handleChange"
+			:value="modelValue"
+			@input="handleChange"
 		>
 
-		<span class="check-box-mark" :class="{ checked: model }"></span>
+		<span class="check-box-mark" :class="{ checked: modelValue }"></span>
 
 		<!-- 如果有内容，则用 span 包裹住添加样式 -->
 		<span v-if="$slots.default" class="check-box-text"><slot/></span>
 	</label>
 </template>
 
-<script>
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { defineEmits, defineProps } from "vue";
 
-export default defineComponent({
-	name: "KxCheckBox",
-	props: {
-		// 可能没有设置，使用 undefined 区分
-		value: {
-			type: Boolean,
-			default: undefined,
-		},
-		disabled: {
-			type: Boolean,
-			default: false,
-		},
-	},
-	emits: ["update:modelValue"],
-	data: () => ({
-		selfValue: false,
-	}),
-	computed: {
-		model: {
-			get() {
-				return this.modelValue ?? this.selfValue;
-			},
-			set(value) {
-				this.selfValue = value;
-				this.$emit("update:modelValue", value);
-			},
-		},
-	},
-	methods: {
-		handleChange(event) {
-			this.$emit("change", event.target.checked);
-		},
-	},
-});
+interface Props {
+	modelValue: boolean;
+	disabled?: boolean;
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits(["update:modelValue"]);
+
+function handleChange(event) {
+	emit("update:modelValue", event.target.checked);
+}
 </script>
 
 <style lang="less">

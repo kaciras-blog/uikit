@@ -20,27 +20,25 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: "KxPasswordInput",
-	props: {
-		inputId: String, // 用于跟label关联
-		required: {},
-		placeholder: String,
-		modelValue: String,
-		disabled: {},
-	},
-	emits: ["update:modelValue"],
-	data: () => ({
-		visible: false,
-	}),
-	methods: {
-		handleInput(event) {
-			const { value } = event.target;
-			this.$emit("update:modelValue", value);
-		},
-	},
-};
+<script setup lang="ts">
+import { defineEmits, defineProps, ref } from "vue";
+
+interface Props {
+	modelValue: string;
+	inputId?: string;
+	disabled?: boolean;
+	required?: boolean;
+	placeholder?: string;
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits(["update:modelValue"]);
+
+const visible = ref(false);
+
+function handleInput(event) {
+	emit("update:modelValue", event.target.value);
+}
 </script>
 
 <style module lang="less">

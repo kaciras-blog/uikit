@@ -7,51 +7,39 @@
 		class="kx-radio-box"
 		role="radio"
 		:aria-checked="checked.toString()"
-		:aria-disabled="group.disabled"
+		:aria-disabled="$parent.disabled"
 	>
 		<input
 			class="radio-box-input"
 			type="radio"
-			:name="group.name"
-			:value="value"
-			:disabled="group.disabled"
+			:name="$parent.name"
+			:disabled="$parent.disabled"
 			:checked="checked"
-			@input="group.$emit('input', value)"
-			@change="handleChange"
+			@input="handleInput"
 		>
 		<span
 			class="radio-box-mark"
-			:class="{ checked, disabled: group.disabled }"
+			:class="{ checked, disabled: $parent.disabled }"
 		/>
 		<span class="radio-box-label"><slot/></span>
 	</label>
 </template>
 
-<script>
-export default {
-	name: "KxRadioBox",
-	props: {
-		name: String,
-		value: {
-			required: true,
-		},
-		disabled: {
-			type: Boolean,
-			default: false,
-		},
-	},
-	inject: ["group"],
-	computed: {
-		checked() {
-			return this.value === this.group.modelValue;
-		},
-	},
-	methods: {
-		handleChange() {
-			this.group.$emit("update:modelValue", this.value);
-		},
-	},
-};
+<script setup lang="ts">
+import { computed, defineProps, getCurrentInstance } from "vue";
+
+interface Props {
+	value: any;
+}
+
+const props = defineProps<Props>();
+const self = getCurrentInstance();
+
+const checked = computed(() => props.value === self.parent.modelValue);
+
+function handleInput(){
+	self.parent.emit("update:modelValue", props.value);
+}
 </script>
 
 <style lang="less">
@@ -107,6 +95,7 @@ export default {
 	}
 
 	&.disabled {
+		cursor: default;
 		--color: #bbb;
 		background-color: #f7f7f7;
 	}

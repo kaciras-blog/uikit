@@ -2,17 +2,15 @@
 	<div><slot/></div>
 </template>
 
-<script>
-export default {
-	name: "KxRadioBoxGroup",
-	props: {
-		name: String,
-		modelValue: {},
-		disabled: Boolean,
-	},
-	emits: ["update:modelValue"],
-	provide() {
-		return { group: this };
-	},
-};
+<script setup lang="ts">
+import { defineEmits, defineProps } from "vue";
+
+interface Props {
+	modelValue: string;
+	name?: string;
+	disabled?: boolean;
+}
+
+const props = defineProps<Props>();
+const emit = defineEmits(["update:modelValue"]);
 </script>

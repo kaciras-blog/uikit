@@ -12,16 +12,18 @@ import KxTaskButton from "./components/KxTaskButton.vue";
 import KxPasswordInput from "./components/KxPasswordInput.vue";
 import KxProgress from "./components/KxProgress.vue";
 import PopupAlertContainer from "./components/PopupAlertContainer.vue";
-
+import KxBaseDialog from "./dialog/KxBaseDialog.vue";
+import KxFrame from "./dialog/KxFrame.vue";
+import KxFrameHeader from "./dialog/KxFrameHeader.vue";
+import KxDialogButtons from "./dialog/KxDialogButtons.vue";
 import AutoFocus from "./directives/autofocus";
 import ImeInput from "./directives/ime-input";
 import SelectionBinding from "./directives/selection-bind";
 import SelectionChange from "./directives/selection-change";
 import SelectionModel from "./directives/selection-model";
 import Ripple from "./directives/ripple";
-
 import { MediaQueryAPI } from "./media-query";
-import { KxDialogAPI } from "./dialog";
+import QuickAlert, { KxDialogAPI } from "./dialog/quick-alert";
 
 declare module "vue" {
 	export interface Vue {
@@ -43,20 +45,26 @@ export { default as PromiseSource } from "./PromiseSource";
  * 自动注册目录下的 Vue 组件。
  */
 export default function install(app: App) {
-	app.component(SkFadingCircle.name, SkFadingCircle);
-	// app.component(ButtonPager.name, ButtonPager);
-	// app.component(ScrollPager.name, ScrollPager);
-	// app.component(ScrollPagingView.name, ScrollPagingView);
-	// app.component(ButtonPagingView.name, ButtonPagingView);
-	app.component(KxButton.name, KxButton);
+	app.use(QuickAlert);
+
+	app.component("SkFadingCircle", SkFadingCircle);
+	// app.component("ButtonPager", ButtonPager);
+	// app.component("ScrollPager", ScrollPager);
+	// app.component("ScrollPagingView", ScrollPagingView);
+	// app.component("ButtonPagingView", ButtonPagingView);
+	app.component("KxButton", KxButton);
 	app.component("KxTaskButton", KxTaskButton);
-	app.component(KxSwitchBox.name, KxSwitchBox);
-	app.component(KxCheckBox.name, KxCheckBox);
-	app.component(KxRadioBox.name, KxRadioBox);
-	app.component(KxRadioBoxGroup.name, KxRadioBoxGroup);
-	app.component(KxPasswordInput.name, KxPasswordInput);
-	app.component(KxProgress.name, KxProgress);
-	app.component(PopupAlertContainer.name, PopupAlertContainer);
+	app.component("KxSwitchBox", KxSwitchBox);
+	app.component("KxCheckBox", KxCheckBox);
+	app.component("KxRadioBox", KxRadioBox);
+	app.component("KxRadioBoxGroup", KxRadioBoxGroup);
+	app.component("KxPasswordInput", KxPasswordInput);
+	app.component("KxProgress", KxProgress);
+	app.component("PopupAlertContainer", PopupAlertContainer);
+	app.component("KxBaseDialog", KxBaseDialog);
+	app.component("KxFrame", KxFrame);
+	app.component("KxFrameHeader", KxFrameHeader);
+	app.component("KxDialogButtons", KxDialogButtons);
 
 	app.directive("autofocus", AutoFocus);
 	app.directive("ime-input", ImeInput);
@@ -64,6 +72,4 @@ export default function install(app: App) {
 	app.directive("bind-selection", SelectionBinding);
 	app.directive("on-selection-change", SelectionChange);
 	app.directive("selection-model", SelectionModel);
-
-	// app.use(KxDialog);
 }
