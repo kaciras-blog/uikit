@@ -1,59 +1,57 @@
 <script lang="ts">
-import { defineComponent, h, useCssModule } from "vue";
 import { RouterLink } from "vue-router";
+import { h } from "vue";
 
-export default defineComponent({
-	props: {
-		route: String,
-		type: String,
-	},
-	setup(props, context) {
-		const { slots, attrs, emit } = context;
+function KxButton(props, context) {
+	const { route } = props;
+	const { slots, attrs, emit } = context;
 
-		const children = slots.default();
-		const $style = useCssModule();
+	const data = {
+		...attrs,
+		class: ["kx-btn", attrs.class],
+	};
 
-		return () => {
-			const { type, route } = props;
+	if (attrs.disabled) {
+		data.class.push("disabled");
+	}
 
-			const data = {
-				...attrs,
-				class: ["kx-btn", type, attrs.class],
-			};
+	/*
+	 * 鼠标点击时屏蔽 focus 状态的边框，还需要在下面样式中 :active 伪类里移除边框。
+	 * 因为苹果不支持 :focus-visible 所以只能这样搞了。
+	 *
+	 * 【可能的副作用】
+	 * 可访问性：用鼠标聚焦元素然后再键盘操作的情况不常见，影响不大。
+	 * 事件处理：在真正的处理函数完成后才取消聚焦，对同步代码没有影响，而异步代码考虑到用户操作也可能取消聚焦，
+	 *           故在异步代码里访问event的聚焦属性应当考虑到该情况，这里不考虑。
+	 *
+	 * 【无法处理的情况】
+	 * 如果鼠标保持按下状态移动到元素之外，则 mouseup 事件无法触发，这种情况很少不用管。
+	 */
+	data.onMouseup = (event) => {
+		emit("mouseup", event);
+		event.currentTarget.blur();
+	};
 
-			if (attrs.disabled) {
-				data.class.push("disabled");
-			}
+	const children = slots.default();
 
-			/*
-			 * 鼠标点击时屏蔽 focus 状态的边框，还需要在下面样式中 :active 伪类里移除边框。
-			 * 因为苹果不支持 :focus-visible 所以只能这样搞了。
-			 *
-			 * 【可能的副作用】
-			 * 可访问性：用鼠标聚焦元素然后再键盘操作的情况不常见，影响不大。
-			 * 事件处理：在真正的处理函数完成后才取消聚焦，对同步代码没有影响，而异步代码考虑到用户操作也可能取消聚焦，
-			 *           故在异步代码里访问event的聚焦属性应当考虑到该情况，这里不考虑。
-			 *
-			 * 【无法处理的情况】
-			 * 如果鼠标保持按下状态移动到元素之外，则 mouseup 事件无法触发，这种情况很少不用管。
-			 */
-			data.onMouseup = (event) => {
-				emit("mouseup", event);
-				event.currentTarget.blur();
-			};
+	if (attrs.href !== undefined) {
+		return h("a", data, children);
+	} else if (route !== undefined) {
+		data.to = route;
+		return h(RouterLink, data, children);
+	} else {
+		data.type = "button";
+		return h("button", data, children);
+	}
+}
 
-			if (attrs.href !== undefined) {
-				return h("a", data, children);
-			} else if (route !== undefined) {
-				data.to = route;
-				return h(RouterLink, data, children);
-			} else {
-				data.type = "button";
-				return h("button", data, children);
-			}
-		};
-	},
-});
+KxButton.props = {
+
+	/** 渲染为 router-link，其 to 属性等于该值 */
+	route: String,
+};
+
+export default KxButton;
 </script>
 
 <style lang="less">

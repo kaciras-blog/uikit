@@ -2,22 +2,21 @@ import { action } from "@storybook/addon-actions";
 import KxButton from "@/components/KxButton";
 
 export default {
-	title: "Button",
 	component: KxButton,
+	title: "Button",
 	parameters: {
 		actions: {
 			handles: ["click"],
 		},
 	},
 	argTypes: {
-		type: {
-			control: {
-				type: "select",
-			},
-			options: ["button", "outline", "text"],
+		class: {
+			control: { type: "select" },
+			options: [null, "outline", "text"],
 		},
 		disabled: {
 			control: { type: "boolean" },
+			defaultValue: false,
 		},
 	},
 };
@@ -31,20 +30,24 @@ const Template = args => ({
 });
 
 export const Normal = Template.bind({});
-Normal.args = {
-	disabled: false,
-};
+
 
 export const Outline = Template.bind({});
 Outline.args = {
-	type: "outline",
-	disabled: false,
+	class: "outline",
 };
 
 export const Text = Template.bind({});
 Text.args = {
-	type: "text",
-	disabled: false,
+	class: "text",
 };
 
-// link buttons?
+export const Route = Template.bind({});
+Route.args = {
+	route: "#",
+};
+
+export const Link = Template.bind({});
+Link.args = {
+	href: "#",
+};
