@@ -1,34 +1,29 @@
 {
 	"compilerOptions": {
-		"target": "ES2019",
+		"target": "ESNext",
 		"module": "ESNext",
-		"jsx": "preserve",
 		"moduleResolution": "Node",
-
+		"lib": [
+			"ESNext",
+			"DOM",
+			"DOM.Iterable"
+		],
+		"jsx": "preserve",
+		"baseUrl": ".",
+		"skipLibCheck": true,
 		"esModuleInterop": true,
 		"strict": true,
 		"sourceMap": true,
 		"experimentalDecorators": true,
-
-		"newLine": "LF",
-		"removeComments": true,
-		"baseUrl": ".",
-
 		"types": [
-			"webpack-env",
-			"jest"
+			"jest",
+			"webpack-env"
 		],
 
 //		被第三方引入时可能造成编译问题
 //		"paths": {
 //			"@/*": ["src/*"]
 //		},
-
-		"lib": [
-			"ESNext",
-			"DOM",
-			"DOM.Iterable"
-		]
 	},
 	"include": [
 		"src/**/*.ts",

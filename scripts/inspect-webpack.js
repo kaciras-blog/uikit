@@ -1,6 +1,6 @@
 const { execFileSync } = require("child_process");
 const Service = require("@vue/cli-service/lib/Service");
-const dump = require("./dump-webpack-config");
+const dump = require("./dump");
 
 /*
  * 获取 Vue-Cli 生成的 webpack 配置文件的内容，相当于 vue-cli-service inspect --mode <mode>。
