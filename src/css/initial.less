@@ -1,6 +1,6 @@
 @import "variables";
 
-*, *::after, *::before {
+*, *::before, *::after {
 	box-sizing: border-box;
 }
 
@@ -25,19 +25,6 @@ body {
 	font-size: 14px;
 }
 
-// 不能被选择的元素也不能高亮
-[tabindex="-1"]:focus {
-	outline: 0 !important;
-}
-
-// 1. Add the correct box sizing in Firefox.
-// 2. Show the overflow in Edge and IE.
-hr {
-	box-sizing: content-box; // 1
-	height: 0; // 1
-	overflow: visible; // 2
-}
-
 //去除标题的上间隔
 h1, h2, h3, h4, h5, h6 {
 	margin-top: 0;
@@ -47,44 +34,74 @@ p {
 	margin-top: 0;
 }
 
-//显示指定缩写的样式
-abbr[title] {
-	text-decoration: underline dotted;
-	cursor: help;
-}
-
 pre, code, kbd, samp {
 	font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 	font-size: 1em;
 }
 
-img, svg {
-	vertical-align: middle;
-}
-
-button, select {
-	text-transform: none; // Remove the inheritance of text transform in Firefox
-}
-
+// 清除浏览器自带的样式，并设置鼠标指针，
+// 这样跟 a 元素保持一致，并且便于后续自定义。
 button {
+	font-size: initial;
 	border: none;
+	background: none;
+
+	&:enabled {
+		cursor: pointer;
+	}
 }
 
-// Remove inner border and padding from Firefox, but don't restore the outline like Normalize.
-button::-moz-focus-inner,
-[type="button"]::-moz-focus-inner,
-[type="reset"]::-moz-focus-inner,
-[type="submit"]::-moz-focus-inner {
-	padding: 0;
-	border-style: none;
+hr {
+	border: 0 solid @color-border;
+	border-bottom-width: 1px;
 }
 
-textarea {
-	overflow: auto;
-	resize: none;
-	font-family: inherit;
+.input, input {
+	padding: .5em;
+	min-width: 0; //去掉谷歌浏览器的最小宽度
 
-	&:focus {
-		outline: none;
+	outline: none;
+	border: solid 1px @color-border;
+	border-radius: 4px;
+	color: inherit;
+	background: transparent;
+
+	transition: box-shadow .2s;
+
+	// TODO: 高亮样式跟按钮的有点像，能不能通用一下
+	&:hover {
+		outline: 0;
+		border-color: #209cee;
+	}
+
+	// 一些模仿 input 样式的复合组件使用 focus-within
+	&:focus-within {
+		outline: 0;
+		border-color: #209cee;
+		box-shadow: 0 0 0 .2rem #a8e8ff;
+	}
+
+	&[type=color] {
+		cursor: pointer;
+		height: 2rem;
+	}
+
+	&[disabled] {
+		border-color: #e1e6e6;
+		background-color: #f5f5f5;
+		box-shadow: none;
+		cursor: default;
+	}
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+	outline: none;
+	cursor: pointer;
+
+	&:hover, &:focus {
+		color: @color-link;
+		text-decoration: underline;
 	}
 }

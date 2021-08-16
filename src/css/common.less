@@ -37,54 +37,18 @@ h1, h2, h3, h4, h5, h6 {
 	}
 }
 
-hr {
-	border: 0 solid @color-border;
-	border-bottom-width: 1px;
-}
-
-.input, input {
-	padding: .5em;
-	min-width: 0; //去掉谷歌浏览器的最小宽度
-
-	outline: none;
-	border: solid 1px @color-border;
-	border-radius: 4px;
-	color: inherit;
-	background: transparent;
-
-	transition: box-shadow .2s;
-
-	// TODO: 高亮样式跟按钮的有点像，能不能通用一下
-	&:hover {
-		outline: 0;
-		border-color: #209cee;
-	}
-
-	// 一些模仿 input 样式的复合组件使用 focus-within
-	&:focus-within {
-		outline: 0;
-		border-color: #209cee;
-		box-shadow: 0 0 0 .2rem #a8e8ff;
-	}
-
-	&[type=color] {
-		cursor: pointer;
-		height: 2rem;
-	}
-
-	&[disabled] {
-		border-color: #e1e6e6;
-		background-color: #f5f5f5;
-		box-shadow: none;
-		cursor: default;
-	}
-}
-
 .minor-text {
 	color: @color-text-minor;
 }
 
 .highlight {
+
+	.highlight-color(@textColor, @hoverColor) {
+		color: @textColor;
+		&:visited { color: @textColor; }
+		&:hover, &:focus { color: @hoverColor; }
+	}
+
 	.highlight-color(@color-link, @color-link);
 
 	&:hover {
@@ -174,6 +138,19 @@ hr {
 	margin: 0;
 	padding-left: 0;
 	list-style: none;
+}
+
+// 清除链接元素的所有高亮样式
+.clean-link {
+	&:hover, &:focus, &:visited {
+		color: inherit;
+		text-decoration: none;
+	}
+}
+
+// Highlight dark link
+.hd-link {
+	color: @color-second;
 }
 
 /**
