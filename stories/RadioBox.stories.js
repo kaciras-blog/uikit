@@ -1,7 +1,9 @@
 import { ref } from "vue";
+import KxRadioBoxGroup from "@/components/KxRadioBoxGroup";
 
 export default {
 	title: "RadioBox",
+	component: KxRadioBoxGroup,
 	argTypes: {
 		disabled: {
 			control: { type: "boolean" },

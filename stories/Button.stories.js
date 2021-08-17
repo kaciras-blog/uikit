@@ -9,6 +9,9 @@ export default {
 			handles: ["click"],
 		},
 	},
+	args: {
+		disabled: false,
+	},
 	argTypes: {
 		class: {
 			control: { type: "select" },
@@ -16,7 +19,6 @@ export default {
 		},
 		disabled: {
 			control: { type: "boolean" },
-			defaultValue: false,
 		},
 	},
 };

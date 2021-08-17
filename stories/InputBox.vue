@@ -11,7 +11,7 @@
 	</kx-base-dialog>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { defineProps, reactive } from "vue";
 
 const { oldName, oldAge, hasInput } = defineProps([

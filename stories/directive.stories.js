@@ -90,7 +90,7 @@ export const SectionModel = () => ({
 });
 
 export const Ripple = (args, { argTypes }) => ({
-	props: Object.keys(argTypes),
+	data:() => args,
 	// 用 key 防止复用元素导致指令更新失败
 	template: `
 		<div v-if="centered && circle" :key="0" class="mock-dialog" v-ripple.centered.circle></div>

@@ -1,5 +1,8 @@
+import ButtonPagingView from "@/paging/ButtonPagingView";
+
 export default {
-	title: "Paging",
+	component: ButtonPagingView,
+	title: "ButtonPagingView",
 };
 
 export const Custom = () => ({
@@ -41,5 +44,4 @@ export const Custom = () => ({
 		this.$refs.pagingView.refresh();
 	},
 });
-
-Custom.storyName = "button paging view";
+Custom.storyName = "ButtonPagingView";
