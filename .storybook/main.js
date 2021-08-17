@@ -1,6 +1,9 @@
 module.exports = {
 	core: {
-		"builder": "webpack5"
+		builder: "webpack5",
+	},
+	features: {
+		previewCsfV3: true,
 	},
 	stories: [
 		"../stories/**/*.stories.js",

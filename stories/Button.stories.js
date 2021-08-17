@@ -1,16 +1,13 @@
+import { h } from "vue";
 import { action } from "@storybook/addon-actions";
 import KxButton from "@/components/KxButton";
 
 export default {
 	component: KxButton,
 	title: "Button",
-	parameters: {
-		actions: {
-			handles: ["click"],
-		},
-	},
 	args: {
 		disabled: false,
+		onClick: action("click"),
 	},
 	argTypes: {
 		class: {
@@ -23,33 +20,26 @@ export default {
 	},
 };
 
-const Template = args => ({
-	components: { KxButton },
-	setup() {
-		return { args, handleClick: action("click") };
-	},
-	template: '<kx-button v-bind="args">按钮</kx-button>',
-});
-
-export const Normal = Template.bind({});
-
-
-export const Outline = Template.bind({});
-Outline.args = {
-	class: "outline",
+export const Default = {
+	render: args => h(KxButton, args, "按钮"),
 };
 
-export const Text = Template.bind({});
-Text.args = {
-	class: "text",
+export const Outline = {
+	...Default,
+	args: { class: "outline" },
 };
 
-export const Route = Template.bind({});
-Route.args = {
-	route: "#",
+export const Text = {
+	...Default,
+	args: { class: "text" },
 };
 
-export const Link = Template.bind({});
-Link.args = {
-	href: "#",
+export const Link = {
+	...Default,
+	args: { href: "#" },
+};
+
+export const Route = {
+	...Default,
+	args: { route: "#" },
 };
