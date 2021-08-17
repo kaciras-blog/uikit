@@ -1,25 +1,25 @@
 <!--
-该组件必须与 KxRadioBoxGroup 搭配使用。
-目前仅使用 value 来区分，即相同 value 的组件具有同样的选择状态，请确保同一组下 Radio 的 value 各不相同。
+	该组件只能作为 KxRadioBoxGroup 的子节点，一个 KxRadioBoxGroup 称为一组。
+	目前仅以 value 来区分不同的选项，请确保同一组下的 value 各不相同。
 -->
 <template>
 	<label
 		class="kx-radio-box"
 		role="radio"
 		:aria-checked="checked.toString()"
-		:aria-disabled="$parent.disabled"
+		:aria-disabled="disabled"
 	>
 		<input
 			class="radio-box-input"
 			type="radio"
-			:name="$parent.name"
-			:disabled="$parent.disabled"
+			:name="groupProps.name"
+			:disabled="disabled"
 			:checked="checked"
 			@input="handleInput"
 		>
 		<span
 			class="radio-box-mark"
-			:class="{ checked, disabled: $parent.disabled }"
+			:class="{ checked, disabled }"
 		/>
 		<span class="radio-box-label"><slot/></span>
 	</label>
@@ -34,11 +34,13 @@ interface Props {
 
 const props = defineProps<Props>();
 const self = getCurrentInstance();
+const { props: groupProps, emit: groupEmit } = self.parent;
 
-const checked = computed(() => props.value === self.parent.modelValue);
+const disabled = computed(() => groupProps.disabled);
+const checked = computed(() => props.value === groupProps.modelValue);
 
-function handleInput(){
-	self.parent.emit("update:modelValue", props.value);
+function handleInput() {
+	groupEmit("update:modelValue", props.value);
 }
 </script>
 

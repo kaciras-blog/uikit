@@ -6,7 +6,7 @@
 import { defineEmits, defineProps } from "vue";
 
 interface Props {
-	modelValue: string;
+	modelValue: any;
 	name?: string;
 	disabled?: boolean;
 }
