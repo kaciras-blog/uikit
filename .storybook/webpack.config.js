@@ -31,6 +31,14 @@ module.exports = ({ config, mode }) => {
 
 	const lessLoader = custom.module.rules.find(loader => loader.test.source === /\.less$/.source);
 	config.module.rules.push(lessLoader);
+
+	// SVG 加载器跟 StoryBook 自带的冲突
+	const assetRule = config.module.rules.find(({ test }) => test.test(".svg"));
+	assetRule.test = /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/;
+
+	const svgLoader = custom.module.rules.find(loader => loader.test.source === /\.(svg)(\?.*)?$/.source);
+	config.module.rules.push(svgLoader);
+
 	config.resolve.alias["@"] = join(__dirname, "../src");
 	config.plugins.push(...custom.plugins);
 	Object.assign(config.resolve.extensions, custom.resolve.extensions);
