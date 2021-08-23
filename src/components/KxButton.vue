@@ -1,23 +1,30 @@
 <script lang="ts">
+import { h, useCssModule } from "vue";
 import { RouterLink } from "vue-router";
-import { h } from "vue";
 
 function KxButton(props, context) {
-	const { route } = props;
+	const { type, color, route } = props;
 	const { slots, attrs, emit } = context;
+
+	const $style = useCssModule();
 
 	const data = {
 		...attrs,
-		class: ["kx-btn", attrs.class],
+		class: [
+			"kx-btn",
+			$style[color],
+			$style[type],
+			attrs.class,
+		],
 	};
 
 	if (attrs.disabled) {
-		data.class.push("disabled");
+		data.class.push($style.disabled);
 	}
 
 	/*
 	 * 鼠标点击时屏蔽 focus 状态的边框，还需要在下面样式中 :active 伪类里移除边框。
-	 * 因为苹果不支持 :focus-visible 所以只能这样搞了。
+	 * 因为 Safari 不支持 :focus-visible 所以只能这样搞了。
 	 *
 	 * 【可能的副作用】
 	 * 可访问性：用鼠标聚焦元素然后再键盘操作的情况不常见，影响不大。
@@ -47,6 +54,12 @@ function KxButton(props, context) {
 
 KxButton.props = {
 
+	/** 内置样式，有 outline，text 和默认三种 */
+	type: String,
+
+	/** 内置颜色主题，有 second，info，dangerous，shadow 和默认五种 */
+	color: String,
+
 	/** 渲染为 router-link，其 to 属性等于该值 */
 	route: String,
 };
@@ -54,39 +67,30 @@ KxButton.props = {
 export default KxButton;
 </script>
 
-<style lang="less">
+<style module lang="less">
 @import "../css/exports";
 
 @radius: 4px;
 
-// 基础样式，也是默认的类型
-.kx-btn {
+// 最顶层的类公开，以便从外层识别。
+:global(.kx-btn) {
 	display: inline-flex;
 	align-items: center;
-	padding: 8px 16px;
-	border-radius: @radius;
 
+	padding: 8px 16px;
+	font-size: initial;
+	line-height: initial;
+
+	border-radius: @radius;
+	transition: ease-in-out .15s;
+
+	// 基础样式，也是默认的类型
 	color: var(--color);
 	background: var(--background);
 	border: solid 1px var(--background);
-	transition: ease-in-out .15s;
-
-	// 镂空按钮样式
-	&.outline {
-		color: var(--background);
-		border-color: var(--background);
-		background: none;
-	}
-
-	// 未激活状态只有文字的样式
-	&.text {
-		color: var(--background);
-		background: none;
-		border-color: transparent;
-	}
 
 	&:hover {
-		background-color: var(--bg-highlight);
+		background: var(--bg-highlight);
 		border-color: var(--bg-highlight);
 
 		// 用于覆盖 a 元素的样式
@@ -103,39 +107,63 @@ export default KxButton;
 	&:active {
 		color: var(--color);
 		box-shadow: none;
-		background-color: var(--bg-active);
+		background: var(--bg-active);
 		border-color: var(--bg-active);
 	}
 
 	.generateColors(white, @color-button-primary);
+}
 
-	&.second {
-		.generateColors(white, @color-button-second);
-	}
+// 镂空按钮样式
+.outline {
+	color: var(--background);
+	border-color: var(--background);
+	background: none;
+}
 
-	&.info {
-		.generateColors(white, @color-button-info);
-	}
-
-	&.dangerous {
-		.generateColors(white, @color-button-dangerous);
-	}
+// 未激活状态只有文字的样式
+.text {
+	color: var(--background);
+	background: none;
+	border-color: transparent;
 }
 
 // 只有一个图标就用这个，可与上面的搭配
-.kx-btn.icon {
+.icon {
 	padding: 5px;
 	font-size: 1.2rem;
 }
 
+.second {
+	.generateColors(white, @color-button-second);
+}
+
+.info {
+	.generateColors(white, @color-button-info);
+}
+
+.dangerous {
+	.generateColors(white, @color-button-dangerous);
+}
+
+.shadow {
+	border-width: 0;
+
+	--color: initial;
+	--bg-glass: none;
+	--background: rgba(0, 0, 0, 0.05);
+	--bg-highlight: rgba(0, 0, 0, 0.08);
+	--bg-active: rgba(0, 0, 0, 0.16);
+}
+
 // 禁用按钮样式，所有颜色的按钮禁用样式都一样。
 // 因为 a 元素没有 :disabled 状态，所以用类来代替。
-.kx-btn.disabled {
+.disabled {
 	cursor: initial;
 	pointer-events: none;
 
 	color: dimgray;
-	background-color: #d9dfdf;
+	background: #d9dfdf;
 	border-color: #d9dfdf;
 }
 

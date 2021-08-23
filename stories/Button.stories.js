@@ -10,9 +10,13 @@ export default {
 		onClick: action("click"),
 	},
 	argTypes: {
-		class: {
+		type: {
 			control: { type: "select" },
 			options: [null, "outline", "text"],
+		},
+		color: {
+			control: { type: "select" },
+			options: [null, "second", "info", "dangerous", "shadow"],
 		},
 		disabled: {
 			control: { type: "boolean" },
@@ -26,12 +30,12 @@ export const Default = {
 
 export const Outline = {
 	...Default,
-	args: { class: "outline" },
+	args: { type: "outline" },
 };
 
 export const Text = {
 	...Default,
-	args: { class: "text" },
+	args: { type: "text" },
 };
 
 export const Link = {
