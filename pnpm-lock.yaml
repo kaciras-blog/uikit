@@ -13,15 +13,12 @@ specifiers:
   '@storybook/vue3': ^6.3.7
   '@types/animejs': ^3.1.3
   '@types/jest': ^27.0.1
-  '@typescript-eslint/eslint-plugin': 4.29.2
-  '@typescript-eslint/parser': 4.29.2
   '@vue/cli-plugin-babel': next
   '@vue/cli-plugin-eslint': next
   '@vue/cli-plugin-typescript': next
   '@vue/cli-plugin-unit-jest': next
   '@vue/cli-service': next
   '@vue/compiler-sfc': ^3.2.4
-  '@vue/eslint-config-typescript': ^7.0.0
   '@vue/test-utils': ^2.0.0-rc.11
   animejs: ^3.2.1
   autobind-decorator: ^2.4.0
@@ -57,7 +54,7 @@ devDependencies:
   '@babel/core': 7.15.0
   '@kaciras-blog/devtool': 2.0.0-alpha.0_2e570a98a3ee0591492679e718190a08
   '@kaciras/eslint-config-core': 1.6.0_eslint@7.32.0
-  '@kaciras/eslint-config-jest': 1.6.0_79d1595ac137e2cc60da3c9a0e522fb9
+  '@kaciras/eslint-config-jest': 1.6.0_eslint@7.32.0+typescript@4.3.5
   '@kaciras/eslint-config-typescript': 1.6.0_eslint@7.32.0+typescript@4.3.5
   '@storybook/addon-essentials': 6.3.7_8cbd4bb4cfb0bf30f91be0589d94ebf7
   '@storybook/builder-webpack5': 6.3.7_typescript@4.3.5
@@ -65,15 +62,12 @@ devDependencies:
   '@storybook/vue3': 6.3.7_7b8ebb7d20dea03f2ebb0b77d9ffdfc3
   '@types/animejs': 3.1.4
   '@types/jest': 27.0.1
-  '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
-  '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
   '@vue/cli-plugin-babel': 5.0.0-beta.3_798c7ddde14e88f38d198c28ca98c757
   '@vue/cli-plugin-eslint': 5.0.0-beta.3_1d60fa5ae41f844ca74d329f2f88fadf
   '@vue/cli-plugin-typescript': 5.0.0-beta.3_79b2a4e3f3fc2f31a4962e2454fc1381
   '@vue/cli-plugin-unit-jest': 5.0.0-beta.3_0512c6d25ec4b06d2df052ae430199e8
   '@vue/cli-service': 5.0.0-beta.3_a281b91032d2a344839c7a0ac4298ecc
   '@vue/compiler-sfc': 3.2.4
-  '@vue/eslint-config-typescript': 7.0.0_e8eb8dffdbf6a8317d57bb352453a700
   '@vue/test-utils': 2.0.0-rc.11_vue@3.2.6
   eslint: 7.32.0
   eslint-plugin-vue: 7.16.0_eslint@7.32.0
@@ -2515,14 +2509,14 @@ packages:
       eslint: 7.32.0
     dev: true
 
-  /@kaciras/eslint-config-jest/1.6.0_79d1595ac137e2cc60da3c9a0e522fb9:
+  /@kaciras/eslint-config-jest/1.6.0_eslint@7.32.0+typescript@4.3.5:
     resolution: {integrity: sha512-aQXFfZPCtiF9e9ocGqTcUdc7hZdTRo061Wx6L+jErEkXG56DaBTytoIYEkCwDxpBXmMIi8MbKB9mKaFF/Qk5Qg==}
     engines: {node: '>=14'}
     peerDependencies:
       eslint: '>=7'
     dependencies:
       eslint: 7.32.0
-      eslint-plugin-jest: 24.4.0_79d1595ac137e2cc60da3c9a0e522fb9
+      eslint-plugin-jest: 24.4.0_eslint@7.32.0+typescript@4.3.5
     transitivePeerDependencies:
       - '@typescript-eslint/eslint-plugin'
       - supports-color
@@ -5544,24 +5538,6 @@ packages:
   /@vue/devtools-api/6.0.0-beta.15:
     resolution: {integrity: sha512-quBx4Jjpexo6KDiNUGFr/zF/2A4srKM9S9v2uHgMXSU//hjgq1eGzqkIFql8T9gfX5ZaVOUzYBP3jIdIR3PKIA==}
     dev: false
-
-  /@vue/eslint-config-typescript/7.0.0_e8eb8dffdbf6a8317d57bb352453a700:
-    resolution: {integrity: sha512-UxUlvpSrFOoF8aQ+zX1leYiEBEm7CZmXYn/ZEM1zwSadUzpamx56RB4+Htdjisv1mX2tOjBegNUqH3kz2OL+Aw==}
-    engines: {node: ^10.12.0 || >=12.0.0}
-    peerDependencies:
-      '@typescript-eslint/eslint-plugin': ^4.4.0
-      '@typescript-eslint/parser': ^4.4.0
-      eslint: ^5.0.0 || ^6.0.0 || ^7.0.0
-      eslint-plugin-vue: ^5.2.3 || ^6.0.0 || ^7.0.0
-    dependencies:
-      '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
-      '@typescript-eslint/parser': 4.29.2_eslint@7.32.0+typescript@4.3.5
-      eslint: 7.32.0
-      eslint-plugin-vue: 7.16.0_eslint@7.32.0
-      vue-eslint-parser: 7.10.0_eslint@7.32.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
 
   /@vue/reactivity/3.2.6:
     resolution: {integrity: sha512-8vIDD2wpCnYisNNZjmcIj+Rixn0uhZNY3G1vzlgdVdLygeRSuFjkmnZk6WwvGzUWpKfnG0e/NUySM3mVi59hAA==}
@@ -9149,7 +9125,7 @@ packages:
       source-map: 0.6.1
     dev: true
 
-  /eslint-plugin-jest/24.4.0_79d1595ac137e2cc60da3c9a0e522fb9:
+  /eslint-plugin-jest/24.4.0_eslint@7.32.0+typescript@4.3.5:
     resolution: {integrity: sha512-8qnt/hgtZ94E9dA6viqfViKBfkJwFHXgJmTWlMGDgunw1XJEGqm3eiPjDsTanM3/u/3Az82nyQM9GX7PM/QGmg==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -9159,7 +9135,6 @@ packages:
       '@typescript-eslint/eslint-plugin':
         optional: true
     dependencies:
-      '@typescript-eslint/eslint-plugin': 4.29.2_b01b7137116ac50f0745961d9cf72d34
       '@typescript-eslint/experimental-utils': 4.29.2_eslint@7.32.0+typescript@4.3.5
       eslint: 7.32.0
     transitivePeerDependencies:
