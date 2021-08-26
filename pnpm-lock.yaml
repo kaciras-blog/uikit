@@ -2,7 +2,6 @@ lockfileVersion: 5.3
 
 specifiers:
   '@babel/core': ^7.15.0
-  '@fortawesome/fontawesome-free': ^5.15.4
   '@kaciras-blog/devtool': ^2.0.0-alpha.0
   '@kaciras/eslint-config-core': ^1.6.0
   '@kaciras/eslint-config-jest': ^1.6.0
@@ -40,7 +39,6 @@ specifiers:
   webpack-chain: ^6.5.1
 
 dependencies:
-  '@fortawesome/fontawesome-free': 5.15.4
   animejs: 3.2.1
   autobind-decorator: 2.4.0
   core-js: 3.16.2
@@ -1962,12 +1960,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
-
-  /@fortawesome/fontawesome-free/5.15.4:
-    resolution: {integrity: sha512-eYm8vijH/hpzr/6/1CJ/V/Eb1xQFW2nnUKArb3z+yUWv7HTwj6M7SP957oMjfZjAHU6qpoNc2wQvIxBLWYa/Jg==}
-    engines: {node: '>=6'}
-    requiresBuild: true
-    dev: false
 
   /@hapi/hoek/9.2.0:
     resolution: {integrity: sha512-sqKVVVOe5ivCaXDWivIJYVSaEgdQK9ul7a4Kity5Iw7u9+wBAPbX1RMSnLLmp7O4Vzj0WOWwMAJsTL00xwaNug==}

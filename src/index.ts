@@ -1,4 +1,3 @@
-import "@fortawesome/fontawesome-free/css/all.css";
 import "./css/index.less";
 import { App } from "vue";
 
@@ -16,6 +15,10 @@ import KxBaseDialog from "./dialog/KxBaseDialog.vue";
 import KxFrame from "./dialog/KxFrame.vue";
 import KxFrameHeader from "./dialog/KxFrameHeader.vue";
 import KxDialogButtons from "./dialog/KxDialogButtons.vue";
+import ButtonPager from "./paging/ButtonPager.vue";
+import ButtonPagingView from "./paging/ButtonPagingView.vue";
+import ScrollPager from "./paging/ScrollPager.vue";
+import ScrollPagingView from "./paging/ScrollPagingView.vue";
 import AutoFocus from "./directives/autofocus";
 import ImeInput from "./directives/ime-input";
 import SelectionBinding from "./directives/selection-bind";
