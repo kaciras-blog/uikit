@@ -1,4 +1,5 @@
 import anime from "animejs";
+import { onMounted, onUnmounted } from "vue";
 
 /**
  * 获取文档当前的的滚动高度，兼容各种浏览器。
@@ -19,11 +20,12 @@ function scrollAnimation(element: HTMLElement, scrollTop: number) {
  * 滚动到元素顶部，浏览器可视区域的上端对齐到元素的顶端。
  *
  * TODO: Element.scrollTo 可以替代，但是 Safari 不支持 smooth
+ *   https://caniuse.com/css-scroll-behavior
  *
  * @param element HTML元素
  * @param offset 可以附加一个偏移（往下）
  */
-export function scrollToElementStart(element: HTMLElement, offset: number = 0) {
+export function scrollToElementStart(element: HTMLElement, offset = 0) {
 	const { top } = element.getBoundingClientRect();
 	scrollAnimation(element, top + getScrollTop() + offset);
 }
@@ -34,7 +36,7 @@ export function scrollToElementStart(element: HTMLElement, offset: number = 0) {
  * @param element HTML元素
  * @param offset 可以附加一个偏移（往下）
  */
-export function scrollToElementEnd(element: HTMLElement, offset: number = 0) {
+export function scrollToElementEnd(element: HTMLElement, offset = 0) {
 	const { bottom } = element.getBoundingClientRect();
 	const vTop = getScrollTop();
 	scrollAnimation(element, vTop + bottom - window.innerHeight + offset);
@@ -58,35 +60,31 @@ export function scrollToElement(element: HTMLElement) {
 }
 
 /**
- * 禁止指定元素的滚动条，返回一个取消禁止的函数。
- *
- * @param el 指定的元素
- * @return 恢复滚动条的函数
+ * 临时禁止页面的滚动条，当组件挂载
  */
-export function preventScroll(el: HTMLElement = document.body) {
-	const { style } = el;
-	const oldHeight = style.height;
-	const oldOverflow = style.overflow;
+export function usePreventScroll() {
+	const { style } = document.body;
 
-	style.height = "100%";
-	style.overflow = "hidden";
-	return () => {
-		style.height = oldHeight;
+	let oldOverflow: string;
+	let oldWidth: string;
+	let oldHeight: string;
+
+	onMounted(() => {
+		oldHeight = style.maxHeight;
+		oldWidth = style.maxWidth;
+		oldOverflow = style.overflow;
+
+		style.maxHeight = "100%";
+		style.maxWidth = "100%";
+		style.overflow = "hidden";
+	});
+
+	onUnmounted(() => {
+		style.maxHeight = oldHeight;
+		style.maxWidth = oldWidth;
 		style.overflow = oldOverflow;
-	};
+	});
 }
-
-/**
- * 组件挂载之后禁止全局滚动条，销毁后恢复，可用于弹窗之类的组件
- */
-export const PreventScrollMixin = {
-	mounted(this: any) {
-		this.$_restoreScroll = preventScroll();
-	},
-	unmouted(this: any) {
-		this.$_restoreScroll();
-	},
-};
 
 /**
  * 将多个元素的垂直滚动条按百分比同步。
