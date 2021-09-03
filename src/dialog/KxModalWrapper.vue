@@ -1,13 +1,11 @@
 <!--
-TODO: 将MessageBox和DialogBase的最外层移到这里，如何方便地对面板设置属性而不是遮罩层？
+TODO: 将 MessageBox 和 DialogBase 的最外层移到这里，如何方便地对面板设置属性而不是遮罩层？
 -->
 <template>
 	<div class="full-vertex kx-modal"><slot/></div>
 </template>
 
 <script>
-import { preventScroll } from "..";
-
 export default {
 	name: "KxModalWrapper",
 	props: {
@@ -16,16 +14,16 @@ export default {
 			default: false,
 		},
 	},
-	mounted() {
-		if (this.preventScroll) {
-			this._restore = preventScroll();
-		}
-	},
-	unmouted() {
-		if (this._restore) {
-			this._restore();
-		}
-	},
+	// mounted() {
+	// 	if (this.preventScroll) {
+	// 		this._restore = preventScroll();
+	// 	}
+	// },
+	// unmouted() {
+	// 	if (this._restore) {
+	// 		this._restore();
+	// 	}
+	// },
 };
 </script>
 

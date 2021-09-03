@@ -1,7 +1,7 @@
 <template>
 	<kx-modal-wrapper
-		@click.native.self="onOverlayClick"
-		@keyup.native.esc="closable && $dialog.close()"
+		@click.self="onOverlayClick"
+		@keyup.esc="closable && $dialog.close()"
 	>
 		<div
 			class="kx-msgbox"
@@ -21,7 +21,7 @@
 			<h2>{{title}}</h2>
 			<pre v-if="content" :class="$style.content">{{content}}</pre>
 
-			<kx-dialog-buttons :cancel-button="showCancelButton"/>
+			<!--<kx-dialog-buttons :cancel-button="showCancelButton"/>-->
 		</div>
 	</kx-modal-wrapper>
 </template>

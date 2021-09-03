@@ -1,12 +1,8 @@
-import { VueConstructor } from "vue";
+import { App, inject } from "vue";
 import { boundClass } from "autobind-decorator";
 import KxDialogContainer from "./KxDialogContainer.vue";
 import KxMessageBox from "./KxMessageBox.vue";
-import KxBaseDialog from "./KxBaseDialog.vue";
-import KxDialogButtons from "./KxDialogButtons.vue";
 import KxImageCropper from "./KxImageCropper.vue";
-import KxFrame from "./KxFrame.vue";
-import KxFrameHeader from "./KxFrameHeader.vue";
 import { DialogManager, DialogSession } from "./controller";
 
 export { DialogManager, DialogSession };
@@ -67,7 +63,7 @@ class KxDialogManagerExt extends DialogManager {
 		return this.alert({ title, content, type: MessageBoxType.Error });
 	}
 
-	alertSuccess(title: string = "执行成功", content?: string) {
+	alertSuccess(title = "执行成功", content?: string) {
 		return this.alert({ title, content, type: MessageBoxType.Success });
 	}
 
@@ -92,13 +88,13 @@ class KxDialogManagerExt extends DialogManager {
 // 只导出类型而不是整个class，避免暴露实现细节
 export type KxDialogAPI = InstanceType<typeof KxDialogManagerExt>;
 
-export default function install(Vue: VueConstructor) {
-	Vue.prototype.$dialog = new KxDialogManagerExt();
+export function useDialog() {
+	return inject("$dialog");
+}
 
-	// 为了方便，把这些基础组件也注册了
-	Vue.component(KxBaseDialog.name, KxBaseDialog);
-	Vue.component(KxFrame.name, KxFrame);
-	Vue.component(KxFrameHeader.name, KxFrameHeader);
-	Vue.component(KxDialogContainer.name, KxDialogContainer);
-	Vue.component(KxDialogButtons.name, KxDialogButtons);
+export default function (app: App) {
+	const controller = new KxDialogManagerExt();
+	app.config.globalProperties.$dialog = controller;
+	app.provide("$dialog", controller);
+	app.component("KxDialogContainer", KxDialogContainer);
 }

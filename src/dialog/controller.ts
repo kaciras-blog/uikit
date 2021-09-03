@@ -1,8 +1,8 @@
-// vue-jest 不支持 babel 7，所以必须把与vue文件相关的部分分开。
-// 该文件包含弹窗的核心API，index.ts里会增加一些具体的弹窗API。
-import Vue, { ComponentOptions, VueConstructor } from "vue";
-import PromiseDelegate from "../PromiseDelegate";
+// vue-jest 不支持 babel 7，所以必须把与 vue 文件相关的部分分开。
+// 该文件包含弹窗的核心 API，index.ts 里会增加一些具体的弹窗API。
+import { ComponentOptions } from "vue";
 import { boundClass } from "autobind-decorator";
+import PromiseDelegate from "../PromiseDelegate";
 
 /**
  * 表示弹窗会话的结果，当弹窗关闭时会返回此对象。
@@ -18,11 +18,12 @@ export class DialogResult<TData> {
 		return new DialogResult(true, data);
 	}
 
-	private constructor(readonly isConfirm: boolean, readonly data: TData) {}
+	private constructor(readonly isConfirm: boolean, readonly data: TData) {
+	}
 }
 
 /**
- * 表示弹窗会话，该类实现了Promise接口可以像Promise一样等待，在窗体关闭后resolve。
+ * 表示弹窗会话，在窗体关闭后 resolve，该类可以像 Promise 一样等待。
  */
 export class DialogSession<TResult> extends PromiseDelegate<DialogResult<TResult>> {
 
@@ -63,23 +64,44 @@ interface PropsData {
 }
 
 // <component :is="DialogComponent" /> is 参数能使用的类型都可以
-export type DialogComponent = VueConstructor | ComponentOptions<any> | string
+export type DialogComponent = ComponentOptions<any> | string
 
 export interface DialogOptions {
 	component: DialogComponent;
 	props: PropsData;
-	isolation?: boolean;
+}
+
+interface DialogMountPoint {
+
+	handleAdd(config: DialogOptions): void;
+
+	handleClear(): void;
+
+	handleClose(result: DialogResult<unknown>): void;
 }
 
 @boundClass
 export class DialogManager {
 
-	readonly eventBus = new Vue();
+	private mountPoint?: DialogMountPoint;
+
+	connect(mountPoint: any) {
+		if (this.mountPoint) {
+			throw new Error("只能有一个挂载点");
+		}
+		this.mountPoint = mountPoint;
+	}
+
+	disconnect(mountPoint: any) {
+		if (this.mountPoint === mountPoint) {
+			this.mountPoint = undefined;
+		}
+	}
 
 	private pushSession<T>(options: DialogOptions) {
 		const promise = new Promise<DialogResult<T>>(resolve => {
 			(options as any).resolve = resolve;
-			this.eventBus.$emit("show", options);
+			this.mountPoint!.handleAdd(options);
 		});
 		return new DialogSession<T>(promise);
 	}
@@ -92,7 +114,14 @@ export class DialogManager {
 	 * @return 弹窗会话，用于接收窗口的返回数据
 	 */
 	show<T = any>(component: DialogComponent, props: PropsData = {}) {
-		return this.pushSession({ component, props });
+		return this.pushSession<T>({ component, props });
+	}
+
+	/**
+	 * 强制关闭所有弹窗，所有弹窗会话将返回 DialogResult.CANCELED
+	 */
+	clear() {
+		this.mountPoint!.handleClear();
 	}
 
 	/**
@@ -110,13 +139,6 @@ export class DialogManager {
 	 * @param result 弹窗会话的结果
 	 */
 	close(result: DialogResult<any> = DialogResult.CANCELED) {
-		this.eventBus.$emit("close", result);
-	}
-
-	/**
-	 * 强制关闭所有弹窗，所有弹窗会话将返回 DialogResult.CANCELED
-	 */
-	clear() {
-		this.eventBus.$emit("clear");
+		this.mountPoint!.handleClose(result);
 	}
 }

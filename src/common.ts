@@ -1,3 +1,12 @@
+let uniqueKeyCounter = 1;
+
+/**
+ * Generate a unique number, it can be used as the key prop in React element.
+ */
+export function uniqueKey() {
+	return uniqueKeyCounter += 1;
+}
+
 /**
  * 返回一个Promise，在指定的时间后完成，可用于模拟耗时的操作。
  *
