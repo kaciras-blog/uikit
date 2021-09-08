@@ -5,14 +5,15 @@
 			<kx-button
 				title="关闭"
 				:class="$style.close_button"
-				icon="fa fa-times"
 				@click="$dialog.close"
-			/>
+			>
+				<close-icon/>
+			</kx-button>
 		</header>
 
 		<div :class="$style.image">
 			<img
-				ref="image"
+				ref="imageEl"
 				style="display: none"
 				:src="image"
 				alt="Image to crop"
@@ -21,29 +22,34 @@
 
 		<div :class="$style.toolbar">
 			<kx-button
-				icon="fa fa-arrows-alt-h"
 				title="水平翻转"
 				@click="cropper.scaleX(xScale = -xScale)"
-			/>
+			>
+				<swap-horiz-icon/>
+			</kx-button>
 			<kx-button
-				icon="fa fa-arrows-alt-v"
 				title="垂直翻转"
 				@click="cropper.scaleY(yScale = -yScale)"
-			/>
+			>
+				<swap-vert-icon/>
+			</kx-button>
 			<kx-button
 				icon="fa fa-redo-alt"
 				title="旋转"
 				@click="cropper.rotate(90)"
-			/>
+			>
+				<rotate-right-icon/>
+			</kx-button>
 			<kx-button
-				icon="fa fa-expand"
 				title="100%"
 				@click="cropper.zoomTo(1)"
-			/>
+			>
+				<zoom-out-map/>
+			</kx-button>
 
 			<div :class="$style.stats">
-				{{cropX}} - {{cropY}} |
-				{{cropWidth}} x {{cropHeight}}
+				{{ cropX }} - {{ cropY }} |
+				{{ cropWidth }} x {{ cropHeight }}
 			</div>
 
 			<div :class="$style.right_buttons">
@@ -54,65 +60,69 @@
 	</div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { defineEmits, defineProps, onMounted, ref } from "vue";
 import "cropperjs/dist/cropper.min.css";
 import Cropper from "cropperjs";
-import { preventScroll } from "../scroll";
+import { usePreventScroll } from "../scroll";
+import CloseIcon from "../assets/icon-close.svg";
+import SwapHorizIcon from "../assets/swap_horiz.svg";
+import SwapVertIcon from "../assets/swap_vert.svg";
+import RotateRightIcon from "../assets/rotate_right.svg";
+import ZoomOutMap from "../assets/zoom_out_map.svg";
 
-export default {
-	name: "KxImageCropper",
-	props: {
-		image: {
-			type: String,
-			required: true,
-		},
-		mimeType: {
-			type: String,
-			required: true,
-		},
-		aspectRatio: {
-			type: Number,
-			required: true,
-		},
+const props = defineProps({
+	image: {
+		type: String,
+		required: true,
 	},
-	data: () => ({
-		// cropper.scaleX() 始终相对于原图
-		xScale: 1,
-		yScale: 1,
-		cropper: undefined,
-		cropX: 0,
-		cropY: 0,
-		cropWidth: 0,
-		cropHeight: 0,
-	}),
-	methods: {
-		ok() {
-			const canvas = this.cropper.getCroppedCanvas({
-				maxWidth: this.width,
-				maxHeight: this.height,
-			});
-			canvas.toBlob(this.$dialog.confirm, this.mimeType);
+	mimeType: {
+		type: String,
+		required: true,
+	},
+	aspectRatio: {
+		type: Number,
+		required: true,
+	},
+});
+
+const emit = defineEmits(["confirm"]);
+
+// cropper.scaleX() 始终相对于原图
+const xScale = ref(1);
+const yScale = ref(1);
+
+const cropX = ref("0");
+const cropY = ref("0");
+const cropWidth = ref("0");
+const cropHeight = ref("0");
+
+const imageEl = ref<HTMLImageElement>();
+const cropper = ref<Cropper>();
+
+usePreventScroll();
+
+function ok() {
+	const canvas = cropper.value!.getCroppedCanvas({
+		// maxWidth: this.width,
+		// maxHeight: this.height,
+	});
+	canvas.toBlob(rv => emit("confirm", rv), props.mimeType);
+}
+
+onMounted(() => {
+	cropper.value = new Cropper(imageEl.value, {
+		aspectRatio: props.aspectRatio,
+		viewMode: 2,
+		dragMode: "move",
+		crop: (event) => {
+			cropX.value = event.detail.x.toFixed(0);
+			cropY.value = event.detail.y.toFixed(0);
+			cropWidth.value = event.detail.width.toFixed(0);
+			cropHeight.value = event.detail.height.toFixed(0);
 		},
-	},
-	mounted() {
-		const { aspectRatio, $refs } = this;
-		this.cropper = new Cropper($refs.image, {
-			aspectRatio,
-			viewMode: 2,
-			dragMode: "move",
-			crop: (event) => {
-				this.cropX = event.detail.x.toFixed(1);
-				this.cropY = event.detail.y.toFixed(1);
-				this.cropWidth = event.detail.width.toFixed(1);
-				this.cropHeight = event.detail.height.toFixed(1);
-			},
-		});
-		this._restore = preventScroll();
-	},
-	unmouted() {
-		this._restore();
-	},
-};
+	});
+});
 </script>
 
 <style module lang="less">
