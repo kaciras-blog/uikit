@@ -15,7 +15,7 @@ import { uniqueKey } from "../common";
 import { DialogOptions, DialogResult } from "./controller";
 import { useDialog } from "./quick-alert";
 
-interface InternalOptions extends DialogOptions {
+interface InternalOptions extends DialogOptions<unknown> {
 	id: number;
 	closed?: boolean;
 }
@@ -35,7 +35,7 @@ const isMobile = computed(() => window.innerWidth < 768);
  * @param index 序号
  * @returns 弹出层是否显示
  */
-function isVisible(config: DialogOptions, index: number) {
+function isVisible(config: DialogOptions<unknown>, index: number) {
 	return (index === stack.length - 1) || config.component.isolation;
 }
 
@@ -90,7 +90,7 @@ function closeDialog(config: InternalOptions, result = DialogResult.CANCELED) {
  *
  * @param config 弹出层会话
  */
-function handleAdd(config) {
+function push(config) {
 	const id = uniqueKey();
 	config.id = id;
 	stack.push(config);
@@ -105,7 +105,7 @@ function handleAdd(config) {
  *
  * @param result 弹窗返回的结果
  */
-function handleClose(result) {
+function close(result) {
 	const config = stack[stack.length - 1];
 	if (!config) {
 		throw new Error("没有可关闭的弹窗");
@@ -119,7 +119,7 @@ function handleClose(result) {
 }
 
 // 目前仅在切换路由时使用，所以没法清除历史
-function handleClear() {
+function clear() {
 	stack.forEach(closeDialog);
 	stack.splice(0, stack.length);
 }
@@ -138,5 +138,9 @@ onBeforeUnmount(() => {
 	// this.$dialog.eventBus.$off("clear", this.handleClear);
 });
 
-useDialog().connect({ handleAdd, handleClose, handleClear });
+const controller = useDialog();
+if (!controller) {
+	throw new Error("必须将 QuickAlert 插件注册到 Vue 实例");
+}
+controller.connect({ push, close, clear });
 </script>
