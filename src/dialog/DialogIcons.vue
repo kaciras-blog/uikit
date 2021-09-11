@@ -1,17 +1,25 @@
 <template>
-	<div v-if="type === 0" class="kx-dialog-icon info"></div>
-	<div v-else-if="type === 1" class="kx-dialog-icon success"></div>
-	<div v-else-if="type === 2" class="kx-dialog-icon warning"></div>
-	<div v-else class="kx-dialog-icon error"></div>
+	<div class="kx-dialog-icon" :class="$style[MessageBoxType[type]]"/>
 </template>
 
-<style lang="less">
+<script setup lang="ts">
+import { defineProps } from "vue";
+import { MessageBoxType } from "./quick-alert";
+
+interface DialogIconProps {
+	type: MessageBoxType;
+}
+
+defineProps<DialogIconProps>();
+</script>
+
+<style module lang="less">
 @color-info: #358bff;
 @color-success: #00d936;
 @color-warning: #ffc04c;
 @color-error: #ff5d64;
 
-.kx-dialog-icon {
+:global(.kx-dialog-icon) {
 	position: relative;
 
 	width: 80px;
@@ -22,118 +30,120 @@
 
 	margin: 20px auto;
 	box-sizing: content-box;
+}
 
-	&.error {
-		border-color: @color-error;
+// 下面几个用驼峰命名，便于动态获取。
 
-		&::before, &::after {
-			content: "";
-			display: block;
-			position: absolute;
-			top: 37px;
-			height: 5px;
-			width: 47px;
+&.Error {
+	border-color: @color-error;
 
-			background-color: @color-error;
-			border-radius: 2px;
-		}
+	&::before, &::after {
+		content: "";
+		display: block;
+		position: absolute;
+		top: 37px;
+		height: 5px;
+		width: 47px;
 
-		&::before {
-			transform: rotate(45deg);
-			left: 17px;
-		}
-
-		&::after {
-			transform: rotate(-45deg);
-			right: 16px;
-		}
+		background-color: @color-error;
+		border-radius: 2px;
 	}
 
-	&.warning {
-		border-color: @color-warning;
-
-		&::before {
-			content: '';
-			position: absolute;
-			width: 5px;
-			height: 29px;
-			left: 50%;
-			bottom: 17px;
-
-			margin-left: -2px;
-			border-radius: 2px;
-			background-color: @color-warning;
-		}
-
-		&::after {
-			content: '';
-			position: absolute;
-			width: 7px;
-			height: 7px;
-			top: 19px;
-
-			margin-left: -3px;
-			border-radius: 50%;
-			background-color: @color-warning;
-		}
+	&::before {
+		transform: rotate(45deg);
+		left: 17px;
 	}
 
-	&.info {
-		border-color: @color-info;
+	&::after {
+		transform: rotate(-45deg);
+		right: 16px;
+	}
+}
 
-		&::before {
-			content: '';
-			position: absolute;
-			width: 5px;
-			height: 29px;
-			left: 50%;
-			bottom: 17px;
+&.Warning {
+	border-color: @color-warning;
 
-			margin-left: -2px;
-			border-radius: 2px;
-			background-color: @color-info;
-		}
+	&::before {
+		content: '';
+		position: absolute;
+		width: 5px;
+		height: 29px;
+		left: 50%;
+		bottom: 17px;
 
-		&::after {
-			content: '';
-			position: absolute;
-			width: 7px;
-			height: 7px;
-			top: 19px;
-
-			margin-left: -3px;
-			border-radius: 50%;
-			background-color: @color-info;
-		}
+		margin-left: -2px;
+		border-radius: 2px;
+		background-color: @color-warning;
 	}
 
-	&.success {
-		border-color: @color-success;
+	&::after {
+		content: '';
+		position: absolute;
+		width: 7px;
+		height: 7px;
+		top: 19px;
 
-		&::before, &::after {
-			content: "";
-			display: block;
-			position: absolute;
-			z-index: 2;
+		margin-left: -3px;
+		border-radius: 50%;
+		background-color: @color-warning;
+	}
+}
 
-			height: 5px;
-			background-color: @color-success;
-			border-radius: 2px;
-		}
+&.Info {
+	border-color: @color-info;
 
-		&::before {
-			width: 25px;
-			left: 14px;
-			top: 46px;
-			transform: rotate(45deg);
-		}
+	&::before {
+		content: '';
+		position: absolute;
+		width: 5px;
+		height: 29px;
+		left: 50%;
+		bottom: 17px;
 
-		&::after {
-			width: 47px;
-			right: 8px;
-			top: 38px;
-			transform: rotate(-45deg);
-		}
+		margin-left: -2px;
+		border-radius: 2px;
+		background-color: @color-info;
+	}
+
+	&::after {
+		content: '';
+		position: absolute;
+		width: 7px;
+		height: 7px;
+		top: 19px;
+
+		margin-left: -3px;
+		border-radius: 50%;
+		background-color: @color-info;
+	}
+}
+
+&.Success {
+	border-color: @color-success;
+
+	&::before, &::after {
+		content: "";
+		display: block;
+		position: absolute;
+		z-index: 2;
+
+		height: 5px;
+		background-color: @color-success;
+		border-radius: 2px;
+	}
+
+	&::before {
+		width: 25px;
+		left: 14px;
+		top: 46px;
+		transform: rotate(45deg);
+	}
+
+	&::after {
+		width: 47px;
+		right: 8px;
+		top: 38px;
+		transform: rotate(-45deg);
 	}
 }
 </style>

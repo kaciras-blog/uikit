@@ -2,7 +2,7 @@ import { MessageBoxType } from "@/dialog/quick-alert";
 import KxMessageBox from "@/dialog/KxMessageBox";
 
 export default {
-	title :"MessageBox",
+	title: "MessageBox",
 	component: KxMessageBox,
 };
 
@@ -23,22 +23,26 @@ export const MessageBox = () => ({
 		success() {
 			this.$dialog.alertSuccess("成功", "内容显示在这里");
 		},
+
 		info() {
 			this.$dialog.alertInfo("有新的信息", "内容显示在这里");
 		},
+
 		warning() {
 			const lines = new Array(30).fill("特别长的内容会出现滚动条");
 			this.$dialog.alertWarning("警告", lines.join("\n"));
 		},
+
 		error() {
 			this.$dialog.alertError("错误", "内容显示在这里");
 		},
+
 		custom() {
 			this.$dialog.alert({
 				type: MessageBoxType.Info,
 				title: "带有取消按钮的消息框",
 				content: "取消 = $dialog.close()\n确定 = $dialog.confirm()",
-				showCancelButton: true,
+				cancelable: true,
 			});
 		},
 	},

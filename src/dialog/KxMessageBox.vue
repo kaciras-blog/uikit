@@ -16,74 +16,68 @@
 				:class="$style.closeIcon"
 				@click="$dialog.close"
 			/>
+
 			<dialog-icons :type="type"/>
+			<h2>{{ title }}</h2>
+			<pre v-if="content" :class="$style.content">{{ content }}</pre>
 
-			<h2>{{title}}</h2>
-			<pre v-if="content" :class="$style.content">{{content}}</pre>
-
-			<!--<kx-dialog-buttons :cancel-button="showCancelButton"/>-->
+			<kx-dialog-buttons
+				:on-cancel="cancelable && $dialog.close"
+				:on-accept="() => $dialog.close(true)"
+			/>
 		</div>
 	</kx-modal-wrapper>
 </template>
 
-<script>
-import KxModalWrapper from "./KxModalWrapper";
+<script setup lang="ts">
+import { defineProps, ref, withDefaults } from "vue";
+import { MessageBoxType, useDialog } from "./quick-alert";
 import DialogIcons from "./DialogIcons";
 import KxCloseIcon from "./KxCloseIcon";
+import KxModalWrapper from "./KxModalWrapper";
+import KxDialogButtons from "./KxDialogButtons";
 
-export default {
-	name: "KxMessageBox",
-	components: {
-		DialogIcons,
-		KxModalWrapper,
-		KxCloseIcon,
-	},
-	props: {
-		title: {
-			type: String,
-			required: true,
-		},
-		/**
-		 * 消息框的内容，可以用换行符\n来换行，在超出宽度也会时自动换行。
-		 * 【更新】取消了数组方式的换行，因为可以用Vue的过滤器完成，或是应该自行处理。
-		 */
-		content: {
-			type: String,
-		},
-		type: {
-			type: Number,
-			default: 0, // MessageBoxType.Info
-		},
-		showCancelButton: {
-			type: Boolean,
-			default: false,
-		},
-		closable: {
-			type: Boolean,
-			default: true,
-		},
-		overlayClose: {
-			type: Boolean,
-			default: true,
-		},
-	},
-	data: () => ({
-		dialogZoomIn: true,
-		shaking: false,
-	}),
-	methods: {
-		onOverlayClick() {
-			if (!this.closable) {
-				this.dialogZoomIn = false; // 一个元素不能有多个animation属性，要把进入动画去掉
-				this.shaking = true;
-				return setTimeout(() => this.shaking = false, 300);
-			}
-			if (this.overlayClose) {
-				this.$dialog.close();
-			}
-		},
-	},
-};
+export interface MessageBoxProps {
+	title: string;
+	type: MessageBoxType;
+
+	/**
+	 * 消息框的内容，可以用换行符\n来换行，在超出宽度也会时自动换行。
+	 * 【更新】取消了数组方式的换行，因为可以用Vue的过滤器完成，或是应该自行处理。
+	 */
+	content?: string;
+
+	/**
+	 * 是否显示取消按钮。
+	 */
+	cancelable?: boolean;
+
+	/**
+	 * 强制必须点击底部的按钮关闭，如果点击遮罩还会显示震动效果。
+	 */
+	closable?: boolean;
+}
+
+const props = withDefaults(defineProps<MessageBoxProps>(), {
+	closable: true,
+	cancelable: false,
+});
+
+const dialogZoomIn = ref(true);
+const shaking = ref(false);
+
+const $dialog = useDialog();
+
+function onOverlayClick() {
+	if (props.closable) {
+		$dialog.close();
+	} else {
+		// 一个元素不能有多个 animation 属性，要先把进入动画去掉
+		dialogZoomIn.value = false;
+		shaking.value = true;
+		return setTimeout(() => shaking.value = false, 300);
+	}
+}
 </script>
 
 <style module lang="less">

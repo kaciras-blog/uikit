@@ -1,91 +1,51 @@
 <!-- 常用的对话框按钮组，包含确定、取消、应用三个按钮 -->
-<!--
-	<div
-		:class="$style.container"
-		class="btn-group"
-	>
-		<kx-button
-			class="primary"
-			:disabled="acceptable"
-			@click="confirm"
-		>
-			确定
-		</kx-button>
-		<kx-button
-			v-if="cancelButton"
-			@click="$dialog.close"
-		>
-			取消
-		</kx-button>
-		<kx-button
-			v-if="listeners.apply"
-			:disabled="acceptable"
-			@click="listeners.apply"
-		>
-			应用
-		</kx-button>
-	</div>
--->
+<script lang="ts">
+import { h, useCssModule } from "vue";
+import KxButton from "../components/KxButton.vue";
 
-<script>
-export default {
-	name: "KxDialogButtons",
-	props: {
-		/** 是否显示取消按钮，默认true */
-		cancelButton: {
-			type: Boolean,
-			default: true,
-		},
-		/** 确定和应用按钮是否禁用 */
-		acceptable: {
-			type: Boolean,
-			default: true,
-		},
+function KxDialogButtons(props) {
+	const { acceptable, onCancel, onAccept, onApply } = props;
+	const buttons = [];
+
+	const $style = useCssModule();
+
+	if (onCancel) {
+		const data = { color: "second", onClick: onCancel };
+		buttons.push(h(KxButton, data, "取消"));
+	}
+
+	if (onAccept) {
+		const data = { disabled: !acceptable, onClick: onAccept };
+		buttons.push(h(KxButton, data, "确定"));
+	}
+
+	if (onApply) {
+		const data = { disabled: !acceptable, onClick: onApply };
+		buttons.push(h(KxButton, data, "应用"));
+	}
+
+	return h("div", { class: ["btn-group", $style.container] }, buttons);
+}
+
+KxDialogButtons.props = {
+
+	/** 确定和应用按钮是否禁用 */
+	acceptable: {
+		type: Boolean,
+		default: true,
 	},
-	render(h, ctx) {
-		const { props, listeners } = ctx;
-		const buttons = [];
 
-		// TODO: 函数组件没法引用到 Vue.prototype？如果父组件也是函数组件？
-		const { $dialog } = ctx.parent;
-
-		buttons.push(h("kx-button", {
-			staticClass: "primary",
-			on: {
-				click: listeners.confirm || $dialog.confirm,
-			},
-			attrs: {
-				disabled: !props.acceptable,
-			},
-		}, "确定"));
-
-		if (props.cancelButton) {
-			buttons.push(h("kx-button", {
-				on: {
-					click: listeners.cancel || $dialog.close,
-				},
-			}, "取消"));
-		}
-
-		if (listeners.apply) {
-			buttons.push(h("kx-button", {
-				on: {
-					click: listeners.apply,
-				},
-				attrs: {
-					disabled: !props.acceptable,
-				},
-			}, "应用"));
-		}
-
-		return h("div", { class: ["btn-group", ctx.$style.container] }, buttons);
-	},
+	onCancel: Function,
+	onApply: Function,
+	onAccept: Function,
 };
+
+export default KxDialogButtons;
 </script>
 
-<style module lang="less">
+<style module>
 .container {
-	text-align: right;
 	margin-top: 20px;
+	text-align: right;
 }
 </style>
