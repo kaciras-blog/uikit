@@ -23,7 +23,7 @@
 
 			<kx-dialog-buttons
 				:on-cancel="cancelable && $dialog.close"
-				:on-accept="() => $dialog.close(true)"
+				:on-accept="() => $dialog.confirm(true)"
 			/>
 		</div>
 	</kx-modal-wrapper>
@@ -53,7 +53,7 @@ export interface MessageBoxProps {
 	cancelable?: boolean;
 
 	/**
-	 * 强制必须点击底部的按钮关闭，如果点击遮罩还会显示震动效果。
+	 * 如果为 false 则强制必须点击底部的按钮关闭，点击遮罩会震动。
 	 */
 	closable?: boolean;
 }

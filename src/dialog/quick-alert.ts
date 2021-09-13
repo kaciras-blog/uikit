@@ -63,8 +63,7 @@ class KxDialogManagerExt extends QuickDialogController {
 			mimeType: options.type || blob.type,
 			image: imageURL,
 		});
-		session.finally(() => URL.revokeObjectURL(imageURL));
-		return session;
+		return session.finally(() => URL.revokeObjectURL(imageURL));
 	}
 }
 
@@ -72,7 +71,11 @@ class KxDialogManagerExt extends QuickDialogController {
 export type KxDialogAPI = InstanceType<typeof KxDialogManagerExt>;
 
 export function useDialog() {
-	return inject<KxDialogAPI>("$dialog");
+	const value = inject<KxDialogAPI>("$dialog");
+	if (process.env.NODE_ENV === "production" || value) {
+		return value!;
+	}
+	throw new Error("无法获取 $dialog，请确保加入了插件");
 }
 
 export default function (app: App) {

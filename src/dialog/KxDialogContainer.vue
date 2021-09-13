@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeMount, onBeforeUnmount, reactive } from "vue";
+import { computed, onBeforeMount, onBeforeUnmount, shallowReactive } from "vue";
 import { uniqueKey } from "../common";
 import { DialogOptions, DialogResult } from "./controller";
 import { useDialog } from "./quick-alert";
@@ -23,7 +23,8 @@ interface InternalOptions extends DialogOptions<unknown> {
 /** 用于标记历史记录是弹窗所产生的 */
 const FLAG = "__KX_DIALOG__";
 
-const stack = reactive<InternalOptions[]>([]);
+// 这里不要用 reactive 因为他会将每个元素也转为代理。
+const stack = shallowReactive<InternalOptions[]>([]);
 
 const isMobile = computed(() => window.innerWidth < 768);
 
@@ -36,7 +37,7 @@ const isMobile = computed(() => window.innerWidth < 768);
  * @returns 弹出层是否显示
  */
 function isVisible(config: DialogOptions<unknown>, index: number) {
-	return (index === stack.length - 1) || config.component.isolation;
+	return (index === stack.length - 1) || (config.component as any).isolation;
 }
 
 /**
@@ -50,10 +51,10 @@ function syncHistory() {
 	const { flag, id } = history.state || {};
 
 	if (flag !== FLAG) {
-		stack.forEach(closeDialog);
+		stack.forEach(c => closeDialog(c));
 	} else {
 		const i = stack.findIndex(c => c.id === id);
-		stack.slice(i + 1).forEach(closeDialog);
+		stack.slice(i + 1).forEach(c => closeDialog(c));
 	}
 }
 
@@ -120,7 +121,7 @@ function close(result) {
 
 // 目前仅在切换路由时使用，所以没法清除历史
 function clear() {
-	stack.forEach(closeDialog);
+	stack.forEach(c => closeDialog(c));
 	stack.splice(0, stack.length);
 }
 
