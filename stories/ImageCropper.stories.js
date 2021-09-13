@@ -1,7 +1,9 @@
 import { openFile } from "@";
+import KxImageCropper from "@/dialog/KxImageCropper";
 
 export default {
 	title: "ImageCropper",
+	component: KxImageCropper,
 };
 
 export const Simple = () => ({

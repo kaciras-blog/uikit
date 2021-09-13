@@ -1,8 +1,12 @@
+import { ref } from "vue";
 import KxCheckBox from "@/components/KxCheckBox";
 
 export default {
 	title: "CheckBox",
 	component: KxCheckBox,
+	args: {
+		disabled: false,
+	},
 	argTypes: {
 		disabled: {
 			control: { type: "boolean" },
@@ -10,25 +14,19 @@ export default {
 	},
 };
 
-const Template = args => ({
-	setup() {
-		return { args };
-	},
+export const CheckBox = args => ({
 	template: `
 		<p>
-			Model value: {{value}}
+		Model value: {{ value }}
 		</p>
 		<kx-check-box
 			v-bind="args"
 			v-model="value"
 		>
-			这是一个复选框
+		这是一个复选框
 		</kx-check-box>
 	`,
-	data: () => ({ value: false }),
+	setup() {
+		return { args, value: ref(false) };
+	},
 });
-
-export const CheckBox = Template.bind({});
-CheckBox.args = {
-	disabled: false,
-};

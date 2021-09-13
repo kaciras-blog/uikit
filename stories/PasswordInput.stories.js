@@ -1,6 +1,15 @@
+import { ref } from "vue";
+import KxPasswordInput from "@/components/KxPasswordInput";
 
-export const Password = (args, { argTypes }) => ({
-	props: Object.keys(argTypes),
+export default {
+	title: "PasswordInput",
+	component: KxPasswordInput,
+	args: {
+		disabled: false,
+	},
+};
+
+export const Password = args => ({
 	template: `
 		<div style="width: 300px">
 			<label for="input">
@@ -9,13 +18,12 @@ export const Password = (args, { argTypes }) => ({
 			<kx-password-input
 				style="margin-top: 10px"
 				input-id="input"
+				v-bind="args"
 				v-model="value"
-				:disabled="disabled"
 			/>
-		</div>`,
-	data: () => ({ value: "" }),
+		</div>
+	`,
+	setup() {
+		return { args, value: ref("") };
+	},
 });
-
-Password.args = {
-	disabled: false,
-};

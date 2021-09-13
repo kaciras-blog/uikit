@@ -31,7 +31,6 @@ export const MediaResolution = () => ({
 	data: () => ({
 		urlInput: "",
 		size: null,
-
 		error: null,
 		mediaType: null,
 		source: null,
@@ -53,13 +52,16 @@ export const MediaResolution = () => ({
 
 			try {
 				// 先HEAD确定资源类型
-				const head = await fetch(urlInput, { method: "HEAD" });
+				const head = await fetch(urlInput, {
+					method: "HEAD",
+				});
 				await this.parse(head.headers.get("Content-Type"), urlInput);
 				this.source = urlInput;
 			} catch (e) {
 				this.error = e.message || "无法解析图片";
 			}
 		},
+
 		async showImageFileSize() {
 			const file = await openFile("image/*,video/*");
 			this.error = null;
@@ -72,6 +74,7 @@ export const MediaResolution = () => ({
 				this.error = e.message || "无法解析视频";
 			}
 		},
+
 		async parse(type, source) {
 			if (type.indexOf("image") === -1) {
 				this.size = await getVideoResolution(source);

@@ -1,5 +1,5 @@
 export default {
-	title: "Others",
+	title: "Misc",
 };
 
 export const TagGroup = () => ({

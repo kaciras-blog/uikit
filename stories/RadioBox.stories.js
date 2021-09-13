@@ -4,6 +4,9 @@ import KxRadioBoxGroup from "@/components/KxRadioBoxGroup";
 export default {
 	title: "RadioBox",
 	component: KxRadioBoxGroup,
+	args: {
+		disabled: false,
+	},
 	argTypes: {
 		disabled: {
 			control: { type: "boolean" },
@@ -11,20 +14,19 @@ export default {
 	},
 };
 
-export const Radio = args => ({
-	template: `
-		<h1>Selected: {{ value }}</h1>
-		<kx-radio-box-group v-model="value" v-bind="args">
-			<kx-radio-box :value="0">0: Apple</kx-radio-box>
-			<kx-radio-box :value="1">1: PC</kx-radio-box>
-			<kx-radio-box :value="2">2: Android</kx-radio-box>
-			<kx-radio-box :value="3">3: WindowsPhone</kx-radio-box>
-		</kx-radio-box-group>`,
-	setup() {
-		return { args, value: ref(1) };
-	},
-});
-
-Radio.args = {
-	disabled: false,
+export const RadioBox = {
+	render: args => ({
+		template: `
+			<h1>Selected: {{ value }}</h1>
+			<kx-radio-box-group v-bind="args" v-model="value">
+				<kx-radio-box :value="0">0: Apple</kx-radio-box>
+				<kx-radio-box :value="1">1: PC</kx-radio-box>
+				<kx-radio-box :value="2">2: Android</kx-radio-box>
+				<kx-radio-box :value="3">3: WindowsPhone</kx-radio-box>
+			</kx-radio-box-group>
+		`,
+		setup() {
+			return { args, value: ref(1) };
+		},
+	}),
 };
