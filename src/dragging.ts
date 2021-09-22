@@ -169,6 +169,6 @@ export class EdgeScrollObserver {
  * @example
  * observeMouseMove().pipe(..., edgeScroll(), ...).subscribe(...)
  */
-export function edgeScroll(size: number = 80, speed: number = 0.4) {
+export function edgeScroll(size = 80, speed = 0.4) {
 	return tap<Point2D>(new EdgeScrollObserver(size, speed));
 }

@@ -19,8 +19,8 @@ export function openFile(accept: string, multiple = false) {
 
 	return new Promise<File | FileList>((resolve, reject) => {
 		input.onerror = reject;
-		input.onchange = (event) => {
-			const { files } = event.target;
+		input.onchange = () => {
+			const files = input.files!;
 			resolve(multiple ? files : files[0]);
 		};
 	});

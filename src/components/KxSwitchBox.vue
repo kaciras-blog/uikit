@@ -11,7 +11,7 @@
 		<!--
 			aria-checked 是 role="switch" 的必需属性，使用 toString() 防止 false 时属性被省略。
 			详情见：https://www.w3.org/TR/wai-aria-1.1/#aria-checked
-		 -->
+		-->
 		<span
 			class="kx-switch"
 			:class="{ checked: modelValue }"
@@ -31,13 +31,13 @@
 <script setup lang="ts">
 import { defineEmits, defineProps } from "vue";
 
-interface Props {
+interface SwitchBoxProps {
 	modelValue: boolean;
 	name?: string;
 	disabled?: boolean;
 }
 
-const props = defineProps<Props>();
+defineProps<SwitchBoxProps>();
 const emit = defineEmits(["update:modelValue"]);
 
 function handleChange(event) {

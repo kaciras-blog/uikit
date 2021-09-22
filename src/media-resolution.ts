@@ -18,37 +18,32 @@
 /**
  * 二维尺寸对象，包含宽高，单位是像素，可能有小数。
  */
-type Resolution = { width: number, height: number };
+export interface Resolution {
+	width: number;
+	height: number;
+}
+
+type MediaElement = HTMLVideoElement | HTMLImageElement;
 
 /**
- * 获取图片的尺寸，同时支持像素图和SVG图。
- * 如果参数是URL，则根据响应的Content-Type头判断图片类型。
+ * 设置媒体元素的 src 属性，并安排可能的清理操作。
+ * IDE 老提示代码重复所以就提取出来了。
  *
- * 详细的说明请见 getRasterImageResolution() 和 getSVGImageResolution() 的文档。
- *
- * @param image 图片文件或URL
- * @return 尺寸信息
- * @throw 如果参数是URL且响应缺少Content-Type头
+ * @param fetcher 读取尺寸的 Promise
+ * @param el 媒体元素
+ * @param src 媒体源
  */
-export async function getImageResolution(image: string | Blob) {
-	if (typeof image === "string") {
-		const res = await fetch(image, { credentials: "include" });
-		const type = res.headers.get("Content-Type");
-
-		if (type === null) {
-			throw new Error("响应没有 Content-Type 头，" +
-				"请自己判断图片类型使用 getRasterImageResolution 或 getSVGImageResolution.");
-		}
-
-		if (type.indexOf("svg") === -1) {
-			return getRasterImageResolution(await res.blob());
-		} else {
-			return getRasterImageResolution(await res.text());
-		}
-	} else if (image.type.indexOf("svg") === -1) {
-		return getRasterImageResolution(image);
+function setMediaElementSource(
+	fetcher: Promise<Resolution>,
+	el: MediaElement,
+	src: string | Blob,
+) {
+	if (typeof src === "string") {
+		el.src = src;
+		return fetcher;
 	} else {
-		return svgSizeOrViewBox(await image.text());
+		el.src = URL.createObjectURL(src);
+		return fetcher.finally(() => URL.revokeObjectURL(el.src));
 	}
 }
 
@@ -70,13 +65,7 @@ export function getVideoResolution(video: string | Blob) {
 		el.onloadedmetadata = () => resolve({ width: el.videoWidth, height: el.videoHeight });
 	});
 
-	if (typeof video === "string") {
-		el.src = video;
-		return promise;
-	} else {
-		el.src = URL.createObjectURL(video);
-		return promise.finally(() => URL.revokeObjectURL(el.src));
-	}
+	return setMediaElementSource(promise, el, video);
 }
 
 /**
@@ -93,13 +82,7 @@ export function getRasterImageResolution(image: string | Blob) {
 		el.onload = () => resolve({ width: el.width, height: el.height });
 	});
 
-	if (typeof image === "string") {
-		el.src = image;
-		return promise;
-	} else {
-		el.src = URL.createObjectURL(image);
-		return promise.finally(() => URL.revokeObjectURL(el.src));
-	}
+	return setMediaElementSource(promise, el, image);
 }
 
 /**
@@ -128,32 +111,69 @@ export async function getSVGImageResolution(image: string | Blob) {
 	}
 }
 
+/**
+ * 仅支持 px 单位和不带单位的值，因为其它单位都与上下文有关。
+ * 如果长度属性不存在则默认为 100%，此时抛出异常。
+ *
+ * @param length SVG长度对象
+ * @throws 如果是不支持的单位或没有该属性
+ */
+function getLengthInPx(length: SVGAnimatedLength) {
+	const { baseVal } = length;
+
+	switch (baseVal.unitType) {
+		case SVGLength.SVG_LENGTHTYPE_NUMBER:
+		case SVGLength.SVG_LENGTHTYPE_PX:
+			return baseVal.value;
+		default:
+			throw new Error("Unsupported SVG length unit");
+	}
+}
+
 function svgSizeOrViewBox(text: string): Resolution {
 	const parser = new DOMParser();
 	const doc = parser.parseFromString(text, "image/svg+xml");
 	const svg = doc.documentElement as unknown as SVGSVGElement;
 
-	/**
-	 * 仅支持px单位和不带单位的值，因为其它单位都与上下文有关
-	 *
-	 * @param length SVG长度
-	 * @throws 如果是不支持的单位
-	 */
-	function getLengthPx(length: SVGAnimatedLength) {
-		const { baseVal } = length;
-
-		switch (baseVal.unitType) {
-			case SVGLength.SVG_LENGTHTYPE_NUMBER:
-			case SVGLength.SVG_LENGTHTYPE_PX:
-				return baseVal.value;
-		}
-		throw new Error("Unsupported SVG length unit.");
-	}
-
 	try {
-		return { width: getLengthPx(svg.width), height: getLengthPx(svg.height) };
+		return {
+			width: getLengthInPx(svg.width),
+			height: getLengthInPx(svg.height),
+		};
 	} catch (e) {
 		const viewBox = svg.viewBox.baseVal;
 		return { width: viewBox.width, height: viewBox.height };
+	}
+}
+
+/**
+ * 获取图片的尺寸，同时支持像素图和 SVG 图。
+ * 如果参数是URL，则根据响应的 Content-Type 头判断图片类型。
+ *
+ * 详细的说明请见 getRasterImageResolution() 和 getSVGImageResolution() 的文档。
+ *
+ * @param image 图片文件或URL
+ * @return 尺寸信息
+ * @throw 如果参数是URL且响应缺少Content-Type头
+ */
+export async function getImageResolution(image: string | Blob) {
+	if (typeof image === "string") {
+		const res = await fetch(image, { credentials: "include" });
+		const type = res.headers.get("Content-Type");
+
+		if (type === null) {
+			throw new Error("响应没有 Content-Type 头，" +
+				"请自己判断图片类型使用 getRasterImageResolution 或 getSVGImageResolution.");
+		}
+
+		if (type.indexOf("svg") !== -1) {
+			return svgSizeOrViewBox(await res.text());
+		} else {
+			return getRasterImageResolution(await res.blob());
+		}
+	} else if (image.type.indexOf("svg") === -1) {
+		return getRasterImageResolution(image);
+	} else {
+		return svgSizeOrViewBox(await image.text());
 	}
 }
