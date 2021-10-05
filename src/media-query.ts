@@ -102,28 +102,23 @@ export class MediaQueryManager {
 	 * @param app Vue对象
 	 */
 	install(app: App) {
+		const globals = app.config.globalProperties;
 		const { breakpoints } = this;
-		const { config } = app;
 
-		// this.$mediaQuery.func(...) 里面访问不到Vue实例，所以得这么搞一下
-		Object.defineProperty(config.globalProperties, "$mediaQuery", {
-			get() {
-				return new MediaQueryAPI(this.$store, breakpoints);
-			},
-			enumerable: true,
-			configurable: true, // SSR 使用外置 Vue 模块时会重复加载插件
-		});
+		const mediaQuery = new MediaQueryAPI(globals, breakpoints);
+		globals.$mediaQuery = mediaQuery;
+		app.provide("$mediaQuery", mediaQuery);
 	}
 }
 
 /** 供组件使用的 API，在组件内部通过 this.$mediaQuery 访问 */
 export class MediaQueryAPI {
 
-	private readonly store: Store<any>;
+	private readonly globals: Record<string, Store<any>>;
 	private readonly breakpoints: MediaBreakPoints;
 
-	constructor(store: Store<any>, breakpoints: MediaBreakPoints) {
-		this.store = store;
+	constructor(globals: Record<string, any>, breakpoints: MediaBreakPoints) {
+		this.globals = globals;
 		this.breakpoints = breakpoints;
 	}
 
@@ -145,7 +140,8 @@ export class MediaQueryAPI {
 	 * @return 当前宽度是否匹配给定的查询字符串
 	 */
 	match(exp: string) {
-		return this.testMatchExp(exp, this.store.state.mediaQuery.width);
+		const { $store } = this.globals;
+		return this.testMatchExp(exp, $store.state.mediaQuery.width);
 	}
 
 	/**
@@ -157,6 +153,8 @@ export class MediaQueryAPI {
 	 * @return 取消监听的函数
 	 */
 	watch(exp: string, enter?: () => void, leave?: () => void) {
+		const { $store } = this.globals;
+
 		const callback = (nv: number, ov: number) => {
 			const nvMatch = this.testMatchExp(exp, nv);
 			const ovMatch = this.testMatchExp(exp, ov);
@@ -164,7 +162,7 @@ export class MediaQueryAPI {
 			if (nvMatch && !ovMatch && enter) enter();
 			if (ovMatch && !nvMatch && leave) leave();
 		};
-		return this.store.watch((state) => state.mediaQuery.width, callback);
+		return $store.watch(state => state.mediaQuery.width, callback);
 	}
 
 	private testMatchExp(exp: string, width: number) {
