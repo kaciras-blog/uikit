@@ -1,76 +1,95 @@
-<script>
-import KxButton from "../components/KxButton";
+<script lang="ts">
+import { h, useCssModule } from "vue";
+import KxButton from "../components/KxButton.vue";
 
-export default {
-	name: "PagingButtons",
-	render(h, context) {
-		const { $style } = context;
-		const { index, total, omitPos } = context.props;
-		const { showPage } = context.listeners;
-		const buttons = [];
+function PagingButtons(props, context) {
+	const { index, total, omitPos } = props;
+	const { emit } = context;
+	const $style = useCssModule();
 
-		function button(page, content, disabled = false) {
-			const data = {
-				staticClass: $style.margin_fix,
-				attrs: { disabled },
-				on: { click: () => showPage(page) },
-			};
-			return h(KxButton, data, content);
+	const buttons = [];
+
+	function button(page, content, disabled = false) {
+		const data = {
+			class: $style.margin_fix,
+			disabled,
+			onClick: () => emit("show-page", page),
+		};
+		return h(KxButton, data, content);
+	}
+
+	function indexButton(page) {
+		if (page !== index) {
+			return button(page, page);
 		}
+		return h("div", { class: $style.active }, page);
+	}
 
-		function indexButton(page) {
-			if (page !== index) {
-				return button(page, page);
-			}
-			return h("div", { staticClass: $style.active }, page);
+	// 下面都是按钮，前三个跟后三个是对称的，中间循环创建按钮
+	buttons.push(button(index - 1, "<", index <= 1));
+	buttons.push(indexButton(1));
+	if (index - omitPos > 1) {
+		buttons.push(h("span", { class: $style.omit }, "..."));
+	}
+
+	const cStart = Math.max(index - omitPos, 2);
+	const cEnd = Math.min(index + omitPos, total - 1);
+	for (let i = cStart; i <= cEnd; i++) {
+		buttons.push(indexButton(i));
+	}
+
+	if (index + omitPos < total) {
+		buttons.push(h("span", { class: $style.omit }, "..."));
+	}
+	if (total > 1) {
+		buttons.push(indexButton(total));
+	}
+	buttons.push(button(index + 1, ">", index >= total));
+
+	// 坑：type="text" 的输入框没有 valueAsNumber
+	function jumpToPage({ target }) {
+		const i = parseInt(target.value);
+		if (i > 0 && i < total) {
+			emit("show-page", i);
 		}
+		target.value = "";
+	}
 
-		// 下面都是按钮，前三个跟后三个是对称的，中间循环创建按钮
-		buttons.push(button(index - 1, "<", index <= 1));
-		buttons.push(indexButton(1));
-		if (index - omitPos > 1) {
-			buttons.push(h("span", { staticClass: $style.omit }, "..."));
-		}
+	/*
+	 * <div class="minor-text">
+	 *     <span>共{{totalPage}}页，</span>
+	 *     <label>跳至<input ...>页</label>
+	 * </div>
+	 */
+	const jumpInput = h("input", {
+		class: $style.jump_input,
+		onChange: jumpToPage,
+	});
+	const jumpGroup = h("label", { class: "minor-text " + $style.jump_label }, ["转到", jumpInput, "页"]);
+	const buttonGroup = h("div", { class: "btn-group compact" }, buttons);
 
-		const cStart = Math.max(index - omitPos, 2);
-		const cEnd = Math.min(index + omitPos, total - 1);
-		for (let i = cStart; i <= cEnd; i++) {
-			buttons.push(indexButton(i));
-		}
+	return h("div", { class: $style.wrapper }, [buttonGroup, jumpGroup]);
+}
 
-		if (index + omitPos < total) {
-			buttons.push(h("span", { staticClass: $style.omit }, "..."));
-		}
-		if (total > 1) {
-			buttons.push(indexButton(total));
-		}
-		buttons.push(button(index + 1, ">", index >= total));
-
-		// 坑：type="text" 的输入框没有 valueAsNumber
-		function jumpToPage({ target }) {
-			const i = parseInt(target.value);
-			if (i > 0 && i < total) {
-				showPage(i);
-			}
-			target.value = "";
-		}
-
-		/*
-		 * <div class="minor-text">
-		 *     <span>共{{totalPage}}页，</span>
-		 *     <label>跳至<input ...>页</label>
-		 * </div>
-		 */
-		const jumpInput = h("input", {
-			staticClass: $style.jump_input,
-			on: { change: jumpToPage },
-		});
-		const jumpGroup = h("label", { staticClass: "minor-text " + $style.jump_label }, ["转到", jumpInput, "页"]);
-		const buttonGroup = h("div", { staticClass: "btn-group compact" }, buttons);
-
-		return h("div", { staticClass: $style.wrapper }, [buttonGroup, jumpGroup]);
+PagingButtons.props = {
+	index: {
+		type: Number,
+		required: true,
 	},
+	total: {
+		type: Number,
+		required: true,
+	},
+	omitPos: {
+		type: Number,
+		default: 2,
+	},
+	buttonClass: String,
 };
+
+PagingButtons.emits = ["show-page"];
+
+export default PagingButtons;
 </script>
 
 <style module lang="less">

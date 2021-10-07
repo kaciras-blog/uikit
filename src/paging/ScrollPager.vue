@@ -1,20 +1,11 @@
+<!--
+	滚动加载的底部，用于指示加载状态，同时还负责检测是否滚动到需要加载的位置。
+	在点击加载模式下会显示一个按钮。
+-->
 <template>
 	<div :class="$style.container">
-
-		<!-- 通过该插槽可以自定义状态显示，父组件内请使用inline-template -->
-		<slot name="state">
-			<sk-fading-circle v-if="state === 'LOADING'"/>
-
-			<span v-else-if="state === 'FAILED'">
-				加载失败,请<a class="error highlight" @click="loadPage">重试</a>
-			</span>
-
-			<span v-else-if="state === 'ALL_LOADED'" class="minor-text">没有更多的了</span>
-		</slot>
-
-		<!-- 手动加载按钮 -->
 		<kx-button
-			v-if="state==='FREE'"
+			v-if="state===State.FREE"
 			tag="a"
 			class="primary"
 			:class="$style.button"
@@ -23,100 +14,88 @@
 		>
 			查看更多
 		</kx-button>
+
+		<!-- 通过该插槽可以自定义状态显示，父组件内请使用inline-template -->
+		<slot name="state">
+			<sk-fading-circle v-if="state === State.LOADING"/>
+
+			<span
+				v-else-if="state === State.ALL_LOADED"
+				class="minor-text"
+			>
+				没有更多的了
+			</span>
+
+			<span v-else-if="state === State.FAILED">
+				加载失败,请
+				<a class="error highlight" @click="loadPage">重试</a>
+			</span>
+		</slot>
 	</div>
 </template>
 
-<script>
-const LOADING = "LOADING";
-const FREE = "FREE";
-const FAILED = "FAILED";
-const ALL_LOADED = "ALL_LOADED";
+<script lang="ts">
+export enum State {
+	FREE,
+	LOADING,
+	FAILED,
+	ALL_LOADED
+}
+</script>
 
-export class LoadTask {
+<script setup lang="ts">
+import { defineEmits, defineProps, onMounted, onUnmounted, watch, withDefaults } from "vue";
 
-	constructor(vm) {
-		this._finish = false;
-		this._vm = vm;
-	}
+interface Props {
 
-	complete(allLoaded = false) {
-		this.finish(allLoaded ? ALL_LOADED : FREE);
-	}
+	// 滚动到距离底部还有多高时触发加载事件
+	activeHeight: number;
 
-	completeWithError() {
-		this.finish(FAILED);
-	}
+	// 滚动时自动加载，该选项为 false 时将不触发滚动加载。
+	autoLoad: boolean;
 
-	finish(state) {
-		if (this._finish) {
-			throw new Error("不能重复设置加载的结果");
-		}
-		this._finish = true;
-		this._vm.state = state;
+	// 当前的加载状态。
+	state: State;
+
+	// 用于预渲染，也能够让爬虫跟踪到后续页。
+	nextPageUrl?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+	autoLoad: false,
+	activeHeight: 512,
+});
+
+const emit = defineEmits(["load-page"]);
+
+let observer: IntersectionObserver;
+
+function loadPage() {
+	switch (props.state) {
+		case State.ALL_LOADED:
+		case State.LOADING:
+			return;
+		default:
+			emit("load-page");
 	}
 }
 
-export default {
-	name: "ScrollPager",
-	props: {
-		// 用于多页显示模式，也能够让爬虫跟踪到后续页
-		nextPageUrl: {
-			type: String,
-			required: false,
-		},
-		// 滚动时自动加载，该选项为false时将不触发滚动加载
-		autoLoad: {
-			type: Boolean,
-			default: false,
-		},
-		// 滚动到距离底部还有多高时触发加载事件
-		activeHeight: {
-			type: Number,
-			default: 512,
-		},
-		// 初始状态，用于预渲染。
-		initState: {
-			type: String,
-			default: FREE,
-		},
-	},
-	data() {
-		/* FREE, FAIL, LOADING, ALL_LOADED */
-		return { state: this.initState };
-	},
-	methods: {
-		loadPage() {
-			if (this.state === ALL_LOADED || this.state === LOADING) {
-				return;
-			}
-			this.state = LOADING;
-			this.$emit("load-page", new LoadTask(this));
-		},
+onMounted(() => {
+	observer = new IntersectionObserver(entries => {
+		// state === FREE 在出错时不自动加载
+		if (entries[0].isIntersecting && props.state === State.FREE) loadPage();
+	});
+	const watchCallback = (value) => {
+		if (value) {
+			observer.observe(this.$el);
+		} else {
+			observer.disconnect();
+		}
+	};
+	watch(() => props.autoLoad, watchCallback, { immediate: true });
+});
 
-		/** 强制加载，该方法在加载完成时仍可以调用，用于HACK一些操作 */
-		forceLoad(loader) {
-			this.state = LOADING;
-			loader(new LoadTask(this));
-		},
-	},
-	mounted() {
-		this.$_observer = new IntersectionObserver(entries => {
-			// state === FREE 在出错时不自动加载
-			if (entries[0].isIntersecting && this.state === FREE) this.loadPage();
-		});
-		const autoLoadWatcher = (value) => {
-			if (value) {
-				this.$_observer.observe(this.$el);
-			} else {
-				this.$_observer.disconnect();
-			}
-		};
-		this.$watch("autoLoad", autoLoadWatcher, { immediate: true });
-	},
-	unmouted() {
-		this.$_observer.disconnect();
-	},
-};
+onUnmounted(() => observer.disconnect());
 </script>
 
 <style module lang="less">

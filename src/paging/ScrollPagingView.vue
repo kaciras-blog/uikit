@@ -8,8 +8,7 @@
 	<div>
 		<slot :items="value ? value.items : []"/>
 		<scroll-pager
-			ref="scrollPager"
-			:init-state="drained ? 'ALL_LOADED' : 'FREE'"
+			:state="drained ? 'ALL_LOADED' : 'FREE'"
 			:auto-load="autoLoad"
 			:next-page-url="nextLink && !drained ? nextLink(start + loadedCount, pageSize) : null"
 			@load-page="handleLoadTask"
@@ -17,80 +16,80 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: "ScrollPagingView",
-	props: {
-		loader: {
-			type: Function,
-			required: true,
-		},
-		value: {
-			type: Object,
-		},
-		start: {
-			type: Number,
-			default: 0,
-		},
-		pageSize: {
-			type: Number,
-			default: 16,
-		},
+<script setup lang="ts">
+import { computed, defineProps, ref, withDefaults } from "vue";
+import { State } from "./ScrollPager.vue";
 
-		/** (start, count) => string，如果不存在则不生成下一页的链接 */
-		nextLink: Function,
+interface Props {
 
-		/** 是否触发滚动加载 */
-		autoLoad: Boolean,
-	},
-	data: () => ({
-		// 内部维护数量而不是用 value.items.length，是为了外部增删元素而不打乱索引
-		loadedCount: 0,
-	}),
-	computed: {
-		/** 是否全部加载完毕，没有数据视为未加载完 */
-		drained() {
-			const { loadedCount, start, value } = this;
-			if (!value) {
-				return false;
-			}
-			return start + loadedCount >= value.total;
-		},
-	},
-	methods: {
-		handleLoadTask(task) {
-			return this.loadPage()
-				.then(isFinish => task.complete(isFinish))
-				.catch(e => task.completeWithError(e));
-		},
-		async loadPage() {
-			const { start, loader, value, pageSize, loadedCount } = this;
-			const { items = [] } = value || {};
-			const offset = start + loadedCount;
+	/** 是否触发滚动加载 */
+	autoLoad: boolean;
 
-			const data = await loader(offset, pageSize);
-			this.loadedCount += pageSize;
-			this.$emit("input", { items: items.concat(data.items), total: data.total });
+	start: number;
 
-			// handleLoadTask不在渲染函数里，无法获知value的更新导致其不能使用 this.drained 来判断结束
-			return offset + pageSize >= data.total;
-		},
-		reload() {
-			const { start, pageSize } = this;
+	pageSize: number;
 
-			const doLoadPage = async () => {
-				const data = await this.loader(start, pageSize);
-				this.$emit("input", data);
-				this.loadedCount = pageSize;
-				return start + pageSize >= data.total;
-			};
+	/** 下一页的链接，用于 SSR，如果不存在则不生成 */
+	nextLink?: (start: number, count: number) => string
+}
 
-			this.$refs.scrollPager.forceLoad(task => {
-				doLoadPage()
-					.then(isFinish => task.complete(isFinish))
-					.catch(e => task.completeWithError(e));
-			});
-		},
-	},
-};
+const props = withDefaults(defineProps<Props>(), {
+	start: 0,
+	pageSize: 16,
+});
+
+const state = ref(State.FREE);
+
+function handleLoadTask(task) {
+	return this.loadPage()
+		.then(isFinish => task.complete(isFinish))
+		.catch(e => task.completeWithError(e));
+}
+
+async function loadPage() {
+	const { start, loader, value, pageSize, loadedCount } = this;
+	const { items = [] } = value || {};
+	const offset = start + loadedCount;
+
+	const data = await loader(offset, pageSize);
+	this.loadedCount += pageSize;
+	this.$emit("input", { items: items.concat(data.items), total: data.total });
+
+	// handleLoadTask不在渲染函数里，无法获知value的更新导致其不能使用 this.drained 来判断结束
+	return offset + pageSize >= data.total;
+}
+
+/** 是否全部加载完毕，没有数据视为未加载完 */
+const drained = computed(() => {
+	const { loadedCount, start, value } = props;
+	if (!value) {
+		return false;
+	}
+	return start + loadedCount >= value.total
+});
+
+function reload() {
+	const { start, pageSize } = this;
+
+	const doLoadPage = async () => {
+		const data = await this.loader(start, pageSize);
+		this.$emit("input", data);
+		this.loadedCount = pageSize;
+		return start + pageSize >= data.total;
+	};
+
+	this.$refs.scrollPager.forceLoad(task => {
+		doLoadPage()
+			.then(isFinish => task.complete(isFinish))
+			.catch(e => task.completeWithError(e));
+	});
+}
+
+interface PagingViewModel {
+	items: any[];
+	total: number;
+
+	// 内部维护数量而不是用 value.items.length，是为了外部增删元素而不打乱索引
+	loadedCount: number;
+}
 </script>
