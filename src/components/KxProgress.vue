@@ -2,7 +2,7 @@
 	<div :class="[$style.progress, {[$style.error]: hasError}]" :style="style"></div>
 </template>
 
-<script>
+<script lang="ts">
 const TRANSITION_TIME = 300;
 const RESIDUAL_TIME = 800;
 

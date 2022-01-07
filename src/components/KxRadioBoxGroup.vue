@@ -11,6 +11,6 @@ interface Props {
 	disabled?: boolean;
 }
 
-const props = defineProps<Props>();
-const emit = defineEmits(["update:modelValue"]);
+defineProps<Props>();
+defineEmits(["update:modelValue"]);
 </script>

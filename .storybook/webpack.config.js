@@ -19,7 +19,8 @@ function getCliConfig(mode) {
 		// "optimize-css",
 	];
 
-	chain.plugins.values().map((item) => item.name)
+	chain.plugins.values()
+		.map((item) => item.name)
 		.filter(name => !allowedPlugins.includes(name))
 		.forEach(name => chain.plugins.delete(name));
 

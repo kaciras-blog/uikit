@@ -1,3 +1,4 @@
+<!-- TODO: 是否需要固定按钮尺寸？ -->
 <template>
 	<kx-button
 		:class="{ [$style.running]: running }"
@@ -10,8 +11,9 @@
 
 <script setup lang="ts">
 import { defineProps, ref, withDefaults } from "vue";
+import KxButton from "./KxButton.vue";
 
-interface Props {
+interface TaskButtonProps {
 
 	// 因为事件无法获取返回值所以用 props
 	onClick: (event: Event, signal: AbortSignal) => Promise<any>;
@@ -20,7 +22,7 @@ interface Props {
 	abortable?: boolean;
 }
 
-const { abortable, onClick } = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<TaskButtonProps>(), {
 	abortable: false,
 });
 
@@ -29,13 +31,13 @@ const controller = ref(new AbortController());
 
 function handleClick(event: MouseEvent) {
 	if (running.value) {
-		if (abortable) {
-			running.value = false;
+		if (props.abortable) {
 			controller.value.abort();
+			running.value = false;
 		}
 	} else {
 		const { signal } = controller.value = new AbortController();
-		const task = onClick(event, signal);
+		const task = props.onClick(event, signal);
 
 		if (typeof task.finally !== "function") {
 			throw new Error("Click handler must return a Promise");
@@ -63,12 +65,12 @@ function handleClick(event: MouseEvent) {
 	}
 
 	background-image: linear-gradient(-45deg,
-	var(--bg-highlight) 25%,
-	transparent 25%,
-	transparent 50%,
-	var(--bg-highlight) 50%,
-	var(--bg-highlight) 75%,
-	transparent 75%);
+		var(--bg-highlight) 25%,
+		transparent 25%,
+		transparent 50%,
+		var(--bg-highlight) 50%,
+		var(--bg-highlight) 75%,
+		transparent 75%);
 
 	animation: barbershop linear .4s infinite;
 }

@@ -1,4 +1,8 @@
 {
+	"include": [
+		"__tests__/**/*.ts",
+		"src/**/*.ts"
+	],
 	"compilerOptions": {
 		"target": "ESNext",
 		"module": "ESNext",
@@ -8,27 +12,16 @@
 			"DOM",
 			"DOM.Iterable"
 		],
-		"jsx": "preserve",
-		"baseUrl": ".",
-		"skipLibCheck": true,
-		"esModuleInterop": true,
-		"strict": true,
-		"sourceMap": true,
-		"experimentalDecorators": true,
 		"types": [
 			"jest",
 			"webpack-env"
 		],
-
-//		被第三方引入时可能造成编译问题
-//		"paths": {
-//			"@/*": ["src/*"]
-//		},
-	},
-	"include": [
-		"src/**/*.ts",
-		"src/**/*.tsx",
-		"__tests__/**/*.ts",
-		"__tests__/**/*.tsx"
-	]
+		"baseUrl": ".",
+		"jsx": "preserve",
+		"skipLibCheck": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"sourceMap": true,
+		"experimentalDecorators": true,
+	}
 }

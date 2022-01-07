@@ -1,4 +1,5 @@
 const { execFileSync } = require("child_process");
+const { dirname } = require("path");
 const Service = require("@vue/cli-service/lib/Service");
 const dump = require("./dump");
 
@@ -11,6 +12,8 @@ const dump = require("./dump");
  * 所以这里开启多个进程来生成文件。
  */
 const [, , mode, name] = process.argv;
+process.chdir(dirname(__dirname));
+
 if (mode) {
 	const service = new Service(process.cwd());
 	service.init(mode);

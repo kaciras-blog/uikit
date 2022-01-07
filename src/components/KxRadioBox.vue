@@ -28,12 +28,18 @@
 <script setup lang="ts">
 import { computed, defineProps, getCurrentInstance } from "vue";
 
-interface Props {
+interface RadioBoxProps {
 	value: any;
 }
 
-const props = defineProps<Props>();
+const props = defineProps<RadioBoxProps>();
 const self = getCurrentInstance();
+
+// Vue 好像没有 React.cloneElement 这样的功能，用 slot 传递太麻烦。
+if (!self?.parent) {
+	throw new Error("RadioBox 必须放在 RadioBoxGroup 里");
+}
+
 const { props: groupProps, emit: groupEmit } = self.parent;
 
 const disabled = computed(() => groupProps.disabled);

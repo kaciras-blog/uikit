@@ -1,20 +1,22 @@
 const { join } = require("path");
 const fs = require("fs");
 const { toString } = require("webpack-chain");
-const { Linter } = require("eslint");
-const lintConfig = require("../.eslintrc");
+const { ESLint, Linter } = require("eslint");
 
-function format(text) {
-	text = text.replace(/\[native code];?/g, "/* native code */");
+const eslint = new ESLint();
+
+async function format(text, filename) {
+	text = text.replaceAll(/\[native code];?/g, "/* native code */");
 	text = "module.exports = " + text;
 
-	const result = new Linter().verifyAndFix(text, lintConfig);
+	const config = await eslint.calculateConfigForFile(filename);
+	const result = new Linter().verifyAndFix(text, config);
+
 	if (result.fixed) {
 		return result.output;
 	}
-
-	console.error("[webpack-dump] 生成配置文件失败，详细信息见生成的文件");
-	return result.messages.map(m => JSON.stringify(m)).join("\n");
+	console.error(`${filename} 格式化失败，详细信息见生成的文件`);
+	return "exports = " + JSON.stringify(result.messages, null, "\t");
 }
 
 const outDir = join(__dirname, "../temp");
@@ -28,7 +30,7 @@ fs.mkdirSync(outDir, { recursive: true });
  * @param name 输出的文件名
  * @param config 要输出的webpack配置
  */
-module.exports = function dump(name, config) {
+module.exports = async function dump(name, config) {
 	if (typeof config !== "string") {
 		config = toString(config);
 	}

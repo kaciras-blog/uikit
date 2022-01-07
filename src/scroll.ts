@@ -60,7 +60,7 @@ export function scrollToElement(element: HTMLElement) {
 }
 
 /**
- * 临时禁止页面的滚动条，当组件挂载
+ * 临时禁止页面的滚动条，当组件挂载时启用，卸载后还原。
  */
 export function usePreventScroll() {
 	const { style } = document.body;

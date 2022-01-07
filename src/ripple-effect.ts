@@ -1,5 +1,5 @@
 /*
- * 波浪效果，主要参考了Vuetify
+ * 波浪效果，主要参考了 Vuetify
  * https://github.com/vuetifyjs/vuetify/blob/master/packages/vuetify/src/directives/ripple/index.ts
  */
 

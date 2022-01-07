@@ -35,7 +35,7 @@ interface Props {
 	disabled?: boolean;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 const emit = defineEmits(["update:modelValue"]);
 
 function handleChange(event) {
