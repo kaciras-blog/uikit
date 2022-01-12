@@ -1,14 +1,14 @@
 <script lang="ts">
-import { h, useCssModule } from "vue";
+import { h, useCssModule, FunctionalComponent } from "vue";
 import { RouterLink } from "vue-router";
 
-function KxButton(props, context) {
+const KxButton: FunctionalComponent<any> = (props, context) =>{
 	const { type, color, route } = props;
 	const { slots, attrs, emit } = context;
 
 	const $style = useCssModule();
 
-	const data = {
+	const data:any = {
 		...attrs,
 		class: [
 			"kx-btn",
@@ -34,11 +34,14 @@ function KxButton(props, context) {
 	 * 【无法处理的情况】
 	 * 如果鼠标保持按下状态移动到元素之外，则 mouseup 事件无法触发，这种情况很少不用管。
 	 */
-	data.onMouseup = (event) => {
+	data.onMouseup = (event: MouseEvent) => {
 		emit("mouseup", event);
-		event.currentTarget.blur();
+		(event.currentTarget as HTMLElement).blur();
 	};
 
+	if (!slots.default) {
+		throw new Error("按钮必须有内容");
+	}
 	const children = slots.default();
 
 	if (attrs.href !== undefined) {

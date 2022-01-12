@@ -19,6 +19,7 @@
 		"baseUrl": ".",
 		"jsx": "preserve",
 		"skipLibCheck": true,
+		"allowJs": true,
 		"allowSyntheticDefaultImports": true,
 		"strict": true,
 		"sourceMap": true,
