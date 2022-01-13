@@ -1,7 +1,7 @@
 import { App, inject } from "vue";
 import { boundClass } from "autobind-decorator";
 import KxDialogContainer from "./KxDialogContainer.vue";
-import KxMessageBox, { MessageBoxProps } from "./KxMessageBox.vue";
+import KxMessageBox from "./KxMessageBox.vue";
 import KxImageCropper from "./KxImageCropper.vue";
 import { DialogSession, QuickDialogController } from "./controller";
 
@@ -12,6 +12,18 @@ export enum MessageBoxType {
 	Success,
 	Warning,
 	Error,
+}
+
+/**
+ * KxMessageBox 的 Props 类型，因为 Vue 的编译器 bug 只能复制出来：
+ * https://github.com/vuejs/vue-next/issues/4918
+ */
+interface MessageBoxProps {
+	title: string;
+	type: MessageBoxType;
+	content?: string;
+	cancelable?: boolean;
+	closable?: boolean;
 }
 
 export interface ImageCopperProps {

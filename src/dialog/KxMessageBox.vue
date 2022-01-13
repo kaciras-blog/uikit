@@ -11,11 +11,15 @@
 			role="dialog"
 			aria-modal="true"
 		>
-			<kx-close-icon
+			<kx-button
 				v-if="closable"
 				:class="$style.closeIcon"
+				title="关闭"
+				type="text"
 				@click="$dialog.close"
-			/>
+			>
+				<close-icon/>
+			</kx-button>
 
 			<dialog-icons :type="type"/>
 			<h2>{{ title }}</h2>
@@ -29,8 +33,16 @@
 	</kx-modal-wrapper>
 </template>
 
-<script lang="ts">
-export interface MessageBoxProps {
+<script setup lang="ts">
+import { defineProps, ref, withDefaults } from "vue";
+import CloseIcon from "../assets/icon-close.svg";
+import KxButton from "../components/KxButton.vue";
+import { MessageBoxType, useDialog } from "./quick-alert";
+import DialogIcons from "./DialogIcons.vue";
+import KxModalWrapper from "./KxModalWrapper.vue";
+import KxDialogButtons from "./KxDialogButtons.vue";
+
+interface MessageBoxProps {
 	title: string;
 	type: MessageBoxType;
 
@@ -50,16 +62,6 @@ export interface MessageBoxProps {
 	 */
 	closable?: boolean;
 }
-</script>
-
-<script setup lang="ts">
-import { defineProps, ref, withDefaults } from "vue";
-import CloseIcon from "../assets/icon-close.svg";
-import KxButton from "../components/KxButton.vue";
-import { MessageBoxType, useDialog } from "./quick-alert";
-import DialogIcons from "./DialogIcons.vue";
-import KxModalWrapper from "./KxModalWrapper.vue";
-import KxDialogButtons from "./KxDialogButtons.vue";
 
 const props = withDefaults(defineProps<MessageBoxProps>(), {
 	closable: true,
