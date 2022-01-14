@@ -1,9 +1,6 @@
 <template>
 	<teleport to="body">
-		<kx-modal-wrapper
-			@click.self="onOverlayClick"
-			@keyup.esc="onEscape"
-		>
+		<kx-modal-wrapper @click.self="onOverlayClick" @keyup.esc="onEscape">
 			<div
 				class="kx-dialog dialogZoomIn"
 				ref="dialogEl"
@@ -20,7 +17,15 @@
 					<slot name="title">
 						<h2 class="kx-dialog-title">{{ title }}</h2>
 					</slot>
-					<kx-close-icon v-if="closeIcon" @click="$emit('close')"/>
+					<button
+						v-if="closeIcon"
+						title="关闭"
+						:class="$style.closeIcon"
+						@mousedown.stop
+						@click="$emit('close')"
+					>
+						<close-icon/>
+					</button>
 				</header>
 
 				<div class="kx-dialog-body"><slot/></div>
@@ -33,7 +38,7 @@
 import { ref } from "vue";
 import { limitInWindow, moveElement, observeMouseMove } from "../dragging";
 import { usePreventScroll } from "../scroll";
-import KxCloseIcon from "./KxCloseIcon.vue";
+import CloseIcon from "../assets/icon-close.svg";
 import KxModalWrapper from "./KxModalWrapper.vue";
 
 const props = defineProps({
@@ -117,5 +122,28 @@ function onOverlayClick() {
 
 .kx-dialog-body {
 	padding: 20px;
+}
+
+.closeIcon {
+	height: 3rem;
+	width: 3rem;
+
+	font-size: 24px;
+	line-height: 1em;
+
+	text-align: center;
+	cursor: pointer;
+	background: none;
+
+	transition: .15s ease-out;
+
+	&:hover,
+	&:focus {
+		background-color: rgba(0, 0, 0, .05);
+	}
+
+	&:active {
+		background-color: rgba(0, 0, 0, .1);
+	}
 }
 </style>

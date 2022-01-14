@@ -5,7 +5,7 @@
 			:class="$style.back_button"
 			@click="$dialog.close"
 		>
-			<i class="fas fa-arrow-left"/>
+			<arrow-left-icon/>
 		</button>
 
 		<span :class="$style.title">{{ title }}</span>
@@ -14,16 +14,18 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: "KxFrameHeader",
-	props: {
-		title: {
-			type: String,
-			required: false,
-		},
+<script setup lang="ts">
+import ArrowLeftIcon from "../assets/arrow-left.svg";
+import { useDialog } from "./quick-alert";
+
+defineProps({
+	title: {
+		type: String,
+		required: false,
 	},
-};
+});
+
+const $dialog = useDialog();
 </script>
 
 <style module lang="less">
