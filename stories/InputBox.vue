@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, reactive } from "vue";
+import { reactive } from "vue";
 
 const { oldName, oldAge, hasInput } = defineProps([
 	"oldName",

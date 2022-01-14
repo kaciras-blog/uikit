@@ -28,12 +28,12 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits, defineProps, ref } from "vue";
+import { ref } from "vue";
 import VisibleIcon from "../assets/visible.svg";
 import HiddenIcon from "../assets/visible-off.svg";
 import KxButton from "./KxButton.vue";
 
-interface Props {
+interface PasswordInputProps {
 	modelValue: string;
 	inputId?: string;
 	disabled?: boolean;
@@ -41,13 +41,13 @@ interface Props {
 	placeholder?: string;
 }
 
-defineProps<Props>();
+defineProps<PasswordInputProps>();
 const emit = defineEmits(["update:modelValue"]);
 
 const visible = ref(false);
 
-function handleInput(event) {
-	emit("update:modelValue", event.target.value);
+function handleInput(event: Event) {
+	emit("update:modelValue", (event.target as HTMLInputElement).value);
 }
 </script>
 

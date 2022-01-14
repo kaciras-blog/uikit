@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import PopupAlert from "./PopupAlert";
+import PopupAlert from "./PopupAlert.vue";
 
 export default {
 	name: "PopupAlertContainer",

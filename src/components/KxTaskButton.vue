@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, withDefaults } from "vue";
+import { ref } from "vue";
 import KxButton from "./KxButton.vue";
 
 interface TaskButtonProps {

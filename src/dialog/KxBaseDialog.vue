@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits, defineProps, ref } from "vue";
+import { ref } from "vue";
 import { limitInWindow, moveElement, observeMouseMove } from "../dragging";
 import { usePreventScroll } from "../scroll";
 import KxCloseIcon from "./KxCloseIcon.vue";

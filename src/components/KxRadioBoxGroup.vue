@@ -3,14 +3,12 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits, defineProps } from "vue";
-
-interface Props {
+export interface RadioGroupProps {
 	modelValue: any;
 	name?: string;
 	disabled?: boolean;
 }
 
-defineProps<Props>();
+defineProps<RadioGroupProps>();
 defineEmits(["update:modelValue"]);
 </script>

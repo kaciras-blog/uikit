@@ -29,8 +29,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits, defineProps } from "vue";
-
 interface SwitchBoxProps {
 	modelValue: boolean;
 	name?: string;
@@ -40,8 +38,8 @@ interface SwitchBoxProps {
 defineProps<SwitchBoxProps>();
 const emit = defineEmits(["update:modelValue"]);
 
-function handleChange(event) {
-	emit("update:modelValue", event.target.checked);
+function handleChange(event: Event) {
+	emit("update:modelValue", (event.target as HTMLInputElement).checked);
 }
 </script>
 

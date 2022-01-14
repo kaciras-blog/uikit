@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, withDefaults } from "vue";
+import { ref } from "vue";
 import CloseIcon from "../assets/icon-close.svg";
 import KxButton from "../components/KxButton.vue";
 import { MessageBoxType, useDialog } from "./quick-alert";

@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, getCurrentInstance } from "vue";
+import { computed, getCurrentInstance } from "vue";
 
 interface RadioBoxProps {
 	value: any;

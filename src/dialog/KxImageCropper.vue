@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits, defineProps, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import "cropperjs/dist/cropper.min.css";
 import Cropper from "cropperjs";
 import { usePreventScroll } from "../scroll";
@@ -70,6 +70,8 @@ import SwapHorizIcon from "../assets/swap_horiz.svg";
 import SwapVertIcon from "../assets/swap_vert.svg";
 import RotateRightIcon from "../assets/rotate_right.svg";
 import ZoomOutMap from "../assets/zoom_out_map.svg";
+import KxButton from "../components/KxButton.vue";
+import { useDialog } from "./quick-alert";
 
 const props = defineProps({
 	image: {
@@ -87,6 +89,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["confirm"]);
+
+const $dialog = useDialog();
 
 // cropper.scaleX() 始终相对于原图
 const xScale = ref(1);
