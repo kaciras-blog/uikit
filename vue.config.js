@@ -1,4 +1,5 @@
-const svgLoader = require.resolve("@kaciras-blog/devtool/lib/webpack/vue-svg-loader");
+const svgLoader = require.resolve("@kaciras-blog/devtool/lib/webpack/reactive-svg-loader");
+const sfcLoader = require.resolve("@kaciras-blog/devtool/lib/webpack/vue-template-loader");
 const packageJson = require("./package.json");
 
 module.exports = {
@@ -12,6 +13,8 @@ module.exports = {
 		svgRule
 			.use("vue-loader").loader("vue-loader")
 			.end()
-			.use("vue-svg-loader").loader(svgLoader);
+			.use("sfc-loader").loader(sfcLoader)
+			.end()
+			.use("svg-loader").loader(svgLoader);
 	},
 };
