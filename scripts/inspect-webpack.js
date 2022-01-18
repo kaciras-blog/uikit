@@ -17,7 +17,7 @@ process.chdir(dirname(__dirname));
 if (mode) {
 	const service = new Service(process.cwd());
 	service.init(mode);
-	dump(name, service.resolveWebpackConfig());
+	await dump(name, service.resolveWebpackConfig());
 } else {
 	execFileSync(process.execPath, [__filename, "development", "vue-cli.js"]);
 	execFileSync(process.execPath, [__filename, "production", "vue-cli.prod.js"]);

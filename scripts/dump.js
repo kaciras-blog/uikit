@@ -34,5 +34,6 @@ module.exports = async function dump(name, config) {
 	if (typeof config !== "string") {
 		config = toString(config);
 	}
-	fs.writeFileSync(join(outDir, name), format(config));
+	config = await format(config, name);
+	fs.writeFileSync(join(outDir, name), config);
 };
