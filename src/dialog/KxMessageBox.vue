@@ -1,4 +1,5 @@
 <template>
+	<teleport to="body">
 	<kx-modal-wrapper
 		@click.self="onOverlayClick"
 		@keyup.esc="closable && $dialog.close()"
@@ -16,6 +17,7 @@
 				:class="$style.closeIcon"
 				title="关闭"
 				type="text"
+				color="shadow"
 				@click="$dialog.close"
 			>
 				<close-icon/>
@@ -23,6 +25,8 @@
 
 			<dialog-icons :type="type"/>
 			<h2>{{ title }}</h2>
+
+			<!-- pre 标签特殊，不会去除内容中的空白 -->
 			<pre v-if="content" :class="$style.content">{{ content }}</pre>
 
 			<kx-dialog-buttons
@@ -31,6 +35,7 @@
 			/>
 		</div>
 	</kx-modal-wrapper>
+	</teleport>
 </template>
 
 <script setup lang="ts">
@@ -90,6 +95,10 @@ function onOverlayClick() {
 	position: absolute;
 	top: 0;
 	right: 0;
+
+	font-size: 24px;
+	padding: 12px;
+	border-radius: 0;
 }
 
 .content {

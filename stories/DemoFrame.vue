@@ -1,15 +1,24 @@
 <template>
 	<kx-frame>
 		<kx-frame-header title="标题">
-			<kx-button :class="$style.icon">
+			<kx-button
+				:class="$style.icon"
+				type="text"
+				color="shadow"
+			>
 				<search-icon/>
 			</kx-button>
-			<kx-button :class="$style.icon">
+			<kx-button
+				:class="$style.icon"
+				type="text"
+				color="shadow"
+			>
 				<help-icon/>
 			</kx-button>
 		</kx-frame-header>
+
 		<div class="kx-frame-body" :class="$style.body">
-			<kx-button class="primary" @click="showDialog">
+			<kx-button @click="showDialog">
 				内层弹窗
 			</kx-button>
 			<p></p>
@@ -30,6 +39,7 @@ export default {
 		SearchIcon,
 		HelpIcon,
 	},
+	inject: ["$dialog"],
 	methods: {
 		showDialog() {
 			this.$dialog.show(LuckyNumber);

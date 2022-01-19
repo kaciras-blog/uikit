@@ -2,10 +2,11 @@
 	<component
 		v-for="(options, i) in stack"
 		v-bind="options.props"
+		v-show="isVisible(options, i)"
 		ref="instances"
 		:key="options.id"
 		:is="options.component"
-		v-show="isVisible(options, i)"
+		@close="r => closeDialog(options, r)"
 	/>
 </template>
 
@@ -133,10 +134,6 @@ onBeforeMount(() => {
 
 onBeforeUnmount(() => {
 	window.removeEventListener("popstate", syncHistory);
-
-	// this.$dialog.eventBus.$off("show", this.handleAdd);
-	// this.$dialog.eventBus.$off("close", this.handleClose);
-	// this.$dialog.eventBus.$off("clear", this.handleClear);
 });
 
 const controller = useDialog();

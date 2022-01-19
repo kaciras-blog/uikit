@@ -2,17 +2,18 @@
 	<kx-base-dialog title="请输入一些信息">
 		<form id="result">
 			<label for="name">你的名字</label>
-			<input id="name" v-model.trim="name" placeholder="某某某"/>
+			<input id="name" v-model.trim="data.name" placeholder="某某某"/>
 
 			<label for="age">年龄</label>
-			<input id="age" type="number" v-model.number="age"/>
+			<input id="age" type="number" v-model.number="data.age"/>
 		</form>
-		<kx-dialog-buttons :cancel-button="true" @confirm="ok"/>
+		<kx-dialog-buttons :on-cancel="$dialog.close" :on-accept="ok"/>
 	</kx-base-dialog>
 </template>
 
 <script setup lang="ts">
 import { reactive } from "vue";
+import { useDialog } from "../src/dialog/quick-alert";
 
 const { oldName, oldAge, hasInput } = defineProps([
 	"oldName",
@@ -22,18 +23,20 @@ const { oldName, oldAge, hasInput } = defineProps([
 
 const data = reactive(hasInput ? { name: oldName, age: oldAge } : { name: "", age: 18 });
 
+const $dialog = useDialog();
+
 function ok() {
-	if (this.name.length === 0) {
-		return this.$dialog.alertError("错误", "请输入一个名字");
+	if (data.name.length === 0) {
+		return $dialog.alertError("错误", "请输入一个名字");
 	}
 
-	if (!Number.isInteger(this.age)) {
-		return this.$dialog.alertError("错误", "您输入的年龄不是数字");
-	} else if (this.age <= 0) {
-		return this.$dialog.alertError("错误", "年龄不能为负数或零");
+	if (!Number.isInteger(data.age)) {
+		return $dialog.alertError("错误", "您输入的年龄不是数字");
+	} else if (data.age <= 0) {
+		return $dialog.alertError("错误", "年龄不能为负数或零");
 	}
 
-	this.$dialog.confirm(this.$data);
+	$dialog.confirm(data);
 }
 </script>
 

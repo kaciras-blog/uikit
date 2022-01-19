@@ -43,7 +43,7 @@ KxDialogButtons.props = {
 export default KxDialogButtons;
 </script>
 
-<style module>
+<style module lang="less">
 .container {
 	margin-top: 20px;
 	text-align: right;

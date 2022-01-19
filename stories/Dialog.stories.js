@@ -12,7 +12,8 @@ export const Custom = {
 		},
 		template: `
 			<kx-button @click="isOpen = true">算一下幸运数字</kx-button>
-			<lucky-number v-model:open="isOpen"/>
+			<lucky-number v-if="isOpen" @close="isOpen=false"/>
+			<kx-dialog-container></kx-dialog-container>
 		`,
 		data: () => ({
 			isOpen: false,

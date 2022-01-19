@@ -1,6 +1,5 @@
 <template>
 	<kx-base-dialog
-		v-if="open"
 		title="算算你的幸运数字"
 		:click-to-close="true"
 		:draggable="true"
@@ -26,10 +25,8 @@ export default {
 	components:{
 		KxBaseDialog,
 	},
-	props: {
-		open: Boolean,
-	},
 	emits: ["update:open"],
+	inject: ["$dialog"],
 	data: () => ({
 		name: "小明",
 		age: 18,

@@ -2,7 +2,8 @@
 	<teleport to="body">
 		<kx-modal-wrapper @click.self="onOverlayClick" @keyup.esc="onEscape">
 			<div
-				class="kx-dialog dialogZoomIn"
+				class="dialogZoomIn"
+				:class="$style.dialog"
 				ref="dialogEl"
 				tabindex="-1"
 				v-autofocus
@@ -10,12 +11,12 @@
 				aria-modal="true"
 			>
 				<header
-					class="kx-dialog-header"
+					:class="$style.header"
 					@mousedown="drag"
 					@touchstart.self.prevent="drag"
 				>
 					<slot name="title">
-						<h2 class="kx-dialog-title">{{ title }}</h2>
+						<h2 :class="$style.title">{{ title }}</h2>
 					</slot>
 					<button
 						v-if="closeIcon"
@@ -28,7 +29,7 @@
 					</button>
 				</header>
 
-				<div class="kx-dialog-body"><slot/></div>
+				<div :class="$style.body"><slot/></div>
 			</div>
 		</kx-modal-wrapper>
 	</teleport>
@@ -89,8 +90,8 @@ function onOverlayClick() {
 }
 </script>
 
-<style lang="less">
-.kx-dialog {
+<style module lang="less">
+.dialog {
 	display: flex;
 	flex-direction: column;
 
@@ -102,29 +103,29 @@ function onOverlayClick() {
 	background-color: white;
 }
 
-.kx-dialog-title {
+.title {
 	margin: 0;
 	padding-left: 16px;
 	font-size: 22px;
 	font-weight: 500;
 }
 
-.kx-dialog-header {
+.header {
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 
 	height: 3rem;
-	border-bottom: solid 1px #d5d5d5;
+	//border-bottom: solid 1px #d5d5d5;
 
 	user-select: none;
 }
 
-.kx-dialog-body {
+.body {
 	padding: 20px;
 }
 
 .closeIcon {
+	margin-left: auto;
 	height: 3rem;
 	width: 3rem;
 
