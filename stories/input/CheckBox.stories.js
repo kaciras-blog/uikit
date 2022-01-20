@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import KxCheckBox from "@/components/KxCheckBox";
+import KxCheckBox from "@/input/KxCheckBox";
 
 export default {
 	title: "CheckBox",

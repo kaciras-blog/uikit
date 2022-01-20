@@ -1,6 +1,6 @@
 <script lang="ts">
 import { h, useCssModule } from "vue";
-import KxButton from "../components/KxButton.vue";
+import KxButton from "../input/KxButton.vue";
 
 function PagingButtons(props, context) {
 	const { index, total, omitPos, theme, buttonClass } = props;

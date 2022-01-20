@@ -1,6 +1,6 @@
 import { h } from "vue";
 import { action } from "@storybook/addon-actions";
-import KxButton from "@/components/KxButton";
+import KxButton from "@/input/KxButton";
 
 export default {
 	component: KxButton,
@@ -16,7 +16,7 @@ export default {
 		},
 		color: {
 			control: { type: "select" },
-			options: [null, "second", "info", "dangerous", "shadow"],
+			options: [null, "second", "info", "dangerous"],
 		},
 		disabled: {
 			control: { type: "boolean" },

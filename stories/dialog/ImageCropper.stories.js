@@ -1,4 +1,4 @@
-import { openFile } from "@";
+import { openFile, blobToURL } from "@";
 import KxImageCropper from "@/dialog/KxImageCropper";
 
 export default {
@@ -20,7 +20,7 @@ export const Simple = () => ({
 			const file = await openFile("image/*");
 
 			const cropper = this.$dialog.cropImage({
-				image: file,
+				image: await blobToURL(file),
 				aspectRatio: 10 / 9,
 			});
 			const blob = await cropper.confirmPromise;

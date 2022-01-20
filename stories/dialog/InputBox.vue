@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { reactive } from "vue";
-import { useDialog } from "../src/dialog/quick-alert";
+import { useDialog } from "@/dialog/quick-alert";
 
 const { oldName, oldAge, hasInput } = defineProps([
 	"oldName",

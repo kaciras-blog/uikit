@@ -2,11 +2,16 @@ import { scrollToElement, scrollToElementEnd, scrollToElementStart, syncScroll }
 
 export default {
 	title: "Scroll",
+	argTypes: {
+		enabled: {
+			control: { type: "boolean" },
+		},
+	},
 };
 
 export const SyncScroll = () => ({
 	props: {
-		enable: {
+		enabled: {
 			default: boolean("Enabled", true),
 		},
 	},
@@ -24,7 +29,7 @@ export const SyncScroll = () => ({
 		return { content };
 	},
 	watch: {
-		enable(value) {
+		enabled(value) {
 			if (value) {
 				this.$_destroy = syncScroll(this.$refs.a, this.$refs.b);
 			} else {

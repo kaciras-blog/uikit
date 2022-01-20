@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import InputBox from "./InputBox.vue";
 import KxBaseDialog from "@/dialog/KxBaseDialog.vue";
+import InputBox from "./InputBox.vue";
 
 export default {
 	name: "LuckyNumber",

@@ -1,7 +1,7 @@
 <!-- 常用的对话框按钮组，包含确定、取消、应用三个按钮 -->
 <script lang="ts">
 import { h, useCssModule } from "vue";
-import KxButton from "../components/KxButton.vue";
+import KxButton from "../input/KxButton.vue";
 
 function KxDialogButtons(props) {
 	const { acceptable, onCancel, onAccept, onApply } = props;

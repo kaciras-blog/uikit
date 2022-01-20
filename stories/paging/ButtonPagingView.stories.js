@@ -1,5 +1,5 @@
 import ButtonPagingView from "@/paging/ButtonPagingView";
-import { getQuotes } from "./data";
+import { getQuotes } from "../data";
 import ListItem from "./ListItem";
 
 export default {

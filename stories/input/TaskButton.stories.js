@@ -1,5 +1,5 @@
 import { sleep } from "@";
-import KxTaskButton from "@/components/KxTaskButton";
+import KxTaskButton from "@/input/KxTaskButton";
 
 export default {
 	title: "TaskButton",

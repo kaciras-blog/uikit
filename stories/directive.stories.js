@@ -5,19 +5,22 @@ export default {
 export const ImeInput = () => ({
 	template: `
 		<label>
-		<div>使用输入法输入一些文本：</div>
-		<textarea
-			@input="e => value = e.target.value"
-			v-ime-input="e => imeValue = e.target.value"
-		/>
+			<div>使用输入法输入一些文本：</div>
+			<textarea
+				@input="e => value = e.target.value"
+				@change="e => changeValue = e.target.value"
+				v-ime-input="e => imeValue = e.target.value"
+			/>
 		</label>
 		<div class="ime-input-result">
-		<p>input事件：{{ value }}</p>
-		<p>v-ime-input：{{ imeValue }}</p>
+			<p>input 事件：{{ value }}</p>
+			<p>change 事件：{{ changeValue }}</p>
+			<p>v-ime-input：{{ imeValue }}</p>
 		</div>
 	`,
 	data: () => ({
 		value: "",
+		changeValue: "",
 		imeValue: "",
 	}),
 });

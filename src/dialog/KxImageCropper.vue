@@ -70,7 +70,6 @@ import SwapHorizIcon from "../assets/swap_horiz.svg";
 import SwapVertIcon from "../assets/swap_vert.svg";
 import RotateRightIcon from "../assets/rotate_right.svg";
 import ZoomOutMap from "../assets/zoom_out_map.svg";
-import KxButton from "../components/KxButton.vue";
 import { useDialog } from "./quick-alert";
 
 const props = defineProps({

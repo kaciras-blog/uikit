@@ -2,18 +2,18 @@ import "./css/index.less";
 import { App } from "vue";
 
 import SkFadingCircle from "./components/SkFadingCircle.vue";
-import KxCheckBox from "./components/KxCheckBox.vue";
-import KxRadioBox from "./components/KxRadioBox.vue";
-import KxSwitchBox from "./components/KxSwitchBox.vue";
-import KxRadioBoxGroup from "./components/KxRadioBoxGroup.vue";
-import KxButton from "./components/KxButton.vue";
-import KxTaskButton from "./components/KxTaskButton.vue";
-import KxPasswordInput from "./components/KxPasswordInput.vue";
 import KxProgress from "./components/KxProgress.vue";
-import PopupAlertContainer from "./components/PopupAlertContainer.vue";
+import KxCheckBox from "./input/KxCheckBox.vue";
+import KxRadioBox from "./input/KxRadioBox.vue";
+import KxSwitchBox from "./input/KxSwitchBox.vue";
+import KxRadioBoxGroup from "./input/KxRadioBoxGroup.vue";
+import KxButton from "./input/KxButton.vue";
+import KxTaskButton from "./input/KxTaskButton.vue";
+import KxPasswordInput from "./input/KxPasswordInput.vue";
 import KxBaseDialog from "./dialog/KxBaseDialog.vue";
 import KxFrame from "./dialog/KxFrame.vue";
 import KxFrameHeader from "./dialog/KxFrameHeader.vue";
+import QuickAlert, { KxDialogAPI } from "./dialog/quick-alert";
 import KxDialogButtons from "./dialog/KxDialogButtons.vue";
 import PagingButtons from "./paging/PagingButtons.vue";
 import ButtonPagingView from "./paging/ButtonPagingView.vue";
@@ -26,7 +26,6 @@ import SelectionChange from "./directives/selection-change";
 import SelectionModel from "./directives/selection-model";
 import Ripple from "./directives/ripple";
 import { MediaQueryAPI } from "./media-query";
-import QuickAlert, { KxDialogAPI } from "./dialog/quick-alert";
 
 declare module "vue" {
 	export interface Vue {
@@ -63,7 +62,6 @@ export default function install(app: App) {
 	app.component("KxRadioBoxGroup", KxRadioBoxGroup);
 	app.component("KxPasswordInput", KxPasswordInput);
 	app.component("KxProgress", KxProgress);
-	app.component("PopupAlertContainer", PopupAlertContainer);
 	app.component("KxBaseDialog", KxBaseDialog);
 	app.component("KxFrame", KxFrame);
 	app.component("KxFrameHeader", KxFrameHeader);

@@ -1,4 +1,5 @@
 import PagingButtons from "@/paging/PagingButtons";
+import { action } from "@storybook/addon-actions";
 
 export default {
 	title: "PagingButtons",
@@ -27,16 +28,14 @@ const render = (args) => ({
 	},
 	data: () => ({ args }),
 	methods: {
-		showPage(page) {
-
-		},
+		showPage: action("showPage"),
 	},
 });
 
 export const Default = {
 	render,
 	args: {
-		index: 0,
+		index: 1,
 		total: 100,
 		omitPos: 2,
 		buttonClass: undefined,

@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import KxRadioBoxGroup from "@/components/KxRadioBoxGroup";
+import KxRadioBoxGroup from "@/input/KxRadioBoxGroup";
 
 export default {
 	title: "RadioBox",

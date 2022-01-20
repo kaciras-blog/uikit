@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import ScrollPagingView from "@/paging/ScrollPagingView";
-import { getQuotes } from "./data";
+import { getQuotes } from "../data";
 import ListItem from "./ListItem.vue";
 
 export default {

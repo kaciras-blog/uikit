@@ -1,16 +1,11 @@
 <template>
-	<transition
-		:enter-class="$style.enter_before"
-		:leave-to-class="$style.enter_before"
+	<div
+		:class="$style.container"
+		@mouseenter="handleHover"
+		@mouseleave="handleLeave"
 	>
-		<div
-			:class="$style.container"
-			@mouseenter="handleHover"
-			@mouseleave="handleLeave"
-		>
-			{{ content }}
-		</div>
-	</transition>
+		{{ content }}
+	</div>
 </template>
 
 <script>
@@ -54,8 +49,9 @@ export default {
 <style module lang="less">
 @import "../css/exports";
 
-.enter_before {
-	opacity: 0;
+@keyframes fade-in {
+	from { opacity: 0; }
+	to { opacity: 1; }
 }
 
 .container {
@@ -64,7 +60,6 @@ export default {
 	bottom: 10vh;
 	z-index: 5000;
 
-	transition: opacity .25s;
 	padding: 5px 12px;
 	transform: translateX(-50%);
 
@@ -72,6 +67,8 @@ export default {
 	border-radius: 4px;
 	color: white;
 	background-color: #4eaf4b;
+
+	animation: fade-in .25s;
 
 	@media screen and (min-width: @length-screen-mobile) {
 		padding: .5em 1em;
