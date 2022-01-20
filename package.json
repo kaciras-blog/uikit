@@ -8,9 +8,11 @@
 		"url": "https://github.com/kaciras-blog/uikit"
 	},
 	"files": [
-		"src"
+		"src",
+		"dist"
 	],
-	"main": "src/index.ts",
+	"main": "dist/uikit.common.js",
+	"types": "src/index.ts",
 	"scripts": {
 		"storybook": "start-storybook",
 		"build-storybook": "build-storybook -o .out",
