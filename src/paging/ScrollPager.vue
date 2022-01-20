@@ -3,19 +3,18 @@
 	在点击加载模式下会显示一个按钮。
 -->
 <template>
-	<div :class="$style.container">
+	<div :class="$style.container" :ref="observe">
 		<kx-button
 			v-if="state===State.FREE"
 			tag="a"
 			class="primary"
 			:class="$style.button"
-			:href="nextPageUrl"
+			:href="nextUrl"
 			@click.prevent="loadPage"
 		>
 			查看更多
 		</kx-button>
 
-		<!-- 通过该插槽可以自定义状态显示，父组件内请使用inline-template -->
 		<slot name="state">
 			<sk-fading-circle v-if="state === State.LOADING"/>
 
@@ -39,14 +38,14 @@ export enum State {
 	FREE,
 	LOADING,
 	FAILED,
-	ALL_LOADED
+	ALL_LOADED,
 }
 </script>
 
 <script setup lang="ts">
-import { defineEmits, defineProps, onMounted, onUnmounted, watch, withDefaults } from "vue";
+import { watch, WatchStopHandle } from "vue";
 
-interface Props {
+interface ScrollPagerProps {
 
 	// 滚动到距离底部还有多高时触发加载事件
 	activeHeight: number;
@@ -54,14 +53,14 @@ interface Props {
 	// 滚动时自动加载，该选项为 false 时将不触发滚动加载。
 	autoLoad: boolean;
 
-	// 当前的加载状态。
+	// 当前的状态。
 	state: State;
 
 	// 用于预渲染，也能够让爬虫跟踪到后续页。
-	nextPageUrl?: string;
+	nextUrl?: string;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<ScrollPagerProps>(), {
 	autoLoad: false,
 	activeHeight: 512,
 });
@@ -69,6 +68,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits(["load-page"]);
 
 let observer: IntersectionObserver;
+let stopWatch: WatchStopHandle;
 
 function loadPage() {
 	switch (props.state) {
@@ -80,22 +80,26 @@ function loadPage() {
 	}
 }
 
-onMounted(() => {
+function observe(el: Element | null) {
+	if (!el) {
+		observer.disconnect();
+		return stopWatch();
+	}
+
 	observer = new IntersectionObserver(entries => {
-		// state === FREE 在出错时不自动加载
+		// 出错时不自动加载
 		if (entries[0].isIntersecting && props.state === State.FREE) loadPage();
-	});
-	const watchCallback = (value) => {
+	}, { rootMargin: props.activeHeight + "px" });
+
+	const callback = (value: boolean) => {
 		if (value) {
-			observer.observe(this.$el);
+			observer.observe(el!);
 		} else {
 			observer.disconnect();
 		}
 	};
-	watch(() => props.autoLoad, watchCallback, { immediate: true });
-});
-
-onUnmounted(() => observer.disconnect());
+	stopWatch = watch(() => props.autoLoad, callback, { immediate: true });
+}
 </script>
 
 <style module lang="less">

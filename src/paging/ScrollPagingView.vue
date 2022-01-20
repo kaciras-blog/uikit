@@ -1,95 +1,91 @@
 <!--
-这个组件仅仅封装了下请求的处理逻辑，基本是原样放置了 slot 和 scroll-pager 而已，这样的复用与 HTML 没啥
-关系，更适合 React Hooks，但是Vue2没有。
-
-新加项目的跳转显示问题：bilibili 的新评论是添加在第一页的最后
+	新加项目的跳转显示问题：bilibili 的新评论是添加在第一页的最后。
 -->
 <template>
-	<div>
-		<slot :items="value ? value.items : []"/>
-		<scroll-pager
-			:state="drained ? 'ALL_LOADED' : 'FREE'"
-			:auto-load="autoLoad"
-			:next-page-url="nextLink && !drained ? nextLink(start + loadedCount, pageSize) : null"
-			@load-page="handleLoadTask"
-		/>
-	</div>
+	<slot :items="modelValue?.items ?? []"/>
+	<scroll-pager
+		:state="drained ? State.ALL_LOADED : state"
+		:auto-load="autoLoad"
+		:next-url="nextUrl"
+		:activeHeight="activeHeight"
+		@load-page="loadPage"
+	/>
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, ref, withDefaults } from "vue";
+import { computed, ref } from "vue";
 import { State } from "./ScrollPager.vue";
+import { LoadPageFn, PageData } from "./core";
 
-interface Props {
+interface ScrollPagingViewProps {
+	modelValue?: PageData;
 
 	/** 是否触发滚动加载 */
 	autoLoad: boolean;
+
+	activeHeight: number;
 
 	start: number;
 
 	pageSize: number;
 
+	loader: LoadPageFn;
+
 	/** 下一页的链接，用于 SSR，如果不存在则不生成 */
 	nextLink?: (start: number, count: number) => string
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<ScrollPagingViewProps>(), {
+	modelValue: null,
 	start: 0,
 	pageSize: 16,
 });
 
+const emit = defineEmits(["update:modelValue"]);
+
 const state = ref(State.FREE);
-
-function handleLoadTask(task) {
-	return this.loadPage()
-		.then(isFinish => task.complete(isFinish))
-		.catch(e => task.completeWithError(e));
-}
-
-async function loadPage() {
-	const { start, loader, value, pageSize, loadedCount } = this;
-	const { items = [] } = value || {};
-	const offset = start + loadedCount;
-
-	const data = await loader(offset, pageSize);
-	this.loadedCount += pageSize;
-	this.$emit("input", { items: items.concat(data.items), total: data.total });
-
-	// handleLoadTask不在渲染函数里，无法获知value的更新导致其不能使用 this.drained 来判断结束
-	return offset + pageSize >= data.total;
-}
+const count = ref(props.modelValue?.items.length ?? 0);
 
 /** 是否全部加载完毕，没有数据视为未加载完 */
 const drained = computed(() => {
-	const { loadedCount, start, value } = props;
-	if (!value) {
+	const { start, modelValue } = props;
+	if (!modelValue) {
 		return false;
 	}
-	return start + loadedCount >= value.total
+	return start + count.value >= modelValue.total
 });
 
-function reload() {
-	const { start, pageSize } = this;
+const nextUrl = computed(() => {
+	const { start, pageSize, nextLink } = props;
+	if (drained.value || !nextLink) {
+		return;
+	}
+	return nextLink(start + count.value, pageSize);
+});
 
-	const doLoadPage = async () => {
-		const data = await this.loader(start, pageSize);
-		this.$emit("input", data);
-		this.loadedCount = pageSize;
-		return start + pageSize >= data.total;
-	};
+async function loadPage() {
+	const { start, loader, modelValue, pageSize } = props;
+	const { items = [] } = modelValue || {};
+	const offset = start + count.value;
 
-	this.$refs.scrollPager.forceLoad(task => {
-		doLoadPage()
-			.then(isFinish => task.complete(isFinish))
-			.catch(e => task.completeWithError(e));
-	});
+	state.value = State.LOADING;
+	const { signal } = new AbortController()
+
+	try {
+		const data = await loader(offset, pageSize, signal);
+		count.value += pageSize;
+
+		emit("update:modelValue", {
+			total: data.total,
+			items: items.concat(data.items),
+		});
+
+		state.value = State.FREE;
+	} catch(e) {
+		state.value = State.FAILED;
+		console.error("ScrollPagingView 数据加载失败", e);
+	}
 }
 
-interface PagingViewModel {
-	items: any[];
-	total: number;
-
-	// 内部维护数量而不是用 value.items.length，是为了外部增删元素而不打乱索引
-	loadedCount: number;
-}
+defineExpose({ reload: loadPage });
 </script>
