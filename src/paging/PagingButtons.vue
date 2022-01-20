@@ -3,7 +3,7 @@ import { h, useCssModule } from "vue";
 import KxButton from "../components/KxButton.vue";
 
 function PagingButtons(props, context) {
-	const { index, total, omitPos } = props;
+	const { index, total, omitPos, theme, buttonClass } = props;
 	const { emit } = context;
 	const $style = useCssModule();
 
@@ -11,7 +11,7 @@ function PagingButtons(props, context) {
 
 	function button(page, content, disabled = false) {
 		const data = {
-			class: $style.margin_fix,
+			type: "outline",
 			disabled,
 			onClick: () => emit("show-page", page),
 		};
@@ -19,10 +19,7 @@ function PagingButtons(props, context) {
 	}
 
 	function indexButton(page) {
-		if (page !== index) {
-			return button(page, page);
-		}
-		return h("div", { class: $style.active }, page);
+		return button(page, page, page === index);
 	}
 
 	// 下面都是按钮，前三个跟后三个是对称的，中间循环创建按钮
@@ -62,10 +59,10 @@ function PagingButtons(props, context) {
 	 * </div>
 	 */
 	const jumpInput = h("input", {
-		class: $style.jump_input,
+		class: $style.jumpInput,
 		onChange: jumpToPage,
 	});
-	const jumpGroup = h("label", { class: "minor-text " + $style.jump_label }, ["转到", jumpInput, "页"]);
+	const jumpGroup = h("label", { class: "minor-text " + $style.jumpLabel }, ["转到", jumpInput, "页"]);
 	const buttonGroup = h("div", { class: "btn-group compact" }, buttons);
 
 	return h("div", { class: $style.wrapper }, [buttonGroup, jumpGroup]);
@@ -84,7 +81,13 @@ PagingButtons.props = {
 		type: Number,
 		default: 2,
 	},
-	buttonClass: String,
+	theme: {
+		type: String,
+		default: "default",
+	},
+	buttonClass: {
+		type: String,
+	},
 };
 
 PagingButtons.emits = ["show-page"];
@@ -123,18 +126,14 @@ export default PagingButtons;
 	user-select: none;
 }
 
-.jump_input {
+.jumpInput {
 	font-size: .8em;
 	width: 4em;
 	margin: 0 .5em;
 	text-align: center;
 }
 
-.jump_label {
+.jumpLabel {
 	margin-left: auto;
-}
-
-.margin_fix {
-	margin: 0 0 0 -1px !important;
 }
 </style>

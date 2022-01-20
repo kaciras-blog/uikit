@@ -1,79 +1,82 @@
 <template>
-	<div>
-		<button-pager
-			v-if="showTopButtons && total"
+	<div ref="el">
+		<paging-buttons
+			v-if="topButtons && total"
 			:theme="theme"
-			:total-count="total"
+			:total="total"
 			:index="index"
 			:page-size="pageSize"
-			@load-page="switchPage"
+			@show-page="switchPage"
 		/>
 
-		<!-- 检查一下防止初始项目数量大于分页数量 -->
-		<slot :items="items.length > pageSize ? items.slice(0, pageSize) : items"/>
+		<slot :items="items.slice(0, pageSize)"/>
 
-		<button-pager
+		<paging-buttons
 			v-if="total"
 			:theme="theme"
-			:total-count="total"
+			:total="total"
 			:index="index"
 			:page-size="pageSize"
-			@load-page="switchPage"
+			@show-page="switchPage"
 		/>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, withDefaults } from "vue";
+import { computed, ref, nextTick } from "vue";
 import { scrollToElementEnd, scrollToElementStart } from "../index";
 import { getScrollTop } from "../scroll";
+import { LoadPageFn } from "./core";
 
-interface Props {
-	/** 是否触发滚动加载 */
-	autoLoad: boolean;
+interface ButtonPagingViewProps {
+	modelValue: any;
 
-	start: number;
-
+	start?: number;
 	pageSize: number;
+
+	topButtons?: boolean;
+	viewportOffset?: Number,
+
+	loader: LoadPageFn;
 
 	/** 下一页的链接，用于 SSR，如果不存在则不生成 */
 	nextLink?: (start: number, count: number) => string;
-
-	showTopButtons: boolean;
-
-	viewportOffset: number;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<ButtonPagingViewProps>(), {
 	start: 0,
-	pageSize: 16,
-	showTopButtons: false,
+	topButtons: false,
 	viewportOffset: 0,
 });
 
+const emit = defineEmits(["update:modelValue"]);
+
+const el = ref<HTMLElement>(null);
+const index = ref(0);
+
+let _loading: AbortController;
+
 const items = computed(() => {
-	const { value } = props;
-	return value ? value.items : [];
+	return props.modelValue?.items ?? [];
 });
 
 const total = computed(() => {
-	const { value } = props;
-	return value ? value.total : 0;
+	return props.modelValue?.total ?? 0;
 });
 
-function loadPage(index) {
-	const { start, pageSize, _loading, loader } = this;
+function loadPage(i: number) {
+	const { start, pageSize, loader } = props;
 	if (_loading) {
 		_loading.abort();
 	}
-	this._loading = new AbortController();
-	const { signal } = this._loading;
+	_loading = new AbortController();
+	const { signal } = _loading;
 
-	this.index = index; // 先跳页再加载
+	index.value = i;
 
-	return loader(start + index * pageSize, pageSize, signal)
-		.then(res => !signal.aborted && this.$emit("input", res))
-		.finally(() => this._loading = null);
+	return loader(start + i * pageSize, pageSize, signal)
+		.then(res => !signal.aborted && emit("update:modelValue", res))
+		.finally(() => _loading = null);
 }
 
 /**
@@ -82,9 +85,9 @@ function loadPage(index) {
  *
  * @param index 页码
  */
-async function switchPage(index) {
-	await this.loadPage(index);
-	const top = this.$el.getBoundingClientRect().top - this.viewportOffset;
+async function switchPage(index: number) {
+	await loadPage(index);
+	const top = el.value.getBoundingClientRect().top - props.viewportOffset;
 	if (top < 0) {
 		document.documentElement.scrollTop = top + getScrollTop();
 	}
@@ -92,25 +95,27 @@ async function switchPage(index) {
 
 /** 重新加载第一页，返回 Promise 表示加载完成 */
 function reload() {
-	return this.loadPage(0);
+	return loadPage(0);
 }
 
 /** 刷新（重新加载）当前页，返回 Promise 表示刷新完成 */
 function refresh() {
-	return this.loadPage(this.index);
+	return loadPage(index.value);
 }
 
 /** 切换到最后一页 */
 function switchToLast() {
-	const { loadPage, total, pageSize, scrollToEnd } = this;
-	loadPage(Math.floor(total / pageSize)).then(scrollToEnd);
+	const { pageSize } = props;
+	loadPage(Math.floor(total.value / pageSize)).then(scrollToEnd);
 }
 
 function scrollToStart() {
-	this.$nextTick(() => scrollToElementStart(this.$el));
+	nextTick(() => scrollToElementStart(el.value));
 }
 
 function scrollToEnd() {
-	this.$nextTick(() => scrollToElementEnd(this.$el));
+	nextTick(() => scrollToElementEnd(el.value));
 }
+
+defineExpose({ reload, refresh, switchToLast, scrollToStart, scrollToEnd });
 </script>
