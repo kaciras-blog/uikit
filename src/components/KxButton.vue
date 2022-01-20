@@ -60,7 +60,7 @@ KxButton.props = {
 	/** 内置样式，有 outline，text 和默认三种 */
 	type: String,
 
-	/** 内置颜色主题，有 second，info，dangerous，shadow 和默认五种 */
+	/** 内置颜色主题，有 second，info，dangerous 和默认五种 */
 	color: String,
 
 	/** 渲染为 router-link，其 to 属性等于该值 */
@@ -147,16 +147,6 @@ export default KxButton;
 
 .dangerous {
 	.generateColors(white, @color-button-dangerous);
-}
-
-.shadow {
-	border-width: 0;
-
-	--color: initial;
-	--bg-glass: none;
-	--background: rgba(0, 0, 0, 0.05);
-	--bg-highlight: rgba(0, 0, 0, 0.08);
-	--bg-active: rgba(0, 0, 0, 0.16);
 }
 
 // 禁用按钮样式，所有颜色的按钮禁用样式都一样。

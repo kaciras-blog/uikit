@@ -1,40 +1,38 @@
 <template>
 	<teleport to="body">
-	<kx-modal-wrapper
-		@click.self="onOverlayClick"
-		@keyup.esc="closable && $dialog.close()"
-	>
-		<div
-			class="kx-msgbox"
-			:class="{ shaking, dialogZoomIn }"
-			tabindex="-1"
-			v-autofocus
-			role="dialog"
-			aria-modal="true"
+		<kx-modal-wrapper
+			@click.self="onOverlayClick"
+			@keyup.esc="closable && $dialog.close()"
 		>
-			<kx-button
-				v-if="closable"
-				:class="$style.closeIcon"
-				title="关闭"
-				type="text"
-				color="shadow"
-				@click="$dialog.close"
+			<div
+				class="kx-msgbox"
+				:class="{ shaking, dialogZoomIn }"
+				tabindex="-1"
+				v-autofocus
+				role="dialog"
+				aria-modal="true"
 			>
-				<close-icon/>
-			</kx-button>
+				<button
+					v-if="closable"
+					:class="$style.closeIcon"
+					title="关闭"
+					@click="$dialog.close"
+				>
+					<close-icon/>
+				</button>
 
-			<dialog-icons :type="type"/>
-			<h2>{{ title }}</h2>
+				<dialog-icons :type="type"/>
+				<h2>{{ title }}</h2>
 
-			<!-- pre 标签特殊，不会去除内容中的空白 -->
-			<pre v-if="content" :class="$style.content">{{ content }}</pre>
+				<!-- pre 标签特殊，不会去除内容中的空白 -->
+				<pre v-if="content" :class="$style.content">{{ content }}</pre>
 
-			<kx-dialog-buttons
-				:on-cancel="cancelable && $dialog.close"
-				:on-accept="() => $dialog.confirm(true)"
-			/>
-		</div>
-	</kx-modal-wrapper>
+				<kx-dialog-buttons
+					:on-cancel="cancelable && $dialog.close"
+					:on-accept="() => $dialog.confirm(true)"
+				/>
+			</div>
+		</kx-modal-wrapper>
 	</teleport>
 </template>
 
@@ -91,6 +89,7 @@ function onOverlayClick() {
 </script>
 
 <style module lang="less">
+/* TODO: 重复 */
 .closeIcon {
 	position: absolute;
 	top: 0;
@@ -99,6 +98,21 @@ function onOverlayClick() {
 	font-size: 24px;
 	padding: 12px;
 	border-radius: 0;
+	line-height: 0;
+
+	text-align: center;
+	background: none;
+
+	transition: .15s ease-out;
+
+	&:hover,
+	&:focus {
+		background-color: rgba(0, 0, 0, .05);
+	}
+
+	&:active {
+		background-color: rgba(0, 0, 0, .1);
+	}
 }
 
 .content {

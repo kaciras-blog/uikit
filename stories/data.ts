@@ -21,7 +21,7 @@ const DATASET = [
 		content: "剧情作和纯爱，好耶",
 	},
 	{
-		avatar: "",
+		avatar: Avatar2,
 		name: "nagi",
 		content: "那给俺整一个有乡村气息的，没啥雷的展开的纯爱作，画风不要太老，妹药已经玩过了，最好是能在手机上玩的",
 	},
@@ -37,6 +37,18 @@ const DATASET = [
 	},
 ];
 
+let counter = 0;
+
+/**
+ * 从数据集里随机选一条，并附加上唯一的 id 属性。
+
+ * @param list 数据集
+ */
+function rand(list: any[]) {
+	const value = list[Math.floor(Math.random() * list.length)];
+	return { ...value, id: counter++ };
+}
+
 export function getQuotes(length: number) {
-	return Array.from({ length }, () => DATASET[Math.floor(Math.random() * DATASET.length)]);
+	return Array.from({ length }, () => rand(DATASET));
 }

@@ -18,7 +18,7 @@ export const Template = {
 				:loader="load"
 			>
 				<template v-slot="{ items }">
-					<list-item v-for="v in items" v-bind="v"/>
+					<list-item v-for="v in items" key="v.id" v-bind="v"/>
 				</template>
 			</scroll-paging-view>
 		`,

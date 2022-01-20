@@ -1,4 +1,5 @@
 <template>
+	<!-- 存储到响应对象的 ref 不带冒号，而回调则要用 :ref -->
 	<div ref="el">
 		<paging-buttons
 			v-if="topButtons && total"

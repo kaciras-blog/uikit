@@ -15,7 +15,7 @@ import KxBaseDialog from "./dialog/KxBaseDialog.vue";
 import KxFrame from "./dialog/KxFrame.vue";
 import KxFrameHeader from "./dialog/KxFrameHeader.vue";
 import KxDialogButtons from "./dialog/KxDialogButtons.vue";
-import ButtonPager from "./paging/ButtonPager.vue";
+import PagingButtons from "./paging/PagingButtons.vue";
 import ButtonPagingView from "./paging/ButtonPagingView.vue";
 import ScrollPager from "./paging/ScrollPager.vue";
 import ScrollPagingView from "./paging/ScrollPagingView.vue";
@@ -51,10 +51,10 @@ export default function install(app: App) {
 	app.use(QuickAlert);
 
 	app.component("SkFadingCircle", SkFadingCircle);
-	// app.component("ButtonPager", ButtonPager);
-	// app.component("ScrollPager", ScrollPager);
-	// app.component("ScrollPagingView", ScrollPagingView);
-	// app.component("ButtonPagingView", ButtonPagingView);
+	app.component("PagingButtons", PagingButtons);
+	app.component("ScrollPager", ScrollPager);
+	app.component("ScrollPagingView", ScrollPagingView);
+	app.component("ButtonPagingView", ButtonPagingView);
 	app.component("KxButton", KxButton);
 	app.component("KxTaskButton", KxTaskButton);
 	app.component("KxSwitchBox", KxSwitchBox);
