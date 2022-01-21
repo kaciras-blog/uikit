@@ -1,21 +1,85 @@
-<script lang="ts">
+<script>
 import { h, useCssModule } from "vue";
 import KxButton from "../input/KxButton.vue";
 
+const defaultTheme = {
+	button($style, emit, page, content, link, active) {
+		const data = {
+			type: "outline",
+			class: $style.default,
+			disabled: active,
+			onClick(event) {
+				event.preventDefault();
+				emit("show-page", page);
+			},
+		};
+		if (link && !active) {
+			data.href = link(page);
+		}
+		return h(KxButton, data, content);
+	},
+
+	omit: ($style) => h("span", { class: $style.omit }, "..."),
+};
+
+const textTheme = {
+	button($style, emit, page, content, link, active) {
+		const data = {
+			class: $style.text,
+			onClick(event) {
+				event.preventDefault();
+				emit("show-page", page);
+			},
+		};
+		if (active) {
+			return h("span", { class: [$style.text, $style.active] }, content);
+		}
+		if (link) {
+			data.href = link(page);
+		}
+		return h("a", data, content);
+	},
+
+	omit: ($style) => h("span", { class: $style.textOmit }, "..."),
+};
+
+/** 
+ * 创建跳转输入框，用户输入页码后按回车即可跳页。
+ * 
+ * <div class="minor-text">
+ *     <span>共{{totalPage}}页，</span>
+ *     <label>跳至<input ...>页</label>
+ * </div>
+ */
+function jumpInput($style, context) {
+	const { emit } = context;
+
+	const jumpInput = h("input", {
+		class: $style.jumpInput,
+		onChange({ target }) {
+			const i = parseInt(target.value);
+			if (i > 0 && i < total) {
+				target.value = "";
+				emit("show-page", i);
+			}
+		},
+	});
+
+	const data = { class: "minor-text " + $style.jumpLabel };
+	return h("label", data, ["转到", jumpInput, "页"]);
+}
+
 function PagingButtons(props, context) {
-	const { index, total, omitPos, theme, buttonClass } = props;
+	const { index, total, omitPos, type, pageLink } = props;
 	const { emit } = context;
 	const $style = useCssModule();
 
 	const buttons = [];
 
-	function button(page, content, disabled = false) {
-		const data = {
-			type: "outline",
-			disabled,
-			onClick: () => emit("show-page", page),
-		};
-		return h(KxButton, data, content);
+	const factory = type === "default" ? defaultTheme : textTheme;
+
+	function button(page, content, active = false) {
+		return factory.button($style, emit, page, content, pageLink, active);
 	}
 
 	function indexButton(page) {
@@ -26,7 +90,7 @@ function PagingButtons(props, context) {
 	buttons.push(button(index - 1, "<", index <= 1));
 	buttons.push(indexButton(1));
 	if (index - omitPos > 1) {
-		buttons.push(h("span", { class: $style.omit }, "..."));
+		buttons.push(factory.omit($style));
 	}
 
 	const cStart = Math.max(index - omitPos, 2);
@@ -36,36 +100,15 @@ function PagingButtons(props, context) {
 	}
 
 	if (index + omitPos < total) {
-		buttons.push(h("span", { class: $style.omit }, "..."));
+		buttons.push(factory.omit($style));
 	}
 	if (total > 1) {
 		buttons.push(indexButton(total));
 	}
 	buttons.push(button(index + 1, ">", index >= total));
 
-	// 坑：type="text" 的输入框没有 valueAsNumber
-	function jumpToPage({ target }) {
-		const i = parseInt(target.value);
-		if (i > 0 && i < total) {
-			emit("show-page", i);
-		}
-		target.value = "";
-	}
-
-	/*
-	 * <div class="minor-text">
-	 *     <span>共{{totalPage}}页，</span>
-	 *     <label>跳至<input ...>页</label>
-	 * </div>
-	 */
-	const jumpInput = h("input", {
-		class: $style.jumpInput,
-		onChange: jumpToPage,
-	});
-	const jumpGroup = h("label", { class: "minor-text " + $style.jumpLabel }, ["转到", jumpInput, "页"]);
-	const buttonGroup = h("div", { class: "btn-group compact" }, buttons);
-
-	return h("div", { class: $style.wrapper }, [buttonGroup, jumpGroup]);
+	const buttonGroup = h("div", { class: "btn-group" }, buttons);
+	return h("div", { class: $style.wrapper }, [buttonGroup, jumpInput($style, context)]);
 }
 
 PagingButtons.props = {
@@ -81,13 +124,15 @@ PagingButtons.props = {
 		type: Number,
 		default: 2,
 	},
-	theme: {
+	// 样式，目前仅支持 default 和 text。
+	type: {
 		type: String,
 		default: "default",
 	},
-	buttonClass: {
-		type: String,
-	},
+	pageLink: {
+		type: Function,
+		required: false,
+	}
 };
 
 PagingButtons.emits = ["show-page"];
@@ -100,22 +145,22 @@ export default PagingButtons;
 
 .wrapper {
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 }
 
-.active {
-	display: inline-block;
-	padding: .5rem 1.2rem;
-	border: solid 1px @color-button-primary;
-	font-size: 1rem;
-	line-height: 1;
-	user-select: none;
-	color: white;
-	background-color: @color-button-primary;
+.default {
+	&.active {
+		display: inline-block;
+		padding: 0.5rem 1.2rem;
+		border: solid 1px @color-button-primary;
+		font-size: 1rem;
+		line-height: 1;
+		user-select: none;
+		color: white;
+		background-color: @color-button-primary;
+	}
 }
 
-// TODO: cursor 和 user-select 组合也挺常见的
 .omit {
 	vertical-align: middle;
 	line-height: 34px;
@@ -126,10 +171,27 @@ export default PagingButtons;
 	user-select: none;
 }
 
+.text {
+	padding: 0 4px;
+
+	&:hover,
+	:focus {
+		color: @color-second;
+	}
+
+	&.active {
+		padding: 0 4px;
+		color: @color-primary;
+		font-weight: 600;
+	}
+}
+
+.textOmit {}
+
 .jumpInput {
-	font-size: .8em;
+	font-size: 0.8em;
 	width: 4em;
-	margin: 0 .5em;
+	margin: 0 0.5em;
 	text-align: center;
 }
 

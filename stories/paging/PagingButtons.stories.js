@@ -7,37 +7,40 @@ export default {
 	argTypes: {
 		type: {
 			control: { type: "select" },
-			options: [null, "outline", "text"],
+			options: ["default", "text"],
 		},
-		color: {
-			control: { type: "select" },
-			options: [null, "second", "info", "dangerous", "shadow"],
-		},
-		disabled: {
+		hasPageLink:{
 			control: { type: "boolean" },
-		},
+		}
 	},
 };
 
 const render = (args) => ({
 	template: `
-		<paging-buttons v-bind="args" @show-page="showPage"/>
+		<paging-buttons v-bind="args" :page-link=pageLink @show-page="showPage"/>
 	`,
 	components: {
 		PagingButtons,
 	},
 	data: () => ({ args }),
+	computed:{
+		pageLink() {
+			return args.hasPageLink && this.link;
+		}
+	},
 	methods: {
 		showPage: action("showPage"),
+		link: (i) => `https://example.com/page/${i}`,
 	},
 });
 
 export const Default = {
 	render,
 	args: {
-		index: 1,
+		type: "default",
+		index: 2,
 		total: 100,
 		omitPos: 2,
-		buttonClass: undefined,
+		hasPageLink: false,
 	},
 };

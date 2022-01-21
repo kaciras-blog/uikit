@@ -3,10 +3,11 @@
 	<div ref="el">
 		<paging-buttons
 			v-if="topButtons && total"
-			:theme="theme"
 			:total="total"
 			:index="index"
 			:page-size="pageSize"
+			:type="theme"
+			:page-link="pageLink"
 			@show-page="switchPage"
 		/>
 
@@ -14,10 +15,11 @@
 
 		<paging-buttons
 			v-if="total"
-			:theme="theme"
 			:total="total"
 			:index="index"
 			:page-size="pageSize"
+			:type="theme"
+			:page-link="pageLink"
 			@show-page="switchPage"
 		/>
 	</div>
@@ -36,7 +38,8 @@ interface ButtonPagingViewProps {
 	pageSize: number;
 
 	topButtons?: boolean;
-	viewportOffset?: Number,
+	viewportOffset?: number,
+	theme?: string;
 
 	loader: LoadPageFn;
 
@@ -55,7 +58,7 @@ const emit = defineEmits(["update:modelValue"]);
 const el = ref<HTMLElement>(null);
 const index = ref(0);
 
-let _loading: AbortController;
+let loading: AbortController;
 
 const items = computed(() => {
 	return props.modelValue?.items ?? [];
@@ -65,19 +68,24 @@ const total = computed(() => {
 	return props.modelValue?.total ?? 0;
 });
 
+const pageLink= computed(() => {
+	const { nextLink, pageSize, start } = props;
+	return nextLink && ((i: number) => nextLink(i * pageSize + start, pageSize));
+});
+
 function loadPage(i: number) {
 	const { start, pageSize, loader } = props;
-	if (_loading) {
-		_loading.abort();
+	if (loading) {
+		loading.abort();
 	}
-	_loading = new AbortController();
-	const { signal } = _loading;
+	loading = new AbortController();
+	const { signal } = loading;
 
 	index.value = i;
 
 	return loader(start + i * pageSize, pageSize, signal)
 		.then(res => !signal.aborted && emit("update:modelValue", res))
-		.finally(() => _loading = null);
+		.finally(() => loading = null);
 }
 
 /**
