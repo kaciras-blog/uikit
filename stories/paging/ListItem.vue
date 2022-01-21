@@ -10,6 +10,7 @@
 </template>
 
 <script>
+// props 数据可以用 data.ts 里的 getQuotes() 生成。
 export default {
 	name: "DemoListItem",
 	props: ["avatar", "name", "content"],

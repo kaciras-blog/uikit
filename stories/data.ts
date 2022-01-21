@@ -3,6 +3,8 @@ import Avatar1 from "./assets/avatar1.jpg";
 import Avatar2 from "./assets/avatar2.jpg";
 import Avatar3 from "./assets/avatar3.jpg";
 import Avatar4 from "./assets/avatar4.jpg";
+import Avatar5 from "./assets/avatar5.jpg";
+import Avatar6 from "./assets/avatar6.jpg";
 
 const DATASET = [
 	{
@@ -35,6 +37,21 @@ const DATASET = [
 		name: "Akari",
 		content: "那么求一些 社畜每天9/10点回家也能玩一会觉的开心的游戏，最好作品有铜（但没有x行为）但要求登场次数多，欢快，纯爱作品，日文也完全可以",
 	},
+	{
+		avatar: Avatar5,
+		name: "Super面筋人",
+		content: "我从7年前就开始玩mc了，但是只玩过盗版，今天好不容易上票正版，搞了一下午终于把东西弄全了，结果进了游戏帧数就1到3，把所有东西都调到最低，甚至区块加载只有5格，才勉强到了3，40左右，有时候还是会走着走着卡一下，我的电脑配置还不至于是垃圾的，x64，处理器是i5，7200，到底怎么办啊，不是人家都说mc起步配置无限低的吗？",
+	},
+	{
+		avatar: Avatar5,
+		name: "Super面筋人",
+		content: "我赛扬j4105都可以保持15-20帧",
+	},
+	{
+		avatar: Avatar6,
+		name: "暴走的酒桶桶",
+		content: "调调Java分配内存试试，要不就买张1050ti或者同样性能的显卡插上。",
+	},
 ];
 
 let counter = 0;
@@ -49,6 +66,11 @@ function rand(list: any[]) {
 	return { ...value, id: counter++ };
 }
 
+/**
+ * 生成消对话息列表，使用一个简单的数据集，其中的项可能有重复。
+ *
+ * @param length 生成多少项
+ */
 export function getQuotes(length: number) {
 	return Array.from({ length }, () => rand(DATASET));
 }

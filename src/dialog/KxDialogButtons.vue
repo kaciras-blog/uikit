@@ -1,5 +1,5 @@
 <!-- 常用的对话框按钮组，包含确定、取消、应用三个按钮 -->
-<script lang="ts">
+<script>
 import { h, useCssModule } from "vue";
 import KxButton from "../input/KxButton.vue";
 
