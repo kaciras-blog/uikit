@@ -33,17 +33,9 @@
 	</div>
 </template>
 
-<script lang="ts">
-export enum State {
-	FREE,
-	LOADING,
-	FAILED,
-	ALL_LOADED,
-}
-</script>
-
 <script setup lang="ts">
 import { watch, WatchStopHandle } from "vue";
+import { State } from "./core";
 
 interface ScrollPagerProps {
 

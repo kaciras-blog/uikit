@@ -14,8 +14,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { State } from "./ScrollPager.vue";
-import { LoadPageFn, PageData } from "./core";
+import { LoadPageFn, PageData, State } from "./core";
 
 interface ScrollPagingViewProps {
 	modelValue?: PageData;
