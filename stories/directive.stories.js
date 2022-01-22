@@ -106,7 +106,7 @@ export const Ripple = {
 			<div v-else class="mock-dialog" :key="3" v-ripple></div>
 		`,
 	}),
-	arge: {
+	args: {
 		circle: false,
 		centered: false,
 	},

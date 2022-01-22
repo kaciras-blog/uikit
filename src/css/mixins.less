@@ -87,3 +87,9 @@
 	background: url(@url) no-repeat 50% 50%;
 	background-size: cover;
 }
+
+.highlight-color(@textColor, @hoverColor) {
+	color: @textColor;
+	&:visited { color: @textColor; }
+	&:hover, &:focus { color: @hoverColor; }
+}
