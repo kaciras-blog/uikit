@@ -1,7 +1,6 @@
 // vue-jest 不支持 babel 7，所以必须把与 vue 文件相关的部分分开。
 // 该文件包含弹窗的核心 API，index.ts 里会增加一些具体的弹窗API。
 import { Component } from "vue";
-import { boundClass } from "autobind-decorator";
 import PromiseDelegate from "../PromiseDelegate";
 
 /**
@@ -79,10 +78,14 @@ interface MountPoint {
 	close(result: DialogResult<unknown>): void;
 }
 
-@boundClass
 export class QuickDialogController {
 
 	private mountPoint?: MountPoint;
+
+	constructor() {
+		this.close = this.close.bind(this);
+		this.confirm = this.confirm.bind(this);
+	}
 
 	connect(mountPoint: MountPoint) {
 		this.mountPoint = mountPoint;

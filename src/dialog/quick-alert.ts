@@ -1,5 +1,4 @@
 import { App, inject } from "vue";
-import { boundClass } from "autobind-decorator";
 import KxDialogContainer from "./KxDialogContainer.vue";
 import KxMessageBox from "./KxMessageBox.vue";
 import KxImageCropper from "./KxImageCropper.vue";
@@ -32,7 +31,6 @@ export interface ImageCopperProps {
 	aspectRatio: number;
 }
 
-@boundClass
 class KxDialogManagerExt extends QuickDialogController {
 
 	/**
