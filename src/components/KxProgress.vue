@@ -2,76 +2,77 @@
 	<div :class="[$style.progress, {[$style.error]: hasError}]" :style="style"></div>
 </template>
 
-<script>
+<script setup>
+import { computed, nextTick, ref } from "vue";
+
 const TRANSITION_TIME = 300;
 const RESIDUAL_TIME = 800;
 
-export default {
-	name: "KxProgress",
-	data: () => ({
-		visible: false,
-		hasError: false,
-		progress: 0,
-		transition: true,
-	}),
-	computed: {
-		style() {
-			return {
-				opacity: this.visible ? 1 : 0,
-				"--progress": this.progress,
-				transition: this.transition ? `width ease-out ${TRANSITION_TIME}ms` : undefined,
-			};
-		},
-	},
-	methods: {
-		start() {
-			if (this.visible) {
-				return; // 忽略重复调用
-			}
-			this.progress = 0;
-			this.visible = true;
-			this.hasError = false;
-		},
-		setProgress(percent) {
-			if (!this.visible) {
-				this.start();
-			}
-			this.progress = percent;
-		},
+const visible = ref(false);
+const hasError = ref(false);
+const progress = ref(0);
+const transition = ref(true);
 
-		/** 重置到进度为0并且不显示的状态，该过程是立即的没有动画 */
-		async reset() {
-			this.transition = false;
-			this.progress = 0;
-			this.visible = false;
+let $_timer;
 
-			await this.$nextTick();
-			this.transition = true;
-			clearTimeout(this.$_timer);
-		},
-		finish() {
-			if (!this.visible) {
-				return; // 必须先调用启动方法
-			}
-			this.progress = 100;
-			this._fadeout();
-		},
-		fail() {
-			if (!this.visible) {
-				return;
-			}
-			this.progress = 100;
-			this.hasError = true;
-			this._fadeout();
-		},
-		_fadeout() {
-			this.$_timer = setTimeout(() => {
-				this.visible = false;
-				this.$_timer = setTimeout(this.reset, TRANSITION_TIME);
-			}, RESIDUAL_TIME);
-		},
-	},
-};
+const style = computed(() => ({
+	opacity: visible.value ? 1 : 0,
+	transition: transition.value ? `width ease-out ${TRANSITION_TIME}ms` : undefined,
+	"--progress": progress.value,
+}));
+
+function start() {
+	if (visible.value) {
+		return; // 忽略重复调用
+	}
+	progress.value = 0;
+	visible.value = true;
+	hasError.value = false;
+}
+
+function setProgress(percent) {
+	if (!visible.value) {
+		this.start();
+	}
+	progress.value = percent;
+}
+
+/** 重置到进度为 0 并且不显示的状态，该过程是立即的没有动画 */
+async function reset() {
+	transition.value = false;
+	progress.value = 0;
+	visible.value = false;
+
+	await nextTick();
+	transition.value = true;
+	clearTimeout($_timer);
+}
+
+function finish() {
+	if (!visible.value) {
+		return; // 必须先调用启动方法
+	}
+	progress.value = 100;
+	this._fadeout();
+}
+
+function fail() {
+	if (!visible.value) {
+		return;
+	}
+	progress.value = 100;
+	hasError.value = true;
+	_fadeout();
+}
+
+function _fadeout() {
+	$_timer = setTimeout(() => {
+		visible.value = false;
+		$_timer = setTimeout(reset, TRANSITION_TIME);
+	}, RESIDUAL_TIME);
+}
+
+defineExpose({ finish, start, fail, reset, setProgress });
 </script>
 
 <style module lang="less">
