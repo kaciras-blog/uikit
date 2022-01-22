@@ -34,6 +34,8 @@ declare module "vue" {
 	}
 }
 
+export * from "./dialog/quick-alert";
+export * from "./media-query";
 export * from "./common";
 export * from "./dragging";
 export * from "./media-resolution";
