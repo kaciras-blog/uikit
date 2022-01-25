@@ -16,10 +16,9 @@
 	"scripts": {
 		"storybook": "start-storybook",
 		"build-storybook": "build-storybook -o .out",
-		"lint": "vue-cli-service lint",
-		"build": "vue-cli-service build --target lib src/index.ts",
+		"lint": "eslint --fix .",
 		"test": "jest",
-		"inspect": "node scripts/inspect-webpack.js"
+		"build": "vite build"
 	},
 	"dependencies": {
 		"animejs": "^3.2.1",
@@ -31,31 +30,35 @@
 		"vuex": "next"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.16.10",
-		"@kaciras-blog/devtool": "^2.0.0-alpha.1",
+		"@babel/core": "^7.16.12",
+		"@kaciras-blog/devtool": "^2.0.0-alpha.3",
 		"@kaciras/eslint-config-core": "^2.3.0",
 		"@kaciras/eslint-config-jest": "^2.3.0",
 		"@kaciras/eslint-config-typescript": "^2.3.0",
 		"@kaciras/eslint-config-vue": "^2.3.0",
-		"@storybook/addon-actions": "^6.4.13",
-		"@storybook/addon-essentials": "^6.4.13",
-		"@storybook/builder-webpack5": "^6.4.13",
-		"@storybook/manager-webpack5": "^6.4.13",
-		"@storybook/vue3": "^6.4.13",
+		"@storybook/addon-actions": "^6.4.14",
+		"@storybook/addon-essentials": "^6.4.14",
+		"@storybook/builder-webpack5": "^6.4.14",
+		"@storybook/manager-webpack5": "^6.4.14",
+		"@storybook/vue3": "^6.4.14",
 		"@types/animejs": "^3.1.3",
 		"@types/jest": "^27.4.0",
+		"@vitejs/plugin-vue": "^2.1.0",
 		"@vue/cli-plugin-typescript": "next",
 		"@vue/cli-service": "next",
-		"@vue/compiler-sfc": "^3.2.27",
+		"@vue/compiler-sfc": "^3.2.29",
 		"@vue/test-utils": "^2.0.0-rc.13",
 		"eslint": "^8.7.0",
 		"jest": "^27.4.7",
 		"less": "^4.1.2",
 		"less-loader": "^10.2.0",
+		"svgo": "^2.8.0",
 		"ts-jest": "^27.1.3",
 		"typescript": "^4.5.5",
+		"vite": "^2.7.13",
 		"vue-jest": "^5.0.0-alpha.10",
 		"vue-loader": "^16.5.0",
+		"webpack": "^5.67.0",
 		"webpack-chain": "^6.5.1"
 	}
 }

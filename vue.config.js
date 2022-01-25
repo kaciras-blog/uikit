@@ -1,5 +1,5 @@
-const svgLoader = require.resolve("@kaciras-blog/devtool/lib/webpack/reactive-svg-loader");
-const sfcLoader = require.resolve("@kaciras-blog/devtool/lib/webpack/vue-template-loader");
+const svgLoader = require.resolve("./.storybook/reactive-svg-loader");
+const sfcLoader = require.resolve("./.storybook/vue-template-loader");
 const packageJson = require("./package.json");
 
 /**
