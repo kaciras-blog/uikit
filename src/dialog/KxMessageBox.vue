@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import CloseIcon from "../assets/icon-close.svg";
+import CloseIcon from "../assets/icon-close.svg?sfc";
 import KxButton from "../components/KxButton.vue";
 import { MessageBoxType, useDialog } from "./quick-alert";
 import DialogIcons from "./DialogIcons.vue";

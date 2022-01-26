@@ -53,7 +53,7 @@ const KxButton: FunctionalComponent<any> = (props, context) =>{
 		data.type = "button";
 		return h("button", data, children);
 	}
-}
+};
 
 KxButton.props = {
 

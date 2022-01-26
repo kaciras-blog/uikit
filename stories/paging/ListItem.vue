@@ -14,7 +14,7 @@
 export default {
 	name: "DemoListItem",
 	props: ["avatar", "name", "content"],
-}
+};
 </script>
 
 <style module lang="less">

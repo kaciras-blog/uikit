@@ -29,8 +29,8 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import VisibleIcon from "../assets/visible.svg";
-import HiddenIcon from "../assets/visible-off.svg";
+import VisibleIcon from "../assets/visible.svg?sfc";
+import HiddenIcon from "../assets/visible-off.svg?sfc";
 import KxButton from "./KxButton.vue";
 
 interface PasswordInputProps {

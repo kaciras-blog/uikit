@@ -65,11 +65,11 @@ import { onMounted, ref } from "vue";
 import "cropperjs/dist/cropper.min.css";
 import Cropper from "cropperjs";
 import { usePreventScroll } from "../scroll";
-import CloseIcon from "../assets/icon-close.svg";
-import SwapHorizIcon from "../assets/swap_horiz.svg";
-import SwapVertIcon from "../assets/swap_vert.svg";
-import RotateRightIcon from "../assets/rotate_right.svg";
-import ZoomOutMap from "../assets/zoom_out_map.svg";
+import CloseIcon from "../assets/icon-close.svg?sfc";
+import SwapHorizIcon from "../assets/swap_horiz.svg?sfc";
+import SwapVertIcon from "../assets/swap_vert.svg?sfc";
+import RotateRightIcon from "../assets/rotate_right.svg?sfc";
+import ZoomOutMap from "../assets/zoom_out_map.svg?sfc";
 import { useDialog } from "./quick-alert";
 
 const props = defineProps({

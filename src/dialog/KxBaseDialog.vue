@@ -39,7 +39,7 @@
 import { ref } from "vue";
 import { limitInWindow, moveElement, observeMouseMove } from "../dragging";
 import { usePreventScroll } from "../scroll";
-import CloseIcon from "../assets/icon-close.svg";
+import CloseIcon from "../assets/icon-close.svg?sfc";
 import KxModalWrapper from "./KxModalWrapper.vue";
 
 const props = defineProps({

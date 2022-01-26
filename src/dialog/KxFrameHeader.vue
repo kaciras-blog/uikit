@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import ArrowLeftIcon from "../assets/arrow-left.svg";
+import ArrowLeftIcon from "../assets/arrow-left.svg?sfc";
 import { useDialog } from "./quick-alert";
 
 defineProps({

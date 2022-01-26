@@ -28,8 +28,8 @@
 </template>
 
 <script lang="ts">
-import SearchIcon from "../assets/search.svg";
-import HelpIcon from "../assets/help.svg";
+import SearchIcon from "../assets/search.svg?sfc";
+import HelpIcon from "../assets/help.svg?sfc";
 import LuckyNumber from "./LuckyNumberDialog";
 
 export default {

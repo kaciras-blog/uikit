@@ -7,7 +7,7 @@ declare module "*.vue" {
 	export default component;
 }
 
-declare module "*.svg" {
+declare module "*.svg?sfc" {
 	import { FunctionalComponent } from "vue";
 
 	// Vue 没有像 React 一样提供 SVG 元素的 props 类型。
