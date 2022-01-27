@@ -45,6 +45,26 @@ export * from "./interactive";
 export { default as PromiseDelegate } from "./PromiseDelegate";
 export { default as PromiseSource } from "./PromiseSource";
 
+export {
+	SkFadingCircle,
+	PagingButtons,
+	ScrollPager,
+	ScrollPagingView,
+	ButtonPagingView,
+	KxButton,
+	KxTaskButton,
+	KxSwitchBox,
+	KxCheckBox,
+	KxRadioBox,
+	KxRadioBoxGroup,
+	KxPasswordInput,
+	KxProgress,
+	KxBaseDialog,
+	KxFrame,
+	KxFrameHeader,
+	KxDialogButtons,
+};
+
 /**
  * 自动注册目录下的 Vue 组件。
  */
