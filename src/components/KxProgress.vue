@@ -32,7 +32,7 @@ function start() {
 
 function setProgress(percent) {
 	if (!visible.value) {
-		this.start();
+		start();
 	}
 	progress.value = percent;
 }
@@ -53,7 +53,7 @@ function finish() {
 		return; // 必须先调用启动方法
 	}
 	progress.value = 100;
-	this._fadeout();
+	_fadeout();
 }
 
 function fail() {
