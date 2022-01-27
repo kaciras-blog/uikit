@@ -1,7 +1,7 @@
 {
 	"name": "@kaciras-blog/uikit",
 	"description": "The component library for kaciras blog",
-	"version": "2.0.1",
+	"version": "2.0.2",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
@@ -11,7 +11,7 @@
 		"src",
 		"dist"
 	],
-	"main": "dist/uikit.common.js",
+	"main": "dist/index.js",
 	"types": "src/index.ts",
 	"scripts": {
 		"storybook": "start-storybook",
@@ -31,7 +31,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.16.12",
-		"@kaciras-blog/devtool": "^2.0.0-alpha.3",
+		"@kaciras-blog/devtool": "^2.0.0-beta.0",
 		"@kaciras/eslint-config-core": "^2.3.0",
 		"@kaciras/eslint-config-jest": "^2.3.0",
 		"@kaciras/eslint-config-typescript": "^2.3.0",
