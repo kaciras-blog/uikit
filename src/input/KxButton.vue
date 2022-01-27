@@ -2,13 +2,13 @@
 import { h, useCssModule, FunctionalComponent } from "vue";
 import { RouterLink } from "vue-router";
 
-const KxButton: FunctionalComponent<any> = (props, context) =>{
+const KxButton: FunctionalComponent<any> = (props, context) => {
 	const { type, color, route } = props;
 	const { slots, attrs, emit } = context;
 
 	const $style = useCssModule();
 
-	const data:any = {
+	const data: any = {
 		...attrs,
 		class: [
 			"kx-btn",
@@ -42,16 +42,15 @@ const KxButton: FunctionalComponent<any> = (props, context) =>{
 	if (!slots.default) {
 		throw new Error("按钮必须有内容");
 	}
-	const children = slots.default();
 
 	if (attrs.href !== undefined) {
-		return h("a", data, children);
+		return h("a", data, slots.default());
 	} else if (route !== undefined) {
 		data.to = route;
-		return h(RouterLink, data, children);
+		return h(RouterLink, data, slots.default());
 	} else {
 		data.type = "button";
-		return h("button", data, children);
+		return h("button", data, slots.default());
 	}
 };
 
@@ -78,6 +77,7 @@ export default KxButton;
 // 最顶层的类公开，以便从外层识别。
 :global(.kx-btn) {
 	display: inline-flex;
+	justify-content: center;
 	align-items: center;
 
 	padding: 8px 16px;
@@ -85,7 +85,7 @@ export default KxButton;
 	line-height: initial;
 
 	border-radius: @radius;
-	transition: ease-in-out .15s;
+	transition: ease-in-out 0.15s;
 
 	// 基础样式，也是默认的类型
 	color: var(--color);
@@ -134,7 +134,16 @@ export default KxButton;
 // 只有一个图标就用这个，可与上面的搭配
 .icon {
 	padding: 5px;
-	font-size: 1.2rem;
+
+	// 这个大小跟文字一起排版较合适，其他地方可能要覆盖。
+	font-size: 24px;
+
+	--color: initial;
+	border: none;
+	background: none;
+
+	--bg-highlight: rgba(0, 0, 0, 0.07);
+	--bg-active: rgba(0, 0, 0, 0.1);
 }
 
 .second {
@@ -162,7 +171,7 @@ export default KxButton;
 
 // 配置各主题色，less还不支运算作为CSS变量值，需要先用变量定义
 .generateColors(@text, @color) {
-	@color-active: @color - #0C0C0C;
+	@color-active: @color - #0c0c0c;
 	@color-highlight: lighten(@color, 5%);
 	@color-glass: fade(@color, 50%);
 

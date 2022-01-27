@@ -3,15 +3,13 @@
 		<kx-frame-header title="标题">
 			<kx-button
 				:class="$style.icon"
-				type="text"
-				color="shadow"
+				type="icon"
 			>
 				<search-icon/>
 			</kx-button>
 			<kx-button
 				:class="$style.icon"
-				type="text"
-				color="shadow"
+				type="icon"
 			>
 				<help-icon/>
 			</kx-button>
@@ -55,6 +53,7 @@ export default {
 }
 
 .icon {
-	font-size: 20px;
+	width: 48px;
+	border-radius: 0;
 }
 </style>

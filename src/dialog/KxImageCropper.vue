@@ -3,6 +3,7 @@
 		<header :class="$style.header">
 			<h1>裁剪图片</h1>
 			<kx-button
+				type="icon"
 				title="关闭"
 				:class="$style.close_button"
 				@click="$dialog.close"
@@ -22,25 +23,28 @@
 
 		<div :class="$style.toolbar">
 			<kx-button
+				type="icon"
 				title="水平翻转"
 				@click="cropper.scaleX(xScale = -xScale)"
 			>
 				<swap-horiz-icon/>
 			</kx-button>
 			<kx-button
+				type="icon"
 				title="垂直翻转"
 				@click="cropper.scaleY(yScale = -yScale)"
 			>
 				<swap-vert-icon/>
 			</kx-button>
 			<kx-button
-				icon="fa fa-redo-alt"
+				type="icon"
 				title="旋转"
 				@click="cropper.rotate(90)"
 			>
 				<rotate-right-icon/>
 			</kx-button>
 			<kx-button
+				type="icon"
 				title="100%"
 				@click="cropper.zoomTo(1)"
 			>

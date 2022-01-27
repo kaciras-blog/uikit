@@ -12,7 +12,7 @@ export default {
 	argTypes: {
 		type: {
 			control: { type: "select" },
-			options: [null, "outline", "text"],
+			options: [null, "outline", "text", "icon"],
 		},
 		color: {
 			control: { type: "select" },
@@ -24,8 +24,9 @@ export default {
 	},
 };
 
+// 这里按钮的内容包了层函数，避免警告 Non-function value encountered for default slot.
 export const Default = {
-	render: args => h(KxButton, args, "按钮"),
+	render: args => h(KxButton, args, { default: () => "按钮" }),
 };
 
 export const Outline = {

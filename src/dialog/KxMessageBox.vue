@@ -12,14 +12,15 @@
 				role="dialog"
 				aria-modal="true"
 			>
-				<button
+				<kx-button
 					v-if="closable"
+					type="icon"
 					:class="$style.closeIcon"
 					title="关闭"
 					@click="$dialog.close"
 				>
 					<close-icon/>
-				</button>
+				</kx-button>
 
 				<dialog-icons :type="type"/>
 				<h2>{{ title }}</h2>
@@ -39,7 +40,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import CloseIcon from "../assets/icon-close.svg?sfc";
-import KxButton from "../components/KxButton.vue";
 import { MessageBoxType, useDialog } from "./quick-alert";
 import DialogIcons from "./DialogIcons.vue";
 import KxModalWrapper from "./KxModalWrapper.vue";
@@ -89,30 +89,17 @@ function onOverlayClick() {
 </script>
 
 <style module lang="less">
-/* TODO: 重复 */
+/* TODO: 跟 BaseDialog 重复 */
 .closeIcon {
 	position: absolute;
 	top: 0;
 	right: 0;
 
+	height: 3rem;
+	width: 3rem;
+
 	font-size: 24px;
-	padding: 12px;
 	border-radius: 0;
-	line-height: 0;
-
-	text-align: center;
-	background: none;
-
-	transition: .15s ease-out;
-
-	&:hover,
-	&:focus {
-		background-color: rgba(0, 0, 0, .05);
-	}
-
-	&:active {
-		background-color: rgba(0, 0, 0, .1);
-	}
 }
 
 .content {

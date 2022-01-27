@@ -18,15 +18,16 @@
 					<slot name="title">
 						<h2 :class="$style.title">{{ title }}</h2>
 					</slot>
-					<button
+					<kx-button
 						v-if="closeIcon"
+						type="icon"
 						title="关闭"
 						:class="$style.closeIcon"
 						@mousedown.stop
 						@click="$emit('close')"
 					>
 						<close-icon/>
-					</button>
+					</kx-button>
 				</header>
 
 				<div :class="$style.body"><slot/></div>
@@ -130,21 +131,6 @@ function onOverlayClick() {
 	width: 3rem;
 
 	font-size: 24px;
-	line-height: 1em;
-
-	text-align: center;
-	cursor: pointer;
-	background: none;
-
-	transition: .15s ease-out;
-
-	&:hover,
-	&:focus {
-		background-color: rgba(0, 0, 0, .05);
-	}
-
-	&:active {
-		background-color: rgba(0, 0, 0, .1);
-	}
+	border-radius: 0;
 }
 </style>

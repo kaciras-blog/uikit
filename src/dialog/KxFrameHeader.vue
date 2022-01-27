@@ -1,12 +1,13 @@
 <template>
 	<div :class="$style.header">
-		<button
+		<kx-button
 			title="返回"
-			:class="$style.back_button"
+			type="icon"
+			:class="$style.back"
 			@click="$dialog.close"
 		>
 			<arrow-left-icon/>
-		</button>
+		</kx-button>
 
 		<span :class="$style.title">{{ title }}</span>
 
@@ -37,16 +38,11 @@ const $dialog = useDialog();
 	border-bottom: 1px solid #eee;
 }
 
-.back_button {
+.back {
 	width: @headerHeight;
-	padding: 0 !important; // 屏蔽按钮点击凹陷效果
 
 	font-size: 20px;
-	background: none;
-
-	&:active {
-		background: whitesmoke;
-	}
+	border-radius: 0;
 }
 
 .title {
