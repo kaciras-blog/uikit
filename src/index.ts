@@ -1,6 +1,7 @@
 import "./css/index.less";
 import { App } from "vue";
 
+import AtomSpinner from "./components/AtomSpinner.vue";
 import SkFadingCircle from "./components/SkFadingCircle.vue";
 import KxProgress from "./components/KxProgress.vue";
 import KxCheckBox from "./input/KxCheckBox.vue";
@@ -71,6 +72,7 @@ export {
 export default function install(app: App) {
 	app.use(QuickAlert);
 
+	app.component("AtomSpinner", AtomSpinner);
 	app.component("SkFadingCircle", SkFadingCircle);
 	app.component("PagingButtons", PagingButtons);
 	app.component("ScrollPager", ScrollPager);

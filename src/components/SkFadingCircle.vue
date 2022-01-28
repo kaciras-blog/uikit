@@ -20,9 +20,12 @@
 @import "../css/exports";
 
 .container {
+	--color: @color-primary;
+	--size: 40px;
+
 	margin: 0 auto;
-	width: 3rem;
-	height: 3rem;
+	width: var(--size);
+	height: var(--size);
 	position: relative;
 }
 
@@ -39,7 +42,7 @@
 		margin: 0 auto;
 		width: 15%;
 		height: 15%;
-		background: var(--fading-circle-color, @color-primary);
+		background: var(--color);
 		border-radius: 100%;
 		animation: animation 1.2s infinite ease-in-out both;
 	}
