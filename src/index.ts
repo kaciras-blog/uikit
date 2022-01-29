@@ -8,6 +8,7 @@ import KxCheckBox from "./input/KxCheckBox.vue";
 import KxRadioBox from "./input/KxRadioBox.vue";
 import KxSwitchBox from "./input/KxSwitchBox.vue";
 import KxRadioBoxGroup from "./input/KxRadioBoxGroup.vue";
+import MaterialTextInput from "./input/MaterialTextInput.vue";
 import KxButton from "./input/KxButton.vue";
 import KxTaskButton from "./input/KxTaskButton.vue";
 import KxPasswordInput from "./input/KxPasswordInput.vue";
@@ -84,6 +85,7 @@ export default function install(app: App) {
 	app.component("KxCheckBox", KxCheckBox);
 	app.component("KxRadioBox", KxRadioBox);
 	app.component("KxRadioBoxGroup", KxRadioBoxGroup);
+	app.component("MaterialTextInput", MaterialTextInput);
 	app.component("KxPasswordInput", KxPasswordInput);
 	app.component("KxProgress", KxProgress);
 	app.component("KxBaseDialog", KxBaseDialog);
