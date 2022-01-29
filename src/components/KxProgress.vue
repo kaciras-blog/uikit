@@ -1,3 +1,6 @@
+<!--
+https://github.com/hilongjw/vue-progressbar
+-->
 <template>
 	<div :class="[$style.progress, {[$style.error]: hasError}]" :style="style"></div>
 </template>

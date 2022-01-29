@@ -4,15 +4,10 @@
 	</teleport>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { usePreventScroll } from "../scroll";
 
-export default {
-	name: "KxFrame",
-	setup() {
-		usePreventScroll();
-	},
-};
+usePreventScroll();
 </script>
 
 <style module lang="less">

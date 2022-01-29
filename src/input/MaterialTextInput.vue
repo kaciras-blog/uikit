@@ -15,12 +15,17 @@
 	</label>
 </template>
 
-<script>
-export default {
-	name: "MaterialTextInput",
-	props: ["name", "modelValue", "disabled", "label", "placeholder"],
-	emits: ["update:modelValue"]
-};
+<script setup lang="ts">
+interface TextInputProps {
+	name?: string;
+	modelValue: string;
+	disabled?: boolean;
+	label?: string;
+	placeholder?: string;
+}
+
+defineProps<TextInputProps>();
+defineEmits(["update:modelValue"]);
 </script>
 
 <style module lang="less">

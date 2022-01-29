@@ -19,12 +19,11 @@
 import ArrowLeftIcon from "../assets/arrow-left.svg?sfc";
 import { useDialog } from "./quick-alert";
 
-defineProps({
-	title: {
-		type: String,
-		required: false,
-	},
-});
+interface FrameHeaderProps {
+	title?: string;
+}
+
+defineProps<FrameHeaderProps>();
 
 const $dialog = useDialog();
 </script>

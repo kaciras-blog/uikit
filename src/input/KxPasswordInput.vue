@@ -17,7 +17,7 @@
 		<kx-button
 			:title="visible ? '隐藏' : '显示密码'"
 			:class="$style.toggle"
-			color="shadow"
+			type="icon"
 			:disabled="disabled"
 			@click="visible = !visible"
 		>

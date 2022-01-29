@@ -5,26 +5,16 @@ TODO: 将 MessageBox 和 DialogBase 的最外层移到这里，如何方便地�
 	<div class="full-vertex kx-modal"><slot/></div>
 </template>
 
-<script>
-export default {
-	name: "KxModalWrapper",
-	props: {
-		preventScroll: {
-			type: Boolean,
-			default: false,
-		},
-	},
-	// mounted() {
-	// 	if (this.preventScroll) {
-	// 		this._restore = preventScroll();
-	// 	}
-	// },
-	// unmouted() {
-	// 	if (this._restore) {
-	// 		this._restore();
-	// 	}
-	// },
-};
+<script setup lang="ts">
+import { usePreventScroll } from "../scroll";
+
+interface KxModalWrapperProps {
+	preventScroll?: boolean;
+}
+
+const props = defineProps<KxModalWrapperProps>();
+
+if (props.preventScroll) usePreventScroll();
 </script>
 
 <style lang="less">
