@@ -7,6 +7,7 @@
 		<input
 			:class="$style.input"
 			:name="name"
+			:disabled="disabled"
 			:placeholder="placeholder"
 			:value="modelValue"
 			@input="e => $emit('update:modelValue', e.target.value)"
@@ -17,7 +18,7 @@
 <script>
 export default {
 	name: "MaterialTextInput",
-	props: ["name", "modelValue", "label", "placeholder"],
+	props: ["name", "modelValue", "disabled", "label", "placeholder"],
 	emits: ["update:modelValue"]
 };
 </script>
@@ -54,6 +55,10 @@ export default {
 
 	&:focus {
 		border-bottom-color: #1175ff;
+	}
+
+	&:disabled {
+		background: #fafafa;
 	}
 }
 </style>

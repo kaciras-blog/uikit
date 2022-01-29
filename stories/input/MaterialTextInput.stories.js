@@ -34,6 +34,8 @@ export const Password = args => ({
 });
 
 Password.args = {
-	text: "name",
+	disabled: false,
+	name: "name",
+	label: "Your name:",
 	placeholder: "default name"
 };
