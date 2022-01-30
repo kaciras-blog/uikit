@@ -1,9 +1,15 @@
+const { defaults: tsjPreset } = require("ts-jest/presets");
+
 module.exports = {
 	preset: "ts-jest",
 	testEnvironment: "jsdom",
-	transform: {
-		"^.+\\.vue$": "vue-jest",
-		"^.+\\js$": "babel-jest",
+	globals: {
+		"ts-jest": {
+			isolatedModules: true,
+		},
 	},
-	moduleFileExtensions: ["vue", "js", "json", "jsx", "ts", "tsx", "node"],
+	transform: {
+		...tsjPreset.transform,
+		"^.+\\.vue$": "@vue/vue3-jest",
+	},
 };

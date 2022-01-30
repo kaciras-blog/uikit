@@ -4,6 +4,7 @@ import { App } from "vue";
 import AtomSpinner from "./components/AtomSpinner.vue";
 import SkFadingCircle from "./components/SkFadingCircle.vue";
 import KxProgress from "./components/KxProgress.vue";
+import SmartLink from "./components/SmartLink.vue";
 import KxCheckBox from "./input/KxCheckBox.vue";
 import KxRadioBox from "./input/KxRadioBox.vue";
 import KxSwitchBox from "./input/KxSwitchBox.vue";
@@ -50,6 +51,7 @@ export { default as PromiseSource } from "./PromiseSource";
 export {
 	SkFadingCircle,
 	PagingButtons,
+	SmartLink,
 	ScrollPager,
 	ScrollPagingView,
 	ButtonPagingView,
@@ -74,6 +76,7 @@ export default function install(app: App) {
 	app.use(QuickAlert);
 
 	app.component("AtomSpinner", AtomSpinner);
+	app.component("SmartLink", SmartLink);
 	app.component("SkFadingCircle", SkFadingCircle);
 	app.component("PagingButtons", PagingButtons);
 	app.component("ScrollPager", ScrollPager);
