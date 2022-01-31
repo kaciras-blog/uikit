@@ -74,6 +74,14 @@ export default KxButton;
 
 @radius: 4px;
 
+/*
+ * 按钮的主题由以下变量控制：
+ * --text-color: 文字主色，通常是主题的主色。
+ * --text-active: 激活文字颜色，因为激活状态下背景是主色，所以它通常是白色。
+ * --struct-color: 文字以外的颜色，跟文字区分开以便分别设置。
+ * --struct-*: 各种状态下的结构色。
+ */
+
 // 最顶层的类公开，以便从外层识别。
 :global(.kx-btn) {
 	display: inline-flex;
@@ -88,30 +96,30 @@ export default KxButton;
 	transition: ease-in-out 0.15s;
 
 	// 基础样式，也是默认的类型
-	color: var(--color);
-	background: var(--background);
-	border: solid 1px var(--background);
+	color: var(--text-active);
+	background: var(--struct-color);
+	border: solid 1px var(--struct-color);
 
 	&:hover {
-		background: var(--bg-highlight);
-		border-color: var(--bg-highlight);
+		background: var(--struct-highlight);
+		border-color: var(--struct-highlight);
 
 		// 用于覆盖 a 元素的样式
-		color: var(--color);
+		color: var(--text-active);
 		text-decoration: none;
 	}
 
 	&:focus {
-		box-shadow: 0 0 0 4px var(--bg-glass);
+		box-shadow: 0 0 0 4px var(--struct-glass);
 		outline: 0;
 		text-decoration: none;
 	}
 
 	&:active {
-		color: var(--color);
+		color: var(--text-active);
 		box-shadow: none;
-		background: var(--bg-active);
-		border-color: var(--bg-active);
+		background: var(--struct-active);
+		border-color: var(--struct-active);
 	}
 
 	.generateColors(white, @color-button-primary);
@@ -119,14 +127,17 @@ export default KxButton;
 
 // 镂空按钮样式
 .outline {
-	color: var(--background);
-	border-color: var(--background);
+	color: var(--text-color);
+	border-color: var(--struct-color);
 	background: none;
+
+	--text-color: initial;
+	--struct-color: #ddd;
 }
 
 // 未激活状态只有文字的样式
 .text {
-	color: var(--background);
+	color: var(--struct-color);
 	background: none;
 	border-color: transparent;
 }
@@ -138,12 +149,16 @@ export default KxButton;
 	// 这个大小跟文字一起排版较合适，其他地方可能要覆盖。
 	font-size: 24px;
 
-	--color: initial;
+	--text-active: initial;
 	border: none;
 	background: none;
 
-	--bg-highlight: rgba(0, 0, 0, 0.07);
-	--bg-active: rgba(0, 0, 0, 0.1);
+	--struct-highlight: rgba(0, 0, 0, 0.07);
+	--struct-active: rgba(0, 0, 0, 0.1);
+}
+
+.primary {
+	.generateColors(white, @color-button-primary);
 }
 
 .second {
@@ -169,16 +184,18 @@ export default KxButton;
 	border-color: #d9dfdf;
 }
 
-// 配置各主题色，less还不支运算作为CSS变量值，需要先用变量定义
+// 配置各主题色，less 不支运算作为 CSS 变量值，需要再用变量定义
 .generateColors(@text, @color) {
 	@color-active: @color - #0c0c0c;
-	@color-highlight: lighten(@color, 5%);
+	@color-highlight: lighten(@color, 4%);
 	@color-glass: fade(@color, 50%);
 
-	--color: @text;
-	--background: @color;
-	--bg-active: @color-active;
-	--bg-highlight: @color-highlight;
-	--bg-glass: @color-glass;
+	--text-color: @color;
+	--struct-color: @color;
+
+	--text-active: @text;
+	--struct-active: @color-active;
+	--struct-highlight: @color-highlight;
+	--struct-glass: @color-glass;
 }
 </style>
