@@ -1,5 +1,6 @@
 <!--
-https://github.com/hilongjw/vue-progressbar
+	最顶部的进度条，用于 SPA 切换页面，参考了：
+	https://github.com/hilongjw/vue-progressbar
 -->
 <template>
 	<div :class="[$style.progress, {[$style.error]: hasError}]" :style="style"></div>

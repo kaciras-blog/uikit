@@ -7,6 +7,11 @@ import { vueSvgComponent } from "@kaciras-blog/devtool";
 const url = new URL("./package.json", import.meta.url);
 const { dependencies } = JSON.parse(readFileSync(url, "utf8"));
 
+/*
+ * 【已经试过的库】
+ * https://github.com/qmhc/vite-plugin-dts 不生成 vue 文件的类型。
+ */
+
 export default defineConfig({
 	plugins: [vue(), vueSvgComponent()],
 	build: {

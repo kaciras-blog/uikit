@@ -1,4 +1,8 @@
-<!-- 加载动画效果, 抄自 http://tobiasahlin.com/spinkit/ -->
+<!--
+	http://tobiasahlin.com/spinkit
+	MIT License
+	Copyright (c) 2020 Tobias Ahlin
+ -->
 <template>
 	<div :class="$style.container">
 		<div :class="$style.cycle"></div>

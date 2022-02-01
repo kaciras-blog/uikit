@@ -23,6 +23,5 @@
 		"allowSyntheticDefaultImports": true,
 		"strict": true,
 		"sourceMap": true,
-		"experimentalDecorators": true,
 	}
 }

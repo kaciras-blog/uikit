@@ -118,7 +118,7 @@ export class EdgeScrollObserver {
 
 	// 为了方便直接 public 了，但是不要再外部修改它们
 	public vX = 0;
-	public vY = 0
+	public vY = 0;
 
 	private animationFrame: number;
 

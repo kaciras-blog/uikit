@@ -7,11 +7,29 @@
 	>
 		<p><span>姓名：</span>{{ name }}</p>
 		<p><span>年龄：</span>{{ age }}</p>
-		<p :class="$style.tip">(点击背景可以关闭窗口)</p>
 
-		<div :class="$style.buttons" class="btn-group">
-			<kx-button class="second outline" @click="inputDialog">输入信息</kx-button>
-			<kx-button class="primary outline" @click="showLuckyNumber">计算！</kx-button>
+		<p :class="$style.tip">
+			(点击背景可以关闭窗口)
+		</p>
+
+		<div
+			:class="$style.buttons"
+			class="btn-group"
+		>
+			<kx-button
+				type="outline"
+				color="second"
+				@click="inputDialog"
+			>
+				输入信息
+			</kx-button>
+			<kx-button
+				type="outline"
+				color="primary"
+				@click="showResult"
+			>
+				计算！
+			</kx-button>
 		</div>
 	</kx-base-dialog>
 </template>
@@ -44,7 +62,7 @@ export default {
 				Object.assign(this.$data, result.data);
 			}
 		},
-		showLuckyNumber() {
+		showResult() {
 			const name = this.name;
 			let num = this.age;
 

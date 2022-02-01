@@ -35,9 +35,18 @@ KxDialogButtons.props = {
 		default: true,
 	},
 
-	onCancel: Function,
-	onApply: Function,
-	onAccept: Function,
+	onCancel: {
+		type: Function,
+		required: false,
+	},
+	onApply: {
+		type: Function,
+		required: false,
+	},
+	onAccept: {
+		type: Function,
+		required: false,
+	},
 };
 
 export default KxDialogButtons;
