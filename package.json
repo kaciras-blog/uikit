@@ -21,6 +21,7 @@
 		"build": "vite build"
 	},
 	"dependencies": {
+		"@vueuse/core": "^7.5.5",
 		"animejs": "^3.2.1",
 		"core-js": "^3.20.3",
 		"cropperjs": "^1.5.11",

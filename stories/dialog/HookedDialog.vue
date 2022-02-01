@@ -21,6 +21,8 @@ function beforeDialogClose() {
 	time.value = 4;
 	return new Promise(countdown);
 }
+
+defineExpose({ beforeDialogClose });
 </script>
 
 <style module lang="less">

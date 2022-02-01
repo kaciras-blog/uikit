@@ -3,7 +3,7 @@
 		v-for="(options, i) in stack"
 		v-bind="options.props"
 		v-show="isVisible(options, i)"
-		ref="instances"
+		:ref="instances.set"
 		:key="options.id"
 		:is="options.component"
 		@close="r => closeDialog(options, r)"
@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
 import { computed, onBeforeMount, onBeforeUnmount, shallowReactive } from "vue";
+import { useTemplateRefsList } from '@vueuse/core';
 import { uniqueKey } from "../common";
 import { DialogOptions, DialogResult } from "./controller";
 import { useDialog } from "./quick-alert";
@@ -26,6 +27,7 @@ const FLAG = "__KX_DIALOG__";
 
 // 这里不要用 reactive 因为他会将每个元素也转为代理。
 const stack = shallowReactive<InternalOptions[]>([]);
+const instances = useTemplateRefsList();
 
 const isMobile = computed(() => window.innerWidth < 768);
 
@@ -76,13 +78,13 @@ function closeDialog(config: InternalOptions, result = DialogResult.CANCELED) {
 	}
 	config.closed = true;
 
-	const { beforeDialogClose } = config.component;
+	const i = stack.findIndex(c => c === config);
+	const { beforeDialogClose } = instances.value[i];
+
 	if (typeof beforeDialogClose !== "function") {
 		remove(config, result);
 	} else {
-		const i = stack.findIndex(c => c === config);
-		const rv = beforeDialogClose.call(this.$refs.instances[i]);
-		Promise.resolve(rv)
+		Promise.resolve(beforeDialogClose())
 			.finally(() => remove(config, result));
 	}
 }
