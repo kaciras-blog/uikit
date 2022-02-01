@@ -1,18 +1,21 @@
+<!--
+	由于 v-show 无法用于 teleport，且过渡无法被外部触发了，改用 v-if。
+-->
 <template>
-	<component
-		v-for="(options, i) in stack"
-		v-bind="options.props"
-		v-show="isVisible(options, i)"
-		:ref="instances.set"
-		:key="options.id"
-		:is="options.component"
-		@close="r => closeDialog(options, r)"
-	/>
+	<template v-for="(options, i) of stack">
+		<component
+			v-bind="options.props"
+			v-if="isVisible(options, i)"
+			:is="options.component"
+			:ref="v => v && instances.set(options, v)"
+			:key="options.id"
+			@close="r => closeDialog(options, r)"
+		/>
+	</template>
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeMount, onBeforeUnmount, shallowReactive } from "vue";
-import { useTemplateRefsList } from '@vueuse/core';
+import { computed, onBeforeMount, onBeforeUnmount, onBeforeUpdate, shallowReactive } from "vue";
 import { uniqueKey } from "../common";
 import { DialogOptions, DialogResult } from "./controller";
 import { useDialog } from "./quick-alert";
@@ -27,7 +30,7 @@ const FLAG = "__KX_DIALOG__";
 
 // 这里不要用 reactive 因为他会将每个元素也转为代理。
 const stack = shallowReactive<InternalOptions[]>([]);
-const instances = useTemplateRefsList();
+const instances = new Map();
 
 const isMobile = computed(() => window.innerWidth < 768);
 
@@ -78,9 +81,7 @@ function closeDialog(config: InternalOptions, result = DialogResult.CANCELED) {
 	}
 	config.closed = true;
 
-	const i = stack.findIndex(c => c === config);
-	const { beforeDialogClose } = instances.value[i];
-
+	const { beforeDialogClose } = instances.get(config);
 	if (typeof beforeDialogClose !== "function") {
 		remove(config, result);
 	} else {
@@ -133,6 +134,8 @@ onBeforeMount(() => {
 		window.addEventListener("popstate", syncHistory);
 	}
 });
+
+onBeforeUpdate(() => instances.clear());
 
 onBeforeUnmount(() => {
 	window.removeEventListener("popstate", syncHistory);
