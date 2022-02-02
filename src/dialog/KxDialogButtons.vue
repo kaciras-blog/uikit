@@ -35,16 +35,17 @@ KxDialogButtons.props = {
 		default: true,
 	},
 
+	/** 为 false 则等效于不设置 */
 	onCancel: {
-		type: Function,
+		type: [Function, Boolean],
 		required: false,
 	},
 	onApply: {
-		type: Function,
+		type: [Function, Boolean],
 		required: false,
 	},
 	onAccept: {
-		type: Function,
+		type: [Function, Boolean],
 		required: false,
 	},
 };

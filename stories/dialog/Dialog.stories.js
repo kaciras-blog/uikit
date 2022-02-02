@@ -31,9 +31,9 @@ export const Buttons = args => ({
 				对话框框
 			</h1>
 			<kx-dialog-buttons
-				:on-apply="applyEvent ? apply : undefined"
-				:on-cancel="cancelEvent ? cancel : undefined"
-				:on-accept="acceptEvent ? accept : undefined"
+				:on-apply="applyEvent && apply"
+				:on-cancel="cancelEvent && cancel"
+				:on-accept="acceptEvent && accept"
 			/>
 		</div>
 	`,
