@@ -12,11 +12,10 @@
 			"DOM",
 			"DOM.Iterable"
 		],
-		"types": [
-			"jest",
-			"webpack-env"
-		],
 		"baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"]
+		},
 		"jsx": "preserve",
 		"skipLibCheck": true,
 		"allowJs": true,

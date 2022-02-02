@@ -6,7 +6,7 @@ export default {
 	title: "LoadingAnimation",
 	args: {
 		size: 60,
-		color: "#0000ee",
+		color: "#077ae6",
 	},
 	argTypes: {
 		size: {

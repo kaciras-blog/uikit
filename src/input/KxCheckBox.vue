@@ -20,10 +20,18 @@
 			@input="handleChange"
 		>
 
-		<span class="check-box-mark" :class="{ checked: modelValue }"></span>
+		<span
+			class="check-box-mark"
+			:class="{ checked: modelValue }"
+		/>
 
 		<!-- 如果有内容，则用 span 包裹住添加样式 -->
-		<span v-if="$slots.default" class="check-box-text"><slot/></span>
+		<span
+			v-if="$slots.default"
+			class="check-box-text"
+		>
+			<slot></slot>
+		</span>
 	</label>
 </template>
 

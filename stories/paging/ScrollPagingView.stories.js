@@ -26,8 +26,10 @@ export const Template = {
 			return { args, value: ref(null) };
 		},
 		methods: {
-			async load(_, size) {
-				return { total: 1000, items: getQuotes(size) };
+			async load(start, size) {
+				const total = 1000;
+				const count = Math.min(total - start, size);
+				return { total, items: getQuotes(count) };
 			},
 		},
 	}),

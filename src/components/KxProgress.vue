@@ -6,7 +6,7 @@
 	<div :class="[$style.progress, {[$style.error]: hasError}]" :style="style"></div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, nextTick, ref } from "vue";
 
 const TRANSITION_TIME = 300;
@@ -34,7 +34,7 @@ function start() {
 	hasError.value = false;
 }
 
-function setProgress(percent) {
+function setProgress(percent: number) {
 	if (!visible.value) {
 		start();
 	}

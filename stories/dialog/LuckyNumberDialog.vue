@@ -5,8 +5,12 @@
 		:draggable="true"
 		@close="$emit('update:open', false)"
 	>
-		<p><span>姓名：</span>{{ name }}</p>
-		<p><span>年龄：</span>{{ age }}</p>
+		<p>
+			<span>姓名：</span>{{ name }}
+		</p>
+		<p>
+			<span>年龄：</span>{{ age }}
+		</p>
 
 		<p :class="$style.tip">
 			(点击背景可以关闭窗口)
@@ -34,49 +38,49 @@
 	</kx-base-dialog>
 </template>
 
-<script>
+<script setup lang="ts">
+import { reactive, ref, toRefs } from "vue";
 import KxBaseDialog from "@/dialog/KxBaseDialog.vue";
+import { useDialog } from "@";
 import InputBox from "./InputBox.vue";
 
-export default {
-	name: "LuckyNumber",
-	components:{
-		KxBaseDialog,
-	},
-	emits: ["update:open"],
-	inject: ["$dialog"],
-	data: () => ({
-		name: "小明",
-		age: 18,
-		hasInput: false,
-	}),
-	methods: {
-		async inputDialog() {
-			const result = await this.$dialog.show(InputBox, {
-				oldName: this.name,
-				oldAge: this.age,
-				hasInput: this.hasInput,
-			});
-			if (result.isConfirm) {
-				this.hasInput = true;
-				Object.assign(this.$data, result.data);
-			}
-		},
-		showResult() {
-			const name = this.name;
-			let num = this.age;
+defineEmits(["update:open"]);
 
-			for (let i = name.length - 1; i >= 0; i--) {
-				num += name.charCodeAt(i);
-			}
-			num = num % 11;
+const $dialog = useDialog();
 
-			return this.$dialog
-				.alertSuccess("幸运数字", `经过详细而周密的计算！\n你的幸运数字是：${num}`)
-				.onConfirm(this.$dialog.close);
-		},
-	},
-};
+const data = reactive({
+	name: "小明",
+	age: 18,
+	hasInput: false,
+});
+
+const { name, age, hasInput } = toRefs(data);
+
+async function inputDialog() {
+	const result = await $dialog.show(InputBox, {
+		oldName: name.value,
+		oldAge: age.value,
+		hasInput: hasInput.value,
+	});
+	if (result.isConfirm) {
+		hasInput.value = true;
+		Object.assign(data, result.data);
+	}
+}
+
+function showResult() {
+	const name = data.name;
+	let num = data.age;
+
+	for (let i = name.length - 1; i >= 0; i--) {
+		num += name.charCodeAt(i);
+	}
+	num = num % 11;
+
+	return $dialog
+		.alertSuccess("幸运数字", `经过详细而周密的计算！\n你的幸运数字是：${num}`)
+		.onConfirm($dialog.close as any);
+}
 </script>
 
 <style module lang="less">
@@ -87,6 +91,6 @@ export default {
 
 .tip {
 	color: #818181;
-	font-size: .9em;
+	font-size: 0.9em;
 }
 </style>

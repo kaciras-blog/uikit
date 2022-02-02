@@ -70,7 +70,7 @@ const dialogEl = ref<HTMLElement>();
 
 usePreventScroll();
 
-function drag(event) {
+function drag(event: TouchEvent & MouseEvent) {
 	if (!props.draggable) {
 		return;
 	}

@@ -28,7 +28,7 @@
 <script lang="ts">
 import SearchIcon from "../assets/search.svg?sfc";
 import HelpIcon from "../assets/help.svg?sfc";
-import LuckyNumber from "./LuckyNumberDialog";
+import LuckyNumber from "./LuckyNumberDialog.vue";
 
 export default {
 	name: "DemoFrame",

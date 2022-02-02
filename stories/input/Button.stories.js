@@ -16,7 +16,7 @@ export default {
 		},
 		color: {
 			control: { type: "select" },
-			options: [null, "second", "info", "dangerous"],
+			options: [null, "primary", "second", "info", "dangerous"],
 		},
 		disabled: {
 			control: { type: "boolean" },

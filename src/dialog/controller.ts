@@ -1,6 +1,6 @@
 // vue-jest 不支持 babel 7，所以必须把与 vue 文件相关的部分分开。
 // 该文件包含弹窗的核心 API，index.ts 里会增加一些具体的弹窗API。
-import { Component } from "vue";
+import { Component, createApp } from "vue";
 import PromiseDelegate from "../PromiseDelegate";
 
 /**
@@ -104,7 +104,7 @@ export class QuickDialogController {
 	 * @param props 传递给弹窗的Props
 	 * @return 弹窗会话，用于接收窗口的返回数据
 	 */
-	show<R, T = unknown>(component: Component<T>, props?: T) {
+	show<R>(component: Component, props?: Record<string, unknown>) {
 		const options = { component, props };
 
 		const promise = new Promise<DialogResult<R>>(resolve => {

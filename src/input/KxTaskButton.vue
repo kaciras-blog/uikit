@@ -27,16 +27,16 @@ const props = withDefaults(defineProps<TaskButtonProps>(), {
 });
 
 const running = ref(false);
-const controller = ref(new AbortController());
+let controller = new AbortController();
 
 function handleClick(event: MouseEvent) {
 	if (running.value) {
 		if (props.abortable) {
-			controller.value.abort();
 			running.value = false;
+			controller.abort();
 		}
 	} else {
-		const { signal } = controller.value = new AbortController();
+		const { signal } = controller = new AbortController();
 		const task = props.onClick(event, signal);
 
 		if (typeof task.finally !== "function") {

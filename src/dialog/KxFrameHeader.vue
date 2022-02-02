@@ -9,7 +9,9 @@
 			<arrow-left-icon/>
 		</kx-button>
 
-		<span :class="$style.title">{{ title }}</span>
+		<span :class="$style.title">
+			{{ title }}
+		</span>
 
 		<slot></slot>
 	</div>
