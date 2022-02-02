@@ -47,7 +47,7 @@ const KxButton: FunctionalComponent<any> = (props, context) => {
 		return h("a", data, slots.default());
 	} else if (route !== undefined) {
 		data.to = route;
-		return h(RouterLink, data, slots.default());
+		return h(RouterLink, data, slots);
 	} else {
 		data.type = "button";
 		return h("button", data, slots.default());

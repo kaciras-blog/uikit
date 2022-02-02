@@ -11,17 +11,17 @@ function KxDialogButtons(props) {
 
 	if (onCancel) {
 		const data = { color: "second", onClick: onCancel };
-		buttons.push(h(KxButton, data, "取消"));
+		buttons.push(h(KxButton, data, { default: () => "取消" }));
 	}
 
 	if (onAccept) {
 		const data = { disabled: !acceptable, onClick: onAccept };
-		buttons.push(h(KxButton, data, "确定"));
+		buttons.push(h(KxButton, data, { default: () => "确定" }));
 	}
 
 	if (onApply) {
 		const data = { disabled: !acceptable, onClick: onApply };
-		buttons.push(h(KxButton, data, "应用"));
+		buttons.push(h(KxButton, data, { default: () => "应用" }));
 	}
 
 	return h("div", { class: ["btn-group", $style.container] }, buttons);
