@@ -2,13 +2,12 @@
 	由于 v-show 无法用于 teleport，且过渡无法被外部触发了，改用 v-if。
 -->
 <template>
-	<template v-for="(options, i) of stack">
+	<template v-for="(options, i) of stack" :key="options.id">
 		<component
 			v-bind="options.props"
 			v-if="isVisible(options, i)"
 			:is="options.component"
 			:ref="v => v && instances.set(options, v)"
-			:key="options.id"
 			@close="r => closeDialog(options, r)"
 		/>
 	</template>
