@@ -3,6 +3,7 @@
 		title="算算你的幸运数字"
 		:click-to-close="true"
 		:draggable="true"
+		:style="{ width: '20rem' }"
 		@close="$emit('update:open', false)"
 	>
 		<p>

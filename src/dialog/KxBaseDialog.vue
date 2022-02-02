@@ -2,13 +2,14 @@
 	<teleport to="body">
 		<kx-modal-wrapper @click.self="onOverlayClick" @keyup.esc="onEscape">
 			<div
+				ref="dialogEl"
 				class="dialogZoomIn"
 				:class="$style.dialog"
-				ref="dialogEl"
 				tabindex="-1"
 				v-autofocus
 				role="dialog"
 				aria-modal="true"
+				v-bind="$attrs"
 			>
 				<header
 					:class="$style.header"
@@ -35,6 +36,12 @@
 		</kx-modal-wrapper>
 	</teleport>
 </template>
+
+<script lang="ts">
+export default {
+	inheritAttrs: false, // 避免警告，虽然不设置也没问题。
+}
+</script>
 
 <script setup lang="ts">
 import { ref } from "vue";
