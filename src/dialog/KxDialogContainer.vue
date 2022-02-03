@@ -14,10 +14,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeMount, onBeforeUnmount, onBeforeUpdate, shallowReactive } from "vue";
+import { computed, inject, onBeforeUpdate, shallowReactive } from "vue";
+import { useEventListener } from '@vueuse/core';
 import { uniqueKey } from "../common";
-import { DialogOptions, DialogResult } from "./controller";
-import { useDialog } from "./quick-alert";
+import { DialogOptions, DialogResult, QuickDialogController } from "./controller";
 
 interface InternalOptions extends DialogOptions<unknown> {
 	id: number;
@@ -128,19 +128,15 @@ function clear() {
 	stack.splice(0, stack.length);
 }
 
-onBeforeMount(() => {
-	if (isMobile.value) {
-		window.addEventListener("popstate", syncHistory);
-	}
-});
-
 onBeforeUpdate(() => instances.clear());
 
-onBeforeUnmount(() => {
-	window.removeEventListener("popstate", syncHistory);
-});
+// 移动端启用回退键功能，这个不是响应的只有载入时执行。
+if (isMobile.value) {
+	useEventListener(window, "popstate", syncHistory);
+}
 
-const controller = useDialog();
+// 这里不用 useDialog()，引用链更清晰。
+const controller = inject<QuickDialogController>("$dialog")!;
 if (!controller) {
 	throw new Error("必须将 QuickAlert 插件注册到 Vue 实例");
 }
