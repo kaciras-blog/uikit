@@ -9,8 +9,8 @@ import { isTouchEvent } from "../common";
 import { RippleEffect } from "../ripple-effect";
 
 class RippleBinding extends RippleEffect {
-	touched: boolean = false;
-	enabled: boolean = true;
+	touched = false;
+	enabled = true;
 }
 
 interface RippledHtmlElement extends HTMLElement {

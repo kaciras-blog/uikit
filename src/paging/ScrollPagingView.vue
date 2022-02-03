@@ -14,10 +14,10 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { LoadPageFn, PageData, State } from "./core";
+import { LoadDateFn, LoadPageFn, PageData, PageLinkFn, State } from "./core";
 
 interface ScrollPagingViewProps {
-	modelValue?: PageData;
+	modelValue: PageData;
 
 	/** 是否触发滚动加载 */
 	autoLoad: boolean;
@@ -28,14 +28,13 @@ interface ScrollPagingViewProps {
 
 	pageSize: number;
 
-	loader: LoadPageFn;
+	loader: LoadDateFn;
 
 	/** 下一页的链接，用于 SSR，如果不存在则不生成 */
-	nextLink?: (start: number, count: number) => string
+	nextLink?: PageLinkFn;
 }
 
 const props = withDefaults(defineProps<ScrollPagingViewProps>(), {
-	modelValue: null,
 	start: 0,
 	pageSize: 16,
 });
@@ -82,7 +81,7 @@ async function loadPage() {
 		state.value = State.FREE;
 	} catch(e) {
 		state.value = State.FAILED;
-		console.error("ScrollPagingView 数据加载失败", e);
+		console.error("[ScrollPagingView] 数据加载失败", e);
 	}
 }
 

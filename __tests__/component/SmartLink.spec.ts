@@ -1,6 +1,6 @@
+import { createRouter, createWebHistory } from "vue-router";
 import { shallowMount } from "@vue/test-utils";
 import SmartLink from "../../src/components/SmartLink.vue";
-import { createRouter, createWebHistory } from "vue-router";
 
 it("should render <a> on full url", async () => {
 	const href = "http://example.com/foo/bar";

@@ -1,5 +1,5 @@
 <template>
-	<!-- 存储到响应对象的 ref 不带冒号，而回调则要用 :ref -->
+	<!-- 存储到响应对象的 ref 不带冒号，而回调则要 -->
 	<div ref="el">
 		<paging-buttons
 			v-if="topButtons && total"
@@ -29,22 +29,24 @@
 import { computed, ref, nextTick } from "vue";
 import { scrollToElementEnd, scrollToElementStart } from "../index";
 import { getScrollTop } from "../scroll";
-import { LoadPageFn } from "./core";
+import { LoadDateFn, LoadPageFn, PageData, PageLinkFn } from "./core";
 
 interface ButtonPagingViewProps {
-	modelValue: any;
-
+	modelValue: PageData;
 	start?: number;
 	pageSize: number;
 
+	/** 是否在上方也显示翻页按钮，默认 false */
 	topButtons?: boolean;
-	viewportOffset?: number,
+
+	viewportOffset?: number;
+
 	theme?: string;
 
-	loader: LoadPageFn;
+	loader: LoadDateFn;
 
 	/** 下一页的链接，用于 SSR，如果不存在则不生成 */
-	nextLink?: (start: number, count: number) => string;
+	nextLink?: PageLinkFn;
 }
 
 const props = withDefaults(defineProps<ButtonPagingViewProps>(), {
@@ -78,13 +80,13 @@ function loadPage(i: number) {
 	if (loading) {
 		loading.abort();
 	}
-	loading = new AbortController();
-	const { signal } = loading;
+	const { signal } = loading = new AbortController();
 
 	index.value = i;
 
-	return loader(start + i * pageSize, pageSize, signal)
-		.then(res => !signal.aborted && emit("update:modelValue", res))
+	const offset = start + i * pageSize;
+	return loader(offset, pageSize, signal)
+		.then(r => emit("update:modelValue", r))
 		.finally(() => loading = null);
 }
 

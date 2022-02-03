@@ -16,7 +16,7 @@ const defaultTheme = {
 		if (link && !active) {
 			data.href = link(page);
 		}
-		return h(KxButton, data, content);
+		return h(KxButton, data, { default: () => content });
 	},
 
 	omit: ($style) => h("span", { class: $style.omit }, "..."),
@@ -51,7 +51,7 @@ const textTheme = {
  *     <label>跳至<input ...>页</label>
  * </div>
  */
-function jumpInput($style, context) {
+function jumpInput(total, $style, context) {
 	const { emit } = context;
 
 	const jumpInput = h("input", {
@@ -108,7 +108,7 @@ function PagingButtons(props, context) {
 	buttons.push(button(index + 1, ">", index >= total));
 
 	const buttonGroup = h("div", { class: "btn-group" }, buttons);
-	return h("div", { class: $style.wrapper }, [buttonGroup, jumpInput($style, context)]);
+	return h("div", { class: $style.wrapper }, [buttonGroup, jumpInput(total, $style, context)]);
 }
 
 PagingButtons.props = {
@@ -132,7 +132,7 @@ PagingButtons.props = {
 	pageLink: {
 		type: Function,
 		required: false,
-	}
+	},
 };
 
 PagingButtons.emits = ["show-page"];
