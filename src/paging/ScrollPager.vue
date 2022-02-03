@@ -34,7 +34,6 @@
 </template>
 
 <script setup lang="ts">
-import { watchEffect, WatchStopHandle } from "vue";
 import { State } from "./core";
 
 interface ScrollPagerProps {
@@ -60,7 +59,6 @@ const props = withDefaults(defineProps<ScrollPagerProps>(), {
 const emit = defineEmits(["load-page"]);
 
 let observer: IntersectionObserver;
-let stopWatch: WatchStopHandle;
 
 function loadPage() {
 	switch (props.state) {
@@ -73,28 +71,23 @@ function loadPage() {
 }
 
 function callback([entry]: IntersectionObserverEntry[]) {
-	if (entry.isIntersecting && props.state === State.FREE) loadPage();
+	if (!entry.isIntersecting) return;
+	if (!props.autoLoad) return;
+	if (props.state === State.FREE) loadPage();
 }
 
 function observe(el: Element | null) {
 	if (!el) {
-		observer.disconnect();
-		return stopWatch();
+		return observer.disconnect();
 	}
 	if (observer) {
 		return; // 函数作为 ref 可能被重复调用。
 	}
 	observer = new IntersectionObserver(callback, {
-		rootMargin: props.activeHeight + "px"
+		rootMargin: props.activeHeight + "px",
 	});
 
-	stopWatch = watchEffect(() => {
-		if (props.autoLoad) {
-			observer.observe(el!);
-		} else {
-			observer.disconnect();
-		}
-	});
+	observer.observe(el);
 }
 </script>
 
