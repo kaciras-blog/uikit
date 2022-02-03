@@ -40,6 +40,7 @@ declare module "vue" {
 export * from "./dialog/quick-alert";
 export * from "./media-query";
 export * from "./common";
+export * from "./composition";
 export * from "./dragging";
 export * from "./media-resolution";
 export * from "./scroll";

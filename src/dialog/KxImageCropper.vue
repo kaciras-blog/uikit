@@ -68,7 +68,7 @@
 import { onMounted, ref } from "vue";
 import "cropperjs/dist/cropper.min.css";
 import Cropper from "cropperjs";
-import { usePreventScroll } from "../scroll";
+import { usePreventScroll } from "../composition";
 import CloseIcon from "../assets/icon-close.svg?sfc";
 import SwapHorizIcon from "../assets/swap_horiz.svg?sfc";
 import SwapVertIcon from "../assets/swap_vert.svg?sfc";

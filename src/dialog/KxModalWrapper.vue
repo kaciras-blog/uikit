@@ -6,7 +6,7 @@ TODO: 将 MessageBox 和 DialogBase 的最外层移到这里，如何方便地�
 </template>
 
 <script setup lang="ts">
-import { usePreventScroll } from "../scroll";
+import { usePreventScroll } from "../composition";
 
 interface KxModalWrapperProps {
 	preventScroll?: boolean;

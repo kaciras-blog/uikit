@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { usePreventScroll } from "../scroll";
+import { usePreventScroll } from "../composition";
 
 usePreventScroll();
 </script>

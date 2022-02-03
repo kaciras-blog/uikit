@@ -46,7 +46,7 @@ export default {
 <script setup lang="ts">
 import { ref } from "vue";
 import { limitInWindow, moveElement, observeMouseMove } from "../dragging";
-import { usePreventScroll } from "../scroll";
+import { usePreventScroll } from "../composition";
 import CloseIcon from "../assets/icon-close.svg?sfc";
 import KxModalWrapper from "./KxModalWrapper.vue";
 
