@@ -45,8 +45,9 @@ export default {
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { limitInWindow, moveElement, observeMouseMove } from "../dragging";
 import { usePreventScroll } from "../composition";
+import { limitInWindow, moveElement, observeMouseMove } from "../dragging";
+import { isTouchEvent } from "../common";
 import CloseIcon from "../assets/icon-close.svg?sfc";
 import KxModalWrapper from "./KxModalWrapper.vue";
 
@@ -77,15 +78,15 @@ const dialogEl = ref<HTMLElement>();
 
 usePreventScroll();
 
-function drag(event: TouchEvent & MouseEvent) {
+function drag(event: TouchEvent | MouseEvent) {
 	if (!props.draggable) {
 		return;
 	}
-	if (!event.touches && event.button !== 0) {
+	if (!isTouchEvent(event) && event.button !== 0) {
 		return; // 鼠标右键不拖动
 	}
 	observeMouseMove()
-		.pipe(limitInWindow(), moveElement(event, dialogEl.value!))
+		.pipe(limitInWindow(), moveElement(event, dialogEl.value))
 		.subscribe();
 }
 

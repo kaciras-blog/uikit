@@ -1,6 +1,6 @@
 // vue-jest 不支持 babel 7，所以必须把与 vue 文件相关的部分分开。
 // 该文件包含弹窗的核心 API，index.ts 里会增加一些具体的弹窗API。
-import { Component, createApp } from "vue";
+import { Component } from "vue";
 import PromiseDelegate from "../PromiseDelegate";
 
 /**
@@ -69,7 +69,7 @@ export interface DialogOptions<T> {
 	component: Component<T>;
 }
 
-interface MountPoint {
+export interface MountPoint {
 
 	push(config: DialogOptions<any>): void;
 

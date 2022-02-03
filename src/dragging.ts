@@ -80,7 +80,7 @@ export function limitInWindow() {
  * @param event 鼠标事件
  * @param el 被移动的元素
  */
-export function moveElement(event: MouseEvent, el: HTMLElement) {
+export function moveElement(event: MouseEvent | TouchEvent, el: HTMLElement) {
 	const { clientX, clientY } = cursorPosition(event);
 	const { style } = el;
 	const clientRect = el.getBoundingClientRect();
