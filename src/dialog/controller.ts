@@ -66,7 +66,8 @@ export class DialogSession<TResult> extends PromiseDelegate<DialogResult<TResult
 
 export interface DialogOptions<T> {
 	props: T;
-	component: Component<T>;
+	resolve: (result: any) => void;
+	component: Component<T> | string;
 }
 
 export interface MountPoint {
@@ -104,12 +105,9 @@ export class QuickDialogController {
 	 * @param props 传递给弹窗的Props
 	 * @return 弹窗会话，用于接收窗口的返回数据
 	 */
-	show<R>(component: Component, props?: Record<string, unknown>) {
-		const options = { component, props };
-
+	show<R>(component: Component | string, props?: Record<string, unknown>) {
 		const promise = new Promise<DialogResult<R>>(resolve => {
-			(options as any).resolve = resolve;
-			this.mountPoint!.push(options);
+			this.mountPoint!.push({ component, props, resolve });
 		});
 		return new DialogSession<R>(promise);
 	}

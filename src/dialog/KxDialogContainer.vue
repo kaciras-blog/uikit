@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { computed, inject, onBeforeUpdate, shallowReactive } from "vue";
-import { useEventListener } from '@vueuse/core';
+import { useEventListener } from "@vueuse/core";
 import { uniqueKey } from "../common";
 import { DialogOptions, DialogResult, QuickDialogController } from "./controller";
 
@@ -84,8 +84,7 @@ function closeDialog(config: InternalOptions, result = DialogResult.CANCELED) {
 	if (typeof beforeDialogClose !== "function") {
 		remove(config, result);
 	} else {
-		Promise.resolve(beforeDialogClose())
-			.finally(() => remove(config, result));
+		Promise.resolve(beforeDialogClose()).finally(() => remove(config, result));
 	}
 }
 
@@ -122,10 +121,9 @@ function close(result) {
 	}
 }
 
-// 目前仅在切换路由时使用，所以没法清除历史
+// 目前仅在切换路由时使用，没法清除历史。该方法也会忽略 beforeDialogClose。
 function clear() {
-	stack.forEach(c => closeDialog(c));
-	stack.splice(0, stack.length);
+	stack.splice(0, stack.length).forEach(c => c.resolve(DialogResult.CANCELED));
 }
 
 onBeforeUpdate(() => instances.clear());

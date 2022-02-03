@@ -1,4 +1,7 @@
-import { DialogResult, DialogSession } from "../src/dialog/controller";
+import { shallowMount } from "@vue/test-utils";
+import { nextTick } from "vue";
+import { DialogResult, DialogSession, QuickDialogController } from "../src/dialog/controller";
+import KxDialogContainer from "../src/dialog/KxDialogContainer.vue";
 
 describe("DialogSession", () => {
 
@@ -12,4 +15,23 @@ describe("DialogSession", () => {
 		const sess = new DialogSession(Promise.resolve(DialogResult.confirm(555)));
 		await sess.confirmPromise.then((value) => expect(value).toBe(555));
 	});
+});
+
+it("should support clear dialogs", async () => {
+	const $dialog = new QuickDialogController();
+	const wrapper = shallowMount(KxDialogContainer, {
+		global: {
+			provide: { $dialog },
+		},
+	});
+
+	$dialog.show("div", { class: "test" });
+	$dialog.show("span", { class: "test" });
+
+	await nextTick();
+	expect(wrapper.findAll(".test")).toHaveLength(1);
+
+	$dialog.clear();
+	await nextTick();
+	expect(wrapper.findAll(".test")).toHaveLength(0);
 });
