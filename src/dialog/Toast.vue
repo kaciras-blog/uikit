@@ -1,16 +1,45 @@
 <template>
 	<div
-		:class="$style.container"
+		:class="[
+			$style.container,
+			$style[MessageBoxType[type]]
+		]"
 		@mouseenter="handleHover"
 		@mouseleave="handleLeave"
 	>
-		{{ content }}
+		<component
+			:is="iconMap[type]"
+			:class="$style.icon"
+		/>
+		<div :class="$style.body">
+			{{ content }}
+		</div>
+		<kx-button
+			:class="$style.close"
+			type="icon"
+			title="关闭"
+			@click='emit("close")'
+		>
+			<CloseIcon/>
+		</kx-button>
 	</div>
 </template>
 
 <script setup lang="ts">
 import { onMounted } from "vue";
+import InfoIcon from "bootstrap-icons/icons/info-circle-fill.svg?sfc";
+import CheckIcon from "bootstrap-icons/icons/check-circle-fill.svg?sfc";
+import WarnIcon from "bootstrap-icons/icons/exclamation-triangle-fill.svg?sfc";
+import ErrorIcon from "bootstrap-icons/icons/x-circle-fill.svg?sfc";
+import CloseIcon from "../assets/icon-close.svg?sfc";
 import { MessageBoxType } from "./quick-alert";
+
+const iconMap = {
+	[MessageBoxType.Info]: InfoIcon,
+	[MessageBoxType.Success]: CheckIcon,
+	[MessageBoxType.Warning]: WarnIcon,
+	[MessageBoxType.Error]: ErrorIcon,
+};
 
 interface ToastProps {
 	type: MessageBoxType;
@@ -59,22 +88,59 @@ onMounted(() => setTimeout(close, props.delay));
 
 .container {
 	position: fixed;
-	left: 50%;
-	bottom: 10vh;
+	bottom: 1.25rem;
+	right: 1.25rem;
 	z-index: 5000;
 
-	padding: 5px 12px;
-	transform: translateX(-50%);
+	display: flex;
+	align-items: center;
+	width: 320px;
+	min-height: 64px;
+	padding: 14px;
+	font-size: 16px;
 
-	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+	box-shadow: 0 1px 10px 0 rgba(0, 0, 0, .1),
+	0 2px 15px 0 rgba(0, 0, 0, .05);
+
 	border-radius: 4px;
 	color: white;
-	background-color: #4eaf4b;
 
 	animation: fade-in .25s;
 
 	@media screen and (min-width: @length-screen-mobile) {
-		padding: .5em 1em;
 	}
+}
+
+.icon {
+	font-size: 1.25em;
+	margin-inline-end: 10px;
+}
+
+.body {
+	flex: 1;
+}
+
+.close {
+	align-self: flex-start;
+	margin-top: -6px;
+	margin-right: -6px;
+	padding: 0;
+	font-size: 18px;
+}
+
+.Info {
+	background: #3498db;
+}
+
+.Success {
+	background: #07bc0c;
+}
+
+.Warning {
+	background: #f1c40f;
+}
+
+.Error {
+	background: #e74c3c;
 }
 </style>

@@ -28,6 +28,7 @@ interface MessageBoxProps {
 
 interface ToastProps {
 	type: MessageBoxType;
+	delay?: number;
 	content: string;
 }
 
