@@ -2,6 +2,7 @@
 // 该文件包含弹窗的核心 API，index.ts 里会增加一些具体的弹窗API。
 import { Component } from "vue";
 import PromiseDelegate from "../PromiseDelegate";
+import { MessageBoxType } from "@/dialog/quick-alert";
 
 /**
  * 表示弹窗会话的结果，当弹窗关闭时会返回此对象。
@@ -135,5 +136,41 @@ export class QuickDialogController {
 	 */
 	close(result: DialogResult<any> = DialogResult.CANCELED) {
 		this.mountPoint!.close(result);
+	}
+}
+
+export interface ToastProps {
+	type: MessageBoxType;
+	delay?: number;
+	content: string;
+}
+
+export interface ToastMountPoint {
+	clear(): void;
+	push(options: ToastProps): void;
+}
+
+export class ToastController {
+
+	mountPoint?: ToastMountPoint;
+
+	show(options: ToastProps) {
+		this.mountPoint!.push(options);
+	}
+
+	info(content: string) {
+		this.show({ type: MessageBoxType.Info, content });
+	}
+
+	success(content: string) {
+		this.show({ type: MessageBoxType.Success, content });
+	}
+
+	warning(content: string) {
+		this.show({ type: MessageBoxType.Warning, content });
+	}
+
+	error(content: string) {
+		this.show({ type: MessageBoxType.Error, content });
 	}
 }

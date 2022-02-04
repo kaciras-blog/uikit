@@ -87,15 +87,12 @@ onMounted(() => setTimeout(close, props.delay));
 }
 
 .container {
-	position: fixed;
-	bottom: 1.25rem;
-	right: 1.25rem;
-	z-index: 5000;
-
 	display: flex;
 	align-items: center;
 	width: 320px;
 	min-height: 64px;
+
+	margin: 12px 0;
 	padding: 14px;
 	font-size: 16px;
 

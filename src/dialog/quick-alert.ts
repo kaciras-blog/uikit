@@ -1,9 +1,9 @@
 import { App, inject } from "vue";
 import KxDialogContainer from "./KxDialogContainer.vue";
+import ToastContainer from "./ToastContainer.vue";
 import KxMessageBox from "./KxMessageBox.vue";
-import Toast from "./Toast.vue";
 import KxImageCropper from "./KxImageCropper.vue";
-import { DialogSession, QuickDialogController } from "./controller";
+import { DialogSession, QuickDialogController, ToastController } from "./controller";
 
 export { QuickDialogController, DialogSession };
 
@@ -24,12 +24,6 @@ interface MessageBoxProps {
 	content?: string;
 	cancelable?: boolean;
 	closable?: boolean;
-}
-
-interface ToastProps {
-	type: MessageBoxType;
-	delay?: number;
-	content: string;
 }
 
 export interface ImageCopperProps {
@@ -67,10 +61,6 @@ class KxDialogManagerExt extends QuickDialogController {
 		return this.alert({ title, content, type: MessageBoxType.Success });
 	}
 
-	toast(options: ToastProps) {
-		this.show(Toast, options);
-	}
-
 	cropImage(options: ImageCopperProps) {
 		if (typeof options.image === "string") {
 			return this.show<Blob>(KxImageCropper, options);
@@ -99,12 +89,25 @@ export function useDialog() {
 	throw new Error("无法获取 $dialog，请确保加入了插件");
 }
 
+export function useToast() {
+	const value = inject<ToastController>("$toast");
+	if (process.env.NODE_ENV === "production" || value) {
+		return value!;
+	}
+	throw new Error("无法获取 $toast，请确保加入了插件");
+}
+
 export default function (app: App) {
-	const controller = new KxDialogManagerExt();
+	const $dialog = new KxDialogManagerExt();
+	const $toast = new ToastController();
 
 	// 为了方便插件见通信，以及兼容性考虑，还是得把它加入全局属性里。
-	app.config.globalProperties.$dialog = controller;
+	app.config.globalProperties.$dialog = $dialog;
+	app.config.globalProperties.$toast = $toast;
 
-	app.provide("$dialog", controller);
+	app.provide("$dialog", $dialog);
+	app.provide("$toast", $toast);
+
 	app.component("KxDialogContainer", KxDialogContainer);
+	app.component("ToastContainer", ToastContainer);
 }

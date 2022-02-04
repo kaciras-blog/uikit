@@ -1,4 +1,4 @@
-import Toast from "@/dialog/Toast.vue";
+import Toast from "@/dialog/KxToast.vue";
 import { MessageBoxType } from "../../src";
 
 export default {
@@ -11,11 +11,11 @@ export const Toast2 = {
 	render: () => ({
 		template: `
 			<kx-button @click="show">显示气泡通知</kx-button>
-			<kx-dialog-container/>
+			<ToastContainer></ToastContainer>
 		`,
 		methods: {
 			show() {
-				this.$dialog.toast({ type: MessageBoxType.Success, content: "评论提交成功" });
+				this.$toast.show({ type: MessageBoxType.Success, content: "评论提交成功" });
 			},
 		},
 	}),
