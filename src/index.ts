@@ -7,6 +7,7 @@ import KxProgress from "./components/KxProgress.vue";
 import SmartLink from "./components/SmartLink.vue";
 import KxCheckBox from "./input/KxCheckBox.vue";
 import KxRadioBox from "./input/KxRadioBox.vue";
+import KxSelect from "./input/KxSelect.vue";
 import KxSwitchBox from "./input/KxSwitchBox.vue";
 import KxRadioBoxGroup from "./input/KxRadioBoxGroup.vue";
 import MaterialTextInput from "./input/MaterialTextInput.vue";
@@ -84,6 +85,7 @@ export default function install(app: App) {
 	app.component("ScrollPagingView", ScrollPagingView);
 	app.component("ButtonPagingView", ButtonPagingView);
 	app.component("KxButton", KxButton);
+	app.component("KxSelect", KxSelect);
 	app.component("KxTaskButton", KxTaskButton);
 	app.component("KxSwitchBox", KxSwitchBox);
 	app.component("KxCheckBox", KxCheckBox);
