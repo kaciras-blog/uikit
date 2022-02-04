@@ -1,6 +1,7 @@
 import { App, inject } from "vue";
 import KxDialogContainer from "./KxDialogContainer.vue";
 import KxMessageBox from "./KxMessageBox.vue";
+import Toast from "./Toast.vue";
 import KxImageCropper from "./KxImageCropper.vue";
 import { DialogSession, QuickDialogController } from "./controller";
 
@@ -23,6 +24,11 @@ interface MessageBoxProps {
 	content?: string;
 	cancelable?: boolean;
 	closable?: boolean;
+}
+
+interface ToastProps {
+	type: MessageBoxType;
+	content: string;
 }
 
 export interface ImageCopperProps {
@@ -58,6 +64,10 @@ class KxDialogManagerExt extends QuickDialogController {
 
 	alertSuccess(title = "执行成功", content?: string) {
 		return this.alert({ title, content, type: MessageBoxType.Success });
+	}
+
+	toast(options: ToastProps) {
+		this.show(Toast, options);
 	}
 
 	cropImage(options: ImageCopperProps) {

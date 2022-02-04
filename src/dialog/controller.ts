@@ -105,7 +105,7 @@ export class QuickDialogController {
 	 * @param props 传递给弹窗的Props
 	 * @return 弹窗会话，用于接收窗口的返回数据
 	 */
-	show<R>(component: Component | string, props?: Record<string, unknown>) {
+	show<R>(component: Component | string, props?: any) {
 		const promise = new Promise<DialogResult<R>>(resolve => {
 			this.mountPoint!.push({ component, props, resolve });
 		});
