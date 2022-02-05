@@ -2,7 +2,7 @@
 	<teleport to="body">
 		<kx-modal-wrapper
 			@click.self="onOverlayClick"
-			@keyup.esc="closable && $dialog.close()"
+			@keyup.esc="closable && close"
 		>
 			<div
 				class="kx-msgbox"
@@ -17,7 +17,7 @@
 					type="icon"
 					:class="$style.closeIcon"
 					title="关闭"
-					@click="$dialog.close"
+					@click="close"
 				>
 					<close-icon/>
 				</kx-button>
@@ -29,8 +29,8 @@
 				<pre v-if="content" :class="$style.content">{{ content }}</pre>
 
 				<kx-dialog-buttons
-					:on-cancel="cancelable && $dialog.close"
-					:on-accept="() => $dialog.confirm(true)"
+					:on-cancel="cancelable && close"
+					:on-accept="() => close(true)"
 				/>
 			</div>
 		</kx-modal-wrapper>
@@ -40,14 +40,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import CloseIcon from "../assets/icon-close.svg?sfc";
-import { MessageBoxType, useDialog } from "./quick-alert";
+import { DialogResult, MessageType } from "./controller";
 import DialogIcons from "./DialogIcons.vue";
 import KxModalWrapper from "./KxModalWrapper.vue";
 import KxDialogButtons from "./KxDialogButtons.vue";
 
 interface MessageBoxProps {
 	title: string;
-	type: MessageBoxType;
+	type: MessageType;
 
 	/**
 	 * 消息框的内容，可以用换行符\n来换行，在超出宽度也会时自动换行。
@@ -71,14 +71,18 @@ const props = withDefaults(defineProps<MessageBoxProps>(), {
 	cancelable: false,
 });
 
+const emit = defineEmits(["close"]);
+
 const dialogZoomIn = ref(true);
 const shaking = ref(false);
 
-const $dialog = useDialog();
+function close(isConfirm = false) {
+	emit("close", new DialogResult(null, isConfirm));
+}
 
 function onOverlayClick() {
 	if (props.closable) {
-		$dialog.close();
+		close();
 	} else {
 		// 一个元素不能有多个 animation 属性，要先把进入动画去掉
 		dialogZoomIn.value = false;

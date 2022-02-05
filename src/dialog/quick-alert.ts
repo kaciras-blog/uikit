@@ -3,16 +3,9 @@ import KxDialogContainer from "./KxDialogContainer.vue";
 import ToastContainer from "./ToastContainer.vue";
 import KxMessageBox from "./KxMessageBox.vue";
 import KxImageCropper from "./KxImageCropper.vue";
-import { DialogSession, QuickDialogController, ToastController } from "./controller";
+import { DialogSession, MessageType, QuickDialogController, ToastController } from "./controller";
 
-export { QuickDialogController, DialogSession };
-
-export enum MessageBoxType {
-	Info,
-	Success,
-	Warning,
-	Error,
-}
+export { QuickDialogController, DialogSession, MessageType };
 
 /**
  * KxMessageBox 的 Props 类型，因为 Vue 的编译器 bug 只能复制出来：
@@ -20,7 +13,7 @@ export enum MessageBoxType {
  */
 interface MessageBoxProps {
 	title: string;
-	type: MessageBoxType;
+	type: MessageType;
 	content?: string;
 	cancelable?: boolean;
 	closable?: boolean;
@@ -46,19 +39,19 @@ class KxDialogManagerExt extends QuickDialogController {
 	// 下面4个都是便捷方法，其中成功的消息往往仅用于提醒一下用户，所以有个有默认标题。
 
 	alertInfo(title: string, content?: string) {
-		return this.alert({ title, content, type: MessageBoxType.Info });
+		return this.alert({ title, content, type: MessageType.Info });
 	}
 
 	alertWarning(title: string, content?: string) {
-		return this.alert({ title, content, type: MessageBoxType.Warning });
+		return this.alert({ title, content, type: MessageType.Warning });
 	}
 
 	alertError(title: string, content?: string) {
-		return this.alert({ title, content, type: MessageBoxType.Error });
+		return this.alert({ title, content, type: MessageType.Error });
 	}
 
 	alertSuccess(title = "执行成功", content?: string) {
-		return this.alert({ title, content, type: MessageBoxType.Success });
+		return this.alert({ title, content, type: MessageType.Success });
 	}
 
 	cropImage(options: ImageCopperProps) {

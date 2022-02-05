@@ -2,7 +2,7 @@
 	<div
 		:class="[
 			$style.container,
-			$style[MessageBoxType[type]]
+			$style[MessageType[type]]
 		]"
 		@mouseenter="handleHover"
 		@mouseleave="handleLeave"
@@ -32,17 +32,17 @@ import CheckIcon from "bootstrap-icons/icons/check-circle-fill.svg?sfc";
 import WarnIcon from "bootstrap-icons/icons/exclamation-triangle-fill.svg?sfc";
 import ErrorIcon from "bootstrap-icons/icons/x-circle-fill.svg?sfc";
 import CloseIcon from "../assets/icon-close.svg?sfc";
-import { MessageBoxType } from "./quick-alert";
+import { MessageType } from "./controller";
 
 const iconMap = {
-	[MessageBoxType.Info]: InfoIcon,
-	[MessageBoxType.Success]: CheckIcon,
-	[MessageBoxType.Warning]: WarnIcon,
-	[MessageBoxType.Error]: ErrorIcon,
+	[MessageType.Info]: InfoIcon,
+	[MessageType.Success]: CheckIcon,
+	[MessageType.Warning]: WarnIcon,
+	[MessageType.Error]: ErrorIcon,
 };
 
 interface ToastProps {
-	type: MessageBoxType;
+	type: MessageType;
 	delay?: number;
 	content: string;
 }

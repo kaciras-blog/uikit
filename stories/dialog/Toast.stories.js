@@ -1,5 +1,5 @@
 import Toast from "@/dialog/KxToast.vue";
-import { MessageBoxType } from "../../src";
+import { MessageType } from "../../src";
 
 export default {
 	title: "Toast",
@@ -15,7 +15,7 @@ export const Toast2 = {
 		`,
 		methods: {
 			show() {
-				this.$toast.show({ type: MessageBoxType.Success, content: "评论提交成功" });
+				this.$toast.show({ type: MessageType.Success, content: "评论提交成功" });
 			},
 		},
 	}),

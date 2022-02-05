@@ -1,6 +1,6 @@
 import { action } from "@storybook/addon-actions";
-import { MessageBoxType } from "@/dialog/quick-alert";
-import KxMessageBox from "@/dialog/KxMessageBox";
+import { MessageType } from "@/dialog/controller";
+import KxMessageBox from "@/dialog/KxMessageBox.vue";
 
 export default {
 	title: "Message Box",
@@ -36,7 +36,7 @@ export const MessageBox = (args) => ({
 });
 
 MessageBox.args = {
-	type: MessageBoxType.Info,
+	type: MessageType.Info,
 	title: "带有取消按钮的消息框",
 	content: "取消 = $dialog.close()\n确定 = $dialog.confirm()",
 	closable: true,

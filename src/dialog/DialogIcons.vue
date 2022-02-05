@@ -1,12 +1,12 @@
 <template>
-	<div class="kx-dialog-icon" :class="$style[MessageBoxType[type]]"/>
+	<div class="kx-dialog-icon" :class="$style[MessageType[type]]"/>
 </template>
 
 <script setup lang="ts">
-import { MessageBoxType } from "./quick-alert";
+import { MessageType } from "./controller";
 
 interface DialogIconProps {
-	type: MessageBoxType;
+	type: MessageType;
 }
 
 defineProps<DialogIconProps>();
