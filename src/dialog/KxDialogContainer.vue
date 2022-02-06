@@ -98,8 +98,10 @@ function push(config) {
 	config.id = id;
 	stack.push(config);
 
+	// https://next.router.vuejs.org/guide/migration/#usage-of-history-state
 	if (isMobile.value) {
-		history.pushState({ flag: FLAG, id }, "");
+		const state = { ...history.state, flag: FLAG, id };
+		history.pushState(state, "");
 	}
 }
 
