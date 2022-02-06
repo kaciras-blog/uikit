@@ -26,10 +26,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, nextTick } from "vue";
+import { computed, nextTick, ref } from "vue";
 import { scrollToElementEnd, scrollToElementStart } from "../index";
 import { getScrollTop } from "../scroll";
-import { LoadDateFn, LoadPageFn, PageData, PageLinkFn } from "./core";
+import { LoadDateFn, PageData, PageLinkFn } from "./core";
 
 interface ButtonPagingViewProps {
 	modelValue: PageData;

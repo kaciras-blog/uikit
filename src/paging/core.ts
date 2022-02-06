@@ -11,4 +11,6 @@ export enum State {
 	ALL_LOADED,
 }
 
-export type LoadPageFn = (start: number, count: number, signal: AbortSignal) => Promise<PageData>;
+export type PageLinkFn = (start: number, count: number) => string;
+
+export type LoadDateFn = (start: number, count: number, signal: AbortSignal) => Promise<PageData>;

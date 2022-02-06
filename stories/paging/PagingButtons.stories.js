@@ -9,9 +9,9 @@ export default {
 			control: { type: "select" },
 			options: ["default", "text"],
 		},
-		hasPageLink:{
+		hasPageLink: {
 			control: { type: "boolean" },
-		}
+		},
 	},
 };
 
@@ -23,10 +23,10 @@ const render = (args) => ({
 		PagingButtons,
 	},
 	data: () => ({ args }),
-	computed:{
+	computed: {
 		pageLink() {
 			return args.hasPageLink && this.link;
-		}
+		},
 	},
 	methods: {
 		showPage: action("showPage"),
