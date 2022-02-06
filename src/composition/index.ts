@@ -1,28 +1,46 @@
 import { onMounted, onUnmounted } from "vue";
 
 /**
- * 临时禁止页面的滚动条，当组件挂载时启用，卸载后还原。
+ * 这里直接把数据放到元素上了，如果不想这么做还可以用全局 Map。
  */
-export function usePreventScroll() {
-	const { style } = document.body;
+interface ElementWithCustomProps extends HTMLElement {
+	kxPSCount: number;
+	kxPSBackup: Partial<CSSStyleDeclaration>;
+}
 
-	let oldOverflow: string;
-	let oldWidth: string;
-	let oldHeight: string;
+/**
+ * 临时禁止元素的滚动条，当组件挂载时启用，卸载后还原。
+ * 该 API 可重入，即支持同时在多个组件中调用。
+ *
+ * @param element 禁止滚动的元素，默认是页面。
+ */
+export function usePreventScroll(element = document.body) {
+	const el = element as ElementWithCustomProps;
 
 	onMounted(() => {
-		oldHeight = style.maxHeight;
-		oldWidth = style.maxWidth;
-		oldOverflow = style.overflow;
+		const count = el.kxPSCount ?? 0;
+		el.kxPSCount = count + 1;
 
+		if (count > 0) {
+			return;
+		}
+		const { style } = el;
+
+		el.kxPSBackup = {
+			maxHeight: style.maxHeight,
+			maxWidth: style.maxWidth,
+			overflow: style.overflow,
+		};
 		style.maxHeight = "100%";
 		style.maxWidth = "100%";
 		style.overflow = "hidden";
 	});
 
 	onUnmounted(() => {
-		style.maxHeight = oldHeight;
-		style.maxWidth = oldWidth;
-		style.overflow = oldOverflow;
+		if ((el.kxPSCount -= 1) > 0) {
+			return;
+		}
+		const { style, kxPSBackup } = el;
+		Object.assign(style, kxPSBackup);
 	});
 }
