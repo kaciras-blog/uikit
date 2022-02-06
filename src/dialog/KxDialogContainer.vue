@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onBeforeUpdate, shallowReactive } from "vue";
+import { inject, onBeforeUpdate, shallowReactive } from "vue";
 import { useEventListener } from "@vueuse/core";
 import { uniqueKey } from "../common";
 import { DialogOptions, DialogResult, QuickDialogController } from "./controller";
@@ -31,7 +31,8 @@ const FLAG = "__KX_DIALOG__";
 const stack = shallowReactive<InternalOptions[]>([]);
 const instances = new Map();
 
-const isMobile = computed(() => window.innerWidth < 768);
+// 这个不是响应的，毕竟在宽屏和窄屏之间切换的常见很少见。
+const isMobile = import.meta.env.SSR ? false : window.innerWidth < 768
 
 /**
  * 判断弹出层是否显示，为了防止遮罩堆太多所以要隐藏非顶部的弹窗。
@@ -99,7 +100,7 @@ function push(config) {
 	stack.push(config);
 
 	// https://next.router.vuejs.org/guide/migration/#usage-of-history-state
-	if (isMobile.value) {
+	if (isMobile) {
 		const state = { ...history.state, flag: FLAG, id };
 		history.pushState(state, "");
 	}
@@ -131,7 +132,7 @@ function clear() {
 onBeforeUpdate(() => instances.clear());
 
 // 移动端启用回退键功能，这个不是响应的只有载入时执行。
-if (isMobile.value) {
+if (isMobile) {
 	useEventListener(window, "popstate", syncHistory);
 }
 

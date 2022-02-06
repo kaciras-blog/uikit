@@ -12,6 +12,9 @@ interface ElementWithCustomProps extends HTMLElement {
  * 临时禁止元素的滚动条，当组件挂载时启用，卸载后还原。
  * 该 API 可重入，即支持同时在多个组件中调用。
  *
+ * 【暂不支持 SSR】
+ * 目前用到的地方都是二级窗口，SSR 中不会被调用，所以没问题。
+ *
  * @param element 禁止滚动的元素，默认是页面。
  */
 export function usePreventScroll(element = document.body) {
