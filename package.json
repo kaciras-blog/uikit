@@ -26,9 +26,9 @@
 		"bootstrap-icons": "^1.8.0",
 		"cropperjs": "^1.5.11",
 		"rxjs": "^7.5.2",
-		"vue": "next",
-		"vue-router": "next",
-		"vuex": "next"
+		"vue": "^3.2.29",
+		"vue-router": "^4.0.12",
+		"vuex": "^4.0.2"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.17.0",
