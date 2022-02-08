@@ -59,6 +59,6 @@ export const BeforeDialogClose = args => ({
 	methods: {
 		show() {
 			this.$dialog.show(HookedDialog);
-		}
-	}
+		},
+	},
 });

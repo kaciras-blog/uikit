@@ -1,4 +1,3 @@
-import { action } from "@storybook/addon-actions";
 import { ref } from "vue";
 import MaterialTextInput from "@/input/MaterialTextInput.vue";
 
@@ -37,5 +36,5 @@ Password.args = {
 	disabled: false,
 	name: "name",
 	label: "Your name:",
-	placeholder: "default name"
+	placeholder: "default name",
 };

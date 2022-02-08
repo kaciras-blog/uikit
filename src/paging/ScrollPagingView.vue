@@ -41,7 +41,7 @@ const props = withDefaults(defineProps<ScrollPagingViewProps>(), {
 
 const emit = defineEmits(["update:modelValue"]);
 
-const state = ref(State.FREE);
+const state = ref<State>(State.FREE);
 const count = ref(props.modelValue?.items.length ?? 0);
 
 /** 是否全部加载完毕，没有数据视为未加载完 */
@@ -50,7 +50,7 @@ const drained = computed(() => {
 	if (!modelValue) {
 		return false;
 	}
-	return start + count.value >= modelValue.total
+	return start + count.value >= modelValue.total;
 });
 
 const nextUrl = computed(() => {
@@ -67,7 +67,7 @@ async function loadPage() {
 	const offset = start + count.value;
 
 	state.value = State.LOADING;
-	const { signal } = new AbortController()
+	const { signal } = new AbortController();
 
 	try {
 		const data = await loader(offset, pageSize, signal);

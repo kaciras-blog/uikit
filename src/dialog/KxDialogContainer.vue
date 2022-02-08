@@ -32,7 +32,7 @@ const stack = shallowReactive<InternalOptions[]>([]);
 const instances = new Map();
 
 // 这个不是响应的，毕竟在宽屏和窄屏之间切换的常见很少见。
-const isMobile = typeof window === "undefined" ? false : window.innerWidth < 768
+const isMobile = typeof window === "undefined" ? false : window.innerWidth < 768;
 
 /**
  * 判断弹出层是否显示，为了防止遮罩堆太多所以要隐藏非顶部的弹窗。

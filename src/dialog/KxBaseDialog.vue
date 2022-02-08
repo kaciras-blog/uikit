@@ -40,7 +40,7 @@
 <script lang="ts">
 export default {
 	inheritAttrs: false, // 避免警告，虽然不设置也没问题。
-}
+};
 </script>
 
 <script setup lang="ts">
@@ -86,7 +86,7 @@ function drag(event: TouchEvent | MouseEvent) {
 		return; // 鼠标右键不拖动
 	}
 	observeMouseMove()
-		.pipe(limitInWindow(), moveElement(event, dialogEl.value))
+		.pipe(limitInWindow(), moveElement(event, dialogEl.value!))
 		.subscribe();
 }
 
