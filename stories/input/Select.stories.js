@@ -2,7 +2,7 @@ import { ref } from "vue";
 import KxSelect from "@/input/KxSelect.vue";
 
 export default {
-	title: "elect",
+	title: "Select",
 	component: KxSelect,
 	args: {
 		disabled: false,

@@ -30,7 +30,7 @@ function handleInput(event) {
 	display: block;
 	position: relative;
 
-	border: solid 1px #e0e0e0;
+	border: solid 1px #ddd;
 	border-radius: 4px;
 }
 
@@ -38,7 +38,7 @@ function handleInput(event) {
 	appearance: none;
 
 	width: 100%;
-	padding: 10px 35px 10px 10px;
+	padding: 5px 30px 5px 5px;
 	border: none;
 
 	cursor: pointer;
