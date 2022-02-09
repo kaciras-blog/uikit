@@ -1,5 +1,5 @@
 <script lang="ts">
-import { h, useCssModule, FunctionalComponent } from "vue";
+import { FunctionalComponent, h, useCssModule } from "vue";
 import { RouterLink } from "vue-router";
 
 const KxButton: FunctionalComponent<any> = (props, context) => {
@@ -56,10 +56,13 @@ const KxButton: FunctionalComponent<any> = (props, context) => {
 
 KxButton.props = {
 
-	/** 内置样式，有 outline，text 和默认三种 */
+	/** 内置样式，有默认，outline，text 和 icon 四种 */
 	type: String,
 
-	/** 内置颜色主题，有 second，info，dangerous 和默认五种 */
+	/**
+	 * 内置颜色主题，有默认，second，info，dangerous 五种，
+	 * 仅当 type 不为 icon 时可用。
+	 */
 	color: String,
 
 	/** 渲染为 router-link，其 to 属性等于该值 */
@@ -97,11 +100,11 @@ export default KxButton;
 
 	// 基础样式，也是默认的类型
 	color: var(--text-active);
-	background: var(--struct-color);
+	background-color: var(--struct-color);
 	border: solid 1px var(--struct-color);
 
 	&:hover {
-		background: var(--struct-highlight);
+		background-color: var(--struct-highlight);
 		border-color: var(--struct-highlight);
 
 		// 用于覆盖 a 元素的样式
@@ -118,7 +121,7 @@ export default KxButton;
 	&:active {
 		color: var(--text-active);
 		box-shadow: none;
-		background: var(--struct-active);
+		background-color: var(--struct-active);
 		border-color: var(--struct-active);
 	}
 
@@ -129,7 +132,7 @@ export default KxButton;
 .outline {
 	color: var(--text-color);
 	border-color: var(--struct-color);
-	background: none;
+	background-color: transparent;
 
 	--text-color: initial;
 	--struct-color: #ddd;
@@ -138,7 +141,7 @@ export default KxButton;
 // 未激活状态只有文字的样式
 .text {
 	color: var(--struct-color);
-	background: none;
+	background-color: transparent;
 	border-color: transparent;
 }
 
@@ -151,7 +154,7 @@ export default KxButton;
 
 	--text-active: initial;
 	border: none;
-	background: none;
+	background-color: transparent;
 
 	--struct-highlight: rgba(0, 0, 0, 0.07);
 	--struct-active: rgba(0, 0, 0, 0.1);
@@ -180,7 +183,7 @@ export default KxButton;
 	pointer-events: none;
 
 	color: dimgray;
-	background: #d9dfdf;
+	background-color: #d9dfdf;
 	border-color: #d9dfdf;
 }
 

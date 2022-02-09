@@ -2,6 +2,9 @@
 <template>
 	<kx-button
 		:class="{ [$style.running]: running }"
+		:route="route"
+		:type="type"
+		:color="color"
 		@click="handleClick"
 	>
 		<slot v-if="!running"/>
@@ -14,6 +17,11 @@ import { ref } from "vue";
 import KxButton from "./KxButton.vue";
 
 interface TaskButtonProps {
+
+	// Vue 残废的 TS 支持，只能把按钮的属性复制一遍。
+	type?: string;
+	color?: string;
+	route?: string;
 
 	// 因为事件无法获取返回值所以用 props
 	onClick: (event: Event, signal: AbortSignal) => Promise<any>;
@@ -59,17 +67,17 @@ function handleClick(event: MouseEvent) {
 .running {
 	&, &:hover {
 		color: white;
-		background-color: var(--bg-active);
-		border-color: var(--bg-highlight);
+		background-color: var(--struct-active);
+		border-color: var(--struct-highlight);
 		background-size: @stripeWidth @stripeWidth;
 	}
 
 	background-image: linear-gradient(-45deg,
-		var(--bg-highlight) 25%,
+		var(--struct-highlight) 25%,
 		transparent 25%,
 		transparent 50%,
-		var(--bg-highlight) 50%,
-		var(--bg-highlight) 75%,
+		var(--struct-highlight) 50%,
+		var(--struct-highlight) 75%,
 		transparent 75%);
 
 	animation: barbershop linear .4s infinite;
