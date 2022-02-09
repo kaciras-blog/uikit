@@ -17,7 +17,7 @@ import KxPasswordInput from "./input/KxPasswordInput.vue";
 import KxBaseDialog from "./dialog/KxBaseDialog.vue";
 import KxFrame from "./dialog/KxFrame.vue";
 import KxFrameHeader from "./dialog/KxFrameHeader.vue";
-import QuickAlert, { KxDialogAPI } from "./dialog/quick-alert";
+import QuickAlert from "./dialog/quick-alert";
 import KxDialogButtons from "./dialog/KxDialogButtons.vue";
 import PagingButtons from "./paging/PagingButtons.vue";
 import ButtonPagingView from "./paging/ButtonPagingView.vue";
@@ -29,14 +29,6 @@ import SelectionBinding from "./directives/selection-bind";
 import SelectionChange from "./directives/selection-change";
 import SelectionModel from "./directives/selection-model";
 import Ripple from "./directives/ripple";
-import { MediaQueryAPI } from "./media-query";
-
-declare module "vue" {
-	export interface Vue {
-		$dialog: KxDialogAPI;
-		$mediaQuery: MediaQueryAPI;
-	}
-}
 
 export * from "./dialog/quick-alert";
 export * from "./media-query";
