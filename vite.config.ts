@@ -15,6 +15,8 @@ const { dependencies } = JSON.parse(readFileSync(url, "utf8"));
 export default defineConfig({
 	plugins: [vue(), vueSvgComponent()],
 	build: {
+		// website 项目里还会再次构建的，这里不转换。
+		target: "esnext",
 		lib: {
 			entry: "src/index.ts",
 			name: "ui-kit",
