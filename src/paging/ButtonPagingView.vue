@@ -1,11 +1,10 @@
 <template>
 	<!-- 存储到响应对象的 ref 不带冒号，而回调则要 -->
 	<div ref="el">
-		<paging-buttons
+		<PagingButtons
 			v-if="topButtons && total"
-			:total="total"
+			:total="totalPage"
 			:index="index"
-			:page-size="pageSize"
 			:type="theme"
 			:page-link="pageLink"
 			@show-page="switchPage"
@@ -13,11 +12,10 @@
 
 		<slot :items="items.slice(0, pageSize)"/>
 
-		<paging-buttons
+		<PagingButtons
 			v-if="total"
-			:total="total"
+			:total="totalPage"
 			:index="index"
-			:page-size="pageSize"
 			:type="theme"
 			:page-link="pageLink"
 			@show-page="switchPage"
@@ -30,6 +28,7 @@ import { computed, nextTick, ref } from "vue";
 import { scrollToElementEnd, scrollToElementStart } from "../index";
 import { getScrollTop } from "../scroll";
 import { LoadDateFn, PageData, PageLinkFn } from "./core";
+import PagingButtons from "./PagingButtons.vue";
 
 interface ButtonPagingViewProps {
 	modelValue: PageData;
@@ -57,7 +56,7 @@ const props = withDefaults(defineProps<ButtonPagingViewProps>(), {
 
 const emit = defineEmits(["update:modelValue"]);
 
-const el = ref<HTMLElement>(null);
+const el = ref<HTMLElement>();
 const index = ref(0);
 
 let loading: AbortController;
@@ -70,6 +69,10 @@ const total = computed(() => {
 	return props.modelValue?.total ?? 0;
 });
 
+const totalPage = computed(() =>{
+	return Math.max(0, Math.floor((total.value - 1) / props.pageSize) + 1);
+});
+
 const pageLink= computed(() => {
 	const { nextLink, pageSize, start } = props;
 	return nextLink && ((i: number) => nextLink(i * pageSize + start, pageSize));
@@ -77,9 +80,8 @@ const pageLink= computed(() => {
 
 function loadPage(i: number) {
 	const { start, pageSize, loader } = props;
-	if (loading) {
-		loading.abort();
-	}
+
+	loading?.abort();
 	const { signal } = loading = new AbortController();
 
 	index.value = i;
@@ -98,7 +100,7 @@ function loadPage(i: number) {
  */
 async function switchPage(index: number) {
 	await loadPage(index);
-	const top = el.value.getBoundingClientRect().top - props.viewportOffset;
+	const top = el.value!.getBoundingClientRect().top - props.viewportOffset;
 	if (top < 0) {
 		document.documentElement.scrollTop = top + getScrollTop();
 	}
@@ -121,11 +123,11 @@ function switchToLast() {
 }
 
 function scrollToStart() {
-	nextTick(() => scrollToElementStart(el.value));
+	nextTick(() => scrollToElementStart(el.value!));
 }
 
 function scrollToEnd() {
-	nextTick(() => scrollToElementEnd(el.value));
+	nextTick(() => scrollToElementEnd(el.value!));
 }
 
 defineExpose({ reload, refresh, switchToLast, scrollToStart, scrollToEnd });
