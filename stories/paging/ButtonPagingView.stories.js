@@ -7,8 +7,13 @@ export default {
 	title: "ButtonPagingView",
 	args: {
 		total: 1000,
+		theme: "default",
 	},
 	argTypes: {
+		theme: {
+			control: { type: "select" },
+			options: ["default", "text"],
+		},
 		total: {
 			control: { type: "number" },
 		},
@@ -24,6 +29,7 @@ export const Template = (args) => ({
 			:loader="load"
 			:viewport-offset="60"
 			:page-size="10"
+			:theme="args.theme"
 			:top-buttons="true"
 		>
 			<template v-slot="{ items }">
@@ -31,6 +37,7 @@ export const Template = (args) => ({
 			</template>
 		</button-paging-view>`,
 	data: () => ({
+		args,
 		model: { total: 0, items: [] },
 	}),
 	methods: {

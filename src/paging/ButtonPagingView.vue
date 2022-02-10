@@ -31,6 +31,11 @@ import { LoadDateFn, PageData, PageLinkFn } from "./core";
 import PagingButtons from "./PagingButtons.vue";
 
 interface ButtonPagingViewProps {
+
+	/**
+	 * 分页数据，该属性身与内部的两个属性（items,total）都不能为空，
+	 * 若要表示未加载状态，请对本组件使用 v-if。
+	 */
 	modelValue: PageData;
 	start?: number;
 	pageSize: number;
@@ -64,22 +69,22 @@ const el = ref<HTMLElement>();
 
 let loading: AbortController | null;
 
-const items = computed(() => {
-	return props.modelValue?.items ?? [];
-});
-
-const total = computed(() => {
-	return props.modelValue?.total ?? 0;
-});
+const items = computed(() => props.modelValue.items);
+const total = computed(() => props.modelValue.total);
 
 const totalPage = computed(() => {
 	return Math.max(0, Math.floor((total.value - 1) / props.pageSize) + 1);
 });
 
 const pageLink = computed(() => {
-	const { nextLink, pageSize, start } = props;
-	return nextLink && ((i: number) => nextLink(i * pageSize + start, pageSize));
+	const { nextLink, pageSize } = props;
+	return nextLink && ((i: number) => nextLink(offset(i), pageSize));
 });
+
+function offset(i: number) {
+	const { pageSize, start } = props;
+	return start + (i - 1) * pageSize;
+}
 
 /**
  * 开始加载指定的页面，是该组件的核心方法。
@@ -87,15 +92,14 @@ const pageLink = computed(() => {
  * @param i 页码，从 1 开始。
  */
 function loadPage(i: number) {
-	const { start, pageSize, loader } = props;
+	const { pageSize, loader } = props;
 
 	loading?.abort();
 	const { signal } = loading = new AbortController();
 
 	index.value = i;
 
-	const offset = start + (i - 1) * pageSize;
-	return loader(offset, pageSize, signal)
+	return loader(offset(i), pageSize, signal)
 		.then(r => emit("update:modelValue", r))
 		.finally(() => loading = null);
 }

@@ -2,7 +2,7 @@
 	新加项目的跳转显示问题：bilibili 的新评论是添加在第一页的最后。
 -->
 <template>
-	<slot :items="modelValue?.items ?? []"/>
+	<slot :items="modelValue.items"/>
 	<scroll-pager
 		:state="drained ? State.ALL_LOADED : state"
 		:auto-load="autoLoad"
@@ -24,7 +24,7 @@ interface ScrollPagingViewProps {
 
 	activeHeight: number;
 
-	start: number;
+	start?: number;
 
 	pageSize: number;
 
@@ -42,14 +42,11 @@ const props = withDefaults(defineProps<ScrollPagingViewProps>(), {
 const emit = defineEmits(["update:modelValue"]);
 
 const state = ref<State>(State.FREE);
-const count = ref(props.modelValue?.items.length ?? 0);
+const count = ref(props.modelValue.items.length);
 
 /** 是否全部加载完毕，没有数据视为未加载完 */
 const drained = computed(() => {
 	const { start, modelValue } = props;
-	if (!modelValue) {
-		return false;
-	}
 	return start + count.value >= modelValue.total;
 });
 
@@ -63,7 +60,7 @@ const nextUrl = computed(() => {
 
 async function loadPage() {
 	const { start, loader, modelValue, pageSize } = props;
-	const { items = [] } = modelValue || {};
+	const { items } = modelValue;
 	const offset = start + count.value;
 
 	state.value = State.LOADING;
