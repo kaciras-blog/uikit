@@ -7,8 +7,8 @@
 		:state="drained ? State.ALL_LOADED : state"
 		:auto-load="autoLoad"
 		:next-url="nextUrl"
-		:activeHeight="activeHeight"
-		@load-page="loadPage"
+		:active-height="activeHeight"
+		@load-page="loadNext"
 	/>
 </template>
 
@@ -58,29 +58,47 @@ const nextUrl = computed(() => {
 	return nextLink(start + count.value, pageSize);
 });
 
-async function loadPage() {
-	const { start, loader, modelValue, pageSize } = props;
-	const { items } = modelValue;
-	const offset = start + count.value;
+async function fetchData(offset: number) {
+	const { loader, pageSize } = props;
 
 	state.value = State.LOADING;
 	const { signal } = new AbortController();
 
 	try {
 		const data = await loader(offset, pageSize, signal);
-		count.value += pageSize;
-
-		emit("update:modelValue", {
-			total: data.total,
-			items: items.concat(data.items),
-		});
-
 		state.value = State.FREE;
-	} catch(e) {
+		return data;
+	} catch (e) {
 		state.value = State.FAILED;
 		console.error("[ScrollPagingView] 数据加载失败", e);
 	}
 }
 
-defineExpose({ reload: loadPage });
+/**
+ * 重新加载，这会清除当前的数据，并抓取第一页。
+ */
+async function reload() {
+	const { start, pageSize } = props;
+	const data = await fetchData(start);
+	count.value = pageSize;
+	emit("update:modelValue", data);
+}
+
+/**
+ * 加载下一页，新的项目将附加在当前项目的后面。
+ */
+async function loadNext() {
+	const { start, modelValue, pageSize } = props;
+	const { items } = modelValue;
+
+	const data = await fetchData(start + count.value);
+	count.value += pageSize;
+
+	emit("update:modelValue", {
+		total: data.total,
+		items: items.concat(data.items),
+	});
+}
+
+defineExpose({ reload, loadNext });
 </script>
