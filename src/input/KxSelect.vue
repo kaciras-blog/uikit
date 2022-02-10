@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits } from "vue";
 import CaretDownIcon from "bootstrap-icons/icons/caret-down-fill.svg?sfc";
 
 export interface SelectProps {

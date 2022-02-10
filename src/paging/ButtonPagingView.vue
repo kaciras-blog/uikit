@@ -67,7 +67,7 @@ const emit = defineEmits(["update:modelValue"]);
 const index = ref(1);
 const el = ref<HTMLElement>();
 
-let loading: AbortController | null;
+let controller: AbortController | null;
 
 const items = computed(() => props.modelValue.items);
 const total = computed(() => props.modelValue.total);
@@ -94,14 +94,14 @@ function offset(i: number) {
 function loadPage(i: number) {
 	const { pageSize, loader } = props;
 
-	loading?.abort();
-	const { signal } = loading = new AbortController();
+	controller?.abort();
+	const { signal } = controller = new AbortController();
 
 	index.value = i;
 
 	return loader(offset(i), pageSize, signal)
 		.then(r => emit("update:modelValue", r))
-		.finally(() => loading = null);
+		.finally(() => controller = null);
 }
 
 /**

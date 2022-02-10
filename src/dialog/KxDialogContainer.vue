@@ -54,7 +54,7 @@ function isVisible(config: DialogOptions<unknown>, index: number) {
  * 同步的方式可以支持多级跳，但好像实际的手机浏览器没法这么做。
  */
 function syncHistory() {
-	const { flag, id } = history.state || {};
+	const { flag, id } = history.state ?? {};
 
 	if (flag !== FLAG) {
 		stack.forEach(c => closeDialog(c));
@@ -116,7 +116,7 @@ function close(result) {
 	if (!config) {
 		throw new Error("没有可关闭的弹窗");
 	}
-	const { flag, id } = history.state || {};
+	const { flag, id } = history.state ?? {};
 	if (flag === FLAG && id === config.id) {
 		history.back();
 	} else {
