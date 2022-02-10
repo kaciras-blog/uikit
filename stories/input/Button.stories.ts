@@ -1,6 +1,9 @@
-import { Story } from "@storybook/vue3";
+import { Args, Story } from "@storybook/vue3";
 import { action } from "@storybook/addon-actions";
 import { h } from "vue";
+import TrashIcon from "bootstrap-icons/icons/trash.svg?sfc";
+import ReplyIcon from "bootstrap-icons/icons/reply.svg?sfc";
+import ArrowHeartIcon from "bootstrap-icons/icons/arrow-through-heart-fill.svg?sfc";
 import KxButton from "@/input/KxButton.vue";
 
 export default {
@@ -40,6 +43,23 @@ export const Outline = {
 export const Text = {
 	render,
 	args: { type: "text" },
+};
+
+export const Icon = {
+	render: (args: Args) => ({
+		components: {
+			TrashIcon,
+			ReplyIcon,
+			ArrowHeartIcon,
+		},
+		data: () => ({ args }),
+		template: `
+			<KxButton v-bind="args"><TrashIcon/></KxButton>
+			<KxButton v-bind="args"><ReplyIcon/></KxButton>
+			<KxButton v-bind="args"><ArrowHeartIcon/></KxButton>
+		`,
+	}),
+	args: { type: "icon" },
 };
 
 export const Link = {

@@ -55,17 +55,24 @@ const KxButton: FunctionalComponent<any> = (props, context) => {
 };
 
 KxButton.props = {
-
-	/** 内置样式，有默认，outline，text 和 icon 四种 */
+	/**
+	 * 内置样式，有默认，outline，text 和 icon 四种。
+	 */
 	type: String,
 
 	/**
-	 * 内置颜色主题，有默认，second，info，dangerous 五种，
-	 * 仅当 type 不为 icon 时可用。
+	 * 内置颜色主题，有默认，second，info，dangerous 五种。
 	 */
 	color: String,
 
-	/** 渲染为 router-link，其 to 属性等于该值 */
+	/**
+	 * 渲染为 <a>，其 href 属性等于该值。
+	 */
+	href: String,
+
+	/**
+	 * 渲染为 router-link，其 to 属性等于该值，不能与 href 同时使用。
+	 */
 	route: String,
 };
 
@@ -145,19 +152,28 @@ export default KxButton;
 	border-color: transparent;
 }
 
-// 只有一个图标就用这个，可与上面的搭配
+// 只有一个图标就用这个
 .icon {
 	padding: 5px;
 
 	// 这个大小跟文字一起排版较合适，其他地方可能要覆盖。
 	font-size: 24px;
 
-	--text-active: initial;
+	color: var(--struct-color);
 	border: none;
 	background-color: transparent;
 
-	--struct-highlight: rgba(0, 0, 0, 0.07);
-	--struct-active: rgba(0, 0, 0, 0.1);
+	--struct-color: initial;
+
+	&:hover {
+		color: var(--struct-color);
+		background-color: rgba(0, 0, 0, 0.07);
+	}
+
+	&:active {
+		color: var(--struct-color);
+		background-color: rgba(0, 0, 0, 0.1);
+	}
 }
 
 .primary {
