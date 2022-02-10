@@ -6,7 +6,7 @@ module.exports = {
 		previewCsfV3: true,
 	},
 	stories: [
-		"../stories/**/*.stories.js",
+		"../stories/**/*.stories.*",
 	],
 	addons: [
 		// 这个包含了 actions、docs、viewports 等模块

@@ -1,6 +1,7 @@
-import { h } from "vue";
+import { Story } from "@storybook/vue3";
 import { action } from "@storybook/addon-actions";
-import KxButton from "@/input/KxButton";
+import { h } from "vue";
+import KxButton from "@/input/KxButton.vue";
 
 export default {
 	component: KxButton,
@@ -25,26 +26,28 @@ export default {
 };
 
 // 这里按钮的内容包了层函数，避免警告 Non-function value encountered for default slot.
+const render: Story = args => h(KxButton, args, { default: () => "按钮" });
+
 export const Default = {
-	render: args => h(KxButton, args, { default: () => "按钮" }),
+	render,
 };
 
 export const Outline = {
-	...Default,
+	render,
 	args: { type: "outline" },
 };
 
 export const Text = {
-	...Default,
+	render,
 	args: { type: "text" },
 };
 
 export const Link = {
-	...Default,
+	render,
 	args: { href: "#" },
 };
 
 export const Route = {
-	...Default,
+	render,
 	args: { route: "#" },
 };

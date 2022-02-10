@@ -1,6 +1,6 @@
 <template>
 	<div :class="$style.box">
-		<img :class="$style.avatar" alt="avatar" :src="avatar" />
+		<img :class="$style.avatar" alt="avatar" :src="avatar"/>
 		<div :class="$style.header">
 			<span :class="$style.name">{{ name }}</span>
 			<span :class="$style.index"></span>
@@ -9,7 +9,7 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
 // props 数据可以用 data.ts 里的 getQuotes() 生成。
 export default {
 	name: "DemoListItem",
