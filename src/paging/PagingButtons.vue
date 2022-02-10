@@ -43,9 +43,9 @@ const textTheme = {
 	omit: ($style) => h("span", { class: $style.textOmit }, "..."),
 };
 
-/** 
+/**
  * 创建跳转输入框，用户输入页码后按回车即可跳页。
- * 
+ *
  * <div class="minor-text">
  *     <span>共{{totalPage}}页，</span>
  *     <label>跳至<input ...>页</label>
@@ -112,6 +112,7 @@ function PagingButtons(props, context) {
 }
 
 PagingButtons.props = {
+	/** 当前的页码，从 1 开始 */
 	index: {
 		type: Number,
 		required: true,
@@ -124,11 +125,12 @@ PagingButtons.props = {
 		type: Number,
 		default: 2,
 	},
-	// 样式，目前仅支持 default 和 text。
+	/** 样式，目前仅支持 default 和 text */
 	type: {
 		type: String,
 		default: "default",
 	},
+	/** 生成每页链接的函数，用于帮助 SEO 收录 */
 	pageLink: {
 		type: Function,
 		required: false,

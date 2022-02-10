@@ -1,39 +1,46 @@
-import ButtonPagingView from "@/paging/ButtonPagingView";
 import { getQuotes } from "../data";
 import ListItem from "./ListItem";
+import ButtonPagingView from "@/paging/ButtonPagingView.vue";
 
 export default {
 	component: ButtonPagingView,
 	title: "ButtonPagingView",
+	args: {
+		total: 1000,
+	},
+	argTypes: {
+		total: {
+			control: { type: "number" },
+		},
+	},
 };
 
-export const Custom = {
-	render: () => ({
-		components: { ListItem },
-		template: `
-			<button-paging-view
-				ref="pagingView"
-				v-model="list"
-				:loader="load"
-				:viewport-offset="60"
-				:page-size="10"
-				:top-buttons="true"
-			>
-				<template v-slot="{ items }">
-					<list-item v-for="v in items" key="v.id" v-bind="v"/>
-				</template>
-			</button-paging-view>`,
-		data: () => ({
-			list: null,
-		}),
-		methods: {
-			async load(_, size) {
-				return { total: 1000, items: getQuotes(size) };
-			},
-		},
-		mounted() {
-			this.$refs.pagingView.refresh();
-		},
+export const Template = (args) => ({
+	components: { ListItem },
+	template: `
+		<button-paging-view
+			ref="pagingView"
+			v-model="model"
+			:loader="load"
+			:viewport-offset="60"
+			:page-size="10"
+			:top-buttons="true"
+		>
+			<template v-slot="{ items }">
+				<list-item v-for="v in items" :key="v.id" v-bind="v"/>
+			</template>
+		</button-paging-view>`,
+	data: () => ({
+		model: { total: 0, items: [] },
 	}),
-	name: "ButtonPagingView",
-};
+	methods: {
+		async load(start, size) {
+			const { total } = args;
+			const count = Math.min(total - start, size);
+			return { total, items: getQuotes(count) };
+		},
+	},
+	mounted() {
+		this.$refs.pagingView.refresh();
+	},
+});

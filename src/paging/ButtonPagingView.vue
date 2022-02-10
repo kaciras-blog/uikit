@@ -56,10 +56,13 @@ const props = withDefaults(defineProps<ButtonPagingViewProps>(), {
 
 const emit = defineEmits(["update:modelValue"]);
 
+/*
+ * 本组件处理页码到偏移的转换，props 里的起始位置是项目数量，传递给 PagingButtons 的是页码。
+ */
+const index = ref(1);
 const el = ref<HTMLElement>();
-const index = ref(0);
 
-let loading: AbortController;
+let loading: AbortController | null;
 
 const items = computed(() => {
 	return props.modelValue?.items ?? [];
@@ -69,15 +72,20 @@ const total = computed(() => {
 	return props.modelValue?.total ?? 0;
 });
 
-const totalPage = computed(() =>{
+const totalPage = computed(() => {
 	return Math.max(0, Math.floor((total.value - 1) / props.pageSize) + 1);
 });
 
-const pageLink= computed(() => {
+const pageLink = computed(() => {
 	const { nextLink, pageSize, start } = props;
 	return nextLink && ((i: number) => nextLink(i * pageSize + start, pageSize));
 });
 
+/**
+ * 开始加载指定的页面，是该组件的核心方法。
+ *
+ * @param i 页码，从 1 开始。
+ */
 function loadPage(i: number) {
 	const { start, pageSize, loader } = props;
 
@@ -86,7 +94,7 @@ function loadPage(i: number) {
 
 	index.value = i;
 
-	const offset = start + i * pageSize;
+	const offset = start + (i - 1) * pageSize;
 	return loader(offset, pageSize, signal)
 		.then(r => emit("update:modelValue", r))
 		.finally(() => loading = null);
@@ -108,7 +116,7 @@ async function switchPage(index: number) {
 
 /** 重新加载第一页，返回 Promise 表示加载完成 */
 function reload() {
-	return loadPage(0);
+	return loadPage(1);
 }
 
 /** 刷新（重新加载）当前页，返回 Promise 表示刷新完成 */
@@ -118,8 +126,7 @@ function refresh() {
 
 /** 切换到最后一页 */
 function switchToLast() {
-	const { pageSize } = props;
-	loadPage(Math.floor(total.value / pageSize)).then(scrollToEnd);
+	loadPage(totalPage.value).then(scrollToEnd);
 }
 
 function scrollToStart() {
