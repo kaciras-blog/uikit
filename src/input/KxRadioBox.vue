@@ -15,7 +15,7 @@
 			:name="groupProps.name"
 			:disabled="disabled"
 			:checked="checked"
-			@input="handleInput"
+			@change="handleInput"
 		>
 		<span
 			class="radio-box-mark"

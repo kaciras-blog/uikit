@@ -21,8 +21,8 @@
 				class="kx-switch-input"
 				type="checkbox"
 				:checked="modelValue"
-				@input="handleChange"
 				:disabled="disabled"
+				@change="handleChange"
 			>
 		</span>
 	</label>

@@ -17,7 +17,7 @@
 			:disabled="disabled"
 			aria-hidden="true"
 			:value="modelValue"
-			@input="handleChange"
+			@change="handleChange"
 		>
 
 		<span
