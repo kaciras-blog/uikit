@@ -19,18 +19,25 @@ import { LoadDateFn, PageData, PageLinkFn, State } from "./core";
 interface ScrollPagingViewProps {
 	modelValue: PageData;
 
-	/** 是否触发滚动加载 */
+	/**
+	 * 是否触发滚动加载，不使用的话就显示个加载按钮。
+	 */
 	autoLoad: boolean;
 
 	activeHeight: number;
 
+	/**
+	 * 初始偏移，不包括已有的元素数量。
+	 */
 	start?: number;
 
 	pageSize: number;
 
 	loader: LoadDateFn;
 
-	/** 下一页的链接，用于 SSR，如果不存在则不生成 */
+	/**
+	 * 下一页的链接，用于 SSR，如果不存在则不生成。
+	 */
 	nextLink?: PageLinkFn;
 }
 

@@ -15,7 +15,7 @@ import { useVModel } from "@vueuse/core";
 import CaretDownIcon from "bootstrap-icons/icons/caret-down-fill.svg?sfc";
 
 export interface SelectProps {
-	modelValue: string;
+	modelValue: unknown;
 }
 
 const props = defineProps<SelectProps>();

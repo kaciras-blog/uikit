@@ -46,10 +46,7 @@ const textTheme = {
 /**
  * 创建跳转输入框，用户输入页码后按回车即可跳页。
  *
- * <div class="minor-text">
- *     <span>共{{totalPage}}页，</span>
- *     <label>跳至<input ...>页</label>
- * </div>
+ * <label>转到<input ...>页</label>
  */
 function jumpInput(total, $style, context) {
 	const { emit } = context;

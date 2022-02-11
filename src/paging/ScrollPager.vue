@@ -38,16 +38,16 @@ import { State } from "./core";
 
 interface ScrollPagerProps {
 
-	// 滚动到距离底部还有多高时触发加载事件
+	/** 滚动到距离底部还有多高时触发加载事件 */
 	activeHeight?: number;
 
-	// 滚动时自动加载，该选项为 false 时将不触发滚动加载。
+	/** 滚动时自动加载，该选项为 false 时将不触发滚动加载 */
 	autoLoad?: boolean;
 
-	// 当前的状态。
+	/** 当前的状态 */
 	state: State;
 
-	// 用于预渲染，也能够让爬虫跟踪到后续页。
+	/** 用于预渲染，也能够让爬虫跟踪到后续页 */
 	nextUrl?: string;
 }
 
