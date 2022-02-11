@@ -21,12 +21,12 @@ export const Select = args => ({
 	template: `
 		<p>当前值：{{ value }}</p>
 		<KxSelect v-bind="args" v-model="value">
-			<option value="1">apple</option>
-			<option value="2">orange</option>
-			<option value="3">tomato</option>
+			<option :value="{ number: 123 }">123</option>
+			<option :value="{ number: 456 }">456</option>
+			<option :value="{ number: 789 }">789</option>
 		</KxSelect>
 	`,
 	setup() {
-		return { args, value: ref("1") };
+		return { args, value: ref({ number: 123 }) };
 	},
 });
