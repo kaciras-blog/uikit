@@ -1,5 +1,4 @@
 export default {
-	title: "Progress",
 };
 
 export const TopProgress = () => ({

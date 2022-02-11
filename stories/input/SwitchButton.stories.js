@@ -2,7 +2,6 @@ import { ref } from "vue";
 import KxSwitchBox from "@/input/KxSwitchBox";
 
 export default {
-	title: "SwitchButton",
 	component: KxSwitchBox,
 	args: {
 		disabled: false,

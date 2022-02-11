@@ -3,7 +3,6 @@ import { MessageType } from "@/dialog/controller";
 import KxMessageBox from "@/dialog/KxMessageBox.vue";
 
 export default {
-	title: "Message Box",
 	component: KxMessageBox,
 	argTypes: {
 		type: {

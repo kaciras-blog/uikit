@@ -4,7 +4,6 @@ import ScrollPagingView from "@/paging/ScrollPagingView.vue";
 
 export default {
 	component: ScrollPagingView,
-	title: "ScrollPagingView",
 	args: {
 		total: 1000,
 	},

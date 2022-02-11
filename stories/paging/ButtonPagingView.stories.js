@@ -4,7 +4,6 @@ import ButtonPagingView from "@/paging/ButtonPagingView.vue";
 
 export default {
 	component: ButtonPagingView,
-	title: "ButtonPagingView",
 	args: {
 		total: 1000,
 		theme: "default",

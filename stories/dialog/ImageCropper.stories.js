@@ -2,7 +2,6 @@ import { blobToURL, openFile } from "@";
 import KxImageCropper from "@/dialog/KxImageCropper";
 
 export default {
-	title: "ImageCropper",
 	component: KxImageCropper,
 };
 

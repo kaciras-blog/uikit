@@ -1,7 +1,6 @@
 import { scrollToElement, scrollToElementEnd, scrollToElementStart, syncScroll } from "@";
 
 export default {
-	title: "Scroll",
 	argTypes: {
 		enabled: {
 			control: { type: "boolean" },

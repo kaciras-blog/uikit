@@ -1,7 +1,6 @@
 import DemoFrame from "./DemoFrame";
 
 export default {
-	title: "Frame",
 };
 
 export const Frame = () => ({

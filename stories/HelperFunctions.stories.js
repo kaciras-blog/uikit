@@ -1,7 +1,6 @@
 import { getImageResolution, getVideoResolution, openFile } from "@";
 
 export default {
-	title: "HelperFunctions",
 };
 
 export const MediaResolution = () => ({

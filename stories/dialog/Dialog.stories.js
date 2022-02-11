@@ -3,7 +3,6 @@ import HookedDialog from "./HookedDialog.vue";
 import LuckyNumber from "./LuckyNumberDialog.vue";
 
 export default {
-	title: "Dialogs",
 };
 
 export const Custom = {

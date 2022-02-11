@@ -2,7 +2,6 @@ import { ref } from "vue";
 import KxCheckBox from "@/input/KxCheckBox";
 
 export default {
-	title: "CheckBox",
 	component: KxCheckBox,
 	args: {
 		disabled: false,

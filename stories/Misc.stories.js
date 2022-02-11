@@ -1,5 +1,4 @@
 export default {
-	title: "Misc",
 };
 
 export const TagGroup = () => ({

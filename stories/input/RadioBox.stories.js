@@ -2,7 +2,6 @@ import { ref } from "vue";
 import KxRadioBoxGroup from "@/input/KxRadioBoxGroup";
 
 export default {
-	title: "RadioBox",
 	component: KxRadioBoxGroup,
 	args: {
 		disabled: false,

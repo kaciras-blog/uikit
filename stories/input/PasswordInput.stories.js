@@ -2,7 +2,6 @@ import { ref } from "vue";
 import KxPasswordInput from "@/input/KxPasswordInput";
 
 export default {
-	title: "PasswordInput",
 	component: KxPasswordInput,
 	args: {
 		disabled: false,

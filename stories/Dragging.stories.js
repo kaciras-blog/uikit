@@ -3,7 +3,6 @@ import { tap } from "rxjs/operators";
 import { EdgeScrollObserver, limitInWindow, moveElement, observeMouseMove } from "@/dragging";
 
 export default {
-	title: "Dragging",
 	argTypes: {
 		size: {
 			control: {

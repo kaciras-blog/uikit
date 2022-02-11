@@ -1,5 +1,4 @@
 export default {
-	title: "Directive",
 };
 
 export const ImeInput = () => ({

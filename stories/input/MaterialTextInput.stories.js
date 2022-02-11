@@ -3,7 +3,6 @@ import MaterialTextInput from "@/input/MaterialTextInput.vue";
 
 export default {
 	component: MaterialTextInput,
-	title: "MaterialTextInput",
 	args: {
 		disabled: false,
 	},

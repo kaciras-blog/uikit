@@ -8,7 +8,6 @@ import KxButton from "@/input/KxButton.vue";
 
 export default {
 	component: KxButton,
-	title: "Button",
 	args: {
 		disabled: false,
 		onClick: action("click"),

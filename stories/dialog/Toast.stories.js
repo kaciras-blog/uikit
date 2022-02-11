@@ -2,7 +2,6 @@ import Toast from "@/dialog/KxToast.vue";
 import { MessageType } from "../../src";
 
 export default {
-	title: "Toast",
 	component: Toast,
 };
 

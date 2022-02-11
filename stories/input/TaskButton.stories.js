@@ -2,7 +2,6 @@ import { sleep } from "@";
 import KxTaskButton from "@/input/KxTaskButton";
 
 export default {
-	title: "TaskButton",
 	component: KxTaskButton,
 	args: {
 		abortable: false,

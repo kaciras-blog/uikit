@@ -3,7 +3,6 @@ import AtomSpinnerC from "@/components/AtomSpinner.vue";
 import SkFadingCircleC from "@/components/SkFadingCircle.vue";
 
 export default {
-	title: "LoadingAnimation",
 	args: {
 		size: 60,
 		color: "#077ae6",
