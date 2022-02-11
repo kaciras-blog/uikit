@@ -3,9 +3,7 @@
 	https://github.com/hilongjw/vue-progressbar
 -->
 <template>
-	<teleport to="body">
-		<div :class="[$style.progress, {[$style.error]: hasError}]" :style="style"></div>
-	</teleport>
+	<div :class="[$style.progress, {[$style.error]: hasError}]" :style="style"></div>
 </template>
 
 <script setup lang="ts">

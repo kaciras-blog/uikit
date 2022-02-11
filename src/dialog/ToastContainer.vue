@@ -1,14 +1,12 @@
 <template>
-	<teleport to="body">
-		<div :class="$style.container">
-			<KxToast
-				v-for="(data, i) of stack"
-				:key="data.id"
-				v-bind="data"
-				@close="close(i)"
-			/>
-		</div>
-	</teleport>
+	<div :class="$style.container">
+		<KxToast
+			v-for="(data, i) of stack"
+			:key="data.id"
+			v-bind="data"
+			@close="close(i)"
+		/>
+	</div>
 </template>
 
 <script setup lang="ts">
