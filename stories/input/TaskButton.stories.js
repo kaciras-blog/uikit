@@ -1,5 +1,5 @@
 import { sleep } from "@";
-import KxTaskButton from "@/input/KxTaskButton";
+import KxTaskButton from "@/input/KxTaskButton.vue";
 
 export default {
 	component: KxTaskButton,

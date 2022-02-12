@@ -1,5 +1,5 @@
-import PagingButtons from "@/paging/PagingButtons";
 import { action } from "@storybook/addon-actions";
+import PagingButtons from "@/paging/PagingButtons.vue";
 
 export default {
 	component: PagingButtons,

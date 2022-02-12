@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, toRefs } from "vue";
+import { reactive, toRefs } from "vue";
 import KxBaseDialog from "@/dialog/KxBaseDialog.vue";
 import { useDialog } from "@";
 import InputBox from "./InputBox.vue";
@@ -59,8 +59,8 @@ const { name, age, hasInput } = toRefs(data);
 
 async function inputDialog() {
 	const result = await $dialog.show(InputBox, {
-		oldName: name.value,
-		oldAge: age.value,
+		name: name.value,
+		age: age.value,
 		hasInput: hasInput.value,
 	});
 	if (result.isConfirm) {

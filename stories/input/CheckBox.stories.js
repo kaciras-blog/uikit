@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import KxCheckBox from "@/input/KxCheckBox";
+import KxCheckBox from "@/input/KxCheckBox.vue";
 
 export default {
 	component: KxCheckBox,
@@ -16,13 +16,13 @@ export default {
 export const CheckBox = args => ({
 	template: `
 		<p>
-		Model value: {{ value }}
+			modelValue: {{ value }}
 		</p>
 		<kx-check-box
 			v-bind="args"
 			v-model="value"
 		>
-		这是一个复选框
+			这是一个复选框
 		</kx-check-box>
 	`,
 	setup() {

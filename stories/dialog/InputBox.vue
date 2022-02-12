@@ -12,16 +12,16 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue";
+import { reactive, toRaw } from "vue";
 import { useDialog } from "@/dialog/quick-alert";
 
-const { oldName, oldAge, hasInput } = defineProps([
-	"oldName",
-	"oldAge",
+const props = defineProps([
+	"name",
+	"age",
 	"hasInput",
 ]);
 
-const data = reactive(hasInput ? { name: oldName, age: oldAge } : { name: "", age: 18 });
+const data = reactive(props.hasInput ? toRaw(props) : { name: "", age: 18 });
 
 const $dialog = useDialog();
 

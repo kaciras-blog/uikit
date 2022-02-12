@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import KxPasswordInput from "@/input/KxPasswordInput";
+import KxPasswordInput from "@/input/KxPasswordInput.vue";
 
 export default {
 	component: KxPasswordInput,

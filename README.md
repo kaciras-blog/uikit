@@ -1,13 +1,11 @@
 # @Kaciras-blog/uikit
 
-Kaciras个人博客的组件库，包含一些比较通用的组件和函数。
-
-# Storybook
+Kaciras Blog 的组件库，包含一些通用的组件和函数。该项目使用 Storybook 独立地进行开发和测试。
 
 [组件演示](https://kaciras-blog.github.io/uikit/)
 
 # Install
 
 ```
-yarn install @Kaciras-blog/uikit
+pnpm install @Kaciras-blog/uikit
 ```
