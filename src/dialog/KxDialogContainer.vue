@@ -1,11 +1,14 @@
 <!--
-	由于 v-show 无法用于 teleport，且过渡无法被外部触发了，改用 v-if。
+	尽管 v-show 无法用于 teleport，且过渡无法被外部触发，
+	但嵌套弹窗要保持组件实例，所以还得用 v-show 而不是 v-if。
+
+	本组件通常放在根节点上，不建议内部的弹窗使用 teleport。
 -->
 <template>
 	<template v-for="(options, i) of stack" :key="options.id">
 		<component
 			v-bind="options.props"
-			v-if="isVisible(options, i)"
+			v-show="isVisible(options, i)"
 			:is="options.component"
 			:ref="v => v && instances.set(options, v)"
 			@close="r => closeDialog(options, r)"

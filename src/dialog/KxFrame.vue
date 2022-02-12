@@ -1,7 +1,5 @@
 <template>
-	<teleport to="body">
-		<div :class="$style.container"><slot/></div>
-	</teleport>
+	<div :class="$style.container"><slot/></div>
 </template>
 
 <script setup lang="ts">

@@ -1,40 +1,38 @@
 <template>
-	<teleport to="body">
-		<kx-modal-wrapper
-			@click.self="onOverlayClick"
-			@keyup.esc="closable && close"
+	<kx-modal-wrapper
+		@click.self="onOverlayClick"
+		@keyup.esc="closable && close"
+	>
+		<div
+			class="kx-msgbox"
+			:class="{ shaking, dialogZoomIn }"
+			tabindex="-1"
+			v-autofocus
+			role="dialog"
+			aria-modal="true"
 		>
-			<div
-				class="kx-msgbox"
-				:class="{ shaking, dialogZoomIn }"
-				tabindex="-1"
-				v-autofocus
-				role="dialog"
-				aria-modal="true"
+			<kx-button
+				v-if="closable"
+				type="icon"
+				:class="$style.closeIcon"
+				title="关闭"
+				@click="close"
 			>
-				<kx-button
-					v-if="closable"
-					type="icon"
-					:class="$style.closeIcon"
-					title="关闭"
-					@click="close"
-				>
-					<close-icon/>
-				</kx-button>
+				<close-icon/>
+			</kx-button>
 
-				<dialog-icons :type="type"/>
-				<h2>{{ title }}</h2>
+			<dialog-icons :type="type"/>
+			<h2>{{ title }}</h2>
 
-				<!-- pre 标签特殊，不会去除内容中的空白 -->
-				<pre v-if="content" :class="$style.content">{{ content }}</pre>
+			<!-- pre 标签特殊，不会去除内容中的空白 -->
+			<pre v-if="content" :class="$style.content">{{ content }}</pre>
 
-				<kx-dialog-buttons
-					:on-cancel="cancelable && close"
-					:on-accept="() => close(true)"
-				/>
-			</div>
-		</kx-modal-wrapper>
-	</teleport>
+			<kx-dialog-buttons
+				:on-cancel="cancelable && close"
+				:on-accept="() => close(true)"
+			/>
+		</div>
+	</kx-modal-wrapper>
 </template>
 
 <script setup lang="ts">
