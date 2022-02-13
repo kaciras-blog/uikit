@@ -14,25 +14,25 @@
 		</kx-button>
 
 		<slot name="state">
-			<sk-fading-circle v-if="state === State.LOADING"/>
-
 			<span
-				v-else-if="state === State.ALL_LOADED"
+				v-if="state === State.ALL_LOADED"
 				class="minor-text"
 			>
 				没有更多的了
 			</span>
 
-			<span v-else-if="state === State.FAILED">
-				加载失败,请
-				<a class="error highlight" @click="loadPage">重试</a>
-			</span>
+			<LoadingStatus
+				v-else-if="state !== State.FREE"
+				:error="state === State.FAILED"
+				@retry="loadPage"
+			/>
 		</slot>
 	</div>
 </template>
 
 <script setup lang="ts">
 import { State } from "./core";
+import LoadingStatus from "../components/LoadingStatus.vue";
 
 interface ScrollPagerProps {
 
@@ -54,7 +54,7 @@ const props = withDefaults(defineProps<ScrollPagerProps>(), {
 	activeHeight: 512,
 });
 
-const emit = defineEmits(["load-page"]);
+const emit = defineEmits(["loadPage"]);
 
 let observer: IntersectionObserver;
 
@@ -64,7 +64,7 @@ function loadPage() {
 		case State.LOADING:
 			return;
 		default:
-			emit("load-page");
+			emit("loadPage");
 	}
 }
 
