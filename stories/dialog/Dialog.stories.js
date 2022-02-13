@@ -5,7 +5,7 @@ import LuckyNumber from "./LuckyNumberDialog.vue";
 export default {
 };
 
-export const Custom = {
+export const Custom = () => ({
 	components: { LuckyNumber },
 	template: `
 		<kx-button @click="isOpen = true">
@@ -18,7 +18,7 @@ export const Custom = {
 		<kx-dialog-container/>
 	`,
 	data: () => ({ isOpen: false }),
-};
+});
 
 export const Buttons = args => ({
 	template: `

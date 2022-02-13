@@ -6,8 +6,6 @@
 	<div :class="$style.container" :ref="observe">
 		<kx-button
 			v-if="state===State.FREE"
-			tag="a"
-			class="primary"
 			:class="$style.button"
 			:href="nextUrl"
 			@click.prevent="loadPage"

@@ -5,7 +5,7 @@ export default {
 	component: ToastComponent,
 };
 
-export const Toast = {
+export const Toast = () => ({
 	template: `
 		<kx-button @click="show">显示气泡通知</kx-button>
 		<ToastContainer></ToastContainer>
@@ -15,4 +15,4 @@ export const Toast = {
 			this.$toast.show({ type: MessageType.Success, content: "评论提交成功" });
 		},
 	},
-};
+});
