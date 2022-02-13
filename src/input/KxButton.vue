@@ -43,7 +43,8 @@ const KxButton: FunctionalComponent<any> = (props, context) => {
 		throw new Error("按钮必须有内容");
 	}
 
-	if (attrs.href !== undefined) {
+	if (props.href !== undefined) {
+		data.href = props.href;
 		return h("a", data, slots.default());
 	} else if (route !== undefined) {
 		data.to = route;
