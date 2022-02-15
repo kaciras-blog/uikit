@@ -5,12 +5,12 @@
 	例如 http://foo.bar -> https://localhost/http://foo.bar
  -->
 <template>
-	<router-link
+	<RouterLink
 		v-if="href[0] === '/'"
 		:to="href"
 	>
 		<slot/>
-	</router-link>
+	</RouterLink>
 	<a v-else :href="href">
 		<slot/>
 	</a>

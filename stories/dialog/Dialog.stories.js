@@ -8,14 +8,14 @@ export default {
 export const Custom = () => ({
 	components: { LuckyNumber },
 	template: `
-		<kx-button @click="isOpen = true">
+		<KxButton @click="isOpen = true">
 			算一下幸运数字
-		</kx-button>
-		<lucky-number 
+		</KxButton>
+		<LuckyNumber
 			v-if="isOpen" 
 			@close="isOpen = false"
 		/>
-		<kx-dialog-container/>
+		<KxDialogContainer/>
 	`,
 	data: () => ({ isOpen: false }),
 });
@@ -26,7 +26,7 @@ export const Buttons = args => ({
 			<h1 class="mock-dialog-content">
 				对话框框
 			</h1>
-			<kx-dialog-buttons
+			<KxDialogButtons
 				:on-apply="applyEvent && apply"
 				:on-cancel="cancelEvent && cancel"
 				:on-accept="acceptEvent && accept"
@@ -49,8 +49,8 @@ Buttons.args = {
 
 export const BeforeDialogClose = args => ({
 	template: `
-		<kx-button @click="show">弹出对话框</kx-button>
-		<kx-dialog-container></kx-dialog-container>
+		<KxButton @click="show">弹出对话框</KxButton>
+		<KxDialogContainer/>
 	`,
 	methods: {
 		show() {

@@ -4,14 +4,14 @@
 -->
 <template>
 	<div :class="$style.container" :ref="observe">
-		<kx-button
+		<KxButton
 			v-if="state===State.FREE"
 			:class="$style.button"
 			:href="nextUrl"
 			@click.prevent="loadPage"
 		>
 			查看更多
-		</kx-button>
+		</KxButton>
 
 		<slot name="state">
 			<span

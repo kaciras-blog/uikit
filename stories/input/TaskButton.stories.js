@@ -16,12 +16,12 @@ export default {
 
 const render = args => ({
 	template: `
-		<kx-task-button v-bind="args">
+		<KxTaskButton v-bind="args">
 			加载按钮
-			<template v-slot:running>
+			<template #running>
 				正在加载
 			</template>
-		</kx-task-button>
+		</KxTaskButton>
 	`,
 	setup: () => ({ args }),
 });

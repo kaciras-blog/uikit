@@ -22,7 +22,7 @@ export default {
 export const Template = (args) => ({
 	components: { ListItem },
 	template: `
-		<button-paging-view
+		<ButtonPagingView
 			ref="pagingView"
 			v-model="model"
 			:loader="load"
@@ -32,9 +32,9 @@ export const Template = (args) => ({
 			:top-buttons="true"
 		>
 			<template v-slot="{ items }">
-				<list-item v-for="v in items" :key="v.id" v-bind="v"/>
+				<ListItem v-for="v in items" :key="v.id" v-bind="v"/>
 			</template>
-		</button-paging-view>`,
+		</ButtonPagingView>`,
 	data: () => ({
 		args,
 		model: { total: 0, items: [] },

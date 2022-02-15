@@ -17,15 +17,15 @@ export default {
 const render = (args) => ({
 	components: { ListItem },
 	template: `
-		<scroll-paging-view
+		<ScrollPagingView
 			v-bind="args"
 			v-model="model"
 			:loader="load"
 		>
 			<template v-slot="{ items }">
-				<list-item v-for="v in items" :key="v.id" v-bind="v"/>
+				<ListItem v-for="v in items" :key="v.id" v-bind="v"/>
 			</template>
-		</scroll-paging-view>
+		</ScrollPagingView>
 	`,
 	data: () =>({
 		args,

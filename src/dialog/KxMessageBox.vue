@@ -1,5 +1,5 @@
 <template>
-	<kx-modal-wrapper
+	<KxModalWrapper
 		@click.self="onOverlayClick"
 		@keyup.esc="closable && close"
 	>
@@ -11,28 +11,28 @@
 			role="dialog"
 			aria-modal="true"
 		>
-			<kx-button
+			<KxButton
 				v-if="closable"
 				type="icon"
 				:class="$style.closeIcon"
 				title="关闭"
 				@click="close"
 			>
-				<close-icon/>
-			</kx-button>
+				<CloseIcon/>
+			</KxButton>
 
-			<dialog-icons :type="type"/>
+			<DialogIcons :type="type"/>
 			<h2>{{ title }}</h2>
 
 			<!-- pre 标签特殊，不会去除内容中的空白 -->
 			<pre v-if="content" :class="$style.content">{{ content }}</pre>
 
-			<kx-dialog-buttons
+			<KxDialogButtons
 				:on-cancel="cancelable && close"
 				:on-accept="() => close(true)"
 			/>
 		</div>
-	</kx-modal-wrapper>
+	</KxModalWrapper>
 </template>
 
 <script setup lang="ts">

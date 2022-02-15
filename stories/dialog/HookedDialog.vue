@@ -1,8 +1,8 @@
 <template>
-	<kx-base-dialog title="关闭钩子">
+	<KxBaseDialog title="关闭钩子">
 		<p>beforeDialogClose() 返回 Promise 可以延迟窗口的关闭</p>
 		<p v-if="time" :class="$style.timer">窗口将在 {{ time }} 秒后关闭</p>
-	</kx-base-dialog>
+	</KxBaseDialog>
 </template>
 
 <script setup lang="ts">

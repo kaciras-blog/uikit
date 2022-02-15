@@ -1,6 +1,6 @@
 <!-- TODO: 是否需要固定按钮尺寸？ -->
 <template>
-	<kx-button
+	<KxButton
 		:class="{ [$style.running]: running }"
 		:route="route"
 		:type="type"
@@ -9,7 +9,7 @@
 	>
 		<slot v-if="!running"/>
 		<slot v-else name="running"><slot/></slot>
-	</kx-button>
+	</KxButton>
 </template>
 
 <script setup lang="ts">

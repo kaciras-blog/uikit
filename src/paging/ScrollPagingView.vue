@@ -3,7 +3,7 @@
 -->
 <template>
 	<slot :items="modelValue.items"/>
-	<scroll-pager
+	<ScrollPager
 		:state="drained ? State.ALL_LOADED : state"
 		:auto-load="autoLoad"
 		:next-url="nextUrl"

@@ -1,5 +1,5 @@
-import ToastComponent from "@/dialog/KxToast.vue";
 import { MessageType } from "../../src";
+import ToastComponent from "@/dialog/KxToast.vue";
 
 export default {
 	component: ToastComponent,
@@ -7,8 +7,8 @@ export default {
 
 export const Toast = () => ({
 	template: `
-		<kx-button @click="show">显示气泡通知</kx-button>
-		<ToastContainer></ToastContainer>
+		<KxButton @click="show">显示气泡通知</KxButton>
+		<KxDialogContainer/>
 	`,
 	methods: {
 		show() {

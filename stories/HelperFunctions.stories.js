@@ -6,9 +6,8 @@ export default {
 export const MediaResolution = () => ({
 	template: `
 		<input v-model="urlInput" placeholder="媒体的URL" style="min-width: 500px">
-		<kx-button @click="showImageURLSize">读取URL</kx-button>
-
-		<kx-button @click="showImageFileSize">选择文件...</kx-button>
+		<KxButton @click="showImageURLSize">读取URL</KxButton>
+		<KxButton @click="showImageFileSize">选择文件...</KxButton>
 
 		<div v-if="error" class="error">错误：{{ error }}</div>
 

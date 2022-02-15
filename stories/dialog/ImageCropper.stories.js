@@ -1,5 +1,5 @@
 import { blobToURL, openFile } from "@";
-import KxImageCropper from "@/dialog/KxImageCropper";
+import KxImageCropper from "@/dialog/KxImageCropper.vue";
 
 export default {
 	component: KxImageCropper,
@@ -7,8 +7,8 @@ export default {
 
 export const Simple = () => ({
 	template: `
-		<kx-button icon="fa fa-upload" @click="showCropper"> 裁剪图片</kx-button>
-		<kx-dialog-container/>
+		<KxButton @click="showCropper"> 裁剪图片</KxButton>
+		<KxDialogContainer/>
 		<img v-if="result" :src="result" alt="Cropped image">
 	`,
 	data: () => ({

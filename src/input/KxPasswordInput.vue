@@ -14,16 +14,16 @@
 			:disabled="disabled"
 			@input="handleInput"
 		>
-		<kx-button
+		<KxButton
 			:title="visible ? '隐藏' : '显示密码'"
 			:class="$style.toggle"
 			type="icon"
 			:disabled="disabled"
 			@click="visible = !visible"
 		>
-			<visible-icon v-if="visible"/>
-			<hidden-icon v-else/>
-		</kx-button>
+			<VisibleIcon v-if="visible"/>
+			<HiddenIcon v-else/>
+		</KxButton>
 	</div>
 </template>
 

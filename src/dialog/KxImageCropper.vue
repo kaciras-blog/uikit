@@ -2,14 +2,14 @@
 	<div :class="$style.container">
 		<header :class="$style.header">
 			<h1>裁剪图片</h1>
-			<kx-button
+			<KxButton
 				type="icon"
 				title="关闭"
 				:class="$style.close_button"
 				@click="$dialog.close"
 			>
-				<close-icon/>
-			</kx-button>
+				<CloseIcon/>
+			</KxButton>
 		</header>
 
 		<div :class="$style.image">
@@ -22,34 +22,34 @@
 		</div>
 
 		<div :class="$style.toolbar">
-			<kx-button
+			<KxButton
 				type="icon"
 				title="水平翻转"
 				@click="cropper.scaleX(xScale = -xScale)"
 			>
-				<swap-horiz-icon/>
-			</kx-button>
-			<kx-button
+				<SwapHorizIcon/>
+			</KxButton>
+			<KxButton
 				type="icon"
 				title="垂直翻转"
 				@click="cropper.scaleY(yScale = -yScale)"
 			>
-				<swap-vert-icon/>
-			</kx-button>
-			<kx-button
+				<SwapVertIcon/>
+			</KxButton>
+			<KxButton
 				type="icon"
 				title="旋转"
 				@click="cropper.rotate(90)"
 			>
-				<rotate-right-icon/>
-			</kx-button>
-			<kx-button
+				<RotateRightIcon/>
+			</KxButton>
+			<KxButton
 				type="icon"
 				title="100%"
 				@click="cropper.zoomTo(1)"
 			>
-				<zoom-out-map/>
-			</kx-button>
+				<ZoomOutMap/>
+			</KxButton>
 
 			<div :class="$style.stats">
 				{{ cropX }} - {{ cropY }} |
@@ -57,8 +57,8 @@
 			</div>
 
 			<div :class="$style.right_buttons">
-				<kx-button @click="$dialog.close">取消</kx-button>
-				<kx-button class="primary" @click="ok">确定</kx-button>
+				<KxButton @click="$dialog.close">取消</KxButton>
+				<KxButton class="primary" @click="ok">确定</KxButton>
 			</div>
 		</div>
 	</div>

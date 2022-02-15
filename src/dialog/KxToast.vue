@@ -14,14 +14,14 @@
 		<div :class="$style.body">
 			{{ content }}
 		</div>
-		<kx-button
+		<KxButton
 			:class="$style.close"
 			type="icon"
 			title="关闭"
 			@click='emit("close")'
 		>
 			<CloseIcon/>
-		</kx-button>
+		</KxButton>
 	</div>
 </template>
 

@@ -16,7 +16,7 @@ export default {
 
 const render = (args) => ({
 	template: `
-		<paging-buttons v-bind="args" :page-link=pageLink @show-page="showPage"/>
+		<PagingButtons v-bind="args" :page-link=pageLink @show-page="showPage"/>
 	`,
 	components: {
 		PagingButtons,

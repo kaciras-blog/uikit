@@ -1,5 +1,5 @@
 <template>
-	<kx-base-dialog title="请输入一些信息">
+	<KxBaseDialog title="请输入一些信息">
 		<form id="result">
 			<label for="name">你的名字</label>
 			<input id="name" v-model.trim="data.name" placeholder="某某某"/>
@@ -7,8 +7,8 @@
 			<label for="age">年龄</label>
 			<input id="age" type="number" v-model.number="data.age"/>
 		</form>
-		<kx-dialog-buttons :on-cancel="$dialog.close" :on-accept="ok"/>
-	</kx-base-dialog>
+		<KxDialogButtons :on-cancel="$dialog.close" :on-accept="ok"/>
+	</KxBaseDialog>
 </template>
 
 <script setup lang="ts">

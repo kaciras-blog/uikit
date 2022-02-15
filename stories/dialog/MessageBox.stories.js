@@ -21,8 +21,8 @@ export default {
 
 export const MessageBox = (args) => ({
 	template: `
-		<kx-button @click="show">显示消息框</kx-button>
-		<kx-dialog-container></kx-dialog-container>
+		<KxButton @click="show">显示消息框</KxButton>
+		<KxDialogContainer/>
 	`,
 	data: () => ({
 		onClose: action("close"),

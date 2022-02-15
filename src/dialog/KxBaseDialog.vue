@@ -1,5 +1,5 @@
 <template>
-	<kx-modal-wrapper @click.self="onOverlayClick" @keyup.esc="onEscape">
+	<KxModalWrapper @click.self="onOverlayClick" @keyup.esc="onEscape">
 		<div
 			ref="dialogEl"
 			class="dialogZoomIn"
@@ -18,7 +18,7 @@
 				<slot name="title">
 					<h2 :class="$style.title">{{ title }}</h2>
 				</slot>
-				<kx-button
+				<KxButton
 					v-if="closeIcon"
 					type="icon"
 					title="关闭"
@@ -26,15 +26,13 @@
 					@mousedown.stop
 					@click="$emit('close')"
 				>
-					<close-icon/>
-				</kx-button>
+					<CloseIcon/>
+				</KxButton>
 			</header>
 
-			<div :class="$style.body">
-				<slot/>
-			</div>
+			<div :class="$style.body"><slot/></div>
 		</div>
-	</kx-modal-wrapper>
+	</KxModalWrapper>
 </template>
 
 <script lang="ts">

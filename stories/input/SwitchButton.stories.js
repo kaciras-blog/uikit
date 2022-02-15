@@ -19,12 +19,12 @@ export const Switch =  args => ({
 			<p>
 				Model value: {{ value }}
 			</p>
-			<kx-switch-box
+			<KxSwitchBox
 				v-bind="args"
 				v-model="value"
 			>
 				这是一个切换按钮
-			</kx-switch-box>
+			</KxSwitchBox>
 		</div>
 	`,
 	setup() {

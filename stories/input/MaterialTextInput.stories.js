@@ -24,7 +24,7 @@ export default {
 
 export const Password = args => ({
 	template: `
-		<material-text-input v-model="value" v-bind="args"/>
+		<MaterialTextInput v-model="value" v-bind="args"/>
 	`,
 	setup() {
 		return { args, value: ref("") };

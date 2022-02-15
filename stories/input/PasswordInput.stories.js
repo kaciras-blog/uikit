@@ -14,7 +14,7 @@ export const Password = args => ({
 			<label for="input">
 				请输入密码：
 			</label>
-			<kx-password-input
+			<KxPasswordInput
 				style="margin-top: 10px"
 				input-id="input"
 				v-bind="args"

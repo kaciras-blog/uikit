@@ -1,13 +1,13 @@
 <template>
 	<div :class="$style.header">
-		<kx-button
+		<KxButton
 			title="返回"
 			type="icon"
 			:class="$style.back"
 			@click="$dialog.close"
 		>
-			<arrow-left-icon/>
-		</kx-button>
+			<ArrowLeftIcon/>
+		</KxButton>
 
 		<span :class="$style.title">
 			{{ title }}

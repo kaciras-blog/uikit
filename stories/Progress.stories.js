@@ -6,10 +6,10 @@ export default {
 
 export const Progress = () => ({
 	template: `
-		<kx-progress ref="progress"></kx-progress>
-		<kx-button @click="increase">增加10%</kx-button>
-		<kx-button @click="fail">失败</kx-button>
-		<kx-button @click="reset">重置</kx-button>
+		<KxProgress ref="progress"/>
+		<KxButton @click="increase">增加10%</KxButton>
+		<KxButton @click="fail">失败</KxButton>
+		<KxButton @click="reset">重置</KxButton>
 		<input type="number" min="0" v-model="value">
 	`,
 	data: () => ({

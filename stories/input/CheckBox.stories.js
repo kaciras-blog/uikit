@@ -18,12 +18,12 @@ export const CheckBox = args => ({
 		<p>
 			modelValue: {{ value }}
 		</p>
-		<kx-check-box
+		<KxCheckBox
 			v-bind="args"
 			v-model="value"
 		>
 			这是一个复选框
-		</kx-check-box>
+		</KxCheckBox>
 	`,
 	setup() {
 		return { args, value: ref(false) };

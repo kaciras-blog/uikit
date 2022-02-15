@@ -1,28 +1,28 @@
 <template>
-	<kx-frame>
-		<kx-frame-header title="标题">
-			<kx-button
+	<KxFrame>
+		<KxFrameHeader title="标题">
+			<KxButton
 				:class="$style.icon"
 				type="icon"
 			>
-				<search-icon/>
-			</kx-button>
-			<kx-button
+				<SearchIcon/>
+			</KxButton>
+			<KxButton
 				:class="$style.icon"
 				type="icon"
 			>
-				<help-icon/>
-			</kx-button>
-		</kx-frame-header>
+				<HelpIcon/>
+			</KxButton>
+		</KxFrameHeader>
 
 		<div class="kx-frame-body" :class="$style.body">
-			<kx-button @click="showDialog">
+			<KxButton @click="showDialog">
 				内层弹窗
-			</kx-button>
+			</KxButton>
 			<p></p>
 			<p>模仿手机弹出层，在窄屏下可以按返回键关闭</p>
 		</div>
-	</kx-frame>
+	</KxFrame>
 </template>
 
 <script lang="ts">

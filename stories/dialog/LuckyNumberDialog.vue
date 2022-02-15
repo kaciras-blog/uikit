@@ -1,5 +1,5 @@
 <template>
-	<kx-base-dialog
+	<KxBaseDialog
 		title="算算你的幸运数字"
 		:click-to-close="true"
 		:draggable="true"
@@ -21,22 +21,22 @@
 			:class="$style.buttons"
 			class="btn-group"
 		>
-			<kx-button
+			<KxButton
 				type="outline"
 				color="second"
 				@click="inputDialog"
 			>
 				输入信息
-			</kx-button>
-			<kx-button
+			</KxButton>
+			<KxButton
 				type="outline"
 				color="primary"
 				@click="showResult"
 			>
 				计算！
-			</kx-button>
+			</KxButton>
 		</div>
-	</kx-base-dialog>
+	</KxBaseDialog>
 </template>
 
 <script setup lang="ts">
