@@ -19,6 +19,8 @@ import KxFrame from "./dialog/KxFrame.vue";
 import KxFrameHeader from "./dialog/KxFrameHeader.vue";
 import QuickAlert from "./dialog/quick-alert";
 import KxDialogButtons from "./dialog/KxDialogButtons.vue";
+import KxDialogContainer from "./dialog/KxDialogContainer.vue";
+import ToastContainer from "./dialog/ToastContainer.vue";
 import PagingButtons from "./paging/PagingButtons.vue";
 import ButtonPagingView from "./paging/ButtonPagingView.vue";
 import ScrollPager from "./paging/ScrollPager.vue";
@@ -65,6 +67,8 @@ export {
 	KxFrame,
 	KxFrameHeader,
 	KxDialogButtons,
+	KxDialogContainer,
+	ToastContainer,
 
 	vAutoFocus,
 	vImeInput,
@@ -101,6 +105,8 @@ export default function install(app: App) {
 	app.component("KxFrame", KxFrame);
 	app.component("KxFrameHeader", KxFrameHeader);
 	app.component("KxDialogButtons", KxDialogButtons);
+	app.component("KxDialogContainer", KxDialogContainer);
+	app.component("ToastContainer", ToastContainer);
 
 	app.directive("autofocus", vAutoFocus);
 	app.directive("ime-input", vImeInput);

@@ -1,6 +1,4 @@
 import { App, inject } from "vue";
-import KxDialogContainer from "./KxDialogContainer.vue";
-import ToastContainer from "./ToastContainer.vue";
 import KxMessageBox from "./KxMessageBox.vue";
 import KxImageCropper from "./KxImageCropper.vue";
 import { DialogSession, MessageType, QuickDialogController, ToastController } from "./controller";
@@ -94,13 +92,10 @@ export default function (app: App) {
 	const $dialog = new KxDialogManagerExt();
 	const $toast = new ToastController();
 
-	// 为了方便插件见通信，以及兼容性考虑，还是得把它加入全局属性里。
-	app.config.globalProperties.$dialog = $dialog;
-	app.config.globalProperties.$toast = $toast;
-
 	app.provide("$dialog", $dialog);
 	app.provide("$toast", $toast);
 
-	app.component("KxDialogContainer", KxDialogContainer);
-	app.component("ToastContainer", ToastContainer);
+	// 加入全局属性，以兼容选项型组件。
+	app.config.globalProperties.$dialog = $dialog;
+	app.config.globalProperties.$toast = $toast;
 }
