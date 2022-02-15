@@ -40,6 +40,7 @@ module.exports = ({ config, mode }) => {
 	const svgLoader = custom.module.rules.find(loader => loader.test.source === /\.(svg)(\?.*)?$/.source);
 	config.module.rules.push(svgLoader);
 
+	config.plugins.push(...custom.plugins);
 	config.resolve.alias["@"] = join(__dirname, "../src");
 	return config;
 };
