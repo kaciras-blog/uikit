@@ -34,11 +34,18 @@ function start() {
 	hasError.value = false;
 }
 
+/**
+ * 设置当前的进度，最大 100，超过了也按 100 算。
+ */
 function setProgress(percent: number) {
 	if (!visible.value) {
 		start();
 	}
-	progress.value = percent;
+	progress.value = Math.min(100, percent);
+}
+
+function increase(percent: number) {
+	setProgress(progress.value + percent);
 }
 
 /** 重置到进度为 0 并且不显示的状态，该过程是立即的没有动画 */
@@ -56,27 +63,27 @@ function finish() {
 	if (!visible.value) {
 		return; // 必须先调用启动方法
 	}
+	fadeout();
 	progress.value = 100;
-	_fadeout();
 }
 
 function fail() {
 	if (!visible.value) {
 		return;
 	}
+	fadeout();
 	progress.value = 100;
 	hasError.value = true;
-	_fadeout();
 }
 
-function _fadeout() {
+function fadeout() {
 	$_timer = setTimeout(() => {
 		visible.value = false;
 		$_timer = setTimeout(reset, TRANSITION_TIME);
 	}, RESIDUAL_TIME);
 }
 
-defineExpose({ finish, start, fail, reset, setProgress });
+defineExpose({ finish, start, fail, reset, setProgress, increase });
 </script>
 
 <style module lang="less">
@@ -103,13 +110,11 @@ defineExpose({ finish, start, fail, reset, setProgress });
 		width: @comet-size;
 		height: 100%;
 
-		background-image: linear-gradient(
-			90deg,
-			transparent 0,
-			rgba(255, 255, 255, 0.7) 20%,
-			rgba(255, 255, 255, 0.9) 60%,
-			transparent 100%
-		);
+		background-image: linear-gradient(90deg,
+		transparent 0,
+		rgba(255, 255, 255, 0.7) 20%,
+		rgba(255, 255, 255, 0.9) 60%,
+		transparent 100%);
 
 		// 恒速运动
 		animation: highlight linear calc(@comet-speed * var(--progress)) infinite;
