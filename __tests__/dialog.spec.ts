@@ -29,7 +29,7 @@ it("should support clear dialogs", async () => {
 	$dialog.show("span", { class: "test" });
 
 	await nextTick();
-	expect(wrapper.findAll(".test")).toHaveLength(1);
+	expect(wrapper.findAll(".test")).toHaveLength(2);
 
 	$dialog.clear();
 	await nextTick();
