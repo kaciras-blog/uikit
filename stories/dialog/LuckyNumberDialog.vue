@@ -41,8 +41,7 @@
 
 <script setup lang="ts">
 import { reactive, toRefs } from "vue";
-import KxBaseDialog from "@/dialog/KxBaseDialog.vue";
-import { useDialog } from "@";
+import { KxBaseDialog, KxButton, useDialog } from "../../src";
 import InputBox from "./InputBox.vue";
 
 defineEmits(["update:open"]);

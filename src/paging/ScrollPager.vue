@@ -33,6 +33,7 @@
 <script setup lang="ts">
 import { State } from "./core";
 import LoadingStatus from "../components/LoadingStatus.vue";
+import KxButton from "../input/KxButton.vue";
 
 interface ScrollPagerProps {
 

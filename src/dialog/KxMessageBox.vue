@@ -7,7 +7,7 @@
 			class="kx-msgbox"
 			:class="{ shaking, dialogZoomIn }"
 			tabindex="-1"
-			v-autofocus
+			v-auto-focus
 			role="dialog"
 			aria-modal="true"
 		>
@@ -39,8 +39,10 @@
 import { ref } from "vue";
 import CloseIcon from "../assets/icon-close.svg?sfc";
 import { DialogResult, MessageType } from "./controller";
+import vAutoFocus from "../directives/autofocus";
 import DialogIcons from "./DialogIcons.vue";
 import KxModalWrapper from "./KxModalWrapper.vue";
+import KxButton from "../input/KxButton.vue";
 import KxDialogButtons from "./KxDialogButtons.vue";
 
 interface MessageBoxProps {

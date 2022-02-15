@@ -5,7 +5,7 @@
 			class="dialogZoomIn"
 			:class="$style.dialog"
 			tabindex="-1"
-			v-autofocus
+			v-auto-focus
 			role="dialog"
 			aria-modal="true"
 			v-bind="$attrs"
@@ -49,6 +49,8 @@ import { usePreventScroll } from "../composition";
 import { limitInWindow, moveElement, observeMouseMove } from "../dragging";
 import { isTouchEvent } from "../common";
 import CloseIcon from "../assets/icon-close.svg?sfc";
+import vAutoFocus from "../directives/autofocus";
+import KxButton from "../input/KxButton.vue";
 import KxModalWrapper from "./KxModalWrapper.vue";
 
 const props = defineProps({

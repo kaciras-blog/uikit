@@ -33,6 +33,7 @@ import WarnIcon from "bootstrap-icons/icons/exclamation-triangle-fill.svg?sfc";
 import ErrorIcon from "bootstrap-icons/icons/x-circle-fill.svg?sfc";
 import CloseIcon from "../assets/icon-close.svg?sfc";
 import { MessageType } from "./controller";
+import KxButton from "../input/KxButton.vue";
 
 const iconMap = {
 	[MessageType.Info]: InfoIcon,

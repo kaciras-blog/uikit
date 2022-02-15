@@ -20,6 +20,7 @@
 <script setup lang="ts">
 import ArrowLeftIcon from "../assets/arrow-left.svg?sfc";
 import { useDialog } from "./quick-alert";
+import KxButton from "../input/KxButton.vue";
 
 interface FrameHeaderProps {
 	title?: string;

@@ -75,6 +75,7 @@ import SwapVertIcon from "../assets/swap_vert.svg?sfc";
 import RotateRightIcon from "../assets/rotate_right.svg?sfc";
 import ZoomOutMap from "../assets/zoom_out_map.svg?sfc";
 import { useDialog } from "./quick-alert";
+import KxButton from "../input/KxButton.vue";
 
 const props = defineProps({
 	image: {

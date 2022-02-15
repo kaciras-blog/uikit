@@ -17,8 +17,11 @@
 </template>
 
 <script setup lang="ts">
+import { RouterLink } from "vue-router";
+
 interface SmartLinkProps {
 	href: string;
 }
+
 defineProps<SmartLinkProps>();
 </script>

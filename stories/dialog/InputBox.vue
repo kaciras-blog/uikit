@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { reactive, toRaw } from "vue";
-import { useDialog } from "@/dialog/quick-alert";
+import { KxBaseDialog, KxDialogButtons, useDialog } from "../../src";
 
 const props = defineProps([
 	"name",

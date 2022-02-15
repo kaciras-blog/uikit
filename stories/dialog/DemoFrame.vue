@@ -26,6 +26,7 @@
 </template>
 
 <script lang="ts">
+import { KxButton, KxFrame, KxFrameHeader } from "../../src";
 import SearchIcon from "../assets/search.svg?sfc";
 import HelpIcon from "../assets/help.svg?sfc";
 import LuckyNumber from "./LuckyNumberDialog.vue";
@@ -36,8 +37,10 @@ export default {
 	components: {
 		SearchIcon,
 		HelpIcon,
+		KxFrame,
+		KxButton,
+		KxFrameHeader,
 	},
-	inject: ["$dialog"],
 	methods: {
 		showDialog() {
 			this.$dialog.show(LuckyNumber);
