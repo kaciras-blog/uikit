@@ -23,12 +23,13 @@ import PagingButtons from "./paging/PagingButtons.vue";
 import ButtonPagingView from "./paging/ButtonPagingView.vue";
 import ScrollPager from "./paging/ScrollPager.vue";
 import ScrollPagingView from "./paging/ScrollPagingView.vue";
-import AutoFocus from "./directives/autofocus";
-import ImeInput from "./directives/ime-input";
-import SelectionBinding from "./directives/selection-bind";
-import SelectionChange from "./directives/selection-change";
-import SelectionModel from "./directives/selection-model";
-import Ripple from "./directives/ripple";
+
+import vAutoFocus from "./directives/autofocus";
+import vImeInput from "./directives/ime-input";
+import vSelectionBinding from "./directives/selection-bind";
+import vSelectionChange from "./directives/selection-change";
+import vSelectionModel from "./directives/selection-model";
+import vRipple from "./directives/ripple";
 
 export * from "./dialog/quick-alert";
 export * from "./media-query";
@@ -43,6 +44,9 @@ export { default as PromiseDelegate } from "./PromiseDelegate";
 export { default as PromiseSource } from "./PromiseSource";
 
 export {
+	AtomSpinner,
+	KxSelect,
+	MaterialTextInput,
 	SkFadingCircle,
 	PagingButtons,
 	SmartLink,
@@ -61,6 +65,13 @@ export {
 	KxFrame,
 	KxFrameHeader,
 	KxDialogButtons,
+
+	vAutoFocus,
+	vImeInput,
+	vRipple,
+	vSelectionChange,
+	vSelectionBinding,
+	vSelectionModel,
 };
 
 /**
@@ -91,10 +102,10 @@ export default function install(app: App) {
 	app.component("KxFrameHeader", KxFrameHeader);
 	app.component("KxDialogButtons", KxDialogButtons);
 
-	app.directive("autofocus", AutoFocus);
-	app.directive("ime-input", ImeInput);
-	app.directive("ripple", Ripple);
-	app.directive("bind-selection", SelectionBinding);
-	app.directive("on-selection-change", SelectionChange);
-	app.directive("selection-model", SelectionModel);
+	app.directive("autofocus", vAutoFocus);
+	app.directive("ime-input", vImeInput);
+	app.directive("ripple", vRipple);
+	app.directive("bind-selection", vSelectionBinding);
+	app.directive("on-selection-change", vSelectionChange);
+	app.directive("selection-model", vSelectionModel);
 }
