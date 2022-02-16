@@ -75,10 +75,14 @@ export class MediaQueryManager {
 				store.commit(SET_WIDTH, width);
 			}
 
-			// Safari 只有 addListener()
-			// https://developer.apple.com/documentation/webkitjs/mediaquerylist#declarations
-			// noinspection JSDeprecatedSymbols
-			mql.addListener(event => event.matches && store.commit(SET_WIDTH, width));
+			const update = () => mql.matches && store.commit(SET_WIDTH, width);
+
+			if ("addEventListener" in mql) {
+				mql.addEventListener("change", update);
+			} else {
+				// noinspection JSDeprecatedSymbols Safari 只有 addListener()
+				mql.addListener(update);
+			}
 		}
 
 		const first = entries[0];
