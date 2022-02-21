@@ -7,18 +7,15 @@ import { defineStore, Pinia } from "pinia";
  * 最大的一个值没有意义，因为比倒数第二大的就认为是最大，而没必要去比较最大的宽度值，
  * 所以随便设一个较大的数即可，但是不要设为 Infinity 因为它不是合法的 JSON 值，
  * 在 SSR 序列化时会出问题。
- *
- * @example
- * const breakpoints = {
- *     mobile: 768,
- *     tablet: 992,
- *     desktop: 1200,
- *     wide: 999999,
- * };
  */
-export interface MediaBreakPoints {
-	[key: string]: number;
-}
+export const breakpoints = {
+	mobile: 768,
+	tablet: 992,
+	desktop: 1200,
+	wide: 999999,
+};
+
+type ViewportType = keyof typeof breakpoints;
 
 export const useMQStore = defineStore("mediaQuery", {
 	state: () => ({ width: 999999 }),
@@ -36,11 +33,9 @@ type MQStore = ReturnType<typeof useMQStore>;
  */
 export class MediaQueryManager {
 
-	private readonly breakpoints: MediaBreakPoints;
 	private readonly entries: Array<[string, number]>;
 
-	constructor(breakpoints: MediaBreakPoints) {
-		this.breakpoints = breakpoints;
+	constructor() {
 		this.entries = Object.entries(breakpoints);
 
 		if (!this.entries.length) {
@@ -104,9 +99,8 @@ export class MediaQueryManager {
 	 */
 	install(app: App) {
 		const globals = app.config.globalProperties;
-		const { breakpoints } = this;
 
-		const mediaQuery = new MediaQueryAPI(globals, breakpoints);
+		const mediaQuery = new MediaQueryAPI(globals);
 		globals.$mediaQuery = mediaQuery;
 		app.provide("$mediaQuery", mediaQuery);
 	}
@@ -123,12 +117,10 @@ export function useBreakPoints() {
 export class MediaQueryAPI {
 
 	private readonly globals: Record<string, MQStore>;
-	private readonly breakpoints: MediaBreakPoints;
-	private readonly width2Name: Record<number, string>;
+	private readonly width2Name: Record<number, ViewportType>;
 
-	constructor(globals: any, breakpoints: MediaBreakPoints) {
+	constructor(globals: any) {
 		this.globals = globals;
-		this.breakpoints = breakpoints;
 
 		const es = Object.entries(breakpoints);
 		const invert = es.map(([k, v]) => [v, k]);
@@ -146,32 +138,32 @@ export class MediaQueryAPI {
 
 	// 这三个返回响应对象，用于 setup 函数。
 
-	greater(name: string) {
+	greater(name: ViewportType) {
 		return computed(() => this.isGreater(name));
 	}
 
-	smaller(name: string) {
+	smaller(name: ViewportType) {
 		return computed(() => this.isSmaller(name));
 	}
 
-	between(lo: string, hi: string) {
+	between(lo: ViewportType, hi: ViewportType) {
 		return computed(() => this.isBetween(lo, hi));
 	}
 
 	// 下面的返回简单值，如果用于渲染函数或 computed 则也是响应的。
 
-	isGreater(name: string) {
-		const { breakpoints, state } = this;
+	isGreater(name: ViewportType) {
+		const { state } = this;
 		return state.width >= breakpoints[name];
 	}
 
-	isSmaller(name: string) {
-		const { breakpoints, state } = this;
+	isSmaller(name: ViewportType) {
+		const { state } = this;
 		return state.width < breakpoints[name];
 	}
 
-	isBetween(lo: string, hi: string) {
-		const { breakpoints, state } = this;
+	isBetween(lo: ViewportType, hi: ViewportType) {
+		const { state } = this;
 		return state.width >= breakpoints[lo] && state.width < breakpoints[hi];
 	}
 }

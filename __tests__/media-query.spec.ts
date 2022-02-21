@@ -3,16 +3,9 @@ import { createTestingPinia } from "@pinia/testing";
 import { shallowMount } from "@vue/test-utils";
 import { MediaQueryManager, useBreakPoints, useMQStore } from "../src/media-query";
 
-const DEFAULT_POINTS = {
-	mobile: 768,
-	tablet: 992,
-	desktop: 1200,
-	wide: 999999,
-};
-
 function createSuite(root: any) {
 	const store = createTestingPinia();
-	const plugin = new MediaQueryManager(DEFAULT_POINTS);
+	const plugin = new MediaQueryManager();
 
 	return shallowMount(root, {
 		global: { plugins: [store, plugin] },
