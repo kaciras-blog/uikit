@@ -28,7 +28,7 @@ import ScrollPagingView from "./paging/ScrollPagingView.vue";
 
 import vAutoFocus from "./directives/autofocus";
 import vImeInput from "./directives/ime-input";
-import vSelectionBinding from "./directives/selection-bind";
+import vBindSelection from "./directives/selection-bind";
 import vSelectionChange from "./directives/selection-change";
 import vSelectionModel from "./directives/selection-model";
 import vRipple from "./directives/ripple";
@@ -74,7 +74,7 @@ export {
 	vImeInput,
 	vRipple,
 	vSelectionChange,
-	vSelectionBinding,
+	vBindSelection,
 	vSelectionModel,
 };
 
@@ -111,7 +111,7 @@ export default function install(app: App) {
 	app.directive("autofocus", vAutoFocus);
 	app.directive("ime-input", vImeInput);
 	app.directive("ripple", vRipple);
-	app.directive("bind-selection", vSelectionBinding);
+	app.directive("bind-selection", vBindSelection);
 	app.directive("on-selection-change", vSelectionChange);
 	app.directive("selection-model", vSelectionModel);
 }

@@ -1,104 +1,67 @@
 import { nextTick } from "vue";
-import { createStore } from "vuex";
+import { createTestingPinia } from "@pinia/testing";
 import { shallowMount } from "@vue/test-utils";
-import { MediaBreakPoints, MediaQueryManager, SET_WIDTH } from "../src/media-query";
+import { MediaQueryManager, useBreakPoints, useMQStore } from "../src/media-query";
 
 const DEFAULT_POINTS = {
 	mobile: 768,
 	tablet: 992,
 	desktop: 1200,
-	wide: 99999,
+	wide: 999999,
 };
 
-function createSuite(breakpoints: MediaBreakPoints, root: any) {
-	const store = createStore({});
-	const plugin = new MediaQueryManager(breakpoints);
+function createSuite(root: any) {
+	const store = createTestingPinia();
+	const plugin = new MediaQueryManager(DEFAULT_POINTS);
 
-	plugin.registerToStore(store);
-
-	const app = shallowMount(root, { global: { plugins: [store, plugin] } }) as any;
-	return { app, store };
+	return shallowMount(root, {
+		global: { plugins: [store, plugin] },
+	});
 }
 
-test("$mediaMatch", () => {
-	const { app } = createSuite(DEFAULT_POINTS, {
-		inject: ["$mediaQuery"],
-		template: "<div></div>",
+it("should available in options API", async () => {
+	const app = createSuite({
+		template: `
+			<div v-if="$mediaQuery.value === 'wide'">WIDE</div>
+			<div v-if='$mediaQuery.isBetween("tablet", "desktop")'>TABLET - DESKTOP</div>
+		`,
 	});
 
-	expect(app.vm.$mediaQuery.match("wide")).toBe(true);
-	expect(app.vm.$mediaQuery.match("desktop")).toBe(false);
+	expect(app.html()).toContain("WIDE");
+	expect(app.html()).not.toContain("TABLET - DESKTOP");
+
+	useMQStore().width = 992;
+	await nextTick();
+
+	expect(app.html()).not.toContain("WIDE");
+	expect(app.html()).toContain("TABLET - DESKTOP");
 });
 
 /**
  * 测试提交变更到 Vuex 后是否触发 $mediaMatch 的更新
  */
-test("responsive $mediaMatch", async () => {
-	const { app, store } = createSuite(DEFAULT_POINTS, {
+it("should support composition API", async () => {
+	const app = createSuite({
 		template: `
-			<div v-if="$mediaQuery.match('desktop+')">DESKTOP</div>
-			<div v-else-if="$mediaQuery.match('mobile')">TABLET</div>
-			`,
+			<div v-if="gtWide">WIDE</div>
+			<div v-if="between">TABLET - DESKTOP</div>
+		`,
+		setup() {
+			const mq = useBreakPoints();
+			const gtWide = mq.greater("wide");
+			const between = mq.between("tablet", "desktop");
+			return { gtWide, between };
+		},
 	});
 
-	expect(app.html()).toContain("DESKTOP");
-	expect(app.html()).not.toContain("TABLET");
+	expect(app.html()).toContain("WIDE");
+	expect(app.html()).not.toContain("TABLET - DESKTOP");
 
-	store.commit(SET_WIDTH, 768);
+	useMQStore().width = 992;
 	await nextTick();
-	expect(app.html()).toContain("TABLET");
+
+	expect(app.html()).not.toContain("WIDE");
+	expect(app.html()).toContain("TABLET - DESKTOP");
 });
 
-test("watch", async () => {
-	const { app, store } = createSuite(DEFAULT_POINTS, {
-		inject: ["$mediaQuery"],
-		template: "<div></div>",
-	});
-
-	const enterCb = jest.fn();
-	const leaveCb = jest.fn();
-	const unwatch = app.vm.$mediaQuery.watch("tablet-", enterCb, leaveCb);
-
-	store.commit(SET_WIDTH, 500);
-	await nextTick();
-	expect(enterCb.mock.calls).toHaveLength(1);
-	expect(leaveCb.mock.calls).toHaveLength(0);
-
-	store.commit(SET_WIDTH, 800);
-	await nextTick();
-	expect(enterCb.mock.calls).toHaveLength(1);
-	expect(leaveCb.mock.calls).toHaveLength(0);
-
-	store.commit(SET_WIDTH, 1000);
-	await nextTick();
-	expect(enterCb.mock.calls).toHaveLength(1);
-	expect(leaveCb.mock.calls).toHaveLength(1);
-
-	store.commit(SET_WIDTH, 3840);
-	await nextTick();
-	expect(enterCb.mock.calls).toHaveLength(1);
-	expect(leaveCb.mock.calls).toHaveLength(1);
-
-	unwatch();
-	store.commit(SET_WIDTH, 500);
-	await nextTick();
-	expect(enterCb.mock.calls).toHaveLength(1);
-	expect(leaveCb.mock.calls).toHaveLength(1);
-});
-
-// TODO: 以下两个测试怎么 mock window.matchMedia ?
-// test("breakpoints argument", () => {
-// 	expect(() => createSuite({})).toThrow(Error);
-// 	createSuite({ a: 100 });
-// 	createSuite({ a: 100, b: 50 });
-// });
-
-// test("observeWindow", () => {
-// 	const { store } = createSuite();
-// 	observeWindow(store);
-// 	const module = (store.state as any).mediaQuery;
-//
-// 	expect(module.screenWidth).toBe(Infinity);
-// 	window.resizeTo(600, 1200);
-// 	expect(module.screenWidth).toBe(768);
-// });
+// observeWindow 没法测，因为 JSDOM 不支持 window.matchMedia

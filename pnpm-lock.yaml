@@ -7,6 +7,7 @@ specifiers:
   '@kaciras/eslint-config-jest': ^2.3.0
   '@kaciras/eslint-config-typescript': ^2.3.0
   '@kaciras/eslint-config-vue': ^2.3.0
+  '@pinia/testing': ^0.0.9
   '@storybook/addon-actions': ^6.4.19
   '@storybook/addon-essentials': ^6.4.19
   '@storybook/builder-webpack5': ^6.4.19
@@ -57,6 +58,7 @@ devDependencies:
   '@kaciras/eslint-config-jest': 2.3.0_e40de970075d4d5a10c059e5371fff87
   '@kaciras/eslint-config-typescript': 2.3.0_eslint@8.9.0+typescript@4.5.5
   '@kaciras/eslint-config-vue': 2.3.0_eslint@8.9.0+typescript@4.5.5
+  '@pinia/testing': 0.0.9_pinia@2.0.11+vue@3.2.31
   '@storybook/addon-actions': 6.4.19
   '@storybook/addon-essentials': 6.4.19_0956bf909595ccccf63c350dc1fb670f
   '@storybook/builder-webpack5': 6.4.19_eslint@8.9.0+typescript@4.5.5
@@ -2207,6 +2209,18 @@ packages:
     dependencies:
       mkdirp: 1.0.4
       rimraf: 3.0.2
+    dev: true
+
+  /@pinia/testing/0.0.9_pinia@2.0.11+vue@3.2.31:
+    resolution: {integrity: sha512-JG+th+BENR89/7vpRxafDApU56AECZ9m+THd8IKsgomyRXaiRRdwt0BLbjStTkksnoNZfZBCz5NszykyNxz/sQ==}
+    peerDependencies:
+      pinia: ~2.0.7
+    dependencies:
+      pinia: 2.0.11_typescript@4.5.5+vue@3.2.31
+      vue-demi: 0.12.1_vue@3.2.31
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
     dev: true
 
   /@polka/url/1.0.0-next.21:
@@ -16331,7 +16345,6 @@ packages:
         optional: true
     dependencies:
       vue: 3.2.31
-    dev: false
 
   /vue-docgen-api/4.44.15:
     resolution: {integrity: sha512-JBFe4EAUSmRqRHaNNHqDo1U+w1HRaHh00C0bYKE65HdN9QS6pCJCUBwi1blow0beDzLTAJYCa90xwG61WYBo4A==}
