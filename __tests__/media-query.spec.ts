@@ -1,14 +1,13 @@
 import { nextTick, ref, watch } from "vue";
 import { createTestingPinia } from "@pinia/testing";
 import { shallowMount } from "@vue/test-utils";
-import { BreakPointManager, useBreakPoint, useMQStore } from "../src/break-point";
+import BreakPoint, { useBreakPoint, useMQStore } from "../src/break-point";
 
 function createSuite(root: any) {
 	const store = createTestingPinia();
-	const plugin = new BreakPointManager();
 
 	return shallowMount(root, {
-		global: { plugins: [store, plugin] },
+		global: { plugins: [store, BreakPoint] },
 	});
 }
 
@@ -80,4 +79,4 @@ it("should support watch on name", async () => {
 	expect(app.html()).toBe("<div>tablet</div>");
 });
 
-// observeWindow 没法测，因为 JSDOM 不支持 window.matchMedia
+// observeMediaQuery 没法测，因为 JSDOM 不支持 window.matchMedia

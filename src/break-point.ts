@@ -1,6 +1,13 @@
 import { App, computed, ComputedRef, inject } from "vue";
 import { defineStore, Pinia } from "pinia";
 
+/*
+ * 因为 vueuse 的 useBreakpoints 有以下缺点，所以自己实现了：
+ * 1）不能指定初始值。
+ * 2）断点一般都是通用的几个值，但它每次都要传，不方便。
+ * 3）每次都会添加 N（断点数）个监听，即便只匹配一个。
+ */
+
 /**
  * 断点配置对象，键位断点名，值为对应的屏幕的宽度的上限。
  *
@@ -20,96 +27,55 @@ export const useMQStore = defineStore("breakPoint", {
 });
 
 /**
- * 本插件依赖 Vuex，所以要同时注册到 Vue 和 Vuex 的 Store 实例。
+ * 监听 window.matchMedia() 的 change 事件，在窗口大小改变时调整断点。
+ * 该函数只能在浏览器环境下使用。
  *
- * 因为 vueuse 的 useBreakpoints 有以下缺点，所以自己实现了：
- * 1）不能指定初始值。
- * 2）断点一般都是通用的几个值，但它每次都要传，不方便。
- * 3）每次都会添加 N（断点数）个监听，即便指匹配一个。
+ * @param pinia Pinia 的存储实例
+ * @param window_ 监听的window对象，默认是全局变量
  */
-export class BreakPointManager {
+export function observeMediaQuery(pinia: Pinia, window_ = window) {
+	const entries = Object.entries(breakpoints);
+	if (!entries.length) {
+		throw new Error("至少要有一个断点");
+	}
+	entries.sort((a, b) => a[1] - b[1]);
 
-	private readonly entries: Array<[string, number]>;
+	if (entries.length < 2) {
+		return;
+	}
+	const store = useMQStore(pinia);
 
-	constructor() {
-		this.entries = Object.entries(breakpoints);
+	function observe(width: number, query: string) {
+		const mql = window_.matchMedia(query);
 
-		if (!this.entries.length) {
-			throw new Error("至少要有一个断点");
+		// 立即检查一下，在后端误判时立刻恢复到正确的宽度
+		if (mql.matches) {
+			store.width = width;
 		}
-		this.entries.sort((a, b) => a[1] - b[1]);
+
+		const update = () => mql.matches && (store.width = width);
+
+		if ("addEventListener" in mql) {
+			mql.addEventListener("change", update);
+		} else {
+			// noinspection JSDeprecatedSymbols Safari 只有 addListener()
+			mql.addListener(update);
+		}
 	}
 
-	/**
-	 * 监听 window.matchMedia() 的 change 事件，在窗口大小改变时自动修改状态。
-	 * 该函数只能在浏览器环境下使用。
-	 *
-	 * @param pinia Pinia 的存储实例
-	 * @param window_ 监听的window对象，默认是全局变量
-	 */
-	observeWindow(pinia: Pinia, window_ = window) {
-		const { entries } = this;
+	const first = entries[0];
+	observe(first[1], `(max-width: ${first[1]}px`);
 
-		if (entries.length < 2) {
-			return;
+	if (entries.length > 2) {
+		for (let i = 1; i < entries.length - 1; i++) {
+			const prev = entries[i - 1][1];
+			const current = entries[i][1];
+			observe(entries[i][1], `(min-width: ${prev}px) and (max-width: ${current}px)`);
 		}
-		const store = useMQStore(pinia);
-
-		function observe(width: number, query: string) {
-			const mql = window_.matchMedia(query);
-
-			// 立即检查一下，在后端误判时立刻恢复到正确的宽度
-			if (mql.matches) {
-				store.width = width;
-			}
-
-			const update = () => mql.matches && (store.width = width);
-
-			if ("addEventListener" in mql) {
-				mql.addEventListener("change", update);
-			} else {
-				// noinspection JSDeprecatedSymbols Safari 只有 addListener()
-				mql.addListener(update);
-			}
-		}
-
-		const first = entries[0];
-		observe(first[1], `(max-width: ${first[1]}px`);
-
-		if (entries.length > 2) {
-			for (let i = 1; i < entries.length - 1; i++) {
-				const prev = entries[i - 1][1];
-				const current = entries[i][1];
-				observe(entries[i][1], `(min-width: ${prev}px) and (max-width: ${current}px)`);
-			}
-		}
-
-		const last = entries[entries.length - 1];
-		observe(last[1], `(min-width: ${entries[entries.length - 2][1]}px`);
 	}
 
-	/**
-	 * 注册 Vue 的插件，使 BreakPointAPI 可以被使用。
-	 * 1）Options API 和模板通过 this.$bp 获取。
-	 * 2）setup 函数中使用 useBreakPoint() 获取。
-	 *
-	 * @param app Vue 对象
-	 */
-	install(app: App) {
-		const globals = app.config.globalProperties;
-
-		const breakPoint = new BreakPointAPI(globals);
-		globals.$bp = breakPoint;
-		app.provide("breakPoint", breakPoint);
-	}
-}
-
-/**
- *
- * 注意 vueuse 里也有个很像的 useBreakPoints，不要搞混了。
- */
-export function useBreakPoint() {
-	return inject<BreakPointAPI>("breakPoint")!;
+	const last = entries[entries.length - 1];
+	observe(last[1], `(min-width: ${entries[entries.length - 2][1]}px`);
 }
 
 /**
@@ -165,4 +131,28 @@ export class BreakPointAPI {
 		const { state } = this;
 		return state.width >= breakpoints[lo] && state.width < breakpoints[hi];
 	}
+}
+
+/**
+ * BreakPoint 功能的 Composition API。
+ *
+ * 注意 vueuse 里也有个很像的 useBreakPoints，不要搞混了。
+ */
+export function useBreakPoint() {
+	return inject<BreakPointAPI>("breakPoint")!;
+}
+
+/**
+ * 注册 Vue 的插件，使 BreakPointAPI 可以被使用。
+ * 1）Options API 和模板通过 this.$bp 获取。
+ * 2）setup 函数中使用 useBreakPoint() 获取。
+ *
+ * @param app Vue 对象
+ */
+export default function install(app: App) {
+	const globals = app.config.globalProperties;
+
+	const breakPoint = new BreakPointAPI(globals);
+	globals.$bp = breakPoint;
+	app.provide("breakPoint", breakPoint);
 }
