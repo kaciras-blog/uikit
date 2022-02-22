@@ -34,7 +34,7 @@ import vSelectionModel from "./directives/selection-model";
 import vRipple from "./directives/ripple";
 
 export * from "./dialog/quick-alert";
-export * from "./media-query";
+export * from "./break-point";
 export * from "./common";
 export * from "./composition";
 export * from "./dragging";

@@ -1,11 +1,11 @@
-import { nextTick } from "vue";
+import { nextTick, ref, watch } from "vue";
 import { createTestingPinia } from "@pinia/testing";
 import { shallowMount } from "@vue/test-utils";
-import { MediaQueryManager, useBreakPoints, useMQStore } from "../src/media-query";
+import { BreakPointManager, useBreakPoint, useMQStore } from "../src/break-point";
 
 function createSuite(root: any) {
 	const store = createTestingPinia();
-	const plugin = new MediaQueryManager();
+	const plugin = new BreakPointManager();
 
 	return shallowMount(root, {
 		global: { plugins: [store, plugin] },
@@ -15,8 +15,8 @@ function createSuite(root: any) {
 it("should available in options API", async () => {
 	const app = createSuite({
 		template: `
-			<div v-if="$mediaQuery.value === 'wide'">WIDE</div>
-			<div v-if='$mediaQuery.isBetween("tablet", "desktop")'>TABLET - DESKTOP</div>
+			<div v-if="$bp.name === 'wide'">WIDE</div>
+			<div v-if='$bp.isBetween("tablet", "desktop")'>TABLET - DESKTOP</div>
 		`,
 	});
 
@@ -40,9 +40,9 @@ it("should support composition API", async () => {
 			<div v-if="between">TABLET - DESKTOP</div>
 		`,
 		setup() {
-			const mq = useBreakPoints();
-			const gtWide = mq.greater("wide");
-			const between = mq.between("tablet", "desktop");
+			const breakPoint = useBreakPoint();
+			const gtWide = breakPoint.greater("wide");
+			const between = breakPoint.between("tablet", "desktop");
 			return { gtWide, between };
 		},
 	});
@@ -55,6 +55,29 @@ it("should support composition API", async () => {
 
 	expect(app.html()).not.toContain("WIDE");
 	expect(app.html()).toContain("TABLET - DESKTOP");
+});
+
+it("should support watch on name", async () => {
+	const app = createSuite({
+		template: "<div>{{ name }}</div>",
+		setup() {
+			const breakPoint = useBreakPoint();
+			const name = ref("invalid");
+
+			watch(breakPoint.name, v => name.value = v, {
+				immediate: true,
+			});
+
+			return { name, breakPoint };
+		},
+	});
+
+	expect(app.html()).toBe("<div>wide</div>");
+
+	useMQStore().width = 992;
+	await nextTick();
+
+	expect(app.html()).toBe("<div>tablet</div>");
 });
 
 // observeWindow 没法测，因为 JSDOM 不支持 window.matchMedia

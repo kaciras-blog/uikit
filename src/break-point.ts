@@ -1,12 +1,10 @@
-import { App, computed, inject } from "vue";
+import { App, computed, ComputedRef, inject } from "vue";
 import { defineStore, Pinia } from "pinia";
 
 /**
- * 断点对象，键位断点名，值为断点的宽度。
+ * 断点配置对象，键位断点名，值为对应的屏幕的宽度的上限。
  *
- * 最大的一个值没有意义，因为比倒数第二大的就认为是最大，而没必要去比较最大的宽度值，
- * 所以随便设一个较大的数即可，但是不要设为 Infinity 因为它不是合法的 JSON 值，
- * 在 SSR 序列化时会出问题。
+ * 最大的一个值不要设为 Infinity 因为它不是 JSON 值，在 SSR 序列化时会出问题。
  */
 export const breakpoints = {
 	mobile: 768,
@@ -15,13 +13,11 @@ export const breakpoints = {
 	wide: 999999,
 };
 
-type ViewportType = keyof typeof breakpoints;
+type BPName = keyof typeof breakpoints;
 
-export const useMQStore = defineStore("mediaQuery", {
+export const useMQStore = defineStore("breakPoint", {
 	state: () => ({ width: 999999 }),
 });
-
-type MQStore = ReturnType<typeof useMQStore>;
 
 /**
  * 本插件依赖 Vuex，所以要同时注册到 Vue 和 Vuex 的 Store 实例。
@@ -31,7 +27,7 @@ type MQStore = ReturnType<typeof useMQStore>;
  * 2）断点一般都是通用的几个值，但它每次都要传，不方便。
  * 3）每次都会添加 N（断点数）个监听，即便指匹配一个。
  */
-export class MediaQueryManager {
+export class BreakPointManager {
 
 	private readonly entries: Array<[string, number]>;
 
@@ -93,76 +89,79 @@ export class MediaQueryManager {
 	}
 
 	/**
-	 * 注册为Vue的插件，别忘了还要注册一个Vuex的模块。
+	 * 注册 Vue 的插件，使 BreakPointAPI 可以被使用。
+	 * 1）Options API 和模板通过 this.$bp 获取。
+	 * 2）setup 函数中使用 useBreakPoint() 获取。
 	 *
-	 * @param app Vue对象
+	 * @param app Vue 对象
 	 */
 	install(app: App) {
 		const globals = app.config.globalProperties;
 
-		const mediaQuery = new MediaQueryAPI(globals);
-		globals.$mediaQuery = mediaQuery;
-		app.provide("$mediaQuery", mediaQuery);
+		const breakPoint = new BreakPointAPI(globals);
+		globals.$bp = breakPoint;
+		app.provide("breakPoint", breakPoint);
 	}
-}
-
-export function useBreakPoints() {
-	return inject<MediaQueryAPI>("$mediaQuery")!;
 }
 
 /**
- * 供组件使用的 API，在组件内部通过 this.$mediaQuery 或 useBreakPoints() 访问。
+ *
+ * 注意 vueuse 里也有个很像的 useBreakPoints，不要搞混了。
+ */
+export function useBreakPoint() {
+	return inject<BreakPointAPI>("breakPoint")!;
+}
+
+/**
+ * 供组件使用的 API，在组件内部通过 this.$mediaQuery 或 useBreakPoint() 访问。
  * 该类同时支持选项式和组合 API。
  */
-export class MediaQueryAPI {
+export class BreakPointAPI {
 
-	private readonly globals: Record<string, MQStore>;
-	private readonly width2Name: Record<number, ViewportType>;
+	private readonly globals: Record<string, any>;
 
-	constructor(globals: any) {
-		this.globals = globals;
+	readonly name: ComputedRef<BPName>;
 
+	constructor(globals: Record<string, any>) {
 		const es = Object.entries(breakpoints);
 		const invert = es.map(([k, v]) => [v, k]);
-		this.width2Name = Object.fromEntries(invert);
+		const w2n = Object.fromEntries(invert);
+
+		this.globals = globals;
+		this.name = computed(() => w2n[this.state.width]);
 	}
 
 	private get state() {
-		// @ts-ignore WebStorm 的类型推导有问题。
 		return useMQStore(this.globals.$pinia);
-	}
-
-	get value() {
-		return this.width2Name[this.state.width];
 	}
 
 	// 这三个返回响应对象，用于 setup 函数。
 
-	greater(name: ViewportType) {
+	greater(name: BPName) {
 		return computed(() => this.isGreater(name));
 	}
 
-	smaller(name: ViewportType) {
+	smaller(name: BPName) {
 		return computed(() => this.isSmaller(name));
 	}
 
-	between(lo: ViewportType, hi: ViewportType) {
+	between(lo: BPName, hi: BPName) {
 		return computed(() => this.isBetween(lo, hi));
 	}
 
 	// 下面的返回简单值，如果用于渲染函数或 computed 则也是响应的。
 
-	isGreater(name: ViewportType) {
+	isGreater(name: BPName) {
 		const { state } = this;
 		return state.width >= breakpoints[name];
 	}
 
-	isSmaller(name: ViewportType) {
+	isSmaller(name: BPName) {
 		const { state } = this;
 		return state.width < breakpoints[name];
 	}
 
-	isBetween(lo: ViewportType, hi: ViewportType) {
+	isBetween(lo: BPName, hi: BPName) {
 		const { state } = this;
 		return state.width >= breakpoints[lo] && state.width < breakpoints[hi];
 	}

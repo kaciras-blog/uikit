@@ -4,9 +4,9 @@ import { createMemoryHistory, createRouter } from "vue-router";
 import "../src/css/index.less";
 import "./stories.less";
 import { createPinia } from "pinia";
-import UIKit, { MediaQueryManager } from "../src/index";
+import UIKit, { BreakPointManager } from "../src/index";
 
-export const mediaQueryPlugin = new MediaQueryManager({
+export const breakPointManager = new BreakPointManager({
 	mobile: 768,
 	tablet: 992,
 	desktop: 1200,
@@ -15,9 +15,9 @@ export const mediaQueryPlugin = new MediaQueryManager({
 
 const pinia = createPinia();
 
-mediaQueryPlugin.observeWindow(pinia)
+breakPointManager.observeWindow(pinia)
 
-app.use(mediaQueryPlugin);
+app.use(breakPointManager);
 app.use(UIKit);
 app.use(pinia);
 app.use(createRouter({
