@@ -17,7 +17,6 @@ import KxPasswordInput from "./input/KxPasswordInput.vue";
 import KxBaseDialog from "./dialog/KxBaseDialog.vue";
 import KxFrame from "./dialog/KxFrame.vue";
 import KxFrameHeader from "./dialog/KxFrameHeader.vue";
-import QuickAlert from "./dialog/quick-alert";
 import KxDialogButtons from "./dialog/KxDialogButtons.vue";
 import KxDialogContainer from "./dialog/KxDialogContainer.vue";
 import ToastContainer from "./dialog/ToastContainer.vue";
@@ -32,6 +31,9 @@ import vBindSelection from "./directives/selection-bind";
 import vSelectionChange from "./directives/selection-change";
 import vSelectionModel from "./directives/selection-model";
 import vRipple from "./directives/ripple";
+
+import QuickAlert from "./dialog/quick-alert";
+import BreakPoint from "./break-point";
 
 export * from "./dialog/quick-alert";
 export * from "./break-point";
@@ -83,6 +85,7 @@ export {
  */
 export default function install(app: App) {
 	app.use(QuickAlert);
+	app.use(BreakPoint);
 
 	app.component("AtomSpinner", AtomSpinner);
 	app.component("SmartLink", SmartLink);
