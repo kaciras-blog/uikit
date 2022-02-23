@@ -1,4 +1,4 @@
-import { App, computed, ComputedRef, inject } from "vue";
+import { App, computed, inject } from "vue";
 import { defineStore, Pinia } from "pinia";
 
 /*
@@ -85,20 +85,22 @@ export function observeMediaQuery(pinia: Pinia, window_ = window) {
 export class BreakPointAPI {
 
 	private readonly globals: Record<string, any>;
-
-	readonly name: ComputedRef<BPName>;
+	private readonly w2n: Record<number, string>;
 
 	constructor(globals: Record<string, any>) {
+		this.globals = globals;
+
 		const es = Object.entries(breakpoints);
 		const invert = es.map(([k, v]) => [v, k]);
-		const w2n = Object.fromEntries(invert);
-
-		this.globals = globals;
-		this.name = computed(() => w2n[this.state.width]);
+		this.w2n = Object.fromEntries(invert);
 	}
 
 	private get state() {
 		return useMQStore(this.globals.$pinia);
+	}
+
+	get value() {
+		return this.w2n[this.state.width];
 	}
 
 	// 这三个返回响应对象，用于 setup 函数。
@@ -118,13 +120,11 @@ export class BreakPointAPI {
 	// 下面的返回简单值，如果用于渲染函数或 computed 则也是响应的。
 
 	isGreater(name: BPName) {
-		const { state } = this;
-		return state.width >= breakpoints[name];
+		return this.state.width >= breakpoints[name];
 	}
 
 	isSmaller(name: BPName) {
-		const { state } = this;
-		return state.width < breakpoints[name];
+		return this.state.width < breakpoints[name];
 	}
 
 	isBetween(lo: BPName, hi: BPName) {

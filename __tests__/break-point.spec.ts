@@ -1,4 +1,4 @@
-import { nextTick, ref, watch } from "vue";
+import { nextTick, ref, watchEffect } from "vue";
 import { createTestingPinia } from "@pinia/testing";
 import { shallowMount } from "@vue/test-utils";
 import BreakPoint, { useBreakPoint, useMQStore } from "../src/break-point";
@@ -14,7 +14,7 @@ function createSuite(root: any) {
 it("should available in options API", async () => {
 	const app = createSuite({
 		template: `
-			<div v-if="$bp.name === 'wide'">WIDE</div>
+			<div v-if="$bp.value === 'wide'">WIDE</div>
 			<div v-if='$bp.isBetween("tablet", "desktop")'>TABLET - DESKTOP</div>
 		`,
 	});
@@ -63,8 +63,8 @@ it("should support watch on name", async () => {
 			const breakPoint = useBreakPoint();
 			const name = ref("invalid");
 
-			watch(breakPoint.name, v => name.value = v, {
-				immediate: true,
+			watchEffect(() => {
+				name.value = breakPoint.value;
 			});
 
 			return { name, breakPoint };
