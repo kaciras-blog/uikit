@@ -34,6 +34,7 @@
 import { State } from "./core";
 import LoadingStatus from "../components/LoadingStatus.vue";
 import KxButton from "../input/KxButton.vue";
+import { useIntersectionHandler } from "../composition";
 
 interface ScrollPagerProps {
 
@@ -57,8 +58,6 @@ const props = withDefaults(defineProps<ScrollPagerProps>(), {
 
 const emit = defineEmits(["loadPage"]);
 
-let observer: IntersectionObserver;
-
 function loadPage() {
 	switch (props.state) {
 		case State.ALL_LOADED:
@@ -69,25 +68,13 @@ function loadPage() {
 	}
 }
 
-function callback([entry]: IntersectionObserverEntry[]) {
-	if (!entry.isIntersecting) return;
+const observe = useIntersectionHandler(e => {
+	if (!e[0].isIntersecting) return;
 	if (!props.autoLoad) return;
 	if (props.state === State.FREE) loadPage();
-}
-
-function observe(el: Element | null) {
-	if (!el) {
-		return observer.disconnect();
-	}
-	if (observer) {
-		return; // 函数作为 ref 可能被重复调用。
-	}
-	observer = new IntersectionObserver(callback, {
-		rootMargin: props.activeHeight + "px",
-	});
-
-	observer.observe(el);
-}
+}, {
+	rootMargin: props.activeHeight + "px",
+});
 </script>
 
 <style module lang="less">

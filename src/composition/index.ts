@@ -47,3 +47,28 @@ export function usePreventScroll(element = document.body) {
 		Object.assign(style, kxPSBackup);
 	});
 }
+
+/**
+ * IntersectionObserver 的简单封装，返回一个用于 :ref 的函数，
+ * 在元素插入后监听，移除时停止，该函数同一时刻只能监听一个元素。
+ *
+ * <h2>与 vueuse 对比</h2>
+ * 该函数类似 vueuse/useIntersectionObserver，但更简单，无需再定义个 ref。
+ *
+ * @param cb 跟 IntersectionObserver 的参数一样
+ * @param options 跟 IntersectionObserver 的参数一样
+ */
+export function useIntersectionHandler(
+	cb: IntersectionObserverCallback,
+	options?: IntersectionObserverInit,
+) {
+	const observer = new IntersectionObserver(cb, options);
+
+	return (el: Element | null) => {
+		if (el) {
+			observer.observe(el);
+		} else {
+			observer.disconnect();
+		}
+	};
+}
