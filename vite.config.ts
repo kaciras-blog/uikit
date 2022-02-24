@@ -2,7 +2,7 @@ import { readFileSync } from "fs";
 import { URL } from "url";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import { vueSvgComponent } from "@kaciras-blog/devtool";
+import svgSfc from "vite-plugin-svg-sfc";
 
 const url = new URL("./package.json", import.meta.url);
 const { dependencies } = JSON.parse(readFileSync(url, "utf8"));
@@ -13,7 +13,7 @@ const { dependencies } = JSON.parse(readFileSync(url, "utf8"));
  */
 
 export default defineConfig({
-	plugins: [vue(), vueSvgComponent()],
+	plugins: [vue(), svgSfc()],
 	build: {
 		reportCompressedSize: false,
 

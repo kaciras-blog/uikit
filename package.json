@@ -32,7 +32,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.17.2",
-		"@kaciras-blog/devtool": "^2.0.0-beta.3",
+		"vite-plugin-svg-sfc": "^0.2.0",
 		"@kaciras/eslint-config-core": "^2.3.0",
 		"@kaciras/eslint-config-jest": "^2.3.0",
 		"@kaciras/eslint-config-typescript": "^2.3.0",
