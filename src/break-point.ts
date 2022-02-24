@@ -85,7 +85,7 @@ export function observeMediaQuery(pinia: Pinia, window_ = window) {
 export class BreakPointAPI {
 
 	private readonly globals: Record<string, any>;
-	private readonly w2n: Record<number, string>;
+	private readonly w2n: Record<number, BPName>;
 
 	constructor(globals: Record<string, any>) {
 		this.globals = globals;

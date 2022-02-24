@@ -37,7 +37,7 @@ export const Template = (args) => ({
 		</ButtonPagingView>`,
 	data: () => ({
 		args,
-		model: { total: 0, items: [] },
+		model: { total: args.total, items: getQuotes(10) },
 	}),
 	methods: {
 		async load(start, size) {

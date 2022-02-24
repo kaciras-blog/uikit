@@ -1,5 +1,6 @@
-export default {
-};
+import { vBindSelection, vImeInput, vRipple, vSelectionChange, vSelectionModel } from "../src";
+
+export default {};
 
 export const ImeInput = () => ({
 	template: `
@@ -17,6 +18,9 @@ export const ImeInput = () => ({
 			<p>v-ime-input：{{ imeValue }}</p>
 		</div>
 	`,
+	directives: {
+		imeInput: vImeInput,
+	},
 	data: () => ({
 		value: "",
 		changeValue: "",
@@ -27,6 +31,9 @@ export const ImeInput = () => ({
 export const SectionBind = {
 	render: (args, { argTypes }) => ({
 		props: Object.keys(argTypes),
+		directives: {
+			bindSelection: vBindSelection,
+		},
 		template: `
 			<textarea
 				v-bind-selection.focus="'selection'"
@@ -51,12 +58,15 @@ export const SectionBind = {
 export const SectionChange = () => ({
 	template: `
 		<textarea
-			v-on-selection-change="setSelectionRange"
+			v-selection-change="setSelectionRange"
 			v-model="value"
 			class="directive-textarea"
 		/>
 		<div>选择范围：{{ start }} - {{ end }}</div>
 	`,
+	directives: {
+		selectionChange: vSelectionChange,
+	},
 	data: () => ({
 		value: "选择文字，下面显示被选中部分的起止位置",
 		start: 0,
@@ -80,6 +90,9 @@ export const SectionModel = () => ({
 		<div>选择范围：{{ selection[0] }} - {{ selection[1] }}</div>
 		<kx-button @click="randomSelection">随机选择</kx-button>
 	`,
+	directives: {
+		selectionModel: vSelectionModel,
+	},
 	data: () => ({
 		value: "调整下面的start和end，改变文本框的选择区域",
 		selection: [0, 0],
@@ -97,6 +110,9 @@ export const SectionModel = () => ({
 export const Ripple = {
 	render: (args) => ({
 		data: () => args,
+		directives: {
+			ripple: vRipple,
+		},
 		// 用 key 防止复用元素导致指令更新失败
 		template: `
 			<div v-if="centered && circle" :key="0" class="mock-dialog" v-ripple.centered.circle></div>
