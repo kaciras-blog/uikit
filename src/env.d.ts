@@ -1,3 +1,3 @@
-/// <reference types="@kaciras-blog/devtool/client" />
+/// <reference types="vite-plugin-svg-sfc/client" />
 
 import "./vue";
