@@ -62,6 +62,9 @@ export function useIntersectionHandler(
 	cb: IntersectionObserverCallback,
 	options?: IntersectionObserverInit,
 ) {
+	if (typeof window === "undefined") {
+		return () => {};
+	}
 	const observer = new IntersectionObserver(cb, options);
 
 	return (el: Element | null) => {
