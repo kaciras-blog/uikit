@@ -43,10 +43,17 @@ controller.mountPoint = { push, clear };
 </script>
 
 <style module lang="less">
+@import "../css/exports";
+
 .container {
 	position: fixed;
 	bottom: 1.25rem;
 	right: 1.25rem;
 	z-index: 5000;
+
+	@media screen and (max-width: @length-screen-mobile) {
+		right: 50%;
+		transform: translateX(50%);
+	}
 }
 </style>

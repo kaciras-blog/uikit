@@ -90,8 +90,6 @@ onMounted(() => setTimeout(close, props.delay));
 .container {
 	display: flex;
 	align-items: center;
-	width: 320px;
-	min-height: 64px;
 
 	margin: 12px 0;
 	padding: 14px;
@@ -106,6 +104,8 @@ onMounted(() => setTimeout(close, props.delay));
 	animation: fade-in .25s;
 
 	@media screen and (min-width: @length-screen-mobile) {
+		width: 320px;
+		min-height: 64px;
 	}
 }
 
@@ -124,6 +124,10 @@ onMounted(() => setTimeout(close, props.delay));
 	margin-right: -6px;
 	padding: 0;
 	font-size: 18px;
+
+	@media screen and (max-width: @length-screen-mobile) {
+		display: none;
+	}
 }
 
 .Info {

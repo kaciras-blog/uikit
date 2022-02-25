@@ -8,7 +8,7 @@ export default {
 export const Toast = () => ({
 	template: `
 		<KxButton @click="show">显示气泡通知</KxButton>
-		<KxDialogContainer/>
+		<ToastContainer/>
 	`,
 	methods: {
 		show() {
