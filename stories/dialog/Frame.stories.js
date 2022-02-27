@@ -9,7 +9,7 @@ export const Frame = () => ({
 			<KxButton class="primary" @click="show">
 				显示弹出层
 			</KxButton>
-			<KxDialogContainer/>
+			<DialogContainer/>
 		</div>`,
 	methods: {
 		show() {

@@ -18,7 +18,7 @@ import KxBaseDialog from "./dialog/KxBaseDialog.vue";
 import KxFrame from "./dialog/KxFrame.vue";
 import KxFrameHeader from "./dialog/KxFrameHeader.vue";
 import KxDialogButtons from "./dialog/KxDialogButtons.vue";
-import KxDialogContainer from "./dialog/KxDialogContainer.vue";
+import DialogContainer from "./dialog/DialogContainer.vue";
 import ToastContainer from "./dialog/ToastContainer.vue";
 import PagingButtons from "./paging/PagingButtons.vue";
 import ButtonPagingView from "./paging/ButtonPagingView.vue";
@@ -69,7 +69,7 @@ export {
 	KxFrame,
 	KxFrameHeader,
 	KxDialogButtons,
-	KxDialogContainer,
+	DialogContainer,
 	ToastContainer,
 
 	vAutofocus,
@@ -108,7 +108,7 @@ export default function install(app: App) {
 	app.component("KxFrame", KxFrame);
 	app.component("KxFrameHeader", KxFrameHeader);
 	app.component("KxDialogButtons", KxDialogButtons);
-	app.component("KxDialogContainer", KxDialogContainer);
+	app.component("DialogContainer", DialogContainer);
 	app.component("ToastContainer", ToastContainer);
 
 	app.directive("autofocus", vAutofocus);

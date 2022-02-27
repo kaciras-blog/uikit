@@ -1,7 +1,7 @@
 import { shallowMount } from "@vue/test-utils";
 import { nextTick } from "vue";
 import { DialogResult, DialogSession, QuickDialogController } from "../src/dialog/controller";
-import KxDialogContainer from "../src/dialog/KxDialogContainer.vue";
+import DialogContainer from "../src/dialog/DialogContainer.vue";
 
 describe("DialogSession", () => {
 
@@ -19,7 +19,7 @@ describe("DialogSession", () => {
 
 it("should support clear dialogs", async () => {
 	const $dialog = new QuickDialogController();
-	const wrapper = shallowMount(KxDialogContainer, {
+	const wrapper = shallowMount(DialogContainer, {
 		global: {
 			provide: { $dialog },
 		},

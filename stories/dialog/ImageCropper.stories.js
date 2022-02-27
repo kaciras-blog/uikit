@@ -8,7 +8,7 @@ export default {
 export const Simple = () => ({
 	template: `
 		<KxButton @click="showCropper"> 裁剪图片</KxButton>
-		<KxDialogContainer/>
+		<DialogContainer/>
 		<img v-if="result" :src="result" alt="Cropped image">
 	`,
 	data: () => ({

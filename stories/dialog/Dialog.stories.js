@@ -15,7 +15,7 @@ export const Custom = () => ({
 			v-if="isOpen" 
 			@close="isOpen = false"
 		/>
-		<KxDialogContainer/>
+		<DialogContainer/>
 	`,
 	data: () => ({ isOpen: false }),
 });
@@ -50,7 +50,7 @@ Buttons.args = {
 export const BeforeDialogClose = args => ({
 	template: `
 		<KxButton @click="show">弹出对话框</KxButton>
-		<KxDialogContainer/>
+		<DialogContainer/>
 	`,
 	methods: {
 		show() {
