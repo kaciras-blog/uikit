@@ -25,7 +25,7 @@ import ButtonPagingView from "./paging/ButtonPagingView.vue";
 import ScrollPager from "./paging/ScrollPager.vue";
 import ScrollPagingView from "./paging/ScrollPagingView.vue";
 
-import vAutoFocus from "./directives/autofocus";
+import vAutofocus from "./directives/autofocus";
 import vImeInput from "./directives/ime-input";
 import vBindSelection from "./directives/selection-bind";
 import vSelectionChange from "./directives/selection-change";
@@ -72,7 +72,7 @@ export {
 	KxDialogContainer,
 	ToastContainer,
 
-	vAutoFocus,
+	vAutofocus,
 	vImeInput,
 	vRipple,
 	vSelectionChange,
@@ -111,7 +111,7 @@ export default function install(app: App) {
 	app.component("KxDialogContainer", KxDialogContainer);
 	app.component("ToastContainer", ToastContainer);
 
-	app.directive("autofocus", vAutoFocus);
+	app.directive("autofocus", vAutofocus);
 	app.directive("ime-input", vImeInput);
 	app.directive("ripple", vRipple);
 	app.directive("bind-selection", vBindSelection);
