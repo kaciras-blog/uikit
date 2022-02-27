@@ -4,7 +4,7 @@ import { createMemoryHistory, createRouter } from "vue-router";
 import "../src/css/index.less";
 import "./stories.less";
 import { createPinia } from "pinia";
-import UIKit, { observeMediaQuery } from "../src/index";
+import UIKit, { observeMediaQuery, registerComponents } from "../src/index";
 
 const pinia = createPinia();
 
@@ -16,6 +16,8 @@ app.use(createRouter({
 	routes: [],
 	history: createMemoryHistory()
 }));
+
+registerComponents(app);
 
 // https://storybook.js.org/docs/react/writing-stories/parameters#global-parameters
 export const parameters = {

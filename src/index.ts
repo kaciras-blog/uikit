@@ -80,13 +80,7 @@ export {
 	vSelectionModel,
 };
 
-/**
- * 自动注册目录下的 Vue 组件。
- */
-export default function install(app: App) {
-	app.use(QuickAlert);
-	app.use(BreakPoint);
-
+export function registerComponents(app: App) {
 	app.component("AtomSpinner", AtomSpinner);
 	app.component("SmartLink", SmartLink);
 	app.component("SkFadingCircle", SkFadingCircle);
@@ -110,6 +104,14 @@ export default function install(app: App) {
 	app.component("KxDialogButtons", KxDialogButtons);
 	app.component("DialogContainer", DialogContainer);
 	app.component("ToastContainer", ToastContainer);
+}
+
+/**
+ * 自动注册各个模块的插件和指令，指令因为 WebStorm 的问题暂不使用导入。
+ */
+export default function install(app: App) {
+	app.use(QuickAlert);
+	app.use(BreakPoint);
 
 	app.directive("autofocus", vAutofocus);
 	app.directive("ime-input", vImeInput);
