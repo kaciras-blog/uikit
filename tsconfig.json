@@ -21,9 +21,10 @@
 
 		"jsx": "preserve",
 		"skipLibCheck": true,
+		"resolveJsonModule": true,
 		"allowJs": true,
 		"allowSyntheticDefaultImports": true,
 		"strict": true,
-		"sourceMap": true,
+		"sourceMap": true
 	}
 }
