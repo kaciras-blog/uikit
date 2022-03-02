@@ -16,7 +16,6 @@ import KxTaskButton from "./input/KxTaskButton.vue";
 import KxPasswordInput from "./input/KxPasswordInput.vue";
 import KxBaseDialog from "./dialog/KxBaseDialog.vue";
 import KxFrame from "./dialog/KxFrame.vue";
-import KxFrameHeader from "./dialog/KxFrameHeader.vue";
 import KxDialogButtons from "./dialog/KxDialogButtons.vue";
 import DialogContainer from "./dialog/DialogContainer.vue";
 import ToastContainer from "./dialog/ToastContainer.vue";
@@ -67,7 +66,6 @@ export {
 	KxProgress,
 	KxBaseDialog,
 	KxFrame,
-	KxFrameHeader,
 	KxDialogButtons,
 	DialogContainer,
 	ToastContainer,
@@ -100,7 +98,6 @@ export function registerComponents(app: App) {
 	app.component("KxProgress", KxProgress);
 	app.component("KxBaseDialog", KxBaseDialog);
 	app.component("KxFrame", KxFrame);
-	app.component("KxFrameHeader", KxFrameHeader);
 	app.component("KxDialogButtons", KxDialogButtons);
 	app.component("DialogContainer", DialogContainer);
 	app.component("ToastContainer", ToastContainer);

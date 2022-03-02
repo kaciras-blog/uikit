@@ -1,6 +1,6 @@
 <template>
-	<KxFrame>
-		<KxFrameHeader title="标题">
+	<KxFrame title="标题">
+		<template #actions>
 			<KxButton
 				:class="$style.icon"
 				type="icon"
@@ -13,9 +13,9 @@
 			>
 				<HelpIcon/>
 			</KxButton>
-		</KxFrameHeader>
+		</template>
 
-		<div class="kx-frame-body" :class="$style.body">
+		<div :class="$style.body">
 			<KxButton @click="showDialog">
 				内层弹窗
 			</KxButton>
@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { KxButton, KxFrame, KxFrameHeader } from "../../src";
+import { KxButton, KxFrame } from "../../src";
 import SearchIcon from "../assets/search.svg?sfc";
 import HelpIcon from "../assets/help.svg?sfc";
 import LuckyNumber from "./LuckyNumberDialog.vue";
@@ -39,7 +39,6 @@ export default {
 		HelpIcon,
 		KxFrame,
 		KxButton,
-		KxFrameHeader,
 	},
 	methods: {
 		showDialog() {
