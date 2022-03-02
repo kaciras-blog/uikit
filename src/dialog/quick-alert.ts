@@ -23,10 +23,22 @@ export interface ImageCopperProps {
 	aspectRatio: number;
 }
 
+/**
+ * 全局的弹出层 API，通过调用方法来将组件挂载到 DialogContainer 中，通常用于弹窗。
+ *
+ * <2h>与挂载到模板的区别</h2>
+ * 官方推荐把弹窗放在模板里，通过 teleport 挂到顶层，然后使用一个 ref 来控制开关。
+ * 与本 API 相比，组件状态之间的联系更紧密，但也有缺点：
+ * 1）需额外添加一个是否显示的状态，增加代码量。
+ * 2）消息框等常用的组件搞得模板里到处都是。
+ * 3）弹窗的 props 必须在顶层定义，即使只在弹窗动作内使用。
+ *
+ * 综上所述，本项目尝试不使用官方推荐的模式，仅用本 API 来实现所有弹窗。
+ */
 class KxDialogManagerExt extends QuickDialogController {
 
 	/**
-	 * 显示内置的消息框，请使用title来做一个简要的说明，如："操作失败"，内容部分可以省略
+	 * 显示内置的消息框，优先使用 title 来做一个简要的说明，如："操作失败"，内容部分可以省略。
 	 *
 	 * @param options 选项
 	 */

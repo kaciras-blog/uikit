@@ -5,15 +5,14 @@
 	本组件通常放在根节点上，不建议内部的弹窗使用 teleport。
 -->
 <template>
-	<template v-for="(options, i) of stack" :key="options.id">
-		<component
-			v-bind="options.props"
-			v-show="isVisible(options, i)"
-			:is="options.component"
-			:ref="v => v && instances.set(options, v)"
-			@close="r => closeDialog(options, r)"
-		/>
-	</template>
+	<component
+		v-for="(options, i) of stack"
+		:key="options.id"
+		v-bind="options.props"
+		v-show="isVisible(options, i)"
+		:is="options.component"
+		:ref="v => v && instances.set(options, v)"
+	/>
 </template>
 
 <script setup lang="ts">
