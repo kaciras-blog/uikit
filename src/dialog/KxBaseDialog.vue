@@ -16,7 +16,9 @@
 				@touchstart.self.prevent="drag"
 			>
 				<slot name="title">
-					<h2 :class="$style.title">{{ title }}</h2>
+					<h2 :class="$style.title">
+						{{ title }}
+					</h2>
 				</slot>
 				<KxButton
 					v-if="closeIcon"
@@ -24,13 +26,21 @@
 					title="关闭"
 					:class="$style.closeIcon"
 					@mousedown.stop
-					@click="$emit('close')"
+					@click="$dialog.close"
 				>
 					<CloseIcon/>
 				</KxButton>
 			</header>
 
+			<!-- 为了方便 padding 还是包一层 -->
 			<div :class="$style.body"><slot/></div>
+
+			<KxDialogButtons
+				:acceptable="acceptable"
+				@accept="onAccept"
+				@apply="onApply"
+				@cancel="onCancel"
+			/>
 		</div>
 	</KxModalWrapper>
 </template>
@@ -50,6 +60,7 @@ import CloseIcon from "../assets/icon-close.svg?sfc";
 import vAutoFocus from "../directives/autofocus";
 import KxButton from "../input/KxButton.vue";
 import KxModalWrapper from "./KxModalWrapper.vue";
+import KxDialogButtons from "./KxDialogButtons.vue";
 
 const props = defineProps({
 
@@ -69,6 +80,26 @@ const props = defineProps({
 	closeIcon: {
 		type: Boolean,
 		default: true,
+	},
+
+	/** 确定和应用按钮是否禁用 */
+	acceptable: {
+		type: Boolean,
+		default: true,
+	},
+
+	/** 为 false 则等效于不设置 */
+	onCancel: {
+		type: [Function, Boolean],
+		required: false,
+	},
+	onApply: {
+		type: [Function, Boolean],
+		required: false,
+	},
+	onAccept: {
+		type: [Function, Boolean],
+		required: false,
 	},
 });
 

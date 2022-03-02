@@ -3,6 +3,8 @@ import bindDirective from "./selection-bind";
 import { addSelectionChangeListener } from "../interactive";
 
 /**
+ * TODO: Vue3 实现自定义 v-model 需要扩展编译器，目前考虑中。
+ *
  * 选区的 v-model 实现，将 selectionStart 和 selectionEnd 双向绑定到数据。
  * 数据的格式为 [start: number, end: number] 二元组。
  */
