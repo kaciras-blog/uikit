@@ -1,3 +1,4 @@
+import { Story } from "@storybook/vue3";
 import { ref } from "vue";
 import KxRadioBoxGroup from "@/input/KxRadioBoxGroup.vue";
 
@@ -13,7 +14,7 @@ export default {
 	},
 };
 
-export const RadioBox = args => ({
+export const RadioBox: Story = args => ({
 	template: `
 		<h1>Selected: {{ value }}</h1>
 		<KxRadioBoxGroup v-bind="args" v-model="value">

@@ -1,3 +1,4 @@
+import { Story } from "@storybook/vue3";
 import { ref } from "vue";
 import KxSwitchBox from "@/input/KxSwitchBox.vue";
 
@@ -13,7 +14,7 @@ export default {
 	},
 };
 
-export const Switch =  args => ({
+export const Switch: Story = args => ({
 	template: `
 		<div style="width: 300px">
 			<p>

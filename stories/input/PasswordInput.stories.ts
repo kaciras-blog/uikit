@@ -1,3 +1,4 @@
+import { Story } from "@storybook/vue3";
 import { ref } from "vue";
 import KxPasswordInput from "@/input/KxPasswordInput.vue";
 
@@ -8,7 +9,7 @@ export default {
 	},
 };
 
-export const Password = args => ({
+export const Password: Story = args => ({
 	template: `
 		<div style="width: 300px">
 			<label for="input">

@@ -1,5 +1,5 @@
-import { sleep } from "@";
-import KxTaskButton from "@/input/KxTaskButton.vue";
+import { Story } from "@storybook/vue3";
+import { KxTaskButton, sleep } from "@";
 
 export default {
 	component: KxTaskButton,
@@ -14,7 +14,7 @@ export default {
 	},
 };
 
-const render = args => ({
+const render: Story = args => ({
 	template: `
 		<KxTaskButton v-bind="args">
 			加载按钮

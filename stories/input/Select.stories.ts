@@ -1,3 +1,4 @@
+import { Story } from "@storybook/vue3";
 import { ref } from "vue";
 import KxSelect from "@/input/KxSelect.vue";
 
@@ -13,7 +14,7 @@ export default {
 	},
 };
 
-export const Select = args => ({
+export const Select: Story = args => ({
 	components: {
 		KxSelect,
 	},
