@@ -23,8 +23,6 @@ export interface Resolution {
 	height: number;
 }
 
-type MediaElement = HTMLVideoElement | HTMLImageElement;
-
 /**
  * 设置媒体元素的 src 属性，并安排可能的清理操作。
  * IDE 老提示代码重复所以就提取出来了。
@@ -35,7 +33,7 @@ type MediaElement = HTMLVideoElement | HTMLImageElement;
  */
 function setMediaElementSource(
 	fetcher: Promise<Resolution>,
-	el: MediaElement,
+	el: HTMLVideoElement | HTMLImageElement,
 	src: string | Blob,
 ) {
 	if (typeof src === "string") {

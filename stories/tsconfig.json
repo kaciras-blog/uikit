@@ -1,0 +1,10 @@
+// 演示代码用了别名，所以单独搞一个 tsconfig
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		 "paths": {
+			 "@": ["src"],
+			 "@/*": ["src/*"]
+		 },
+	}
+}
