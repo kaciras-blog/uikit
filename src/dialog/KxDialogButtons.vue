@@ -1,4 +1,7 @@
-<!-- 常用的对话框按钮组，包含确定、取消、应用三个按钮 -->
+<!--
+	常用的对话框按钮组，包含确定、取消、应用三个按钮。
+	经测试给按钮加图标会导致元素过长，限制布局，故不采用。
+ -->
 <script>
 import { h, useCssModule } from "vue";
 import KxButton from "../input/KxButton.vue";

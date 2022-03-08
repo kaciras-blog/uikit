@@ -20,7 +20,7 @@ const reactivePlugin = {
 			if (stroke && stroke !== "none") {
 				attributes.stroke = "currentColor";
 			}
-			if (fill && fill !== "none") {
+			if (fill !== "none") {
 				attributes.fill = "currentColor";
 			}
 			attributes.width = attributes.height = "1em";
