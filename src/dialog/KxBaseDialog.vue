@@ -1,5 +1,5 @@
 <template>
-	<KxModalWrapper @click.self="onOverlayClick" @keyup.esc="onEscape">
+	<KxModalWrapper @click.self="onEscape" @keyup.esc="onEscape">
 		<div
 			ref="dialogEl"
 			class="dialogZoomIn"
@@ -73,10 +73,7 @@ const props = defineProps({
 		default: true,
 	},
 
-	/** 点击遮罩层关闭，默认false */
-	clickToClose: Boolean,
-
-	/** 是否显示右上角的关闭按钮（叉），并且允许按 ESC 关闭 */
+	/** 是否显示右上角的关闭按钮，并允许按 ESC 关闭 */
 	closeIcon: {
 		type: Boolean,
 		default: true,
@@ -123,10 +120,6 @@ function drag(event: TouchEvent | MouseEvent) {
 
 function onEscape() {
 	if (props.closeIcon) emit("close");
-}
-
-function onOverlayClick() {
-	if (props.clickToClose && props.closeIcon) emit("close");
 }
 </script>
 
