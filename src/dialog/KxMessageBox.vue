@@ -28,8 +28,8 @@
 			<pre v-if="content" :class="$style.content">{{ content }}</pre>
 
 			<KxDialogButtons
-				:on-cancel="cancelable && close"
-				:on-accept="() => close(true)"
+				@cancel="cancelable && close"
+				@accept="() => close(true)"
 			/>
 		</div>
 	</KxModalWrapper>
