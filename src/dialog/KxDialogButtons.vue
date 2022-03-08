@@ -38,7 +38,11 @@ KxDialogButtons.props = {
 		default: true,
 	},
 
-	/** 为 false 则等效于不设置 */
+	/**
+	 * 各个按钮的事件，false 则等效于不设置。
+	 *
+	 * 这些属性可以用 v-on，但要注意其与 v-bind 对表达式的计算处理不同。
+	 */
 	onCancel: {
 		type: [Function, Boolean],
 		required: false,

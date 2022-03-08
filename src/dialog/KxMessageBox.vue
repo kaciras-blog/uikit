@@ -28,8 +28,8 @@
 			<pre v-if="content" :class="$style.content">{{ content }}</pre>
 
 			<KxDialogButtons
-				@cancel="cancelable && close"
-				@accept="() => close(true)"
+				:on-cancel="cancelable && close"
+				:on-accept="() => close(true)"
 			/>
 		</div>
 	</KxModalWrapper>
@@ -44,6 +44,7 @@ import DialogIcons from "./DialogIcons.vue";
 import KxModalWrapper from "./KxModalWrapper.vue";
 import KxButton from "../input/KxButton.vue";
 import KxDialogButtons from "./KxDialogButtons.vue";
+import { useDialog } from "./quick-alert";
 
 interface MessageBoxProps {
 	title: string;
@@ -71,13 +72,13 @@ const props = withDefaults(defineProps<MessageBoxProps>(), {
 	cancelable: false,
 });
 
-const emit = defineEmits(["close"]);
+const dialog = useDialog();
 
 const dialogZoomIn = ref(true);
 const shaking = ref(false);
 
 function close(isConfirm = false) {
-	emit("close", new DialogResult(null, isConfirm));
+	dialog.close(new DialogResult(null, isConfirm));
 }
 
 function onOverlayClick() {

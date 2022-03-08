@@ -2,22 +2,20 @@ import { action } from "@storybook/addon-actions";
 import HookedDialog from "./HookedDialog.vue";
 import LuckyNumber from "./LuckyNumberDialog.vue";
 
-export default {
-};
+export default {};
 
 export const Custom = () => ({
-	components: { LuckyNumber },
 	template: `
-		<KxButton @click="isOpen = true">
+		<KxButton @click="show">
 			算一下幸运数字
 		</KxButton>
-		<LuckyNumber
-			v-if="isOpen" 
-			@close="isOpen = false"
-		/>
 		<DialogContainer/>
 	`,
-	data: () => ({ isOpen: false }),
+	methods: {
+		show() {
+			this.$dialog.show(LuckyNumber);
+		},
+	},
 });
 
 export const Buttons = args => ({
@@ -47,7 +45,7 @@ Buttons.args = {
 	applyEvent: false,
 };
 
-export const BeforeDialogClose = args => ({
+export const BeforeDialogClose = () => ({
 	template: `
 		<KxButton @click="show">弹出对话框</KxButton>
 		<DialogContainer/>

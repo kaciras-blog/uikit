@@ -5,7 +5,7 @@
 			class="dialogZoomIn"
 			:class="$style.dialog"
 			tabindex="-1"
-			v-auto-focus
+			v-autofocus
 			role="dialog"
 			aria-modal="true"
 			v-bind="$attrs"
@@ -34,13 +34,6 @@
 
 			<!-- 为了方便 padding 还是包一层 -->
 			<div :class="$style.body"><slot/></div>
-
-			<KxDialogButtons
-				:acceptable="acceptable"
-				@accept="onAccept"
-				@apply="onApply"
-				@cancel="onCancel"
-			/>
 		</div>
 	</KxModalWrapper>
 </template>
@@ -53,14 +46,14 @@ export default {
 
 <script setup lang="ts">
 import { ref } from "vue";
+import CloseIcon from "../assets/icon-close.svg?sfc";
 import { usePreventScroll } from "../composition";
 import { limitInWindow, moveElement, observeMouseMove } from "../dragging";
 import { isTouchEvent } from "../common";
-import CloseIcon from "../assets/icon-close.svg?sfc";
-import vAutoFocus from "../directives/autofocus";
+import vAutofocus from "../directives/autofocus";
+import { useDialog } from "./quick-alert";
 import KxButton from "../input/KxButton.vue";
 import KxModalWrapper from "./KxModalWrapper.vue";
-import KxDialogButtons from "./KxDialogButtons.vue";
 
 const props = defineProps({
 
@@ -78,29 +71,9 @@ const props = defineProps({
 		type: Boolean,
 		default: true,
 	},
-
-	/** 确定和应用按钮是否禁用 */
-	acceptable: {
-		type: Boolean,
-		default: true,
-	},
-
-	/** 为 false 则等效于不设置 */
-	onCancel: {
-		type: [Function, Boolean],
-		required: false,
-	},
-	onApply: {
-		type: [Function, Boolean],
-		required: false,
-	},
-	onAccept: {
-		type: [Function, Boolean],
-		required: false,
-	},
 });
 
-const emit = defineEmits(["close"]);
+const dialog = useDialog();
 
 const dialogEl = ref<HTMLElement>();
 
@@ -119,7 +92,7 @@ function drag(event: TouchEvent | MouseEvent) {
 }
 
 function onEscape() {
-	if (props.closeIcon) emit("close");
+	if (props.closeIcon) dialog.close();
 }
 </script>
 
