@@ -69,7 +69,7 @@ function syncHistory() {
 /**
  * 从弹窗栈中移除指定的弹窗，弹窗可以不存在。
  */
-function remove(config, result) {
+function remove(config: InternalOptions, result: any) {
 	const i = stack.indexOf(config);
 	if (i !== -1) {
 		stack.splice(i, 1);
@@ -96,7 +96,7 @@ function closeDialog(config: InternalOptions, result = DialogResult.CANCELED) {
  *
  * @param config 弹出层会话
  */
-function push(config) {
+function push(config: InternalOptions) {
 	const id = uniqueKey();
 	config.id = id;
 	stack.push(config);
@@ -113,7 +113,7 @@ function push(config) {
  *
  * @param result 弹窗返回的结果
  */
-function close(result) {
+function close(result: any) {
 	const config = stack[stack.length - 1];
 	if (!config) {
 		throw new Error("没有可关闭的弹窗");

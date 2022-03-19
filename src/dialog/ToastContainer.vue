@@ -15,7 +15,7 @@ import { uniqueKey } from "../common";
 import { ToastController, ToastProps } from "./controller";
 import KxToast from "./KxToast.vue";
 
-interface InternalToastProps {
+interface InternalToastProps extends ToastProps {
 	id: number;
 }
 
