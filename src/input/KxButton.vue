@@ -83,10 +83,11 @@ export default KxButton;
 <style module lang="less">
 @import "../css/exports";
 
-@radius: 4px;
-
 /*
- * 按钮的主题由以下变量控制：
+ * 该组件有以下 CSS 变量：
+ * --btn-radius: 圆角大小，默认 4px。
+ *
+ * 颜色由以下变量控制：
  * --text-color: 文字主色，通常是主题的主色。
  * --text-active: 激活文字颜色，因为激活状态下背景是主色，所以它通常是白色。
  * --struct-color: 文字以外的颜色，跟文字区分开以便分别设置。
@@ -103,7 +104,7 @@ export default KxButton;
 	font-size: initial;
 	line-height: initial;
 
-	border-radius: @radius;
+	border-radius: var(--btn-radius, 4px);
 	transition: ease-in-out 0.15s;
 
 	// 基础样式，也是默认的类型
