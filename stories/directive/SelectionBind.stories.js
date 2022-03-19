@@ -2,7 +2,7 @@ import { vBindSelection } from "../../src";
 
 export default {};
 
-export const SectionBind = () => ({
+export const SelectionBind = () => ({
 	directives: {
 		bindSelection: vBindSelection,
 	},

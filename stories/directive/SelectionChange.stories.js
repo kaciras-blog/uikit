@@ -2,7 +2,7 @@ import { vSelectionChange } from "../../src";
 
 export default {};
 
-export const SectionChange = () => ({
+export const SelectionChange = () => ({
 	directives: {
 		selectionChange: vSelectionChange,
 	},

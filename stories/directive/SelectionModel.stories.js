@@ -2,7 +2,7 @@ import { vSelectionModel } from "../../src";
 
 export default {};
 
-export const SectionModel = () => ({
+export const SelectionModel = () => ({
 	template: `
 		<textarea
 			v-selection-model.focus="'selection'"
