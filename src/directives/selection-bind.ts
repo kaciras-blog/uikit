@@ -1,4 +1,4 @@
-import { DirectiveBinding } from "vue";
+import { DirectiveBinding, toRaw } from "vue";
 
 export type SelectableElement = HTMLTextAreaElement | HTMLInputElement;
 
@@ -15,7 +15,7 @@ export type SelectableElement = HTMLTextAreaElement | HTMLInputElement;
 export default (el: SelectableElement, binding: DirectiveBinding) => {
 	const { value, modifiers } = binding;
 
-	const [s, e] = value;
+	const [s, e] = toRaw(value);
 	el.selectionStart = s;
 	el.selectionEnd = e;
 

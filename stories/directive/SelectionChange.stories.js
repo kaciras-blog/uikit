@@ -1,3 +1,4 @@
+import { ref } from "vue";
 import { vSelectionChange } from "../../src";
 
 export default {};
@@ -8,22 +9,24 @@ export const SelectionChange = () => ({
 	},
 	template: `
 		<textarea
-			v-selection-change="handleChange"
+			v-selection-change="fn"
+			v-model="value"
+			class="directive-textarea"
+		/>
+		<textarea
+			v-selection-change="selA"
 			v-model="value"
 			class="directive-textarea"
 		/>
 		<div>
 		选择范围：
-		{{ selection[0] }} - {{ selection[1] }}
+		{{ selA[0] }} - {{ selA[1] }}
 		</div>
 	`,
-	data: () => ({
-		value: "选择文字，下面显示被选中部分的起止位置",
-		selection: [0, 0],
-	}),
-	methods: {
-		handleChange(...selection) {
-			this.selection = selection;
-		},
+	setup() {
+		const value = "选择文字，下面显示被选中部分的起止位置";
+		const selA = ref([0, 0]);
+		const fn = (s, e) => selA.value = [s, e];
+		return { value, selA, fn };
 	},
 });

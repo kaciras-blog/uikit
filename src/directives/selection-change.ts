@@ -1,6 +1,18 @@
-import { DirectiveBinding } from "vue";
+import { Directive, DirectiveBinding } from "vue";
 import { addSelectionChangeListener, SelectionChangeHandler } from "../interactive";
 import { SelectableElement } from "./selection-bind";
+
+type DirValue = SelectionChangeHandler | [number, number];
+
+function listen(el: SelectableElement, binding: DirectiveBinding<DirValue>) {
+	const { value } = binding;
+
+	const handler = typeof value === "function" ?
+		value :
+		(s: number, e: number) => value.splice(0, 2, s, e);
+
+	(el as any)._vRemoveSelectionListener = addSelectionChangeListener(el, handler);
+}
 
 /**
  * 文本选区改变监听，当元素的 selectionStart 和 selectionEnd 改变时触发回调。
@@ -8,13 +20,14 @@ import { SelectableElement } from "./selection-bind";
  * 该指令只能用于浏览器环境。
  *
  * @example
- * <textarea v-on-selection-change="handleSelect"/>
+ * <textarea v-on-selection-change="v => selection = v"/>
+ * <textarea v-on-selection-change="selectionRef"/>
  */
-export default {
-	mounted(el: SelectableElement, binding: DirectiveBinding<SelectionChangeHandler>) {
-		const { value } = binding;
-		(el as any)._vRemoveSelectionChangeListener = addSelectionChangeListener(el, value);
+export default <Directive<SelectableElement>>{
+	updated(el, binding) {
+		(el as any)._vRemoveSelectionListener();
+		listen(el, binding);
 	},
-
-	unmounted: (el: any) => el._vRemoveSelectionChangeListener(),
+	mounted: listen,
+	unmounted: (el: any) => el._vRemoveSelectionListener(),
 };
