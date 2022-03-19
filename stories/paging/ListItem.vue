@@ -3,7 +3,6 @@
 		<img :class="$style.avatar" alt="avatar" :src="avatar"/>
 		<div :class="$style.header">
 			<span :class="$style.name">{{ name }}</span>
-			<span :class="$style.index"></span>
 		</div>
 		<div :class="$style.content">{{ content }}</div>
 	</div>
@@ -25,6 +24,8 @@ export default {
 	grid-template-areas: "avatar header" "avatar content";
 	gap: 10px;
 
+	counter-increment: item-index;
+
 	margin: 10px;
 	padding: 10px;
 	border: solid 2px #888;
@@ -39,16 +40,15 @@ export default {
 .header {
 	grid-area: header;
 	display: flex;
+
+	&::after {
+		margin-left: auto;
+		content: "#" counter(item-index);
+	}
 }
 
 .name {
 	font-size: 1.125em;
-}
-
-.index {
-	margin-left: auto;
-	counter-increment: index;
-	content: "#" counter(index);
 }
 
 .content {
