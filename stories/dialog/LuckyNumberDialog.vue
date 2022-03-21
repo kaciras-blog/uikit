@@ -4,7 +4,6 @@
 		:click-to-close="true"
 		:draggable="true"
 		:style="{ width: '20rem' }"
-		@close="$emit('update:open', false)"
 	>
 		<p>
 			<span>姓名：</span>{{ name }}
@@ -43,8 +42,6 @@
 import { reactive, toRefs } from "vue";
 import { KxBaseDialog, KxButton, useDialog } from "../../src";
 import InputBox from "./InputBox.vue";
-
-defineEmits(["update:open"]);
 
 const $dialog = useDialog();
 

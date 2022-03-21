@@ -31,11 +31,13 @@
 import { reactive, toRaw } from "vue";
 import { KxBaseDialog, KxDialogButtons, useDialog } from "../../src";
 
-const props = defineProps([
-	"name",
-	"age",
-	"hasInput",
-]);
+interface InputBoxProps {
+	name: string;
+	age: number;
+	hasInput: boolean;
+}
+
+const props = defineProps<InputBoxProps>();
 
 const data = reactive(props.hasInput ? toRaw(props) : { name: "", age: 18 });
 

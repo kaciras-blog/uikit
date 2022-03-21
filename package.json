@@ -1,6 +1,6 @@
 {
 	"name": "@kaciras-blog/uikit",
-	"description": "The component library for kaciras blog",
+	"description": "Component library for kaciras blog",
 	"version": "2.2.2",
 	"license": "MIT",
 	"repository": {

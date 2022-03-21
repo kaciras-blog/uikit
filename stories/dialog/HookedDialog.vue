@@ -11,7 +11,7 @@ import { KxBaseDialog } from "../../src";
 
 const time = ref(0);
 
-function countdown(callback) {
+function countdown(callback: () => void) {
 	if (--time.value === 0) {
 		callback();
 	}
@@ -20,7 +20,7 @@ function countdown(callback) {
 
 function beforeDialogClose() {
 	time.value = 4;
-	return new Promise(countdown);
+	return new Promise<void>(countdown);
 }
 
 defineExpose({ beforeDialogClose });
