@@ -7,6 +7,7 @@ export default {
 export const Progress = () => ({
 	template: `
 		<KxProgress ref="progress"/>
+		<KxButton @click="start">启动</KxButton>
 		<KxButton @click="increase">增加10%</KxButton>
 		<KxButton @click="fail">失败</KxButton>
 		<KxButton @click="reset">重置</KxButton>
@@ -21,6 +22,9 @@ export const Progress = () => ({
 		},
 	},
 	methods: {
+		start() {
+			this.$refs.progress.start();
+		},
 		increase() {
 			this.$refs.progress.increase(10);
 		},

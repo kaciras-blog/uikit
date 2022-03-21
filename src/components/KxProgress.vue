@@ -17,7 +17,7 @@ const hasError = ref(false);
 const progress = ref(0);
 const transition = ref(true);
 
-let $_timer;
+let timer: any;
 
 const style = computed(() => ({
 	opacity: visible.value ? 1 : 0,
@@ -25,9 +25,12 @@ const style = computed(() => ({
 	"--progress": progress.value,
 }));
 
+/**
+ *
+ */
 function start() {
 	if (visible.value) {
-		return; // 忽略重复调用
+		return;
 	}
 	progress.value = 0;
 	visible.value = true;
@@ -38,9 +41,6 @@ function start() {
  * 设置当前的进度，最大 100，超过了也按 100 算。
  */
 function setProgress(percent: number) {
-	if (!visible.value) {
-		start();
-	}
 	progress.value = Math.min(100, percent);
 }
 
@@ -48,15 +48,17 @@ function increase(percent: number) {
 	setProgress(progress.value + percent);
 }
 
-/** 重置到进度为 0 并且不显示的状态，该过程是立即的没有动画 */
+/**
+ * 重置到进度为 0 并且不显示的状态，该过程是立即的没有动画
+ */
 async function reset() {
-	transition.value = false;
-	progress.value = 0;
 	visible.value = false;
+	transition.value = false;
 
 	await nextTick();
+	progress.value = 0;
 	transition.value = true;
-	clearTimeout($_timer);
+	clearTimeout(timer);
 }
 
 function finish() {
@@ -77,9 +79,9 @@ function fail() {
 }
 
 function fadeout() {
-	$_timer = setTimeout(() => {
+	timer = setTimeout(() => {
 		visible.value = false;
-		$_timer = setTimeout(reset, TRANSITION_TIME);
+		timer = setTimeout(reset, TRANSITION_TIME);
 	}, RESIDUAL_TIME);
 }
 
