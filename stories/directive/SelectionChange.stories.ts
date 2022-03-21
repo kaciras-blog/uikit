@@ -26,7 +26,7 @@ export const SelectionChange = () => ({
 	setup() {
 		const value = "选择文字，下面显示被选中部分的起止位置";
 		const selA = ref([0, 0]);
-		const fn = (s, e) => selA.value = [s, e];
+		const fn = (s: number, e: number) => selA.value = [s, e];
 		return { value, selA, fn };
 	},
 });
