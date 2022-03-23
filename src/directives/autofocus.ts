@@ -7,4 +7,8 @@ import { DirectiveBinding } from "vue";
  * <input v-autofocus></input>
  * <input v-autofocus="showElement"></input>
  */
-export default (el: HTMLElement, { value }: DirectiveBinding) => value && el.focus();
+export default {
+	mounted(el: HTMLElement, { value }: DirectiveBinding) {
+		(value !== false) && el.focus();
+	},
+}
