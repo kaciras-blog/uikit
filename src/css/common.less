@@ -140,6 +140,17 @@ h1, h2, h3, h4, h5, h6 {
 	bottom: 0;
 }
 
+.dialog-backdrop {
+	position: fixed;
+	z-index: 1000;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	background-color: rgba(0, 0, 0, .3);
+}
+
 // 禁止换行, 文本溢出省略号显示 (一行)
 .ellipsis {
 	white-space: normal;

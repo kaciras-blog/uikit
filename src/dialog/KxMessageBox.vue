@@ -1,5 +1,6 @@
 <template>
-	<KxModalWrapper
+	<div
+		class="dialog-backdrop full-vertex"
 		@click.self="onOverlayClick"
 		@keyup.esc="closable && close"
 	>
@@ -32,7 +33,7 @@
 				:on-accept="() => close(true)"
 			/>
 		</div>
-	</KxModalWrapper>
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -41,7 +42,6 @@ import CloseIcon from "../assets/icon-close.svg?sfc";
 import { DialogResult, MessageType } from "./controller";
 import vAutoFocus from "../directives/autofocus";
 import DialogIcons from "./DialogIcons.vue";
-import KxModalWrapper from "./KxModalWrapper.vue";
 import KxButton from "../input/KxButton.vue";
 import KxDialogButtons from "./KxDialogButtons.vue";
 import { useDialog } from "./quick-alert";

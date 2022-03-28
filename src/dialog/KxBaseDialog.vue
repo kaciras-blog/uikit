@@ -1,5 +1,9 @@
 <template>
-	<KxModalWrapper @click.self="onEscape" @keyup.esc="onEscape">
+	<div
+		class="dialog-backdrop full-vertex"
+		@click.self="onEscape"
+		@keyup.esc="onEscape"
+	>
 		<div
 			ref="dialogEl"
 			class="dialogZoomIn"
@@ -35,7 +39,7 @@
 			<!-- 为了方便 padding 还是包一层 -->
 			<div :class="$style.body"><slot/></div>
 		</div>
-	</KxModalWrapper>
+	</div>
 </template>
 
 <script lang="ts">
@@ -53,7 +57,6 @@ import { isTouchEvent } from "../common";
 import vAutofocus from "../directives/autofocus";
 import { useDialog } from "./quick-alert";
 import KxButton from "../input/KxButton.vue";
-import KxModalWrapper from "./KxModalWrapper.vue";
 
 const props = defineProps({
 
