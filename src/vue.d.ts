@@ -1,6 +1,6 @@
 import { BreakPointAPI } from "./break-point";
 import { KxDialogAPI } from "./dialog/quick-alert";
-import { ToastController } from "./dialog/controller";
+import { ToastController } from "./dialog/core";
 
 declare module "@vue/runtime-core" {
 	interface ComponentCustomOptions {

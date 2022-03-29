@@ -19,7 +19,7 @@
 import { inject, onBeforeUpdate, shallowReactive } from "vue";
 import { useEventListener } from "@vueuse/core";
 import { uniqueKey } from "../common";
-import { DialogOptions, DialogResult, QuickDialogController } from "./controller";
+import { DialogOptions, DialogResult, QuickDialogController } from "./core";
 
 interface InternalOptions extends DialogOptions<unknown> {
 	id: number;

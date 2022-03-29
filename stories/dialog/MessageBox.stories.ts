@@ -1,6 +1,6 @@
 import { Story } from "@storybook/vue3";
 import { action } from "@storybook/addon-actions";
-import { MessageType } from "@/dialog/controller";
+import { MessageType } from "@/dialog/core";
 import KxMessageBox from "@/dialog/KxMessageBox.vue";
 
 export default {

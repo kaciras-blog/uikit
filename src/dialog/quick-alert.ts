@@ -1,7 +1,7 @@
 import { App, inject } from "vue";
 import KxMessageBox from "./KxMessageBox.vue";
 import KxImageCropper from "./KxImageCropper.vue";
-import { DialogSession, MessageType, QuickDialogController, ToastController } from "./controller";
+import { DialogSession, MessageType, QuickDialogController, ToastController } from "./core";
 
 export { QuickDialogController, DialogSession, MessageType };
 
@@ -39,7 +39,7 @@ export interface ImageCopperProps {
  *
  * 综上所述，本项目尝试不使用官方推荐的模式，仅用本 API 来实现所有弹窗。
  */
-class KxDialogManagerExt extends QuickDialogController {
+export class KxDialogAPI extends QuickDialogController {
 
 	/**
 	 * 显示内置的消息框，优先使用 title 来做一个简要的说明，如："操作失败"，内容部分可以省略。
@@ -85,9 +85,6 @@ class KxDialogManagerExt extends QuickDialogController {
 	}
 }
 
-// 只导出类型而不是整个class，避免暴露实现细节
-export type KxDialogAPI = InstanceType<typeof KxDialogManagerExt>;
-
 export function useDialog() {
 	const value = inject<KxDialogAPI>("$dialog");
 	if (process.env.NODE_ENV === "production" || value) {
@@ -105,7 +102,7 @@ export function useToast() {
 }
 
 export default function (app: App) {
-	const $dialog = new KxDialogManagerExt();
+	const $dialog = new KxDialogAPI();
 	const $toast = new ToastController();
 
 	app.provide("$dialog", $dialog);

@@ -156,6 +156,9 @@ export interface ToastMountPoint {
 	push(options: ToastProps): void;
 }
 
+/**
+ * 简单的消息提醒功能，消息的重要程度比消息框更低，因为布局的需要跟弹窗栈分开了。
+ */
 export class ToastController {
 
 	mountPoint?: ToastMountPoint;

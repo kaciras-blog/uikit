@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { MessageType } from "./controller";
+import { MessageType } from "./core";
 
 interface DialogIconProps {
 	type: MessageType;

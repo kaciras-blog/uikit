@@ -39,7 +39,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import CloseIcon from "../assets/icon-close.svg?sfc";
-import { DialogResult, MessageType } from "./controller";
+import { DialogResult, MessageType } from "./core";
 import vAutoFocus from "../directives/autofocus";
 import DialogIcons from "./DialogIcons.vue";
 import KxButton from "../input/KxButton.vue";

@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { inject, shallowReactive } from "vue";
 import { uniqueKey } from "../common";
-import { ToastController, ToastProps } from "./controller";
+import { ToastController, ToastProps } from "./core";
 import KxToast from "./KxToast.vue";
 
 interface InternalToastProps extends ToastProps {

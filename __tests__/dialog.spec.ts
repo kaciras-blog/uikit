@@ -1,6 +1,6 @@
 import { shallowMount } from "@vue/test-utils";
 import { nextTick } from "vue";
-import { DialogResult, DialogSession, QuickDialogController } from "../src/dialog/controller";
+import { DialogResult, DialogSession, QuickDialogController } from "../src/dialog/core";
 import DialogContainer from "../src/dialog/DialogContainer.vue";
 
 describe("DialogSession", () => {
