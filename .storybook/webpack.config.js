@@ -5,7 +5,7 @@ const Service = require("@vue/cli-service/lib/Service");
  * 对 StoryBook 和 Vue-CLI 的整合分为两步：调整 Vue-CLI 的配置，然后合并。
  * 本函数是第一步，负责初始化配置以及移除一些冲突的插件。
  *
- * @see // https://github.com/storybookjs/vue-cli-plugin-storybook/blob/master/lib/preset.js
+ * @see https://github.com/storybookjs/vue-cli-plugin-storybook/blob/master/lib/preset.js
  */
 function getCliConfig(mode) {
 	const service = new Service(process.cwd());

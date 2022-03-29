@@ -3,6 +3,7 @@ node_modules
 .out
 /dist
 /temp
+/debug.[jt]s
 
 # local env files
 .env.local
