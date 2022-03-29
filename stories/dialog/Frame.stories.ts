@@ -1,8 +1,9 @@
-import DemoFrame from "./DemoFrame";
+import { Story } from "@storybook/vue3";
+import DemoFrame from "./DemoFrame.vue";
 
 export default {};
 
-export const Frame = () => ({
+export const Frame: Story = () => ({
 	template: `
 		<KxButton class="primary" @click="show">
 			显示弹出层

@@ -1,9 +1,10 @@
+import { Story } from "@storybook/vue3";
 import { getQuotes } from "../data";
-import ListItem from "./ListItem";
-import ButtonPagingView from "@/paging/ButtonPagingView.vue";
+import ListItem from "./ListItem.vue";
+import ButtonPagingViewVue from "@/paging/ButtonPagingView.vue";
 
 export default {
-	component: ButtonPagingView,
+	component: ButtonPagingViewVue,
 	args: {
 		total: 1000,
 		theme: "default",
@@ -19,7 +20,7 @@ export default {
 	},
 };
 
-export const Template = (args) => ({
+export const ButtonPagingView: Story = (args) => ({
 	components: { ListItem },
 	template: `
 		<ButtonPagingView
@@ -40,7 +41,7 @@ export const Template = (args) => ({
 		model: { total: args.total, items: getQuotes(10) },
 	}),
 	methods: {
-		async load(start, size) {
+		async load(start: number, size: number) {
 			const { total } = args;
 			const count = Math.min(total - start, size);
 			return { total, items: getQuotes(count) };

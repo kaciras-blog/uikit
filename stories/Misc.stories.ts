@@ -1,5 +1,4 @@
-export default {
-};
+export default {};
 
 export const TagGroup = () => ({
 	template: `

@@ -1,10 +1,11 @@
+import { Story } from "@storybook/vue3";
 import { action } from "@storybook/addon-actions";
 import HookedDialog from "./HookedDialog.vue";
 import LuckyNumber from "./LuckyNumberDialog.vue";
 
 export default {};
 
-export const Custom = () => ({
+export const Custom: Story = () => ({
 	template: `
 		<KxButton @click="show">
 			算一下幸运数字
@@ -18,7 +19,7 @@ export const Custom = () => ({
 	},
 });
 
-export const Buttons = args => ({
+export const Buttons: Story = (args) => ({
 	template: `
 		<div class="mock-dialog">
 			<h1 class="mock-dialog-content">
@@ -45,7 +46,7 @@ Buttons.args = {
 	applyEvent: false,
 };
 
-export const BeforeDialogClose = () => ({
+export const BeforeDialogClose: Story = () => ({
 	template: `
 		<KxButton @click="show">弹出对话框</KxButton>
 		<DialogContainer/>
