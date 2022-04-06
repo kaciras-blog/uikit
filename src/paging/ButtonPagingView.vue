@@ -24,8 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, ref } from "vue";
-import { scrollToElementEnd, scrollToElementStart } from "../index";
+import { computed, ref } from "vue";
 import { getScrollTop } from "../scroll";
 import { LoadDateFn, PageData, PageLinkFn } from "./core";
 import PagingButtons from "./PagingButtons.vue";
@@ -128,18 +127,5 @@ function refresh() {
 	return loadPage(index.value);
 }
 
-/** 切换到最后一页 */
-function switchToLast() {
-	loadPage(totalPage.value).then(scrollToEnd);
-}
-
-function scrollToStart() {
-	nextTick(() => scrollToElementStart(el.value!));
-}
-
-function scrollToEnd() {
-	nextTick(() => scrollToElementEnd(el.value!));
-}
-
-defineExpose({ reload, refresh, switchToLast, scrollToStart, scrollToEnd });
+defineExpose({ reload, refresh });
 </script>

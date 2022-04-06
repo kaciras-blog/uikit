@@ -1,5 +1,3 @@
-import anime from "animejs";
-
 /**
  * 获取文档当前的的滚动高度，兼容各种浏览器。
  *
@@ -9,53 +7,6 @@ import anime from "animejs";
 export function getScrollTop() {
 	const doc = document.documentElement || document.body.parentNode;
 	return (typeof doc.scrollTop === "number" ? doc : document.body).scrollTop;
-}
-
-function scrollAnimation(element: HTMLElement, scrollTop: number) {
-	anime({ targets: document.scrollingElement, scrollTop, duration: 400, easing: "easeOutQuad" });
-}
-
-/**
- * 滚动到元素顶部，浏览器可视区域的上端对齐到元素的顶端。
- *
- * TODO: Element.scrollTo 可以替代，但是 Safari 不支持 smooth
- *   https://caniuse.com/css-scroll-behavior
- *
- * @param element HTML元素
- * @param offset 可以附加一个偏移（往下）
- */
-export function scrollToElementStart(element: HTMLElement, offset = 0) {
-	const { top } = element.getBoundingClientRect();
-	scrollAnimation(element, top + getScrollTop() + offset);
-}
-
-/**
- * 滚动到元素底部，浏览器可视区域的最下面对齐到元素的底端。
- *
- * @param element HTML元素
- * @param offset 可以附加一个偏移（往下）
- */
-export function scrollToElementEnd(element: HTMLElement, offset = 0) {
-	const { bottom } = element.getBoundingClientRect();
-	const vTop = getScrollTop();
-	scrollAnimation(element, vTop + bottom - window.innerHeight + offset);
-}
-
-/**
- * 滚动到元素能显示在窗口中，相当于 scrollToElementStart 和 scrollToElementEnd 的结合版。
- * 如果元素已经在窗口里则不做任何动作。
- *
- * @param element 元素
- */
-export function scrollToElement(element: HTMLElement) {
-	const { top, bottom } = element.getBoundingClientRect();
-	const { innerHeight } = window;
-
-	if (top > innerHeight || (top > 0 && bottom > innerHeight)) {
-		scrollAnimation(element, top + getScrollTop());
-	} else if (bottom < 0 || (top < 0 && bottom < innerHeight)) {
-		scrollAnimation(element, bottom + getScrollTop() - innerHeight);
-	}
 }
 
 /**

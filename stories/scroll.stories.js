@@ -1,4 +1,4 @@
-import { scrollToElement, scrollToElementEnd, scrollToElementStart, syncScroll } from "@";
+import { syncScroll } from "@";
 
 export default {
 	argTypes: {
@@ -38,29 +38,5 @@ export const SyncScroll = () => ({
 	},
 	mounted() {
 		this.$_destroy = syncScroll(this.$refs.a, this.$refs.b);
-	},
-});
-
-export const ScrollTo = () => ({
-	template: `
-		<div style="height: 300vh">
-			<div ref="target" class="scroll-to-box"/>
-		</div>
-	`,
-	methods: {
-		scrollToElement() {
-			scrollToElement(this.$refs.target);
-		},
-		scrollToStart() {
-			scrollToElementStart(this.$refs.target);
-		},
-		scrollToEnd() {
-			scrollToElementEnd(this.$refs.target);
-		},
-	},
-	created() {
-		button("ScrollToStart", this.scrollToStart);
-		button("ScrollToEnd", this.scrollToEnd);
-		button("ScrollToElement", this.scrollToElement);
 	},
 });
