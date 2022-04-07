@@ -1,9 +1,9 @@
+import { Story } from "@storybook/vue3";
 import { getImageResolution, getVideoResolution, openFile } from "@";
 
-export default {
-};
+export default {};
 
-export const MediaResolution = () => ({
+export const MediaResolution: Story = () => ({
 	template: `
 		<input v-model="urlInput" placeholder="媒体的URL" style="min-width: 500px">
 		<KxButton @click="showImageURLSize">读取URL</KxButton>
@@ -73,7 +73,7 @@ export const MediaResolution = () => ({
 			}
 		},
 
-		async parse(type, source) {
+		async parse(type: string, source: string) {
 			if (type.indexOf("image") === -1) {
 				this.size = await getVideoResolution(source);
 				this.mediaType = "video";

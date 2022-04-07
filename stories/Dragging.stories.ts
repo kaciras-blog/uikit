@@ -1,8 +1,13 @@
+import { Story } from "@storybook/vue3";
 import { computed, ref } from "vue";
 import { tap } from "rxjs/operators";
 import { EdgeScrollObserver, limitInWindow, moveElement, observeMouseMove } from "@/dragging";
 
 export default {
+	args: {
+		size: 80,
+		speed: 0.4,
+	},
 	argTypes: {
 		size: {
 			control: {
@@ -19,7 +24,7 @@ export default {
 	},
 };
 
-export const Demo = (args) => ({
+export const Demo: Story = (args) => ({
 	template: `
 		<div id="drag-demo" :style="style">
 			<aside id="drag-demo-labels">
@@ -35,9 +40,9 @@ export const Demo = (args) => ({
 
 		const style = computed(() => ({ "--edge-size": args.size + "px" }));
 
-		function drag(event) {
+		function drag(event: MouseEvent) {
 			const { size, speed } = args;
-			const el = event.target;
+			const el = event.target as HTMLElement;
 
 			const eso = new EdgeScrollObserver(size, speed);
 
@@ -48,15 +53,10 @@ export const Demo = (args) => ({
 					vX.value = eso.vX.toFixed(1);
 					vY.value = eso.vY.toFixed(1);
 				},
-				complete: () => el.style.cursor = null,
+				complete: () => el.style.cursor = "",
 			});
 		}
 
 		return { vX, vY, style, drag };
 	},
 });
-
-Demo.args = {
-	size: 80,
-	speed: 0.4,
-};
