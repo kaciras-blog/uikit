@@ -92,8 +92,6 @@ const props = defineProps({
 	},
 });
 
-const emit = defineEmits(["confirm"]);
-
 const $dialog = useDialog();
 
 // cropper.scaleX() 始终相对于原图
@@ -115,7 +113,7 @@ function ok() {
 		// maxWidth: this.width,
 		// maxHeight: this.height,
 	});
-	canvas.toBlob(rv => emit("confirm", rv), props.mimeType);
+	canvas.toBlob($dialog.confirm, props.mimeType);
 }
 
 onMounted(() => {

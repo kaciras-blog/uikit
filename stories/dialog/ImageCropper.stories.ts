@@ -1,3 +1,4 @@
+import { Story } from "@storybook/vue3";
 import { blobToURL, openFile } from "@";
 import KxImageCropper from "@/dialog/KxImageCropper.vue";
 
@@ -5,7 +6,7 @@ export default {
 	component: KxImageCropper,
 };
 
-export const Simple = () => ({
+export const ImageCropper: Story = () => ({
 	template: `
 		<KxButton @click="showCropper"> 裁剪图片</KxButton>
 		<DialogContainer/>
@@ -18,10 +19,10 @@ export const Simple = () => ({
 		async showCropper() {
 			const file = await openFile("image/*");
 
-			const cropper = this.$dialog.cropImage({
-				image: await blobToURL(file),
-				type: file.type,
+			const cropper = this.$dialog.show(KxImageCropper, {
+				mimeType: file.type,
 				aspectRatio: 10 / 9,
+				image: await blobToURL(file),
 			});
 			const blob = await cropper.confirmPromise;
 

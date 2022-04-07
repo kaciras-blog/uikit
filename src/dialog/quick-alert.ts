@@ -1,7 +1,6 @@
 import { App, inject } from "vue";
-import KxMessageBox from "./KxMessageBox.vue";
-import KxImageCropper from "./KxImageCropper.vue";
 import { DialogSession, MessageType, QuickDialogController, ToastController } from "./core";
+import KxMessageBox from "./KxMessageBox.vue";
 
 export { QuickDialogController, DialogSession, MessageType };
 
@@ -15,12 +14,6 @@ interface MessageBoxProps {
 	content?: string;
 	cancelable?: boolean;
 	closable?: boolean;
-}
-
-export interface ImageCopperProps {
-	image: Blob | string;
-	type?: string;
-	aspectRatio: number;
 }
 
 /**
@@ -66,22 +59,6 @@ export class KxDialogAPI extends QuickDialogController {
 
 	alertSuccess(title = "执行成功", content?: string) {
 		return this.alert({ title, content, type: MessageType.Success });
-	}
-
-	cropImage(options: ImageCopperProps) {
-		if (typeof options.image === "string") {
-			return this.show<Blob>(KxImageCropper, options);
-		}
-
-		const blob = options.image;
-		const imageURL = URL.createObjectURL(blob);
-
-		const session = this.show<Blob>(KxImageCropper, {
-			...options,
-			mimeType: options.type || blob.type,
-			image: imageURL,
-		});
-		return session.finally(() => URL.revokeObjectURL(imageURL));
 	}
 }
 
