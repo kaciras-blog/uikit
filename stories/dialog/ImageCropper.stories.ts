@@ -1,6 +1,6 @@
 import { Story } from "@storybook/vue3";
 import { blobToURL, openFile } from "@";
-import KxImageCropper from "@/dialog/KxImageCropper.vue";
+import KxImageCropper from "@/dialog/ImageCropper.vue";
 
 export default {
 	component: KxImageCropper,

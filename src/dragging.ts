@@ -19,7 +19,7 @@ interface Point2D {
  * @param event 事件对象
  * @return 包含指针位置的对象
  */
-function cursorPosition(event: MouseEvent | TouchEvent) {
+export function cursorPosition(event: MouseEvent | TouchEvent) {
 	return isTouchEvent(event) ? event.touches[0] : event;
 }
 
