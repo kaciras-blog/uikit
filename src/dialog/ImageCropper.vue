@@ -14,12 +14,13 @@
 
 		<div
 			v-show="loadStatus"
+			ref="main"
 			:class="$style.cropView"
 			@mousedown="drag"
 			@touchstart.self.prevent="drag"
 			@wheel="handleWheel"
 		>
-			<div :style="wrapStyle" ref="main">
+			<div :style="wrapStyle">
 				<img
 					:src="image"
 					alt="Image to crop"
@@ -30,6 +31,7 @@
 				>
 			</div>
 			<div
+				ref="regionEl"
 				:class="$style.region"
 				:style="stencilStyle"
 			/>
@@ -88,7 +90,8 @@
 				title="缩放"
 				min="0.01"
 				step="0.1"
-				v-model="transform.scale"
+				:value="transform.scale.toPrecision(3)"
+				@input="e => transform.scale = e.target.valueAsNumber"
 			>
 
 			<div :class="$style.stats">
@@ -141,12 +144,21 @@ const props = defineProps({
 	},
 });
 
+
 const $dialog = useDialog();
 usePreventScroll();
 
 const main = shallowRef<HTMLElement>();
+const regionEl = shallowRef<HTMLElement>();
+
 const loadStatus = shallowRef<boolean | null>(false);
-const stencilStyle = shallowRef();
+
+const stencil = reactive({
+	x: 0,
+	y: 0,
+	width: 0,
+	height: 0,
+});
 
 const flip = reactive({
 	x: 1,
@@ -166,38 +178,83 @@ const imgStyle = computed(() => ({
 
 const wrapStyle = computed(() => {
 	const { x, y, rotate, scale } = transform;
-	return { transform: `translate(${x}px, ${y}px) rotate(${rotate}deg) scale(${scale})` };
+	return {
+		lineHeight: 0,
+		transform: `translate(${x}px, ${y}px) rotate(${rotate}deg) scale(${scale})`,
+	};
 });
 
-const region = computed(() => {
+const stencilStyle = computed(() => {
+	const { x, y, width, height } = stencil!;
 	return {
-		left: 0,
-		top: 0,
-		width: 1,
-		height: 1,
+		top: `${y}px`,
+		left: `${x}px`,
+		width: `${width}px`,
+		height: `${height}px`,
+	};
+});
+
+function getContainerSize() {
+	if (!main.value) {
+		return { vw: 0, vh: 0 };
+	}
+	const rect = main.value.getBoundingClientRect();
+	return { vw: rect.width, vh: rect.height };
+}
+
+function invert(value: number) {
+	return Math.floor(value / transform.scale);
+}
+
+const region = computed(() => {
+	stencil.x;
+	transform.x;
+
+	if (!main.value) {
+		return { top: 0, left: 0, width: 0, height: 0 };
+	}
+	const ri = main.value.firstElementChild!.getBoundingClientRect();
+	const rs = main.value.lastElementChild!.getBoundingClientRect();
+
+	return {
+		width: invert(stencil.width),
+		height: invert(stencil.height),
+		left: invert(rs.left - ri.left),
+		top: invert(rs.top - ri.top),
 	};
 });
 
 function handleLoad(event: Event) {
-	const { width: w, height: h } = (event.target as HTMLImageElement);
+	const img = (event.target as HTMLImageElement);
+	const { width: w, height: h } = img;
 	const { width: vw, height: vh } = main.value!.getBoundingClientRect();
 
 	transform.scale = Math.max(vw / w, vh / h);
 	loadStatus.value = true;
 
-	const s = Math.min(vw / (1/ props.aspectRatio), vh / props.aspectRatio);
-	stencilStyle.value = {
-		top: `calc(50% - ${vw * s / 2}px)`,
-		left: `calc(50% - ${vh * s / 2}px)`,
-		width: `${vw * s}px`,
-		height: `${vh * s}px`,
-	};
+	const rw = (vh * props.aspectRatio) / vw;
+	const rh = (vw / props.aspectRatio) / vh;
+
+	let width;
+	let height;
+
+	if (rw < rh) {
+		width = rw * vw;
+		height = width / props.aspectRatio;
+	} else {
+		height = rh * vh;
+		width = height * props.aspectRatio;
+	}
+
+	stencil.width = width;
+	stencil.height = height;
+	stencil.x = (vw - width) / 2;
+	stencil.y = (vh - height) / 2;
 }
 
 function ok() {
 	$dialog.confirm({
 		...region.value,
-		scale: transform.scale,
 		flipHorizontal: flip.x === -1,
 		flipVertically: flip.y === -1,
 	});
@@ -212,19 +269,55 @@ function drag(event: MouseEvent | TouchEvent) {
 	observeMouseMove().subscribe(({ x, y }) => {
 		transform.x = Δx + x;
 		transform.y = Δy + y;
+		fixTransform();
 	});
+}
+
+function fixTransform() {
+	const { vw, vh } = getContainerSize();
+
+	const nw = (main.value!.firstElementChild!.firstElementChild as HTMLImageElement).naturalWidth;
+	const nh = (main.value!.firstElementChild!.firstElementChild as HTMLImageElement).naturalHeight;
+
+	const px = vw / 2 - nw * transform.scale / 2 + transform.x;
+	const py = vh / 2 - nh * transform.scale / 2 + transform.y;
+
+	if (px > stencil.x) {
+		transform.x -= px - stencil.x;
+	} else if (px + nw * transform.scale < stencil.x + stencil.width) {
+		transform.x += stencil.x + stencil.width - (px + nw * transform.scale);
+	}
+
+	if (py > stencil.y) {
+		transform.y -= py - stencil.y;
+	} else if (py + nh * transform.scale < stencil.y + stencil.height) {
+		transform.y += stencil.y + stencil.height - (py + nh * transform.scale);
+	}
+
+	transform.x = Math.round(transform.x);
+	transform.y = Math.round(transform.y);
 }
 
 function handleWheel(event: WheelEvent) {
 	const { deltaY, clientX, clientY } = event;
 	event.preventDefault();
 
-	const d = 1 - deltaY / 100;
-	transform.scale *= d;
+	// 计算缩放后的偏移位置，注意 transform: scale(...) 以中心为基准。
+	const imgBox = event.currentTarget as HTMLElement;
+	const rect = imgBox.firstElementChild!.getBoundingClientRect();
 
-	const { width, height } = main.value!.getBoundingClientRect();
-	transform.x += ((transform.x + width / 2) - clientX) * (d - 1);
-	transform.y += ((transform.y + height / 2) - clientY) * (d - 1);
+	const nw = (imgBox.firstElementChild!.firstElementChild as HTMLImageElement).naturalWidth;
+	const nh = (imgBox.firstElementChild!.firstElementChild as HTMLImageElement).naturalHeight;
+
+	// 确保图片的每个轴都不小于裁剪区。
+	let d = 1 - deltaY / 1500;
+	d = Math.max(stencil.width / nw / transform.scale, d);
+	d = Math.max(stencil.height / nh / transform.scale, d);
+
+	transform.scale *= d;
+	transform.x -= (clientX - rect.left - rect.width / 2) * (d - 1);
+	transform.y -= (clientY - rect.top - rect.height / 2) * (d - 1);
+	fixTransform();
 }
 </script>
 
