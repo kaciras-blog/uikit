@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from "vite";
 import svgSfc from "vite-plugin-svg-sfc";
 import vue from "@vitejs/plugin-vue";
@@ -24,5 +25,10 @@ export default defineConfig({
 		rollupOptions: {
 			external: Object.keys(dependencies),
 		},
+	},
+	test: {
+		environment: "happy-dom",
+		clearMocks: true,
+		include: ["__tests__/**/*.spec.ts"],
 	},
 });

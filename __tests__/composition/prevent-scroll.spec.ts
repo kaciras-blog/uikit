@@ -1,3 +1,4 @@
+import { expect, it } from "vitest";
 import { h } from "vue";
 import { usePreventScroll } from "../../src/composition";
 import { mount } from "@vue/test-utils";

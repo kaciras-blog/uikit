@@ -5,13 +5,5 @@ module.exports = {
 		"@kaciras/typescript",
 		"@kaciras/vue/typescript",
 	],
-	env: {
-		node: true,
-	},
-	overrides: [{
-		files: [
-			"**/__tests__/*.{j,t}s?(x)",
-		],
-		extends: ["@kaciras/jest"],
-	}],
+	env: { node: true },
 };

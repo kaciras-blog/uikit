@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import { shallowMount } from "@vue/test-utils";
 import { nextTick } from "vue";
 import { DialogResult, DialogSession, QuickDialogController } from "../src/dialog/core";
@@ -5,10 +6,12 @@ import DialogContainer from "../src/dialog/DialogContainer.vue";
 
 describe("DialogSession", () => {
 
-	it("shouldn't resolve confirmPromise on cancelled", (done) => {
+	it("shouldn't resolve confirmPromise on cancelled", async () => {
 		const s = new DialogSession(Promise.resolve(DialogResult.CANCELED));
-		s.confirmPromise.then(() => done.fail("DialogSession.confirmThen resolved"));
-		setTimeout(done, 50);
+		const conform = s.confirmPromise.then(() => 11);
+		const timeout = new Promise(resolve => setTimeout(resolve, 50, 22));
+
+		expect(await Promise.race([conform, timeout])).toBe(22)
 	});
 
 	it("should resolve confirmPromise with confirm", async () => {

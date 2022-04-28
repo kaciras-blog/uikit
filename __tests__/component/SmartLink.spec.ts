@@ -1,3 +1,4 @@
+import { expect, it } from "vitest";
 import { createRouter, createWebHistory } from "vue-router";
 import { shallowMount } from "@vue/test-utils";
 import SmartLink from "../../src/components/SmartLink.vue";
