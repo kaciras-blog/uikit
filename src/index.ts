@@ -19,6 +19,7 @@ import KxFrame from "./dialog/KxFrame.vue";
 import KxDialogButtons from "./dialog/KxDialogButtons.vue";
 import DialogContainer from "./dialog/DialogContainer.vue";
 import ToastContainer from "./dialog/ToastContainer.vue";
+import ImageCropper from "./dialog/ImageCropper.vue";
 import PagingButtons from "./paging/PagingButtons.vue";
 import ButtonPagingView from "./paging/ButtonPagingView.vue";
 import ScrollPager from "./paging/ScrollPager.vue";
@@ -67,6 +68,7 @@ export {
 	KxBaseDialog,
 	KxFrame,
 	KxDialogButtons,
+	ImageCropper,
 	DialogContainer,
 	ToastContainer,
 
@@ -97,6 +99,7 @@ export function registerComponents(app: App) {
 	app.component("KxPasswordInput", KxPasswordInput);
 	app.component("KxProgress", KxProgress);
 	app.component("KxBaseDialog", KxBaseDialog);
+	app.component("ImageCropper", ImageCropper);
 	app.component("KxFrame", KxFrame);
 	app.component("KxDialogButtons", KxDialogButtons);
 	app.component("DialogContainer", DialogContainer);
