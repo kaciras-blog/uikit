@@ -38,6 +38,7 @@ export const ImageCropper: Story = () => ({
 			const i = await cropper.confirmPromise;
 
 			this.style = {
+				transform: `rotate(${i.rotate}deg)`,
 				objectPosition: `${-i.left}px ${-i.top}px`,
 				width: `${i.width}px`,
 				height: `${i.height}px`,

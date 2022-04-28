@@ -115,7 +115,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, shallowRef } from "vue";
+import { computed, reactive, shallowRef, watch } from "vue";
 import { usePreventScroll } from "../composition";
 import CloseIcon from "../assets/icon-close.svg?sfc";
 import SwapHorizIcon from "../assets/swap_horiz.svg?sfc";
@@ -231,13 +231,13 @@ const region = computed(() => {
 	};
 });
 
-function handleLoad(event: Event) {
-	const img = (event.target as HTMLImageElement);
-	const { width: w, height: h } = img;
+function layout(img: HTMLImageElement) {
+	let { naturalWidth: w, naturalHeight: h } = img;
 	const { width: vw, height: vh } = main.value!.getBoundingClientRect();
 
-	transform.scale = Math.max(vw / w, vh / h);
-	loadStatus.value = true;
+	if (transform.rotate % 180 !== 0) {
+		[w, h] = [h, w];
+	}
 
 	const rw = (vh * props.aspectRatio) / vw;
 	const rh = (vw / props.aspectRatio) / vh;
@@ -257,13 +257,40 @@ function handleLoad(event: Event) {
 	stencil.height = height;
 	stencil.x = (vw - width) / 2;
 	stencil.y = (vh - height) / 2;
+
+	transform.x = 0;
+	transform.y = 0;
+	transform.scale = Math.max(vw / w, vh / h);
+}
+
+function handleLoad(event: Event) {
+	layout(event.target as HTMLImageElement);
+	loadStatus.value = true;
+}
+
+watch(() => transform.rotate, () => {
+	layout(main.value!.firstElementChild!.firstElementChild as HTMLImageElement);
+});
+
+/**
+ * 获取图片在未缩放时的尺寸，考虑了旋转等操作，该函数只能在图片加载后调用。
+ */
+function getNaturalDimension() {
+	const img = main.value!.firstElementChild!.firstElementChild;
+	let { naturalWidth, naturalHeight } = img as HTMLImageElement;
+
+	if (transform.rotate % 180 !== 0) {
+		[naturalWidth, naturalHeight] = [naturalHeight, naturalWidth];
+	}
+	return { width: naturalWidth, height: naturalHeight };
 }
 
 function ok() {
 	$dialog.confirm({
 		...region.value,
-		flipHorizontal: flip.x === -1,
-		flipVertically: flip.y === -1,
+		rotate: transform.rotate,
+		flipH: flip.x === -1,
+		flipV: flip.y === -1,
 	});
 }
 
@@ -281,10 +308,8 @@ function drag(event: MouseEvent | TouchEvent) {
 }
 
 function fixTransform() {
+	const { width: nw, height: nh } = getNaturalDimension();
 	const { vw, vh } = getContainerSize();
-
-	const nw = (main.value!.firstElementChild!.firstElementChild as HTMLImageElement).naturalWidth;
-	const nh = (main.value!.firstElementChild!.firstElementChild as HTMLImageElement).naturalHeight;
 
 	const px = vw / 2 - nw * transform.scale / 2 + transform.x;
 	const py = vh / 2 - nh * transform.scale / 2 + transform.y;
@@ -300,9 +325,6 @@ function fixTransform() {
 	} else if (py + nh * transform.scale < stencil.y + stencil.height) {
 		transform.y += stencil.y + stencil.height - (py + nh * transform.scale);
 	}
-
-	transform.x = Math.round(transform.x);
-	transform.y = Math.round(transform.y);
 }
 
 function handleWheel(event: WheelEvent) {
@@ -313,8 +335,7 @@ function handleWheel(event: WheelEvent) {
 	const imgBox = event.currentTarget as HTMLElement;
 	const rect = imgBox.firstElementChild!.getBoundingClientRect();
 
-	const nw = (imgBox.firstElementChild!.firstElementChild as HTMLImageElement).naturalWidth;
-	const nh = (imgBox.firstElementChild!.firstElementChild as HTMLImageElement).naturalHeight;
+	const { width: nw, height: nh } = getNaturalDimension();
 
 	// 确保图片的每个轴都不小于裁剪区。
 	let d = 1 - deltaY / 1500;
@@ -366,11 +387,10 @@ function handleWheel(event: WheelEvent) {
 	position: relative;
 	overflow: hidden;
 
-	background-image:
-			linear-gradient(45deg, @tile-color 25%, transparent 0),
-			linear-gradient(45deg, transparent 75%, @tile-color 0),
-			linear-gradient(45deg, @tile-color 25%, transparent 0),
-			linear-gradient(45deg, transparent 75%, @tile-color 0);
+	background-image: linear-gradient(45deg, @tile-color 25%, transparent 0),
+	linear-gradient(45deg, transparent 75%, @tile-color 0),
+	linear-gradient(45deg, @tile-color 25%, transparent 0),
+	linear-gradient(45deg, transparent 75%, @tile-color 0);
 	background-size: 20px 20px;
 	background-position: 0 0, 10px 10px, 10px 10px, 0 0;
 }
