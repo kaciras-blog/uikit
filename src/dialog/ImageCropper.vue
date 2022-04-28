@@ -1,7 +1,9 @@
 <template>
 	<div :class="$style.container">
 		<header :class="$style.header">
-			<h1>裁剪图片</h1>
+			<h1 class="compact">
+				裁剪图片
+			</h1>
 			<KxButton
 				type="icon"
 				title="关闭"
@@ -100,8 +102,13 @@
 			</div>
 
 			<div :class="$style.right_buttons">
-				<KxButton @click="$dialog.close">取消</KxButton>
-				<KxButton class="primary" @click="ok">确定</KxButton>
+				<KxButton
+					color="second"
+					@click="$dialog.close"
+				>
+					取消
+				</KxButton>
+				<KxButton @click="ok">确定</KxButton>
 			</div>
 		</div>
 	</div>
@@ -330,13 +337,13 @@ function handleWheel(event: WheelEvent) {
 
 	display: flex;
 	flex-direction: column;
-	padding: 20px 40px;
 	background: white;
 }
 
 .header {
 	display: flex;
 	align-items: flex-start;
+	margin: 10px;
 }
 
 .close_button {
@@ -352,11 +359,20 @@ function handleWheel(event: WheelEvent) {
 }
 
 .cropView {
+	@tile-color: #eee;
 	composes: main;
 
 	cursor: move;
 	position: relative;
 	overflow: hidden;
+
+	background-image:
+			linear-gradient(45deg, @tile-color 25%, transparent 0),
+			linear-gradient(45deg, transparent 75%, @tile-color 0),
+			linear-gradient(45deg, @tile-color 25%, transparent 0),
+			linear-gradient(45deg, transparent 75%, @tile-color 0);
+	background-size: 20px 20px;
+	background-position: 0 0, 10px 10px, 10px 10px, 0 0;
 }
 
 .loading {
@@ -381,7 +397,7 @@ function handleWheel(event: WheelEvent) {
 }
 
 .toolbar {
-	margin-top: 20px;
+	margin: 10px;
 	display: flex;
 	align-items: center;
 }

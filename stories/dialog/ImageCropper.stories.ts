@@ -8,9 +8,19 @@ export default {
 
 export const ImageCropper: Story = () => ({
 	template: `
-		<KxButton @click="showCropper"> 裁剪图片</KxButton>
+		<KxButton 
+			@click="showCropper"
+		>
+			裁剪图片
+		</KxButton>
 		<DialogContainer/>
-		<img v-if="result" :src="result" alt="Cropped image" :style="style">
+		<img
+			v-if="result"
+			class="cropped" 
+			:src="result" 
+			alt="裁剪结果" 
+			:style="style"
+		>
 	`,
 	data: () => ({
 		result: null,
@@ -28,10 +38,7 @@ export const ImageCropper: Story = () => ({
 			const i = await cropper.confirmPromise;
 
 			this.style = {
-				display: "block",
-				marginTop: "20px",
 				objectPosition: `${-i.left}px ${-i.top}px`,
-				objectFit: "none",
 				width: `${i.width}px`,
 				height: `${i.height}px`,
 			};
