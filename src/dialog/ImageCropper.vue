@@ -42,6 +42,8 @@
 					<div :class="$style.dash"/>
 					<div :class="$style.dash"/>
 				</template>
+
+				<PlusIcon :class="$style.crosshair"/>
 			</div>
 		</div>
 
@@ -122,6 +124,7 @@
 
 <script setup lang="ts">
 import { computed, reactive, shallowRef, watch } from "vue";
+import PlusIcon from "bootstrap-icons/icons/plus-lg.svg?sfc";
 import { usePreventScroll } from "../composition";
 import CloseIcon from "../assets/icon-close.svg?sfc";
 import SwapHorizIcon from "../assets/swap_horiz.svg?sfc";
@@ -156,7 +159,6 @@ const props = defineProps({
 		required: true,
 	},
 });
-
 
 const $dialog = useDialog();
 usePreventScroll();
@@ -469,6 +471,14 @@ function handleWheel(event: WheelEvent) {
 
 	border: solid 1px #eee;
 	box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
+}
+
+.crosshair {
+	position: absolute;
+	top: calc(50% - 10px);
+	left: calc(50% - 10px);
+	color: #eee;
+	font-size: 20px;
 }
 
 .toolbar {
