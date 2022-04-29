@@ -36,7 +36,13 @@
 				ref="regionEl"
 				:class="$style.region"
 				:style="stencilStyle"
-			/>
+			>
+				<div v-if="circle" :class="$style.circle"/>
+				<template v-else>
+					<div :class="$style.dash"/>
+					<div :class="$style.dash"/>
+				</template>
+			</div>
 		</div>
 
 		<!--
@@ -231,6 +237,27 @@ const region = computed(() => {
 	};
 });
 
+export interface CropResult {
+	left: number;
+	top: number;
+	width: number;
+	height: number;
+
+	rotate: number;
+
+	flipH: boolean;
+	flipV: boolean;
+}
+
+function ok() {
+	$dialog.confirm({
+		...region.value,
+		rotate: transform.rotate,
+		flipH: flip.x === -1,
+		flipV: flip.y === -1,
+	});
+}
+
 function layout(img: HTMLImageElement) {
 	let { naturalWidth: w, naturalHeight: h } = img;
 	const { width: vw, height: vh } = main.value!.getBoundingClientRect();
@@ -283,15 +310,6 @@ function getNaturalDimension() {
 		[naturalWidth, naturalHeight] = [naturalHeight, naturalWidth];
 	}
 	return { width: naturalWidth, height: naturalHeight };
-}
-
-function ok() {
-	$dialog.confirm({
-		...region.value,
-		rotate: transform.rotate,
-		flipH: flip.x === -1,
-		flipV: flip.y === -1,
-	});
 }
 
 function drag(event: MouseEvent | TouchEvent) {
@@ -386,11 +404,13 @@ function handleWheel(event: WheelEvent) {
 	cursor: move;
 	position: relative;
 	overflow: hidden;
+	user-select: none;
 
-	background-image: linear-gradient(45deg, @tile-color 25%, transparent 0),
-	linear-gradient(45deg, transparent 75%, @tile-color 0),
-	linear-gradient(45deg, @tile-color 25%, transparent 0),
-	linear-gradient(45deg, transparent 75%, @tile-color 0);
+	background-image:
+			linear-gradient(45deg, @tile-color 25%, transparent 0),
+			linear-gradient(45deg, transparent 75%, @tile-color 0),
+			linear-gradient(45deg, @tile-color 25%, transparent 0),
+			linear-gradient(45deg, transparent 75%, @tile-color 0);
 	background-size: 20px 20px;
 	background-position: 0 0, 10px 10px, 10px 10px, 0 0;
 }
@@ -409,10 +429,45 @@ function handleWheel(event: WheelEvent) {
 
 .region {
 	position: absolute;
-	border: solid 1px white;
+	border: solid 1px #eee;
 	pointer-events: none;
+	overflow: hidden;
 
 	/* 用阴影实现元素外变暗 */
+	box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
+}
+
+.dash {
+	position: absolute;
+	border: 0 dashed #eee;
+
+	&:nth-child(1) {
+		height: calc(100% / 3);
+		left: 0;
+		top: calc(100% / 3);
+		width: 100%;
+
+		border-bottom-width: 1px;
+		border-top-width: 1px;
+	}
+
+	&:nth-child(2) {
+		left: calc(100% / 3);
+		top: 0;
+		width: calc(100% / 3);
+		height: 100%;
+
+		border-left-width: 1px;
+		border-right-width: 1px;
+	}
+}
+
+.circle {
+	border-radius: 100%;
+	width: 100%;
+	height: 100%;
+
+	border: solid 1px #eee;
 	box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
 }
 
