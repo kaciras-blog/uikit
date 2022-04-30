@@ -163,10 +163,9 @@ const props = defineProps({
 const $dialog = useDialog();
 usePreventScroll();
 
+const loadStatus = shallowRef<boolean | null>(false);
 const main = shallowRef<HTMLElement>();
 const regionEl = shallowRef<HTMLElement>();
-
-const loadStatus = shallowRef<boolean | null>(false);
 
 const stencil = reactive({
 	x: 0,
@@ -260,45 +259,45 @@ function ok() {
 	});
 }
 
-function layout(img: HTMLImageElement) {
-	let { naturalWidth: w, naturalHeight: h } = img;
+/**
+ * 确定裁剪框的位置和图片的初始缩放。
+ */
+function resetLayout(img: HTMLImageElement) {
 	const { width: vw, height: vh } = main.value!.getBoundingClientRect();
-
-	if (transform.rotate % 180 !== 0) {
-		[w, h] = [h, w];
-	}
-
-	const rw = (vh * props.aspectRatio) / vw;
-	const rh = (vw / props.aspectRatio) / vh;
-
-	let width;
-	let height;
+	const { aspectRatio } = props;
+	const rw = (vh * aspectRatio) / vw;
+	const rh = (vw / aspectRatio) / vh;
 
 	if (rw < rh) {
-		width = rw * vw;
-		height = width / props.aspectRatio;
+		stencil.width = rw * vw;
+		stencil.height = stencil.width / aspectRatio;
 	} else {
-		height = rh * vh;
-		width = height * props.aspectRatio;
+		stencil.height = rh * vh;
+		stencil.width = stencil.height * aspectRatio;
 	}
-
-	stencil.width = width;
-	stencil.height = height;
-	stencil.x = (vw - width) / 2;
-	stencil.y = (vh - height) / 2;
+	stencil.x = (vw - stencil.width) / 2;
+	stencil.y = (vh - stencil.height) / 2;
 
 	transform.x = 0;
 	transform.y = 0;
+
+	let { naturalWidth: w, naturalHeight: h } = img;
+	if (transform.rotate % 180 !== 0) {
+		[w, h] = [h, w];
+	}
 	transform.scale = Math.max(vw / w, vh / h);
 }
 
 function handleLoad(event: Event) {
-	layout(event.target as HTMLImageElement);
 	loadStatus.value = true;
+	resetLayout(event.target as HTMLImageElement);
 }
 
+/**
+ * 在固定宽高比模式下，选择操作可能使图片超出裁剪框，故要重置视图。
+ */
 watch(() => transform.rotate, () => {
-	layout(main.value!.firstElementChild!.firstElementChild as HTMLImageElement);
+	resetLayout(main.value!.firstElementChild!.firstElementChild as HTMLImageElement);
 });
 
 /**
@@ -312,6 +311,31 @@ function getNaturalDimension() {
 		[naturalWidth, naturalHeight] = [naturalHeight, naturalWidth];
 	}
 	return { width: naturalWidth, height: naturalHeight };
+}
+
+/**
+ * 检查并调整图片的偏移，保裁剪区在图片内，不会裁剪出空白。
+ */
+function fixTransform() {
+	const { width: nw, height: nh } = getNaturalDimension();
+	const { vw, vh } = getContainerSize();
+
+	const left = vw / 2 - nw * transform.scale / 2 + transform.x;
+	const top = vh / 2 - nh * transform.scale / 2 + transform.y;
+	const right = left + nw * transform.scale;
+	const bottom = top + nh * transform.scale;
+
+	if (left > stencil.x) {
+		transform.x -= left - stencil.x;
+	} else if (right < stencil.x + stencil.width) {
+		transform.x += stencil.x + stencil.width - right;
+	}
+
+	if (top > stencil.y) {
+		transform.y -= top - stencil.y;
+	} else if (bottom < stencil.y + stencil.height) {
+		transform.y += stencil.y + stencil.height - bottom;
+	}
 }
 
 function drag(event: MouseEvent | TouchEvent) {
