@@ -29,7 +29,7 @@
 		>
 			<div :style="wrapStyle">
 				<img
-					:src="image"
+					:src="imgUrl"
 					alt="Image to crop"
 					:class="$style.image"
 					:style="imgStyle"
@@ -128,7 +128,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, shallowRef, watch } from "vue";
+import { computed, onUnmounted, reactive, shallowRef, watch } from "vue";
 import PlusIcon from "bootstrap-icons/icons/plus-lg.svg?sfc";
 import { usePreventScroll } from "../composition";
 import CloseIcon from "../assets/icon-close.svg?sfc";
@@ -146,7 +146,7 @@ const props = defineProps({
 	 * 要裁剪的图片的 URL。
 	 */
 	image: {
-		type: String,
+		type: [String, Blob],
 		required: true,
 	},
 	/**
@@ -163,6 +163,17 @@ const props = defineProps({
 		type: Number,
 		required: true,
 	},
+});
+
+// 暂不支持修改 image，要裁剪其它图片请重新创建 ImageCropper 组件。
+// eslint-disable-next-line vue/no-setup-props-destructure
+const { image } = props;
+const imgUrl = typeof image === "string"
+	? image
+	: URL.createObjectURL(image);
+
+onUnmounted(() => {
+	typeof image !== "string" && URL.revokeObjectURL(imgUrl);
 });
 
 const $dialog = useDialog();

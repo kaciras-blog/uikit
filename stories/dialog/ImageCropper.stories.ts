@@ -1,5 +1,5 @@
 import { Story } from "@storybook/vue3";
-import { blobToURL, openFile } from "@";
+import { openFile } from "@";
 import ImageCropperVue from "@/dialog/ImageCropper.vue";
 
 export default {
@@ -8,7 +8,7 @@ export default {
 
 export const ImageCropper: Story = () => ({
 	template: `
-		<KxButton 
+		<KxButton
 			@click="showCropper"
 		>
 			裁剪图片
@@ -28,12 +28,11 @@ export const ImageCropper: Story = () => ({
 	}),
 	methods: {
 		async showCropper() {
-			const file = await openFile("image/*");
+			const image = await openFile("image/*");
 
 			const cropper = this.$dialog.show(ImageCropperVue, {
-				mimeType: file.type,
+				image,
 				aspectRatio: 16 / 9,
-				image: await blobToURL(file),
 			});
 			const i = await cropper.confirmPromise;
 
@@ -52,7 +51,7 @@ export const ImageCropper: Story = () => ({
 			}
 
 			URL.revokeObjectURL(this.result);
-			this.result = URL.createObjectURL(file);
+			this.result = URL.createObjectURL(image);
 		},
 	},
 });
