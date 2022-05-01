@@ -1,3 +1,8 @@
+<!--
+	【不支持响应式】
+	如果改变窗口大小裁剪框并不会跟着适应，因为要实现该功能很复杂，
+	特别是支持裁剪框可调的情况下。
+-->
 <template>
 	<div :class="$style.container">
 		<header :class="$style.header">
@@ -199,7 +204,7 @@ const wrapStyle = computed(() => {
 });
 
 const stencilStyle = computed(() => {
-	const { x, y, width, height } = stencil!;
+	const { x, y, width, height } = stencil;
 	return {
 		top: `${y}px`,
 		left: `${x}px`,
@@ -246,16 +251,16 @@ export interface CropResult {
 
 	rotate: number;
 
-	flipH: boolean;
-	flipV: boolean;
+	flipX: boolean;
+	flipY: boolean;
 }
 
 function ok() {
 	$dialog.confirm({
 		...region.value,
 		rotate: transform.rotate,
-		flipH: flip.x === -1,
-		flipV: flip.y === -1,
+		flipX: flip.x === -1,
+		flipY: flip.y === -1,
 	});
 }
 
@@ -349,26 +354,6 @@ function drag(event: MouseEvent | TouchEvent) {
 		transform.y = Δy + y;
 		fixTransform();
 	});
-}
-
-function fixTransform() {
-	const { width: nw, height: nh } = getNaturalDimension();
-	const { vw, vh } = getContainerSize();
-
-	const px = vw / 2 - nw * transform.scale / 2 + transform.x;
-	const py = vh / 2 - nh * transform.scale / 2 + transform.y;
-
-	if (px > stencil.x) {
-		transform.x -= px - stencil.x;
-	} else if (px + nw * transform.scale < stencil.x + stencil.width) {
-		transform.x += stencil.x + stencil.width - (px + nw * transform.scale);
-	}
-
-	if (py > stencil.y) {
-		transform.y -= py - stencil.y;
-	} else if (py + nh * transform.scale < stencil.y + stencil.height) {
-		transform.y += stencil.y + stencil.height - (py + nh * transform.scale);
-	}
 }
 
 function handleWheel(event: WheelEvent) {

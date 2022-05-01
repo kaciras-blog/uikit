@@ -16,9 +16,9 @@ export const ImageCropper: Story = () => ({
 		<DialogContainer/>
 		<img
 			v-if="result"
-			class="cropped" 
-			:src="result" 
-			alt="裁剪结果" 
+			class="cropped"
+			:src="result"
+			alt="裁剪结果"
 			:style="style"
 		>
 	`,
@@ -43,6 +43,13 @@ export const ImageCropper: Story = () => ({
 				width: `${i.width}px`,
 				height: `${i.height}px`,
 			};
+
+			if (i.flipX) {
+				this.style.transform += " scaleX(-1)";
+			}
+			if (i.flipY) {
+				this.style.transform += " scaleY(-1)";
+			}
 
 			URL.revokeObjectURL(this.result);
 			this.result = URL.createObjectURL(file);
