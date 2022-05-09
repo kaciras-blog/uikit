@@ -1,4 +1,25 @@
-import { onMounted, onUnmounted } from "vue";
+import { customRef, onMounted, onUnmounted } from "vue";
+
+/**
+ * 创建一个非响应的 ref 对象，修改本对象的值不会触发刷新。
+ *
+ * <h2>为什么搞这个</h2>
+ * Vue 中没有与 React 的 useRef 对等的函数；同时 Vue 的一些特性，
+ * 比如模板中的 ref 和 v-model 要求值必须是 ref 对象。
+ *
+ * 某些特殊情况下需要避免它们导致的重新渲染，所以就有了这个函数。
+ *
+ * 自己模仿 ref 对象（const myRef = { value: null }）是不行的，
+ * Vue 的内部有太多的“黑魔法”，比如检查一个内部的 Symbol 来判断是不是 ref。
+ *
+ * @param initialValue 初始值。
+ */
+export function plainRef<T>(initialValue?: T) {
+	return customRef<T | undefined>(() => ({
+		get: () => initialValue,
+		set: value => { initialValue = value; },
+	}));
+}
 
 /**
  * 这里直接把数据放到元素上了，如果不想这么做还可以用全局 Map。
