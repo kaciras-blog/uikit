@@ -130,7 +130,7 @@
 <script setup lang="ts">
 import { computed, onUnmounted, reactive, shallowRef, watch } from "vue";
 import PlusIcon from "bootstrap-icons/icons/plus-lg.svg?sfc";
-import { usePreventScroll } from "../composition";
+import { plainRef, usePreventScroll } from "../composition";
 import CloseIcon from "../assets/icon-close.svg?sfc";
 import SwapHorizIcon from "../assets/swap_horiz.svg?sfc";
 import SwapVertIcon from "../assets/swap_vert.svg?sfc";
@@ -180,7 +180,7 @@ const $dialog = useDialog();
 usePreventScroll();
 
 const loadStatus = shallowRef<boolean | null>(false);
-const main = shallowRef<HTMLElement>();
+const main = plainRef<HTMLElement>();
 const regionEl = shallowRef<HTMLElement>();
 
 const stencil = reactive({
