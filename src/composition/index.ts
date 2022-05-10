@@ -21,12 +21,15 @@ export function plainRef<T>(initialValue?: T) {
 	}));
 }
 
+const kCount = Symbol("PreventScrollCounter");
+const kBackup = Symbol("PreventScrollBackup");
+
 /**
  * 这里直接把数据放到元素上了，如果不想这么做还可以用全局 Map。
  */
 interface ElementWithCustomProps extends HTMLElement {
-	kxPSCount: number;
-	kxPSBackup: Partial<CSSStyleDeclaration>;
+	[kCount]: number;
+	[kBackup]: Partial<CSSStyleDeclaration>;
 }
 
 /**
@@ -42,15 +45,15 @@ export function usePreventScroll(element = document.body) {
 	const el = element as ElementWithCustomProps;
 
 	onMounted(() => {
-		const count = el.kxPSCount ?? 0;
-		el.kxPSCount = count + 1;
+		const count = el[kCount] ?? 0;
+		el[kCount] = count + 1;
 
 		if (count > 0) {
 			return;
 		}
 		const { style } = el;
 
-		el.kxPSBackup = {
+		el[kBackup] = {
 			maxHeight: style.maxHeight,
 			maxWidth: style.maxWidth,
 			overflow: style.overflow,
@@ -61,11 +64,10 @@ export function usePreventScroll(element = document.body) {
 	});
 
 	onUnmounted(() => {
-		if ((el.kxPSCount -= 1) > 0) {
+		if ((el[kCount] -= 1) > 0) {
 			return;
 		}
-		const { style, kxPSBackup } = el;
-		Object.assign(style, kxPSBackup);
+		Object.assign(el.style, el[kBackup]);
 	});
 }
 

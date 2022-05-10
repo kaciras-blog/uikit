@@ -4,6 +4,8 @@ import { SelectableElement } from "./selection-bind";
 
 type DirValue = SelectionChangeHandler | [number, number];
 
+const kListener = Symbol("SelectionListener");
+
 function listen(el: SelectableElement, binding: DirectiveBinding<DirValue>) {
 	const { value } = binding;
 
@@ -11,7 +13,7 @@ function listen(el: SelectableElement, binding: DirectiveBinding<DirValue>) {
 		value :
 		(s: number, e: number) => value.splice(0, 2, s, e);
 
-	(el as any)._vRemoveSelectionListener = addSelectionChangeListener(el, handler);
+	(el as any)[kListener] = addSelectionChangeListener(el, handler);
 }
 
 /**
@@ -25,9 +27,9 @@ function listen(el: SelectableElement, binding: DirectiveBinding<DirValue>) {
  */
 export default <Directive<SelectableElement>>{
 	updated(el, binding) {
-		(el as any)._vRemoveSelectionListener();
+		(el as any)[kListener]();
 		listen(el, binding);
 	},
 	mounted: listen,
-	unmounted: (el: any) => el._vRemoveSelectionListener(),
+	unmounted: (el: any) => el[kListener](),
 };
