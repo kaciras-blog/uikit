@@ -11,4 +11,4 @@ export default {
 	mounted(el: HTMLElement, { value }: DirectiveBinding) {
 		(value !== false) && el.focus();
 	},
-}
+};

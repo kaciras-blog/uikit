@@ -1,4 +1,5 @@
 import { customRef, onMounted, onUnmounted } from "vue";
+import { noop } from "@vueuse/core";
 
 /**
  * 创建一个非响应的 ref 对象，修改本对象的值不会触发刷新。
@@ -86,7 +87,7 @@ export function useIntersectionHandler(
 	options?: IntersectionObserverInit,
 ) {
 	if (typeof window === "undefined") {
-		return () => {};
+		return noop;
 	}
 	const observer = new IntersectionObserver(cb, options);
 

@@ -46,14 +46,14 @@ export class DialogSession<TResult> extends PromiseDelegate<DialogResult<TResult
 	}
 
 	onConfirm(callback: (result: TResult) => void) {
-		this.promise.then((rv) => {
+		this.raw.then((rv) => {
 			if (rv.isConfirm) callback(rv.data);
 		});
 		return this;
 	}
 
 	onCancel(callback: () => void) {
-		this.promise.then((rv) => {
+		this.raw.then((rv) => {
 			if (!rv.isConfirm) callback();
 		});
 		return this;
