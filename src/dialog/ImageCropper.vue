@@ -92,13 +92,6 @@
 			>
 				<RotateRightIcon/>
 			</KxButton>
-			<KxButton
-				type="icon"
-				title="100%"
-				@click="transform.scale = 1"
-			>
-				<ZoomOutMap/>
-			</KxButton>
 
 			<input
 				type="number"
@@ -135,7 +128,6 @@ import CloseIcon from "../assets/icon-close.svg?sfc";
 import SwapHorizIcon from "../assets/swap_horiz.svg?sfc";
 import SwapVertIcon from "../assets/swap_vert.svg?sfc";
 import RotateRightIcon from "../assets/rotate_right.svg?sfc";
-import ZoomOutMap from "../assets/zoom_out_map.svg?sfc";
 import { useDialog } from "./quick-alert";
 import { cursorPosition, observeMouseMove } from "../dragging";
 import KxButton from "../input/KxButton.vue";
