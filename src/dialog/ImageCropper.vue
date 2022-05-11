@@ -74,14 +74,14 @@
 			<KxButton
 				type="icon"
 				title="水平翻转"
-				@click="flip.x *= -1"
+				@click="transform.flipX *= -1"
 			>
 				<SwapHorizIcon/>
 			</KxButton>
 			<KxButton
 				type="icon"
 				title="垂直翻转"
-				@click="flip.y *= -1"
+				@click="transform.flipY *= -1"
 			>
 				<SwapVertIcon/>
 			</KxButton>
@@ -182,20 +182,17 @@ const stencil = reactive({
 	height: 0,
 });
 
-const flip = reactive({
-	x: 1,
-	y: 1,
-});
-
 const transform = reactive({
 	x: 0,
 	y: 0,
 	rotate: 0,
 	scale: 1,
+	flipX: 1,
+	flipY: 1,
 });
 
 const imgStyle = computed(() => ({
-	transform: `scaleX(${flip.x}) scaleY(${flip.y})`,
+	transform: `scaleX(${transform.flipX}) scaleY(${transform.flipY})`,
 }));
 
 const wrapStyle = computed(() => {
@@ -262,8 +259,8 @@ function ok() {
 	$dialog.confirm({
 		...region.value,
 		rotate: transform.rotate,
-		flipX: flip.x === -1,
-		flipY: flip.y === -1,
+		flipX: transform.flipX === -1,
+		flipY: transform.flipY === -1,
 	});
 }
 
