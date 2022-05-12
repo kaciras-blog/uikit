@@ -1,5 +1,3 @@
-// vue-jest 不支持 babel 7，所以必须把与 vue 文件相关的部分分开。
-// 该文件包含弹窗的核心 API，index.ts 里会增加一些具体的弹窗API。
 import { Component } from "vue";
 import PromiseDelegate from "../PromiseDelegate";
 
@@ -38,11 +36,8 @@ export class DialogResult<TData> {
  */
 export class DialogSession<TResult> extends PromiseDelegate<DialogResult<TResult>> {
 
-	private dialogResult?: DialogResult<TResult>;
-
 	constructor(promise: Promise<DialogResult<TResult>>) {
 		super(promise);
-		promise.then((rv) => this.dialogResult = rv);
 	}
 
 	onConfirm(callback: (result: TResult) => void) {
