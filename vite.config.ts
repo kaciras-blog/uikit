@@ -9,8 +9,13 @@ import { dependencies } from "./package.json" assert { type: "json" };
  * https://github.com/qmhc/vite-plugin-dts 不生成 vue 文件的类型。
  */
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
 	plugins: [vue(), svgSfc()],
+	test: {
+		environment: "happy-dom",
+		clearMocks: true,
+		include: ["__tests__/**/*.spec.ts"],
+	},
 	build: {
 		reportCompressedSize: false,
 
@@ -26,9 +31,10 @@ export default defineConfig({
 			external: Object.keys(dependencies),
 		},
 	},
-	test: {
-		environment: "happy-dom",
-		clearMocks: true,
-		include: ["__tests__/**/*.spec.ts"],
+	css: {
+		modules: {
+			generateScopedName: mode === "production"
+				? "[hash:base64:5]" : undefined,
+		},
 	},
-});
+}));
