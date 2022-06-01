@@ -114,6 +114,7 @@
 				>
 					取消
 				</KxButton>
+				<KxButton @click="$dialog.confirm">跳过</KxButton>
 				<KxButton @click="ok">确定</KxButton>
 			</div>
 		</div>
