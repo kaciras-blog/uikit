@@ -141,8 +141,17 @@
 	margin: 1rem 0;
 }
 
+.crop-image {
+	display: grid;
+	gap: 20px;
+	align-items: start;
+	grid-template-areas: "button image" "json image";
+	grid-template-columns: auto 1fr;
+	grid-template-rows: auto 1fr;
+}
+
 .cropped {
 	display: block;
-	margin-top: 20px;
+	grid-area: image;
 	object-fit: none;
 }
