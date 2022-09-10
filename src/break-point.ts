@@ -11,7 +11,7 @@ import { defineStore, Pinia } from "pinia";
 /**
  * 断点配置对象，键位断点名，值为对应的屏幕的宽度的上限。
  *
- * 最大的一个值不要设为 Infinity 因为它不是 JSON 值，在 SSR 序列化时会出问题。
+ * 最大的不要设为 Infinity 因为它不是 JSON 值，在 SSR 序列化时会出问题。
  */
 export const breakpoints = {
 	mobile: 768,
