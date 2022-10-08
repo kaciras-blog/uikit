@@ -10,6 +10,12 @@
 			@show-page="switchPage"
 		/>
 
+		<LoadingStatus
+			v-if='error'
+			:error="true"
+			@retry="refresh"
+		/>
+
 		<slot :items="items.slice(0, pageSize)"/>
 
 		<PagingButtons
@@ -28,6 +34,7 @@ import { computed, ref } from "vue";
 import { getScrollTop } from "../scroll";
 import { LoadDateFn, PageData, PageLinkFn } from "./core";
 import PagingButtons from "./PagingButtons.vue";
+import LoadingStatus from "../components/LoadingStatus.vue";
 
 interface ButtonPagingViewProps {
 
@@ -64,6 +71,7 @@ const emit = defineEmits(["update:modelValue"]);
  * 本组件处理页码到偏移的转换，props 里的起始位置是项目数量，传递给 PagingButtons 的是页码。
  */
 const index = ref(1);
+const error = ref<Error | null>(null);
 const el = ref<HTMLElement>();
 
 let controller: AbortController | null;
@@ -97,9 +105,11 @@ function loadPage(i: number) {
 	const { signal } = controller = new AbortController();
 
 	index.value = i;
+	error.value = null;
 
 	return loader(offset(i), pageSize, signal)
 		.then(r => emit("update:modelValue", r))
+		.catch(e => error.value = e)
 		.finally(() => controller = null);
 }
 

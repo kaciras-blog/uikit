@@ -25,7 +25,7 @@ interface ScrollPagingViewProps {
 	 */
 	autoLoad: boolean;
 
-	activeHeight: number;
+	activeHeight?: number;
 
 	/**
 	 * 初始偏移，不包括已有的元素数量。
@@ -69,9 +69,8 @@ const nextUrl = computed(() => {
 async function fetchData(offset: number) {
 	const { loader, pageSize } = props;
 
-	state.value = State.LOADING;
 	const { signal } = new AbortController();
-
+	state.value = State.LOADING;
 	try {
 		const data = await loader(offset, pageSize, signal);
 		state.value = State.FREE;
@@ -88,8 +87,10 @@ async function fetchData(offset: number) {
 async function reload() {
 	const { start, pageSize } = props;
 	const data = await fetchData(start);
-	count.value = pageSize;
-	emit("update:modelValue", data);
+	if (data) {
+		count.value = pageSize;
+		emit("update:modelValue", data);
+	}
 }
 
 /**
@@ -100,12 +101,13 @@ async function loadNext() {
 	const { items } = modelValue;
 
 	const data = await fetchData(start + count.value);
-	count.value += pageSize;
-
-	emit("update:modelValue", {
-		total: data.total,
-		items: items.concat(data.items),
-	});
+	if (data) {
+		count.value += pageSize;
+		emit("update:modelValue", {
+			total: data.total,
+			items: items.concat(data.items),
+		});
+	}
 }
 
 defineExpose({ reload, loadNext });

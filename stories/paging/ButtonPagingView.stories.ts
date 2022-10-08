@@ -6,10 +6,14 @@ import ButtonPagingViewVue from "@/paging/ButtonPagingView.vue";
 export default {
 	component: ButtonPagingViewVue,
 	args: {
+		mockErrorAt: Infinity,
 		total: 1000,
 		theme: "default",
 	},
 	argTypes: {
+		mockErrorAt: {
+			control: { type: "number" },
+		},
 		theme: {
 			control: { type: "select" },
 			options: ["default", "text"],
@@ -38,12 +42,17 @@ export const ButtonPagingView: Story = (args) => ({
 		</ButtonPagingView>`,
 	data: () => ({
 		args,
-		model: { total: args.total, items: getQuotes(10) },
+		loadTimes: 0,
+		model: { total: 0, items: [] },
 	}),
 	methods: {
 		async load(start: number, size: number) {
+			if (this.loadTimes >= args.mockErrorAt) {
+				throw new Error("Mocked Error");
+			}
 			const { total } = args;
 			const count = Math.min(total - start, size);
+			this.loadTimes++;
 			return { total, items: getQuotes(count) };
 		},
 	},

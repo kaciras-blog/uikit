@@ -7,13 +7,16 @@ export default {
 	component: ScrollPagingViewVue,
 	args: {
 		total: 1000,
-
+		mockErrorAt: Infinity,
 		autoLoad: false,
 		start: 0,
 		pageSize: 20,
 		activeHeight: 200,
 	},
 	argTypes: {
+		mockErrorAt: {
+			control: { type: "number" },
+		},
 		total: {
 			control: { type: "number" },
 		},
@@ -36,14 +39,19 @@ export const ScrollPagingView: Story = (args) => ({
 	data() {
 		const { total, ...binding } = args;
 		return {
+			loadTimes: 0,
 			binding,
 			model: { total, items: [] },
 		};
 	},
 	methods: {
 		async load(start: number, size: number) {
+			if (this.loadTimes >= args.mockErrorAt) {
+				throw new Error("Mocked Error");
+			}
 			const { total } = args;
 			const count = Math.min(total - start, size);
+			this.loadTimes++;
 			return { total, items: getQuotes(count) };
 		},
 	},
