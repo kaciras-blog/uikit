@@ -16,6 +16,8 @@
 import { ref } from "vue";
 import KxButton from "./KxButton.vue";
 
+type TaskHandler = (event: Event, signal: AbortSignal) => Promise<unknown>;
+
 interface TaskButtonProps {
 
 	// Vue 残废的 TS 支持，只能把按钮的属性复制一遍。
@@ -23,11 +25,11 @@ interface TaskButtonProps {
 	color?: string;
 	route?: string;
 
-	// 因为事件无法获取返回值所以用 props
-	onClick: (event: Event, signal: AbortSignal) => Promise<any>;
-
 	// 在运行状态下点击时是否取消当前操作
 	abortable?: boolean;
+
+	// 事件无法获取返回值所以用 props
+	onClick: TaskHandler | TaskHandler[];
 }
 
 const props = withDefaults(defineProps<TaskButtonProps>(), {
@@ -38,18 +40,19 @@ const running = ref(false);
 let controller = new AbortController();
 
 function handleClick(event: MouseEvent) {
+	const { onClick, abortable } = props;
+
 	if (running.value) {
-		if (props.abortable) {
+		if (abortable) {
 			running.value = false;
 			controller.abort();
 		}
 	} else {
 		const { signal } = controller = new AbortController();
-		const task = props.onClick(event, signal);
 
-		if (typeof task.finally !== "function") {
-			throw new Error("Click handler must return a Promise");
-		}
+		const task = typeof onClick === "function"
+			? onClick(event, signal)
+			: Promise.all(onClick.map(v => v(event, signal)));
 
 		running.value = true;
 		task.finally(() => running.value = false);
@@ -73,12 +76,12 @@ function handleClick(event: MouseEvent) {
 	}
 
 	background-image: linear-gradient(-45deg,
-		var(--struct-highlight) 25%,
-		transparent 25%,
-		transparent 50%,
-		var(--struct-highlight) 50%,
-		var(--struct-highlight) 75%,
-		transparent 75%);
+	var(--struct-highlight) 25%,
+	transparent 25%,
+	transparent 50%,
+	var(--struct-highlight) 50%,
+	var(--struct-highlight) 75%,
+	transparent 75%);
 
 	animation: barbershop linear .4s infinite;
 }
