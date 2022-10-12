@@ -57,6 +57,8 @@ hr {
 }
 
 .input, input {
+	--shadow-color: #a8e8ff;
+
 	padding: .5rem;
 	min-width: 0; //去掉谷歌浏览器的最小宽度
 
@@ -78,7 +80,7 @@ hr {
 	&:focus-within {
 		outline: 0;
 		border-color: #209cee;
-		box-shadow: 0 0 0 .2rem #a8e8ff;
+		box-shadow: 0 0 0 .2rem var(--shadow-color);
 	}
 
 	&[type=color] {
@@ -92,6 +94,11 @@ hr {
 		background-color: #f5f5f5;
 		box-shadow: none;
 		cursor: default;
+	}
+
+	&:invalid {
+		border-color: #ec2d2d;
+		--shadow-color: #ff000061;
 	}
 }
 
