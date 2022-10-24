@@ -1,23 +1,18 @@
-@table-border-color: #cfcfcf;
+@table-border-color: #bbb;
 @table-border-width: 1px;
 
 table {
 	border-collapse: collapse;
-	width: 100%;
 	margin-bottom: 1rem;
-	border: solid 1px @table-border-color;
-	background-color: white;
 }
 
 th, td {
-	padding: .75rem;
-	vertical-align: top;
-	border-bottom: @table-border-width solid @table-border-color;
+	padding: .5rem 1rem;
+	border: @table-border-width solid @table-border-color;
 }
 
 thead th {
 	vertical-align: bottom;
-	border-bottom: (2 * @table-border-width) solid @table-border-color;
 }
 
 tbody + tbody {

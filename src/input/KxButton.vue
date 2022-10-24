@@ -106,6 +106,7 @@ export default KxButton;
 
 	border-radius: var(--btn-radius, 4px);
 	transition: ease-in-out 0.15s;
+	text-decoration: none;
 
 	// 基础样式，也是默认的类型
 	color: var(--text-active);
@@ -118,13 +119,11 @@ export default KxButton;
 
 		// 用于覆盖 a 元素的样式
 		color: var(--text-active);
-		text-decoration: none;
 	}
 
 	&:focus {
 		box-shadow: 0 0 0 4px var(--struct-glass);
 		outline: 0;
-		text-decoration: none;
 	}
 
 	&:active {

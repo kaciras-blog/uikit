@@ -60,6 +60,7 @@ defineProps<LoadingStatusProps>();
 }
 
 .icon {
+	margin-left: 5px;
 	vertical-align: text-bottom;
 }
 </style>
