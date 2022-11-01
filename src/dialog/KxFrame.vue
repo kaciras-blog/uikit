@@ -7,7 +7,9 @@
 				:class="$style.back"
 				@click="$dialog.close"
 			>
-				<ArrowLeftIcon/>
+				<ArrowLeftIcon
+					:class='$style.backIcon'
+				/>
 			</KxButton>
 
 			<span :class="$style.title">
@@ -57,9 +59,12 @@ defineProps<FrameHeaderProps>();
 
 .back {
 	width: @headerHeight;
-
-	font-size: 20px;
 	border-radius: 0;
+}
+
+// TODO: 被全局的 .btn { font-size } 覆盖了，只能放在图标上。
+.backIcon {
+	font-size: 20px;
 }
 
 .title {

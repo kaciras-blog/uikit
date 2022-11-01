@@ -3,6 +3,7 @@
 	<div ref="el">
 		<PagingButtons
 			v-if="topButtons && total"
+			:class='$style.top'
 			:total="totalPage"
 			:index="index"
 			:type="theme"
@@ -20,6 +21,7 @@
 
 		<PagingButtons
 			v-if="total"
+			:class='$style.bottom'
 			:total="totalPage"
 			:index="index"
 			:type="theme"
@@ -139,3 +141,16 @@ function refresh() {
 
 defineExpose({ reload, refresh });
 </script>
+
+<style module lang='less'>
+// 列表项目不一定有容器，所以边距还是要放在按钮上；
+// 上按钮组可能不存在，所以也不能设上边距。
+
+.top {
+	margin-bottom: var(--pagenation-margin, 2em);
+}
+
+.bottom {
+	margin-top: var(--pagenation-margin, 2em);
+}
+</style>

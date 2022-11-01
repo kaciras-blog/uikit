@@ -26,7 +26,7 @@ export default {
 
 	counter-increment: item-index;
 
-	margin: 10px;
+	margin: 10px 0;
 	padding: 10px;
 	border: solid 2px #888;
 }
