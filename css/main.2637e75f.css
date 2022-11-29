@@ -1,0 +1,1878 @@
+/*
+ * 在.vue文件的<style>中导入的样式会重复输出，为了避免此问题
+ * 在其中导入时仅允许导入变量和函数，不允许导入样式，该文件
+ * 已经导入了所有的变量和函数，用于在.vue文件中导入。
+ */
+/*
+ * 常用 Less 公共样式封装，部分取自：
+ * https://blog.csdn.net/boyit0/article/details/78802385
+ */
+/**
+ * 使用 -webkit-line-clamp 属性限制文字的行数，多余的显示省略号。
+ * 这个属性的兼容性目前还不太好。
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  font-family: Helvetica, Arial, Microsoft YaHei, WenQuanYi Micro Hei, sans-serif;
+  line-height: 1.5;
+  image-rendering: -webkit-optimize-contrast;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -ms-overflow-style: scrollbar;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+body {
+  margin: 0;
+  color: #222;
+  font-size: 14px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+}
+p {
+  margin-top: 0;
+}
+pre,
+code,
+kbd,
+samp {
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 1em;
+}
+button {
+  font-size: initial;
+  border: none;
+  background: none;
+}
+button:enabled {
+  cursor: pointer;
+}
+hr {
+  border: 0 solid #dce2e6;
+  border-bottom-width: 1px;
+}
+.input,
+input {
+  --shadow-color: #a8e8ff;
+  padding: 0.4rem 0.5rem;
+  min-width: 0;
+  outline: none;
+  border: solid 1px #dce2e6;
+  border-radius: 4px;
+  color: inherit;
+  background: transparent;
+  transition: box-shadow 0.2s;
+}
+.input:hover,
+input:hover {
+  outline: 0;
+  border-color: #209cee;
+}
+.input:focus-within,
+input:focus-within {
+  outline: 0;
+  border-color: #209cee;
+  box-shadow: 0 0 0 0.2rem var(--shadow-color);
+}
+.input[type=color],
+input[type=color] {
+  cursor: pointer;
+  height: 2rem;
+}
+.input:disabled,
+input:disabled,
+.input.disabled,
+input.disabled {
+  border-color: #e1e6e6;
+  background-color: #f5f5f5;
+  box-shadow: none;
+  cursor: default;
+}
+.input:invalid,
+input:invalid {
+  border-color: #ec2d2d;
+  --shadow-color: #ff000061;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+}
+a:hover,
+a:focus {
+  color: #0000ee;
+  text-decoration: underline;
+}
+.full-screen {
+  height: 100vh;
+  overflow: hidden;
+}
+.segment:not(:last-child) {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: solid 1px #dce2e6;
+}
+h1.compact,
+h2.compact,
+h3.compact,
+h4.compact,
+h5.compact,
+h6.compact {
+  margin: 0;
+}
+.minor-text {
+  color: #6E7881;
+}
+.highlight {
+  color: #0000ee;
+}
+.highlight:visited {
+  color: #0000ee;
+}
+.highlight:hover,
+.highlight:focus {
+  color: #0000ee;
+}
+.highlight:hover {
+  text-decoration: underline;
+}
+.highlight.error {
+  color: #f94f55;
+}
+.highlight.error:visited {
+  color: #f94f55;
+}
+.highlight.error:hover,
+.highlight.error:focus {
+  color: #f94f55;
+}
+.highlight.pink {
+  color: white;
+}
+.highlight.pink:visited {
+  color: white;
+}
+.highlight.pink:hover,
+.highlight.pink:focus {
+  color: #ff72ae;
+}
+.btn-group > .kx-btn + .kx-btn {
+  margin-left: 10px;
+}
+.btn-group.compact > .kx-btn:not(:last-child) {
+  margin: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.btn-group.compact > .kx-btn:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: 1px;
+  margin-right: 0;
+}
+.btn-group.compact > .kx-btn:not(:first-child).outline {
+  margin-left: -1px;
+}
+.vertical-btn-group {
+  display: flex;
+  flex-direction: column;
+}
+.vertical-btn-group > .kx-btn + .kx-btn {
+  margin-top: 10px;
+}
+.vertical-btn-group.compact > .kx-btn:not(:last-child) {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.vertical-btn-group.compact > .kx-btn:not(:first-child) {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-top: 1px;
+}
+.vertical-btn-group.compact > .kx-btn:not(:first-child).outline {
+  margin-top: -1px;
+}
+.full-percent {
+  width: 100%;
+  height: 100%;
+}
+.clean-list {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+.clean-link:hover,
+.clean-link:focus,
+.clean-link:visited {
+  color: inherit;
+  text-decoration: none;
+}
+.hd-link {
+  color: #ff2cd2;
+}
+/**
+ * 这几个属性写一大堆，而且还挺常用，所以提取出来了。
+ * 使用方通常需要设置下 z-index，还有可能需要覆盖 position。
+ */
+.full-vertex {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.dialog-backdrop {
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.ellipsis {
+  white-space: normal;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.click-item {
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+/*
+ * 类似面包屑导航，效果见 StoryBook Others > TagGroup。
+ *
+ * 标签元素的顺序是反的，对TAB切换有影响，但可以当作特性。
+ *
+ * 【设计原理】
+ * https://blog.kaciras.com/article/5/implement-multi-level-label-styles-by-CSS
+ *
+ * 【用法】
+ * <div class="tag-group">
+ *   <a class="tag-group-item">Last</a>
+ *   <a class="tag-group-item">Second</a>
+ *   <a class="tag-group-item">First</a>
+ * </div>
+ */
+.tag-group {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  border-radius: 4px;
+}
+.tag-group-item {
+  position: relative;
+  border: solid 1px #069AF9;
+  padding: 0.2em 0.4em;
+}
+.tag-group-item:last-child {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.tag-group-item:first-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.tag-group-item:not(:last-child) {
+  padding-left: 1.2em;
+  border-left-width: 0;
+}
+.tag-group-item:not(:first-child) {
+  border-right-color: transparent;
+}
+.tag-group-item:not(:first-child):after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -1.4em;
+  border: solid 0.75em transparent;
+  border-top-color: white;
+  border-right-color: white;
+  transform: translate(-50%, -50%) rotate(45deg);
+  box-shadow: 1px -1px 0 0 #069AF9;
+}
+.tag-group-item:hover,
+.tag-group-item:focus {
+  color: white;
+  background-color: #069AF9;
+  text-decoration: none;
+  border-right-color: #069AF9;
+}
+.tag-group-item:hover:after,
+.tag-group-item:focus:after {
+  border-top-color: #069AF9;
+  border-right-color: #069AF9;
+}
+/*
+ * TODO: 排行列表。暂时没想到怎么搞成组件，如果用slot子元素的class没法设置；用
+ *  component又强制子元素必须单独写成组件。
+ */
+.rank-list {
+  padding-left: 0;
+  list-style: none;
+}
+.rank-list > li {
+  position: relative;
+  counter-increment: index;
+  margin-bottom: 0.75em;
+}
+.rank-list > li:first-child::before {
+  background: #ff2cd2;
+}
+.rank-list > li:nth-child(2)::before {
+  background: #ff5fdd;
+}
+.rank-list > li:nth-child(3)::before {
+  background: #ff92e8;
+}
+.rank-list > li::before {
+  content: counter(index);
+  position: absolute;
+  padding: 0 0.4em;
+  border-radius: 4px;
+  font-weight: 600;
+  color: white;
+  background: #c0c0c0;
+}
+.rank-list > li > .item {
+  margin-left: 1.75em;
+}
+table {
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+th,
+td {
+  padding: 0.5rem 1rem;
+  border: 1px solid #bbb;
+}
+thead th {
+  vertical-align: bottom;
+}
+tbody + tbody {
+  border-top: 2px solid #bbb;
+}
+tbody > tr:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+.v-ripple__container {
+  color: inherit;
+  border-radius: inherit;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+  contain: strict;
+}
+.v-ripple__animation {
+  color: inherit;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+.v-ripple__animation--enter {
+  transition: none;
+}
+.v-ripple__animation--in {
+  transition: transform 0.25s;
+}
+.v-ripple__animation--out {
+  transition: opacity 0.3s;
+}
+
+/*
+ * 常用 Less 公共样式封装，部分取自：
+ * https://blog.csdn.net/boyit0/article/details/78802385
+ */
+/**
+ * 使用 -webkit-line-clamp 属性限制文字的行数，多余的显示省略号。
+ * 这个属性的兼容性目前还不太好。
+ */
+.mock-dialog {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 280px;
+  margin: 0 auto;
+  padding: 10px;
+  border: solid 1px #e6e6e6;
+}
+.mock-dialog-content {
+  flex: 1;
+}
+.sync-scroll {
+  display: flex;
+  height: 90vh;
+}
+.sync-scroll > textarea {
+  min-width: 20em;
+}
+.directive-textarea {
+  width: 50vw;
+  height: 8em;
+}
+.ime-input-result {
+  font-size: initial;
+  padding: 1em 0;
+}
+.error {
+  color: red;
+}
+.line-clamp {
+  border: solid 1px;
+  width: 28em;
+  padding: 0.5em;
+}
+.line-clamp > article {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.scroll-to-box {
+  width: 320px;
+  height: 980px;
+  margin: 110vh auto;
+  border: blue dashed;
+}
+#drag-demo {
+  --grid-size: 100px;
+  width: 500vw;
+  height: 500vh;
+  background-size: var(--grid-size) var(--grid-size);
+  background-image: linear-gradient(to right, lightgray 1px, transparent 1px), linear-gradient(to bottom, lightgray 1px, transparent 1px);
+}
+#drag-demo::before,
+#drag-demo::after {
+  content: "";
+  position: fixed;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-color: red;
+  pointer-events: none;
+}
+#drag-demo::before {
+  width: calc(100vw - var(--edge-size) * 2);
+  height: 100vh;
+  border-left-style: dashed;
+  border-right-style: dashed;
+}
+#drag-demo::after {
+  height: calc(100vh - var(--edge-size) * 2);
+  width: 100vw;
+  border-top-style: dashed;
+  border-bottom-style: dashed;
+}
+#drag-demo-el {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: calc(50% - 100px);
+  left: calc(50% - 150px);
+  width: 300px;
+  height: 200px;
+  cursor: -webkit-grab;
+  cursor: grab;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  background: whitesmoke;
+  border: solid #0000ee;
+  font-size: 40px;
+}
+#drag-demo-labels {
+  position: fixed;
+  top: 40px;
+  left: 40px;
+  z-index: 3;
+  padding: 10px;
+  pointer-events: none;
+  color: white;
+  background: rgba(0, 0, 0, 0.4);
+}
+.toolbar {
+  height: 40px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.75);
+}
+.tool-button {
+  height: 100%;
+  --color: white;
+  --bg-focus: rgba(255, 255, 255, 0.2);
+  --bg-active: rgba(255, 255, 255, 0.15);
+}
+.row {
+  margin: 1rem 0;
+}
+.crop-image {
+  display: grid;
+  gap: 20px;
+  align-items: start;
+  grid-template-areas: "button image" "json image";
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+}
+.cropped {
+  display: block;
+  grid-area: image;
+  -o-object-fit: none;
+     object-fit: none;
+}
+
+/*
+ * 在.vue文件的<style>中导入的样式会重复输出，为了避免此问题
+ * 在其中导入时仅允许导入变量和函数，不允许导入样式，该文件
+ * 已经导入了所有的变量和函数，用于在.vue文件中导入。
+ */
+/*
+ * 常用 Less 公共样式封装，部分取自：
+ * https://blog.csdn.net/boyit0/article/details/78802385
+ */
+/**
+ * 使用 -webkit-line-clamp 属性限制文字的行数，多余的显示省略号。
+ * 这个属性的兼容性目前还不太好。
+ */
+.AtomSpinner_spinner_l5Sgx {
+  --color: #0099ff;
+  --size: 60px;
+  display: block;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+}
+.AtomSpinner_dot_eYRy9 {
+  display: block;
+  position: absolute;
+  color: var(--color);
+  font-size: calc(var(--size) * 0.24);
+  top: 50%;
+  left: 50%;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  transform: translate(-50%, -50%);
+}
+.AtomSpinner_line_Tplan {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  border-left-width: calc(var(--size) / 25);
+  border-top-width: calc(var(--size) / 25);
+  border-left-color: var(--color);
+  border-left-style: solid;
+  border-top-style: solid;
+  border-top-color: transparent;
+}
+.AtomSpinner_line_Tplan:nth-child(1) {
+  -webkit-animation: AtomSpinner_animation-1_SgczP 1s linear infinite;
+          animation: AtomSpinner_animation-1_SgczP 1s linear infinite;
+  transform: rotateZ(120deg) rotateX(66deg) rotateZ(0deg);
+}
+.AtomSpinner_line_Tplan:nth-child(2) {
+  -webkit-animation: AtomSpinner_animation-2_lTIzL 1s linear infinite;
+          animation: AtomSpinner_animation-2_lTIzL 1s linear infinite;
+  transform: rotateZ(240deg) rotateX(66deg) rotateZ(0deg);
+}
+.AtomSpinner_line_Tplan:nth-child(3) {
+  -webkit-animation: AtomSpinner_animation-3_B6AJy 1s linear infinite;
+          animation: AtomSpinner_animation-3_B6AJy 1s linear infinite;
+  transform: rotateZ(360deg) rotateX(66deg) rotateZ(0deg);
+}
+@-webkit-keyframes AtomSpinner_animation-1_SgczP {
+100% {
+    transform: rotateZ(120deg) rotateX(66deg) rotateZ(360deg);
+}
+}
+@keyframes AtomSpinner_animation-1_SgczP {
+100% {
+    transform: rotateZ(120deg) rotateX(66deg) rotateZ(360deg);
+}
+}
+@-webkit-keyframes AtomSpinner_animation-2_lTIzL {
+100% {
+    transform: rotateZ(240deg) rotateX(66deg) rotateZ(360deg);
+}
+}
+@keyframes AtomSpinner_animation-2_lTIzL {
+100% {
+    transform: rotateZ(240deg) rotateX(66deg) rotateZ(360deg);
+}
+}
+@-webkit-keyframes AtomSpinner_animation-3_B6AJy {
+100% {
+    transform: rotateZ(360deg) rotateX(66deg) rotateZ(360deg);
+}
+}
+@keyframes AtomSpinner_animation-3_B6AJy {
+100% {
+    transform: rotateZ(360deg) rotateX(66deg) rotateZ(360deg);
+}
+}
+
+/*
+ * 在.vue文件的<style>中导入的样式会重复输出，为了避免此问题
+ * 在其中导入时仅允许导入变量和函数，不允许导入样式，该文件
+ * 已经导入了所有的变量和函数，用于在.vue文件中导入。
+ */
+/*
+ * 常用 Less 公共样式封装，部分取自：
+ * https://blog.csdn.net/boyit0/article/details/78802385
+ */
+/**
+ * 使用 -webkit-line-clamp 属性限制文字的行数，多余的显示省略号。
+ * 这个属性的兼容性目前还不太好。
+ */
+.SkFadingCircle_container_xI1jS {
+  --color: #0099ff;
+  --size: 40px;
+  margin: 0 auto;
+  width: var(--size);
+  height: var(--size);
+  position: relative;
+}
+.SkFadingCircle_cycle_CxjEu {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.SkFadingCircle_cycle_CxjEu::before {
+  content: '';
+  display: block;
+  margin: 0 auto;
+  width: 15%;
+  height: 15%;
+  background: var(--color);
+  border-radius: 100%;
+  -webkit-animation: SkFadingCircle_animation_tApSY 1.2s infinite ease-in-out both;
+          animation: SkFadingCircle_animation_tApSY 1.2s infinite ease-in-out both;
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(2) {
+  transform: rotate(30deg);
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(2)::before {
+  -webkit-animation-delay: -1.1s;
+          animation-delay: -1.1s;
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(3) {
+  transform: rotate(60deg);
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(3)::before {
+  -webkit-animation-delay: -1s;
+          animation-delay: -1s;
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(4) {
+  transform: rotate(90deg);
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(4)::before {
+  -webkit-animation-delay: -0.9s;
+          animation-delay: -0.9s;
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(5) {
+  transform: rotate(120deg);
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(5)::before {
+  -webkit-animation-delay: -0.8s;
+          animation-delay: -0.8s;
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(6) {
+  transform: rotate(150deg);
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(6)::before {
+  -webkit-animation-delay: -0.7s;
+          animation-delay: -0.7s;
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(7) {
+  transform: rotate(180deg);
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(7)::before {
+  -webkit-animation-delay: -0.6s;
+          animation-delay: -0.6s;
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(8) {
+  transform: rotate(210deg);
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(8)::before {
+  -webkit-animation-delay: -0.5s;
+          animation-delay: -0.5s;
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(9) {
+  transform: rotate(240deg);
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(9)::before {
+  -webkit-animation-delay: -0.4s;
+          animation-delay: -0.4s;
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(10) {
+  transform: rotate(270deg);
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(10)::before {
+  -webkit-animation-delay: -0.3s;
+          animation-delay: -0.3s;
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(11) {
+  transform: rotate(300deg);
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(11)::before {
+  -webkit-animation-delay: -0.2s;
+          animation-delay: -0.2s;
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(12) {
+  transform: rotate(330deg);
+}
+.SkFadingCircle_cycle_CxjEu:nth-child(12)::before {
+  -webkit-animation-delay: -0.1s;
+          animation-delay: -0.1s;
+}
+@-webkit-keyframes SkFadingCircle_animation_tApSY {
+40% {
+    opacity: 1;
+}
+0%,
+  39%,
+  100% {
+    opacity: 0;
+}
+}
+@keyframes SkFadingCircle_animation_tApSY {
+40% {
+    opacity: 1;
+}
+0%,
+  39%,
+  100% {
+    opacity: 0;
+}
+}
+
+.KxProgress_progress_QwTTE {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(var(--progress) * 1%);
+  height: 2px;
+  z-index: 999999;
+  background: var(--color, #1084ff);
+}
+.KxProgress_progress_QwTTE::before {
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 100%;
+  background-image: linear-gradient(90deg, transparent 0, rgba(255, 255, 255, 0.7) 20%, rgba(255, 255, 255, 0.9) 60%, transparent 100%);
+  -webkit-animation: KxProgress_highlight_zOijF linear calc(40ms * var(--progress)) infinite;
+          animation: KxProgress_highlight_zOijF linear calc(40ms * var(--progress)) infinite;
+}
+.KxProgress_error_Nsa7h {
+  background: #f74343;
+}
+@-webkit-keyframes KxProgress_highlight_zOijF {
+from {
+    right: 100%;
+}
+to {
+    right: -60px;
+}
+}
+@keyframes KxProgress_highlight_zOijF {
+from {
+    right: 100%;
+}
+to {
+    right: -60px;
+}
+}
+
+/*
+ * 在.vue文件的<style>中导入的样式会重复输出，为了避免此问题
+ * 在其中导入时仅允许导入变量和函数，不允许导入样式，该文件
+ * 已经导入了所有的变量和函数，用于在.vue文件中导入。
+ */
+/*
+ * 常用 Less 公共样式封装，部分取自：
+ * https://blog.csdn.net/boyit0/article/details/78802385
+ */
+/**
+ * 使用 -webkit-line-clamp 属性限制文字的行数，多余的显示省略号。
+ * 这个属性的兼容性目前还不太好。
+ */
+.kx-check-box {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  height: 1.6em;
+  cursor: pointer;
+  vertical-align: -6px;
+}
+.check-box-input {
+  position: absolute;
+  opacity: 0;
+}
+.check-box-input:focus + .check-box-mark {
+  border-color: #32b3ff;
+  box-shadow: 0 0 0 0.2rem #94dfff;
+}
+.check-box-input[disabled] + .check-box-mark {
+  background-color: #F0F0F0;
+}
+.check-box-input[disabled] + .check-box-mark.checked {
+  border-color: #bababa;
+  background-color: #bababa;
+}
+.check-box-mark {
+  display: inline-block;
+  position: relative;
+  width: 1.6em;
+  height: 1.6em;
+  border: 1px solid #dce2e6;
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+.check-box-mark.checked {
+  background-color: #069AF9;
+  border-color: #069AF9;
+}
+.check-box-mark.checked::after {
+  content: "";
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  position: absolute;
+  transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  left: 10px;
+  top: 9px;
+  width: 7px;
+  height: 13px;
+}
+.check-box-text {
+  margin-left: 5px;
+}
+
+/*
+ * 在.vue文件的<style>中导入的样式会重复输出，为了避免此问题
+ * 在其中导入时仅允许导入变量和函数，不允许导入样式，该文件
+ * 已经导入了所有的变量和函数，用于在.vue文件中导入。
+ */
+/*
+ * 常用 Less 公共样式封装，部分取自：
+ * https://blog.csdn.net/boyit0/article/details/78802385
+ */
+/**
+ * 使用 -webkit-line-clamp 属性限制文字的行数，多余的显示省略号。
+ * 这个属性的兼容性目前还不太好。
+ */
+.kx-radio-box {
+  display: inline-block;
+  margin-right: 1em;
+  cursor: pointer;
+}
+.radio-box-input {
+  position: absolute;
+  opacity: 0;
+}
+.radio-box-mark {
+  display: inline-block;
+  position: relative;
+  height: 24px;
+  width: 24px;
+  vertical-align: top;
+  border: 1px solid #bbb;
+  border-radius: 50%;
+  --color: #069AF9;
+}
+.radio-box-mark::after {
+  content: "";
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transform: scale(0.6);
+  background-color: var(--color);
+}
+.radio-box-mark.checked {
+  border-width: 2px;
+  border-color: var(--color);
+}
+.radio-box-mark.checked::after {
+  display: block;
+}
+.radio-box-mark.disabled {
+  cursor: default;
+  --color: #bbb;
+  background-color: #f7f7f7;
+}
+.radio-box-label {
+  display: inline-block;
+  padding-left: 0.5rem;
+  line-height: 24px;
+}
+
+.KxSelect_container_dv_NU {
+  display: block;
+  position: relative;
+  border: solid 1px #ddd;
+  border-radius: 4px;
+}
+.KxSelect_select_iBLk4 {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  width: 100%;
+  padding: 5px 30px 5px 5px;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  background: none;
+}
+.KxSelect_icon_iKfTQ {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  width: 16px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/*
+ * 在.vue文件的<style>中导入的样式会重复输出，为了避免此问题
+ * 在其中导入时仅允许导入变量和函数，不允许导入样式，该文件
+ * 已经导入了所有的变量和函数，用于在.vue文件中导入。
+ */
+/*
+ * 常用 Less 公共样式封装，部分取自：
+ * https://blog.csdn.net/boyit0/article/details/78802385
+ */
+/**
+ * 使用 -webkit-line-clamp 属性限制文字的行数，多余的显示省略号。
+ * 这个属性的兼容性目前还不太好。
+ */
+.kx-switch-box {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.kx-switch-box.disabled {
+  cursor: default;
+}
+.kx-switch {
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+  margin-left: auto;
+  padding: 4px;
+  border-radius: 12px;
+  background: gray;
+  transition: background 0.2s ease-out;
+}
+.kx-switch::after {
+  content: "";
+  display: block;
+  width: 16px;
+  height: 100%;
+  background: white;
+  border-radius: 8px;
+  transition: margin-left 0.2s ease-out;
+}
+.kx-switch.checked {
+  background: #069AF9;
+}
+.kx-switch.checked::after {
+  margin-left: 24px;
+}
+.disabled > .kx-switch {
+  background: lightgray;
+}
+.kx-switch-input {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+
+.MaterialTextInput_container_qJQul {
+  display: block;
+  margin: 16px 8px 8px 8px;
+}
+.MaterialTextInput_container_qJQul:focus-within > .MaterialTextInput_label_aZeqT {
+  color: #1672f9;
+}
+.MaterialTextInput_label_aZeqT {
+  display: block;
+  transition: all 0.2s ease;
+}
+.MaterialTextInput_input_x1En3 {
+  display: block;
+  width: 100%;
+  padding: 6px 0;
+  border: none;
+  border-bottom: 2px solid #d0d0d0;
+  border-radius: 0;
+  transition: all 0.2s ease;
+}
+.MaterialTextInput_input_x1En3:focus-within {
+  box-shadow: none;
+}
+.MaterialTextInput_input_x1En3:focus {
+  border-bottom-color: #1175ff;
+}
+.MaterialTextInput_input_x1En3:disabled {
+  background: #fafafa;
+}
+
+/*
+ * 在.vue文件的<style>中导入的样式会重复输出，为了避免此问题
+ * 在其中导入时仅允许导入变量和函数，不允许导入样式，该文件
+ * 已经导入了所有的变量和函数，用于在.vue文件中导入。
+ */
+/*
+ * 常用 Less 公共样式封装，部分取自：
+ * https://blog.csdn.net/boyit0/article/details/78802385
+ */
+/**
+ * 使用 -webkit-line-clamp 属性限制文字的行数，多余的显示省略号。
+ * 这个属性的兼容性目前还不太好。
+ */
+/*
+ * 该组件有以下 CSS 变量：
+ * --btn-radius: 圆角大小，默认 4px。
+ *
+ * 颜色由以下变量控制：
+ * --text-color: 文字主色，通常是主题的主色。
+ * --text-active: 激活文字颜色，因为激活状态下背景是主色，所以它通常是白色。
+ * --struct-color: 文字以外的颜色，跟文字区分开以便分别设置。
+ * --struct-*: 各种状态下的结构色。
+ */
+.kx-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  font-size: initial;
+  line-height: initial;
+  border-radius: var(--btn-radius, 4px);
+  transition: ease-in-out 0.15s;
+  text-decoration: none;
+  color: var(--text-active);
+  background-color: var(--struct-color);
+  border: solid 1px var(--struct-color);
+  --text-color: #0776DF;
+  --struct-color: #0776DF;
+  --text-active: white;
+  --struct-active: #006ad3;
+  --struct-highlight: #0880f3;
+  --struct-glass: rgba(7, 118, 223, 0.5);
+}
+.kx-btn:hover {
+  background-color: var(--struct-highlight);
+  border-color: var(--struct-highlight);
+  color: var(--text-active);
+}
+.kx-btn:focus {
+  box-shadow: 0 0 0 4px var(--struct-glass);
+  outline: 0;
+}
+.kx-btn:active {
+  color: var(--text-active);
+  box-shadow: none;
+  background-color: var(--struct-active);
+  border-color: var(--struct-active);
+}
+.KxButton_outline_MiRRW {
+  color: var(--text-color);
+  border-color: var(--struct-color);
+  background-color: transparent;
+  --text-color: initial;
+  --struct-color: #ddd;
+}
+.KxButton_text_oyK_0 {
+  color: var(--struct-color);
+  background-color: transparent;
+  border-color: transparent;
+}
+.KxButton_icon_gKxXE {
+  padding: 5px;
+  font-size: 24px;
+  color: var(--struct-color);
+  border: none;
+  background-color: transparent;
+  --struct-color: initial;
+}
+.KxButton_icon_gKxXE:hover {
+  color: var(--struct-color);
+  background-color: rgba(0, 0, 0, 0.07);
+}
+.KxButton_icon_gKxXE:active {
+  color: var(--struct-color);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.KxButton_primary_ErXBu {
+  --text-color: #0776DF;
+  --struct-color: #0776DF;
+  --text-active: white;
+  --struct-active: #006ad3;
+  --struct-highlight: #0880f3;
+  --struct-glass: rgba(7, 118, 223, 0.5);
+}
+.KxButton_second__2o4C {
+  --text-color: #e10199;
+  --struct-color: #e10199;
+  --text-active: white;
+  --struct-active: #d5008d;
+  --struct-highlight: #f501a7;
+  --struct-glass: rgba(225, 1, 153, 0.5);
+}
+.KxButton_info_urXAP {
+  --text-color: #01AD20;
+  --struct-color: #01AD20;
+  --text-active: white;
+  --struct-active: #00a114;
+  --struct-highlight: #01c124;
+  --struct-glass: rgba(1, 173, 32, 0.5);
+}
+.KxButton_dangerous_yxoRm {
+  --text-color: #E42B21;
+  --struct-color: #E42B21;
+  --text-active: white;
+  --struct-active: #d81f15;
+  --struct-highlight: #e63c33;
+  --struct-glass: rgba(228, 43, 33, 0.5);
+}
+.KxButton_disabled_DAvSZ {
+  cursor: initial;
+  pointer-events: none;
+  color: dimgray;
+  background-color: #d9dfdf;
+  border-color: #d9dfdf;
+}
+
+/*
+ * 在.vue文件的<style>中导入的样式会重复输出，为了避免此问题
+ * 在其中导入时仅允许导入变量和函数，不允许导入样式，该文件
+ * 已经导入了所有的变量和函数，用于在.vue文件中导入。
+ */
+/*
+ * 常用 Less 公共样式封装，部分取自：
+ * https://blog.csdn.net/boyit0/article/details/78802385
+ */
+/**
+ * 使用 -webkit-line-clamp 属性限制文字的行数，多余的显示省略号。
+ * 这个属性的兼容性目前还不太好。
+ */
+.KxTaskButton_running_iWfaD {
+  background-image: linear-gradient(-45deg, var(--struct-highlight) 25%, transparent 25%, transparent 50%, var(--struct-highlight) 50%, var(--struct-highlight) 75%, transparent 75%);
+  -webkit-animation: KxTaskButton_barbershop_UX4JG linear 0.4s infinite;
+          animation: KxTaskButton_barbershop_UX4JG linear 0.4s infinite;
+}
+.KxTaskButton_running_iWfaD,
+.KxTaskButton_running_iWfaD:hover {
+  color: white;
+  background-color: var(--struct-active);
+  border-color: var(--struct-highlight);
+  background-size: 32px 32px;
+}
+@-webkit-keyframes KxTaskButton_barbershop_UX4JG {
+from {
+    background-position: 0;
+}
+to {
+    background-position: -32px;
+}
+}
+@keyframes KxTaskButton_barbershop_UX4JG {
+from {
+    background-position: 0;
+}
+to {
+    background-position: -32px;
+}
+}
+
+.KxPasswordInput_container_G2rFc {
+  display: flex;
+  padding: 0;
+}
+.KxPasswordInput_input_bxC3C,
+.KxPasswordInput_input_bxC3C:focus-within {
+  flex-grow: 1;
+  padding-right: 0;
+  border: none;
+  box-shadow: none;
+}
+.KxPasswordInput_toggle_gcuf8 {
+  padding: 0 6px;
+  font-size: 22px;
+  border-radius: 0;
+}
+
+.kx-dialog-icon {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border: 4px solid gray;
+  border-radius: 50%;
+  margin: 20px auto;
+  box-sizing: content-box;
+}
+.DialogIcons_Error_y6hA1 {
+  border-color: #ff5d64;
+}
+.DialogIcons_Error_y6hA1::before,
+.DialogIcons_Error_y6hA1::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 37px;
+  height: 5px;
+  width: 47px;
+  background-color: #ff5d64;
+  border-radius: 2px;
+}
+.DialogIcons_Error_y6hA1::before {
+  transform: rotate(45deg);
+  left: 17px;
+}
+.DialogIcons_Error_y6hA1::after {
+  transform: rotate(-45deg);
+  right: 16px;
+}
+.DialogIcons_Warning_AJ2GQ {
+  border-color: #ffc04c;
+}
+.DialogIcons_Warning_AJ2GQ::before {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 29px;
+  left: 50%;
+  bottom: 17px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background-color: #ffc04c;
+}
+.DialogIcons_Warning_AJ2GQ::after {
+  content: '';
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  top: 19px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background-color: #ffc04c;
+}
+.DialogIcons_Info_E5iu1 {
+  border-color: #358bff;
+}
+.DialogIcons_Info_E5iu1::before {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 29px;
+  left: 50%;
+  bottom: 17px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background-color: #358bff;
+}
+.DialogIcons_Info_E5iu1::after {
+  content: '';
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  top: 19px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background-color: #358bff;
+}
+.DialogIcons_Success_BYK4U {
+  border-color: #00d936;
+}
+.DialogIcons_Success_BYK4U::before,
+.DialogIcons_Success_BYK4U::after {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: 2;
+  height: 5px;
+  background-color: #00d936;
+  border-radius: 2px;
+}
+.DialogIcons_Success_BYK4U::before {
+  width: 25px;
+  left: 14px;
+  top: 46px;
+  transform: rotate(45deg);
+}
+.DialogIcons_Success_BYK4U::after {
+  width: 47px;
+  right: 8px;
+  top: 38px;
+  transform: rotate(-45deg);
+}
+
+.KxDialogButtons_container_G1JkV {
+  margin-top: 20px;
+  text-align: right;
+}
+
+/* TODO: 跟 BaseDialog 重复 */
+.KxMessageBox_closeIcon_dENfQ {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 3rem;
+  width: 3rem;
+  font-size: 24px;
+  border-radius: 0;
+}
+.KxMessageBox_content_jE0Lf {
+  max-height: 40vh;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: 20px;
+}
+
+.kx-msgbox {
+  position: relative;
+  max-width: 450px;
+  width: 80vw;
+  padding: 30px 20px 20px;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: white;
+  font-size: 1rem;
+  text-align: center;
+}
+.dialogZoomIn {
+  -webkit-animation: dialog-zoomIn 0.3s 1;
+          animation: dialog-zoomIn 0.3s 1;
+}
+@-webkit-keyframes dialog-zoomIn {
+from {
+    opacity: 0;
+    transform: scale(0.96, 0.96);
+}
+to {
+    /* default */
+}
+}
+@keyframes dialog-zoomIn {
+from {
+    opacity: 0;
+    transform: scale(0.96, 0.96);
+}
+to {
+    /* default */
+}
+}
+.shaking {
+  -webkit-animation: shaking 0.3s 1;
+          animation: shaking 0.3s 1;
+}
+@-webkit-keyframes shaking {
+0% {
+    transform: translateX(-4px);
+}
+50% {
+    transform: translateX(4px);
+}
+}
+@keyframes shaking {
+0% {
+    transform: translateX(-4px);
+}
+50% {
+    transform: translateX(4px);
+}
+}
+
+.KxBaseDialog_dialog_dwxq_ {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  max-width: 80vw;
+  overflow: hidden;
+  border-radius: 4px;
+  background-color: white;
+}
+.KxBaseDialog_title_rE66m {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 22px;
+  font-weight: 500;
+}
+.KxBaseDialog_header_YX8K2 {
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.KxBaseDialog_body_AQZQC {
+  padding: 20px;
+}
+.KxBaseDialog_closeIcon_W0Saw {
+  margin-left: auto;
+  height: 3rem;
+  width: 3rem;
+  font-size: 24px;
+  border-radius: 0;
+}
+
+.KxFrame_container_iuikw {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  z-index: 900;
+  background-color: white;
+}
+.KxFrame_header_peyrv {
+  display: flex;
+  height: 48px;
+  border-bottom: 1px solid #eee;
+}
+.KxFrame_back_ccWDQ {
+  width: 48px;
+  border-radius: 0;
+}
+.KxFrame_backIcon_ZPQC3 {
+  font-size: 20px;
+}
+.KxFrame_title_kZqYk {
+  font-size: 16px;
+  line-height: 48px;
+  margin-left: 10px;
+  margin-right: auto;
+}
+
+/*
+ * 在.vue文件的<style>中导入的样式会重复输出，为了避免此问题
+ * 在其中导入时仅允许导入变量和函数，不允许导入样式，该文件
+ * 已经导入了所有的变量和函数，用于在.vue文件中导入。
+ */
+/*
+ * 常用 Less 公共样式封装，部分取自：
+ * https://blog.csdn.net/boyit0/article/details/78802385
+ */
+/**
+ * 使用 -webkit-line-clamp 属性限制文字的行数，多余的显示省略号。
+ * 这个属性的兼容性目前还不太好。
+ */
+@-webkit-keyframes KxToast_fade-in_DvUNL {
+from {
+    opacity: 0;
+}
+to {
+    opacity: 1;
+}
+}
+@keyframes KxToast_fade-in_DvUNL {
+from {
+    opacity: 0;
+}
+to {
+    opacity: 1;
+}
+}
+.KxToast_container_c923w {
+  display: flex;
+  align-items: center;
+  margin: 12px 0;
+  padding: 14px;
+  font-size: 16px;
+  box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 15px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  color: white;
+  -webkit-animation: KxToast_fade-in_DvUNL 0.25s;
+          animation: KxToast_fade-in_DvUNL 0.25s;
+}
+@media screen and (min-width: 768px) {
+.KxToast_container_c923w {
+    width: 320px;
+    min-height: 64px;
+}
+}
+.KxToast_icon_KEgzr {
+  font-size: 1.25em;
+  -webkit-margin-end: 10px;
+          margin-inline-end: 10px;
+}
+.KxToast_body_RrmOc {
+  flex: 1;
+}
+.KxToast_close_FtDT2 {
+  align-self: flex-start;
+  margin-top: -6px;
+  margin-right: -6px;
+  padding: 0;
+  font-size: 18px;
+}
+@media screen and (max-width: 768px) {
+.KxToast_close_FtDT2 {
+    display: none;
+}
+}
+.KxToast_Info_WZn1f {
+  background: #3498db;
+}
+.KxToast_Success_E9XI3 {
+  background: #07bc0c;
+}
+.KxToast_Warning_EwXcf {
+  background: #f1c40f;
+}
+.KxToast_Error_hQo0K {
+  background: #e74c3c;
+}
+
+/*
+ * 在.vue文件的<style>中导入的样式会重复输出，为了避免此问题
+ * 在其中导入时仅允许导入变量和函数，不允许导入样式，该文件
+ * 已经导入了所有的变量和函数，用于在.vue文件中导入。
+ */
+/*
+ * 常用 Less 公共样式封装，部分取自：
+ * https://blog.csdn.net/boyit0/article/details/78802385
+ */
+/**
+ * 使用 -webkit-line-clamp 属性限制文字的行数，多余的显示省略号。
+ * 这个属性的兼容性目前还不太好。
+ */
+.ToastContainer_container_LXwea {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 5000;
+}
+@media screen and (max-width: 768px) {
+.ToastContainer_container_LXwea {
+    right: 50%;
+    transform: translateX(50%);
+}
+}
+
+.ImageCropper_container_gJuVO {
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+.ImageCropper_header_jQakc {
+  display: flex;
+  align-items: flex-start;
+  margin: 10px;
+}
+.ImageCropper_close_button_sAxeK {
+  margin-left: auto;
+  font-size: 2rem;
+}
+.ImageCropper_main_hJshh {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+.ImageCropper_cropView_oihu1 {
+  cursor: move;
+  position: relative;
+  overflow: hidden;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  background-image: linear-gradient(45deg, #eee 25%, transparent 0), linear-gradient(45deg, transparent 75%, #eee 0), linear-gradient(45deg, #eee 25%, transparent 0), linear-gradient(45deg, transparent 75%, #eee 0);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px, 10px 10px, 0 0;
+}
+.ImageCropper_loading_t1LGF {
+  flex-direction: column;
+  gap: 10px;
+  font-size: 1.5em;
+}
+.ImageCropper_image_T1S7g {
+  pointer-events: none;
+}
+.ImageCropper_region_khmKp {
+  position: absolute;
+  border: solid 1px #eee;
+  pointer-events: none;
+  overflow: hidden;
+  /* 用阴影实现元素外变暗 */
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
+}
+.ImageCropper_dash_sW_eT {
+  position: absolute;
+  border: 0 dashed #eee;
+}
+.ImageCropper_dash_sW_eT:nth-child(1) {
+  height: calc(100% / 3);
+  left: 0;
+  top: calc(100% / 3);
+  width: 100%;
+  border-bottom-width: 1px;
+  border-top-width: 1px;
+}
+.ImageCropper_dash_sW_eT:nth-child(2) {
+  left: calc(100% / 3);
+  top: 0;
+  width: calc(100% / 3);
+  height: 100%;
+  border-left-width: 1px;
+  border-right-width: 1px;
+}
+.ImageCropper_circle_k7Hjn {
+  border-radius: 100%;
+  width: 100%;
+  height: 100%;
+  border: solid 1px #eee;
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.3);
+}
+.ImageCropper_crosshair_On1HT {
+  position: absolute;
+  top: calc(50% - 10px);
+  left: calc(50% - 10px);
+  color: #eee;
+  font-size: 20px;
+}
+.ImageCropper_toolbar_EhTMl {
+  margin: 10px;
+  display: flex;
+  align-items: center;
+}
+.ImageCropper_stats_OgbT9 {
+  padding: 0 10px;
+  font-size: initial;
+}
+.ImageCropper_right_buttons_YSare {
+  margin-left: auto;
+}
+
+/*
+ * 在.vue文件的<style>中导入的样式会重复输出，为了避免此问题
+ * 在其中导入时仅允许导入变量和函数，不允许导入样式，该文件
+ * 已经导入了所有的变量和函数，用于在.vue文件中导入。
+ */
+/*
+ * 常用 Less 公共样式封装，部分取自：
+ * https://blog.csdn.net/boyit0/article/details/78802385
+ */
+/**
+ * 使用 -webkit-line-clamp 属性限制文字的行数，多余的显示省略号。
+ * 这个属性的兼容性目前还不太好。
+ */
+.PagingButtons_wrapper_NeqfI {
+  display: flex;
+  align-items: center;
+}
+.PagingButtons_default_jKLlv.PagingButtons_active_uRvjd {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  border: solid 1px #0776DF;
+  font-size: 1rem;
+  line-height: 1;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  color: white;
+  background-color: #0776DF;
+}
+.PagingButtons_omit_XOmyW {
+  vertical-align: middle;
+  line-height: 34px;
+  padding: 0 1rem;
+  font-size: 1.5em;
+  cursor: default;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.PagingButtons_text_uN5yT {
+  padding: 0 4px;
+}
+.PagingButtons_text_uN5yT:hover,
+.PagingButtons_text_uN5yT :focus {
+  color: #ff2cd2;
+}
+.PagingButtons_text_uN5yT.PagingButtons_active_uRvjd {
+  padding: 0 4px;
+  color: #0099ff;
+  font-weight: 600;
+}
+.PagingButtons_jumpInput_go53b {
+  font-size: 0.8em;
+  width: 4em;
+  margin: 0 0.5em;
+  text-align: center;
+}
+.PagingButtons_jumpLabel_hRjUc {
+  margin-left: auto;
+}
+
+/*
+ * 在.vue文件的<style>中导入的样式会重复输出，为了避免此问题
+ * 在其中导入时仅允许导入变量和函数，不允许导入样式，该文件
+ * 已经导入了所有的变量和函数，用于在.vue文件中导入。
+ */
+/*
+ * 常用 Less 公共样式封装，部分取自：
+ * https://blog.csdn.net/boyit0/article/details/78802385
+ */
+/**
+ * 使用 -webkit-line-clamp 属性限制文字的行数，多余的显示省略号。
+ * 这个属性的兼容性目前还不太好。
+ */
+.LoadingStatus_container_I6544 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  font-size: 1rem;
+}
+.LoadingStatus_failed_kSZ04 {
+}
+.LoadingStatus_loading_aWTap {
+  color: #6E7881;
+  flex-direction: column;
+}
+.LoadingStatus_text_u3uzF {
+  margin-top: 0.5em;
+}
+.LoadingStatus_icon_VXnM9 {
+  margin-left: 5px;
+  vertical-align: text-bottom;
+}
+
+.ButtonPagingView_top_xSdCg {
+  margin-bottom: var(--pagenation-margin, 2em);
+}
+.ButtonPagingView_bottom_Jn0kU {
+  margin-top: var(--pagenation-margin, 2em);
+}
+
+/*
+ * 在.vue文件的<style>中导入的样式会重复输出，为了避免此问题
+ * 在其中导入时仅允许导入变量和函数，不允许导入样式，该文件
+ * 已经导入了所有的变量和函数，用于在.vue文件中导入。
+ */
+/*
+ * 常用 Less 公共样式封装，部分取自：
+ * https://blog.csdn.net/boyit0/article/details/78802385
+ */
+/**
+ * 使用 -webkit-line-clamp 属性限制文字的行数，多余的显示省略号。
+ * 这个属性的兼容性目前还不太好。
+ */
+.ScrollPager_container_M3Csh {
+  text-align: center;
+  padding: 20px;
+}
+@media screen and (max-width: 768px) {
+.ScrollPager_button_B9uEh {
+    width: 64%;
+}
+}
+
+.HookedDialog_timer_knjeB {
+  color: blue;
+  text-align: center;
+}
+
+#result {
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: auto 1fr;
+  grid-gap: 1rem;
+  align-items: center;
+}
+#result > label {
+  justify-self: right;
+  grid-column-start: 1;
+}
+#result > input {
+  grid-column-start: 2;
+}
+#result > button {
+  grid-column: 1/3;
+}
+
+.LuckyNumberDialog_buttons_PDb9v {
+  margin-top: 1rem;
+  float: right;
+}
+.LuckyNumberDialog_tip_m1KHu {
+  color: #818181;
+  font-size: 0.9em;
+}
+
+.DemoFrame_body_kerUd {
+  padding: 20px;
+  text-align: center;
+}
+.DemoFrame_icon_V2l68 {
+  width: 48px;
+  border-radius: 0;
+}
+
+.ListItem_box_cThg9 {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "avatar header" "avatar content";
+  gap: 10px;
+  counter-increment: item-index;
+  margin: 10px 0;
+  padding: 10px;
+  border: solid 2px #888;
+}
+.ListItem_avatar_mCGcD {
+  grid-area: avatar;
+  width: 48px;
+  height: 48px;
+}
+.ListItem_header_xeQ9y {
+  grid-area: header;
+  display: flex;
+}
+.ListItem_header_xeQ9y::after {
+  margin-left: auto;
+  content: "#" counter(item-index);
+}
+.ListItem_name_U4Bqy {
+  font-size: 1.125em;
+}
+.ListItem_content_ImMC8 {
+  grid-area: content;
+}
+
