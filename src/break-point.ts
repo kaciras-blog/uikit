@@ -45,7 +45,7 @@ export function observeMediaQuery(pinia: Pinia, window_ = window) {
 	}
 	const store = useMQStore(pinia);
 
-	function observe(width: number, query: string) {
+	function observe([, width]: [string, number], query: string) {
 		const mql = window_.matchMedia(query);
 
 		// 立即检查一下，在后端误判时立刻恢复到正确的宽度
@@ -58,24 +58,24 @@ export function observeMediaQuery(pinia: Pinia, window_ = window) {
 		if ("addEventListener" in mql) {
 			mql.addEventListener("change", update);
 		} else {
-			// noinspection JSDeprecatedSymbols Safari 只有 addListener()
+			// @ts-ignore
+			// noinspection JSDeprecatedSymbols Safari 只有 addListener()。
 			mql.addListener(update);
 		}
 	}
 
 	const first = entries[0];
-	observe(first[1], `(max-width: ${first[1]}px`);
+	observe(first, `(max-width: ${first[1]}px`);
 
 	if (entries.length > 2) {
 		for (let i = 1; i < entries.length - 1; i++) {
 			const prev = entries[i - 1][1];
 			const current = entries[i][1];
-			observe(entries[i][1], `(min-width: ${prev}px) and (max-width: ${current}px)`);
+			observe(entries[i], `(min-width: ${prev}px) and (max-width: ${current}px)`);
 		}
 	}
 
-	const last = entries[entries.length - 1];
-	observe(last[1], `(min-width: ${entries[entries.length - 2][1]}px`);
+	observe(entries.at(-1)!, `(min-width: ${entries[entries.length - 2][1]}px`);
 }
 
 /**

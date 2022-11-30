@@ -114,7 +114,7 @@ function push(config: InternalOptions) {
  * @param result 弹窗返回的结果
  */
 function close(result: any) {
-	const config = stack[stack.length - 1];
+	const config = stack.at(-1);
 	if (!config) {
 		throw new Error("没有可关闭的弹窗");
 	}
