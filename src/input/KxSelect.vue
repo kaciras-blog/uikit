@@ -5,14 +5,14 @@
 	所以使用原生的 select 是很好的选择。
 -->
 <template>
-	<div :class="$style.container">
+	<div :class='$style.container'>
 		<select
-			:class="$style.select"
-			v-model="forward"
+			:class='$style.select'
+			v-model='forward'
 		>
 			<slot></slot>
 		</select>
-		<CaretDownIcon :class="$style.icon"/>
+		<CaretDownIcon :class='$style.icon'/>
 	</div>
 </template>
 

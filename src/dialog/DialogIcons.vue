@@ -1,5 +1,5 @@
 <template>
-	<div class="kx-dialog-icon" :class="$style[MessageType[type]]"/>
+	<div class='kx-dialog-icon' :class='$style[MessageType[type]]'/>
 </template>
 
 <script setup lang="ts">

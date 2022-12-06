@@ -1,27 +1,27 @@
 <!-- 可惜没有 :hover-within 标签关联没法高亮 hover -->
 <template>
 	<div
-		:class="[$style.container, { disabled }]"
-		class="input"
+		:class='[$style.container, { disabled }]'
+		class='input'
 	>
 		<input
 			:type="visible ? 'text': 'password'"
-			:id="inputId"
-			:class="$style.input"
-			:value="modelValue"
-			:placeholder="placeholder"
-			:required="required"
-			:disabled="disabled"
-			@input="handleInput"
+			:id='inputId'
+			:class='$style.input'
+			:value='modelValue'
+			:placeholder='placeholder'
+			:required='required'
+			:disabled='disabled'
+			@input='handleInput'
 		>
 		<KxButton
 			:title="visible ? '隐藏' : '显示密码'"
-			:class="$style.toggle"
-			type="icon"
-			:disabled="disabled"
-			@click="visible = !visible"
+			:class='$style.toggle'
+			type='icon'
+			:disabled='disabled'
+			@click='visible = !visible'
 		>
-			<VisibleIcon v-if="visible"/>
+			<VisibleIcon v-if='visible'/>
 			<HiddenIcon v-else/>
 		</KxButton>
 	</div>

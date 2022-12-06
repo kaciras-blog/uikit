@@ -6,12 +6,12 @@
 -->
 <template>
 	<component
-		v-for="(options, i) of stack"
-		:key="options.id"
-		v-bind="options.props"
-		v-show="isVisible(options, i)"
-		:is="options.component"
-		:ref="v => v && instances.set(options, v)"
+		v-for='(options, i) of stack'
+		:key='options.id'
+		v-bind='options.props'
+		v-show='isVisible(options, i)'
+		:is='options.component'
+		:ref='v => v && instances.set(options, v)'
 	/>
 </template>
 

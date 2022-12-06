@@ -11,7 +11,7 @@ describe("DialogSession", () => {
 		const conform = s.confirmPromise.then(() => 11);
 		const timeout = new Promise(resolve => setTimeout(resolve, 50, 22));
 
-		expect(await Promise.race([conform, timeout])).toBe(22)
+		expect(await Promise.race([conform, timeout])).toBe(22);
 	});
 
 	it("should resolve confirmPromise with confirm", async () => {

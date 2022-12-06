@@ -1,36 +1,36 @@
 <template>
 	<div
-		class="dialog-backdrop full-vertex"
-		@click.self="onOverlayClick"
-		@keyup.esc="closable && close"
+		class='dialog-backdrop full-vertex'
+		@click.self='onOverlayClick'
+		@keyup.esc='closable && close'
 	>
 		<div
-			class="kx-msgbox"
-			:class="{ shaking, dialogZoomIn }"
-			tabindex="-1"
+			class='kx-msgbox'
+			:class='{ shaking, dialogZoomIn }'
+			tabindex='-1'
 			v-auto-focus
-			role="dialog"
-			aria-modal="true"
+			role='dialog'
+			aria-modal='true'
 		>
 			<KxButton
-				v-if="closable"
-				type="icon"
-				:class="$style.closeIcon"
-				title="关闭"
-				@click="close"
+				v-if='closable'
+				type='icon'
+				:class='$style.closeIcon'
+				title='关闭'
+				@click='close'
 			>
 				<CloseIcon/>
 			</KxButton>
 
-			<DialogIcons :type="type"/>
+			<DialogIcons :type='type'/>
 			<h2>{{ title }}</h2>
 
 			<!-- pre 标签特殊，不会去除内容中的空白 -->
-			<pre v-if="content" :class="$style.content">{{ content }}</pre>
+			<pre v-if='content' :class='$style.content'>{{ content }}</pre>
 
 			<KxDialogButtons
-				:on-cancel="cancelable && close"
-				:on-accept="() => close(true)"
+				:on-cancel='cancelable && close'
+				:on-accept='() => close(true)'
 			/>
 		</div>
 	</div>

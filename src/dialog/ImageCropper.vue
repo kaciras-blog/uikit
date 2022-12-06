@@ -4,51 +4,51 @@
 	特别是支持裁剪框可调的情况下。
 -->
 <template>
-	<div :class="$style.container">
-		<header :class="$style.header">
-			<h1 class="compact">
+	<div :class='$style.container'>
+		<header :class='$style.header'>
+			<h1 class='compact'>
 				裁剪图片
 			</h1>
 			<KxButton
-				type="icon"
-				title="关闭"
-				:class="$style.close_button"
-				@click="$dialog.close"
+				type='icon'
+				title='关闭'
+				:class='$style.close_button'
+				@click='$dialog.close'
 			>
 				<CloseIcon/>
 			</KxButton>
 		</header>
 
 		<div
-			v-show="loadStatus"
-			ref="main"
-			:class="$style.cropView"
-			@mousedown="drag"
-			@touchstart.self.prevent="drag"
-			@wheel="handleWheel"
+			v-show='loadStatus'
+			ref='main'
+			:class='$style.cropView'
+			@mousedown='drag'
+			@touchstart.self.prevent='drag'
+			@wheel='handleWheel'
 		>
-			<div :style="wrapStyle">
+			<div :style='wrapStyle'>
 				<img
-					:src="imgUrl"
-					alt="Image to crop"
-					:class="$style.image"
-					:style="imgStyle"
-					@load="handleLoad"
-					@error="loadStatus = null"
+					:src='imgUrl'
+					alt='Image to crop'
+					:class='$style.image'
+					:style='imgStyle'
+					@load='handleLoad'
+					@error='loadStatus = null'
 				>
 			</div>
 			<div
-				ref="regionEl"
-				:class="$style.region"
-				:style="stencilStyle"
+				ref='regionEl'
+				:class='$style.region'
+				:style='stencilStyle'
 			>
-				<div v-if="circle" :class="$style.circle"/>
+				<div v-if='circle' :class='$style.circle'/>
 				<template v-else>
-					<div :class="$style.dash"/>
-					<div :class="$style.dash"/>
+					<div :class='$style.dash'/>
+					<div :class='$style.dash'/>
 				</template>
 
-				<PlusIcon :class="$style.crosshair"/>
+				<PlusIcon :class='$style.crosshair'/>
 			</div>
 		</div>
 
@@ -56,66 +56,66 @@
 			要放在后面，以便在未加载时覆盖 main 引用。
 		-->
 		<div
-			v-if="loadStatus === false"
-			ref="main"
-			:class="$style.loading"
+			v-if='loadStatus === false'
+			ref='main'
+			:class='$style.loading'
 		>
 			<AtomSpinner/>
 			加载中...
 		</div>
 		<div
-			v-else-if="loadStatus === null"
-			:class="$style.loading"
+			v-else-if='loadStatus === null'
+			:class='$style.loading'
 		>
 			加载失败，请重新选择图片以重试。
 		</div>
 
-		<div :class="$style.toolbar">
+		<div :class='$style.toolbar'>
 			<KxButton
-				type="icon"
-				title="水平翻转"
-				@click="transform.flipX *= -1"
+				type='icon'
+				title='水平翻转'
+				@click='transform.flipX *= -1'
 			>
 				<SwapHorizIcon/>
 			</KxButton>
 			<KxButton
-				type="icon"
-				title="垂直翻转"
-				@click="transform.flipY *= -1"
+				type='icon'
+				title='垂直翻转'
+				@click='transform.flipY *= -1'
 			>
 				<SwapVertIcon/>
 			</KxButton>
 			<KxButton
-				type="icon"
-				title="旋转"
-				@click="transform.rotate += 90"
+				type='icon'
+				title='旋转'
+				@click='transform.rotate += 90'
 			>
 				<RotateRightIcon/>
 			</KxButton>
 
 			<input
-				type="number"
-				title="缩放"
-				min="0.01"
-				step="0.1"
-				:value="transform.scale.toPrecision(3)"
-				@input="e => transform.scale = e.target.valueAsNumber"
+				type='number'
+				title='缩放'
+				min='0.01'
+				step='0.1'
+				:value='transform.scale.toPrecision(3)'
+				@input='e => transform.scale = e.target.valueAsNumber'
 			>
 
-			<div :class="$style.stats">
+			<div :class='$style.stats'>
 				{{ region.left }} - {{ region.top }} |
 				{{ region.width }} x {{ region.height }}
 			</div>
 
-			<div :class="$style.right_buttons">
+			<div :class='$style.right_buttons'>
 				<KxButton
-					color="second"
-					@click="$dialog.close()"
+					color='second'
+					@click='$dialog.close()'
 				>
 					取消
 				</KxButton>
-				<KxButton @click="$dialog.confirm()">跳过</KxButton>
-				<KxButton @click="ok">确定</KxButton>
+				<KxButton @click='$dialog.confirm()'>跳过</KxButton>
+				<KxButton @click='ok'>确定</KxButton>
 			</div>
 		</div>
 	</div>

@@ -1,14 +1,14 @@
 <!-- TODO: 是否需要固定按钮尺寸？ -->
 <template>
 	<KxButton
-		:class="{ [$style.running]: running }"
-		:route="route"
-		:type="type"
-		:color="color"
-		@click="handleClick"
+		:class='{ [$style.running]: running }'
+		:route='route'
+		:type='type'
+		:color='color'
+		@click='handleClick'
 	>
-		<slot v-if="!running"/>
-		<slot v-else name="running"><slot/></slot>
+		<slot v-if='!running'/>
+		<slot v-else name='running'><slot/></slot>
 	</KxButton>
 </template>
 

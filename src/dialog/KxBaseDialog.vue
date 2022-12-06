@@ -1,43 +1,43 @@
 <template>
 	<div
-		class="dialog-backdrop full-vertex"
-		@click.self="onEscape"
-		@keyup.esc="onEscape"
+		class='dialog-backdrop full-vertex'
+		@click.self='onEscape'
+		@keyup.esc='onEscape'
 	>
 		<div
-			ref="dialogEl"
-			class="dialogZoomIn"
-			:class="$style.dialog"
-			tabindex="-1"
+			ref='dialogEl'
+			class='dialogZoomIn'
+			:class='$style.dialog'
+			tabindex='-1'
 			v-autofocus
-			role="dialog"
-			aria-modal="true"
-			v-bind="$attrs"
+			role='dialog'
+			aria-modal='true'
+			v-bind='$attrs'
 		>
 			<header
-				:class="$style.header"
-				@mousedown="drag"
-				@touchstart.self.prevent="drag"
+				:class='$style.header'
+				@mousedown='drag'
+				@touchstart.self.prevent='drag'
 			>
-				<slot name="title">
-					<h2 :class="$style.title">
+				<slot name='title'>
+					<h2 :class='$style.title'>
 						{{ title }}
 					</h2>
 				</slot>
 				<KxButton
-					v-if="closeIcon"
-					type="icon"
-					title="关闭"
-					:class="$style.closeIcon"
+					v-if='closeIcon'
+					type='icon'
+					title='关闭'
+					:class='$style.closeIcon'
 					@mousedown.stop
-					@click="$dialog.close"
+					@click='$dialog.close'
 				>
 					<CloseIcon/>
 				</KxButton>
 			</header>
 
 			<!-- 为了方便 padding 还是包一层 -->
-			<div :class="$style.body"><slot/></div>
+			<div :class='$style.body'><slot/></div>
 		</div>
 	</div>
 </template>

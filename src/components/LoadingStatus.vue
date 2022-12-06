@@ -1,21 +1,21 @@
 <!-- 简单的加载指示器，拥有失败状态和重试按钮 -->
 <template>
-	<div v-if="error && onRetry" :class="$style.container">
+	<div v-if='error && onRetry' :class='$style.container'>
 		加载失败，请
 		<a
-			class="error highlight"
+			class='error highlight'
 			@click='onRetry'
 		>
-			<ReloadIcon :class="$style.icon"/>
+			<ReloadIcon :class='$style.icon'/>
 			重试
 		</a>
 	</div>
-	<div v-else-if="error" :class="$style.failed">
+	<div v-else-if='error' :class='$style.failed'>
 		加载失败！
 	</div>
-	<div v-else :class="$style.loading">
+	<div v-else :class='$style.loading'>
 		<AtomSpinner/>
-		<span :class="$style.text">加载中......</span>
+		<span :class='$style.text'>加载中......</span>
 	</div>
 </template>
 

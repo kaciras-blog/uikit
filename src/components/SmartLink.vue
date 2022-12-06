@@ -7,11 +7,11 @@
 <template>
 	<RouterLink
 		v-if="href[0] === '/'"
-		:to="href"
+		:to='href'
 	>
 		<slot/>
 	</RouterLink>
-	<a v-else :href="href">
+	<a v-else :href='href'>
 		<slot/>
 	</a>
 </template>

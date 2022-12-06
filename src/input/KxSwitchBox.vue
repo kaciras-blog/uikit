@@ -1,10 +1,10 @@
 <template>
 	<label
-		class="kx-switch-box"
-		role="switch"
-		:aria-checked="modelValue.toString()"
-		:aria-disabled="disabled"
-		:class="{ disabled }"
+		class='kx-switch-box'
+		role='switch'
+		:aria-checked='modelValue.toString()'
+		:aria-disabled='disabled'
+		:class='{ disabled }'
 	>
 		<slot></slot>
 
@@ -13,16 +13,16 @@
 			详情见：https://www.w3.org/TR/wai-aria-1.1/#aria-checked
 		-->
 		<span
-			class="kx-switch"
-			:class="{ checked: modelValue }"
+			class='kx-switch'
+			:class='{ checked: modelValue }'
 		>
 			<input
-				:name="name"
-				class="kx-switch-input"
-				type="checkbox"
-				:checked="modelValue"
-				:disabled="disabled"
-				@change="handleChange"
+				:name='name'
+				class='kx-switch-input'
+				type='checkbox'
+				:checked='modelValue'
+				:disabled='disabled'
+				@change='handleChange'
 			>
 		</span>
 	</label>

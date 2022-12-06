@@ -3,28 +3,28 @@
 	在点击加载模式下会显示一个按钮。
 -->
 <template>
-	<div :class="$style.container" :ref="observe">
+	<div :class='$style.container' :ref='observe'>
 		<KxButton
-			v-if="state===State.FREE"
-			:class="$style.button"
-			:href="nextUrl"
-			@click.prevent="loadPage"
+			v-if='state===State.FREE'
+			:class='$style.button'
+			:href='nextUrl'
+			@click.prevent='loadPage'
 		>
 			查看更多
 		</KxButton>
 
-		<slot name="state">
+		<slot name='state'>
 			<span
-				v-if="state === State.ALL_LOADED"
-				class="minor-text"
+				v-if='state === State.ALL_LOADED'
+				class='minor-text'
 			>
 				没有更多的了
 			</span>
 
 			<LoadingStatus
-				v-else-if="state !== State.FREE"
-				:error="state === State.FAILED"
-				@retry="loadPage"
+				v-else-if='state !== State.FREE'
+				:error='state === State.FAILED'
+				@retry='loadPage'
 			/>
 		</slot>
 	</div>

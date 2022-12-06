@@ -2,13 +2,13 @@
 	新加项目的跳转显示问题：bilibili 的新评论是添加在第一页的最后。
 -->
 <template>
-	<slot :items="modelValue.items"/>
+	<slot :items='modelValue.items'/>
 	<ScrollPager
-		:state="drained ? State.ALL_LOADED : state"
-		:auto-load="autoLoad"
-		:next-url="nextUrl"
-		:active-height="activeHeight"
-		@load-page="loadNext"
+		:state='drained ? State.ALL_LOADED : state'
+		:auto-load='autoLoad'
+		:next-url='nextUrl'
+		:active-height='activeHeight'
+		@load-page='loadNext'
 	/>
 </template>
 

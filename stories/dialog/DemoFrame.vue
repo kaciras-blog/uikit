@@ -1,22 +1,22 @@
 <template>
-	<KxFrame title="标题">
+	<KxFrame title='标题'>
 		<template #actions>
 			<KxButton
-				:class="$style.icon"
-				type="icon"
+				:class='$style.icon'
+				type='icon'
 			>
 				<SearchIcon/>
 			</KxButton>
 			<KxButton
-				:class="$style.icon"
-				type="icon"
+				:class='$style.icon'
+				type='icon'
 			>
 				<HelpIcon/>
 			</KxButton>
 		</template>
 
-		<div :class="$style.body">
-			<KxButton @click="showDialog">
+		<div :class='$style.body'>
+			<KxButton @click='showDialog'>
 				内层弹窗
 			</KxButton>
 			<p></p>

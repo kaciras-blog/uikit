@@ -1,32 +1,32 @@
 <template>
 	<!-- 存储到响应对象的 ref 不带冒号，而回调则要 -->
-	<div ref="el">
+	<div ref='el'>
 		<PagingButtons
-			v-if="topButtons && total"
+			v-if='topButtons && total'
 			:class='$style.top'
-			:total="totalPage"
-			:index="index"
-			:type="theme"
-			:page-link="pageLink"
-			@show-page="switchPage"
+			:total='totalPage'
+			:index='index'
+			:type='theme'
+			:page-link='pageLink'
+			@show-page='switchPage'
 		/>
 
 		<LoadingStatus
 			v-if='error'
-			:error="true"
-			@retry="refresh"
+			:error='true'
+			@retry='refresh'
 		/>
 
-		<slot :items="items.slice(0, pageSize)"/>
+		<slot :items='items.slice(0, pageSize)'/>
 
 		<PagingButtons
-			v-if="total"
+			v-if='total'
 			:class='$style.bottom'
-			:total="totalPage"
-			:index="index"
-			:type="theme"
-			:page-link="pageLink"
-			@show-page="switchPage"
+			:total='totalPage'
+			:index='index'
+			:type='theme'
+			:page-link='pageLink'
+			@show-page='switchPage'
 		/>
 	</div>
 </template>

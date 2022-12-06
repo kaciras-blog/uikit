@@ -1,22 +1,22 @@
 <template>
-	<div :class="$style.container">
-		<div :class="$style.header">
+	<div :class='$style.container'>
+		<div :class='$style.header'>
 			<KxButton
-				title="返回"
-				type="icon"
-				:class="$style.back"
-				@click="$dialog.close"
+				title='返回'
+				type='icon'
+				:class='$style.back'
+				@click='$dialog.close'
 			>
 				<ArrowLeftIcon
 					:class='$style.backIcon'
 				/>
 			</KxButton>
 
-			<span :class="$style.title">
+			<span :class='$style.title'>
 				{{ title }}
 			</span>
 
-			<slot name="actions"/>
+			<slot name='actions'/>
 		</div>
 
 		<slot></slot>

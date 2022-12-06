@@ -12,5 +12,5 @@ export const Autofocus: Story = () => ({
 		<p></p>
 		<input v-if="visible" v-autofocus>
 	`,
-	data:() =>({ visible: false }),
+	data: () =>({ visible: false }),
 });

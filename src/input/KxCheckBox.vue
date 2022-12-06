@@ -5,30 +5,30 @@
 -->
 <template>
 	<label
-		class="kx-check-box"
-		:class="{ disabled }"
-		role="checkbox"
-		:aria-checked="modelValue.toString()"
-		:aria-disabled="disabled"
+		class='kx-check-box'
+		:class='{ disabled }'
+		role='checkbox'
+		:aria-checked='modelValue.toString()'
+		:aria-disabled='disabled'
 	>
 		<input
-			type="checkbox"
-			class="check-box-input"
-			:disabled="disabled"
-			aria-hidden="true"
-			:value="modelValue"
-			@change="handleChange"
+			type='checkbox'
+			class='check-box-input'
+			:disabled='disabled'
+			aria-hidden='true'
+			:value='modelValue'
+			@change='handleChange'
 		>
 
 		<span
-			class="check-box-mark"
-			:class="{ checked: modelValue }"
+			class='check-box-mark'
+			:class='{ checked: modelValue }'
 		/>
 
 		<!-- 如果有内容，则用 span 包裹住添加样式 -->
 		<span
-			v-if="$slots.default"
-			class="check-box-text"
+			v-if='$slots.default'
+			class='check-box-text'
 		>
 			<slot></slot>
 		</span>

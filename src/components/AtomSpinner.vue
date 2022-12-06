@@ -4,11 +4,11 @@
 	Copyright (c) 2018 Epicmax LLC
 -->
 <template>
-	<div :class="$style.spinner">
-		<div :class="$style.line"></div>
-		<div :class="$style.line"></div>
-		<div :class="$style.line"></div>
-		<div :class="$style.dot">&#9679;</div>
+	<div :class='$style.spinner'>
+		<div :class='$style.line'></div>
+		<div :class='$style.line'></div>
+		<div :class='$style.line'></div>
+		<div :class='$style.dot'>&#9679;</div>
 	</div>
 </template>
 

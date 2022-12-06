@@ -1,23 +1,23 @@
 <template>
 	<div
-		:class="[
+		:class='[
 			$style.container,
 			$style[MessageType[type]]
-		]"
-		@mouseenter="handleHover"
-		@mouseleave="handleLeave"
+		]'
+		@mouseenter='handleHover'
+		@mouseleave='handleLeave'
 	>
 		<component
-			:is="iconMap[type]"
-			:class="$style.icon"
+			:is='iconMap[type]'
+			:class='$style.icon'
 		/>
-		<div :class="$style.body">
+		<div :class='$style.body'>
 			{{ content }}
 		</div>
 		<KxButton
-			:class="$style.close"
-			type="icon"
-			title="关闭"
+			:class='$style.close'
+			type='icon'
+			title='关闭'
 			@click='emit("close")'
 		>
 			<CloseIcon/>

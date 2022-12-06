@@ -1,10 +1,10 @@
 <template>
-	<div :class="$style.container">
+	<div :class='$style.container'>
 		<KxToast
-			v-for="(data, i) of stack"
-			:key="data.id"
-			v-bind="data"
-			@close="close(i)"
+			v-for='(data, i) of stack'
+			:key='data.id'
+			v-bind='data'
+			@close='close(i)'
 		/>
 	</div>
 </template>

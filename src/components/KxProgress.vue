@@ -3,7 +3,7 @@
 	https://github.com/hilongjw/vue-progressbar
 -->
 <template>
-	<div :class="[$style.progress, {[$style.error]: hasError}]" :style="style"></div>
+	<div :class='[$style.progress, {[$style.error]: hasError}]' :style='style'></div>
 </template>
 
 <script setup lang="ts">

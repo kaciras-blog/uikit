@@ -1,10 +1,10 @@
 <template>
-	<div :class="$style.box">
-		<img :class="$style.avatar" alt="avatar" :src="avatar"/>
-		<div :class="$style.header">
-			<span :class="$style.name">{{ name }}</span>
+	<div :class='$style.box'>
+		<img :class='$style.avatar' alt='avatar' :src='avatar'/>
+		<div :class='$style.header'>
+			<span :class='$style.name'>{{ name }}</span>
 		</div>
-		<div :class="$style.content">{{ content }}</div>
+		<div :class='$style.content'>{{ content }}</div>
 	</div>
 </template>
 

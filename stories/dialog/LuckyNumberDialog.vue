@@ -1,8 +1,8 @@
 <template>
 	<KxBaseDialog
-		title="算算你的幸运数字"
-		:click-to-close="true"
-		:draggable="true"
+		title='算算你的幸运数字'
+		:click-to-close='true'
+		:draggable='true'
 		:style="{ width: '20rem' }"
 	>
 		<p>
@@ -12,25 +12,25 @@
 			<span>年龄：</span>{{ age }}
 		</p>
 
-		<p :class="$style.tip">
+		<p :class='$style.tip'>
 			(点击背景可以关闭窗口)
 		</p>
 
 		<div
-			:class="$style.buttons"
-			class="btn-group"
+			:class='$style.buttons'
+			class='btn-group'
 		>
 			<KxButton
-				type="outline"
-				color="second"
-				@click="inputDialog"
+				type='outline'
+				color='second'
+				@click='inputDialog'
 			>
 				输入信息
 			</KxButton>
 			<KxButton
-				type="outline"
-				color="primary"
-				@click="showResult"
+				type='outline'
+				color='primary'
+				@click='showResult'
 			>
 				计算！
 			</KxButton>

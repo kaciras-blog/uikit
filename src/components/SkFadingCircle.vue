@@ -4,19 +4,19 @@
 	Copyright (c) 2020 Tobias Ahlin
  -->
 <template>
-	<div :class="$style.container">
-		<div :class="$style.cycle"></div>
-		<div :class="$style.cycle"></div>
-		<div :class="$style.cycle"></div>
-		<div :class="$style.cycle"></div>
-		<div :class="$style.cycle"></div>
-		<div :class="$style.cycle"></div>
-		<div :class="$style.cycle"></div>
-		<div :class="$style.cycle"></div>
-		<div :class="$style.cycle"></div>
-		<div :class="$style.cycle"></div>
-		<div :class="$style.cycle"></div>
-		<div :class="$style.cycle"></div>
+	<div :class='$style.container'>
+		<div :class='$style.cycle'></div>
+		<div :class='$style.cycle'></div>
+		<div :class='$style.cycle'></div>
+		<div :class='$style.cycle'></div>
+		<div :class='$style.cycle'></div>
+		<div :class='$style.cycle'></div>
+		<div :class='$style.cycle'></div>
+		<div :class='$style.cycle'></div>
+		<div :class='$style.cycle'></div>
+		<div :class='$style.cycle'></div>
+		<div :class='$style.cycle'></div>
+		<div :class='$style.cycle'></div>
 	</div>
 </template>
 

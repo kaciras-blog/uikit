@@ -1,28 +1,28 @@
 <template>
-	<KxBaseDialog title="请输入一些信息">
-		<form id="result">
-			<label for="name">
+	<KxBaseDialog title='请输入一些信息'>
+		<form id='result'>
+			<label for='name'>
 				你的名字
 			</label>
 			<input
-				id="name"
-				v-model.trim="data.name"
-				placeholder="某某某"
+				id='name'
+				v-model.trim='data.name'
+				placeholder='某某某'
 			/>
 
-			<label for="age">
+			<label for='age'>
 				年龄
 			</label>
 			<input
-				id="age"
-				type="number"
-				v-model.number="data.age"
+				id='age'
+				type='number'
+				v-model.number='data.age'
 			/>
 		</form>
 
 		<KxDialogButtons
-			@accept="ok"
-			@cancel="$dialog.close"
+			@accept='ok'
+			@cancel='$dialog.close'
 		/>
 	</KxBaseDialog>
 </template>

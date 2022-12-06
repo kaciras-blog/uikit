@@ -4,24 +4,24 @@
 -->
 <template>
 	<label
-		class="kx-radio-box"
-		role="radio"
-		:aria-checked="checked.toString()"
-		:aria-disabled="disabled"
+		class='kx-radio-box'
+		role='radio'
+		:aria-checked='checked.toString()'
+		:aria-disabled='disabled'
 	>
 		<input
-			class="radio-box-input"
-			type="radio"
-			:name="groupProps.name"
-			:disabled="disabled"
-			:checked="checked"
-			@change="handleInput"
+			class='radio-box-input'
+			type='radio'
+			:name='groupProps.name'
+			:disabled='disabled'
+			:checked='checked'
+			@change='handleInput'
 		>
 		<span
-			class="radio-box-mark"
-			:class="{ checked, disabled }"
+			class='radio-box-mark'
+			:class='{ checked, disabled }'
 		/>
-		<span class="radio-box-label"><slot/></span>
+		<span class='radio-box-label'><slot/></span>
 	</label>
 </template>
 

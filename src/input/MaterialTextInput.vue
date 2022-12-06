@@ -2,14 +2,14 @@
 	玩玩 Material Disign 的样式
 -->
 <template>
-	<label :class="$style.container">
-		<span :class="$style.label">{{ label }}</span>
+	<label :class='$style.container'>
+		<span :class='$style.label'>{{ label }}</span>
 		<input
-			:class="$style.input"
-			:name="name"
-			:disabled="disabled"
-			:placeholder="placeholder"
-			:value="modelValue"
+			:class='$style.input'
+			:name='name'
+			:disabled='disabled'
+			:placeholder='placeholder'
+			:value='modelValue'
 			@input="e => $emit('update:modelValue', e.target.value)"
 		>
 	</label>
