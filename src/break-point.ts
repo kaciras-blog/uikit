@@ -26,6 +26,8 @@ export const useMQStore = defineStore("breakPoint", {
 	state: () => ({ width: 999999 }),
 });
 
+const kBreakPoint = Symbol("BreakPoint");
+
 /**
  * 监听 window.matchMedia() 的 change 事件，在窗口大小改变时调整断点。
  * 该函数只能在浏览器环境下使用。
@@ -139,7 +141,7 @@ export class BreakPointAPI {
  * 注意 vueuse 里也有个很像的 useBreakPoints，不要搞混了。
  */
 export function useBreakPoint() {
-	return inject<BreakPointAPI>("breakPoint")!;
+	return inject<BreakPointAPI>(kBreakPoint)!;
 }
 
 /**
@@ -154,5 +156,5 @@ export default function install(app: App) {
 
 	const breakPoint = new BreakPointAPI(globals);
 	globals.$bp = breakPoint;
-	app.provide("breakPoint", breakPoint);
+	app.provide(kBreakPoint, breakPoint);
 }

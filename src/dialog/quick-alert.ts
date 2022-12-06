@@ -4,6 +4,9 @@ import KxMessageBox from "./KxMessageBox.vue";
 
 export { QuickDialogController, DialogSession, MessageType };
 
+const kDialog = Symbol("Dialog");
+const kToast = Symbol("Toast");
+
 /**
  * KxMessageBox 的 Props 类型，因为 Vue 的编译器 bug 只能复制出来：
  * https://github.com/vuejs/vue-next/issues/4918
@@ -63,7 +66,7 @@ export class KxDialogAPI extends QuickDialogController {
 }
 
 export function useDialog() {
-	const value = inject<KxDialogAPI>("$dialog");
+	const value = inject<KxDialogAPI>(kDialog);
 	if (process.env.NODE_ENV === "production" || value) {
 		return value!;
 	}
@@ -71,7 +74,7 @@ export function useDialog() {
 }
 
 export function useToast() {
-	const value = inject<ToastController>("$toast");
+	const value = inject<ToastController>(kToast);
 	if (process.env.NODE_ENV === "production" || value) {
 		return value!;
 	}
@@ -82,8 +85,8 @@ export default function (app: App) {
 	const $dialog = new KxDialogAPI();
 	const $toast = new ToastController();
 
-	app.provide("$dialog", $dialog);
-	app.provide("$toast", $toast);
+	app.provide(kDialog, $dialog);
+	app.provide(kToast, $toast);
 
 	// 加入全局属性，以兼容选项型组件。
 	app.config.globalProperties.$dialog = $dialog;
