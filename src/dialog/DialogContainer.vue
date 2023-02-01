@@ -16,10 +16,11 @@
 </template>
 
 <script setup lang="ts">
-import { inject, onBeforeUpdate, shallowReactive } from "vue";
+import { onBeforeUpdate, shallowReactive } from "vue";
 import { useEventListener } from "@vueuse/core";
 import { uniqueKey } from "../common";
-import { DialogOptions, DialogResult, QuickDialogController } from "./core";
+import { DialogOptions, DialogResult } from "./core";
+import { useDialog } from "./quick-alert";
 
 interface InternalOptions extends DialogOptions<unknown> {
 	id: number;
@@ -138,10 +139,5 @@ if (isMobile) {
 	useEventListener(window, "popstate", syncHistory);
 }
 
-// 这里不用 useDialog()，引用链更清晰。
-const controller = inject<QuickDialogController>("$dialog")!;
-if (!controller) {
-	throw new Error("必须将 QuickAlert 插件注册到 Vue 实例");
-}
-controller.connect({ push, close, clear });
+useDialog().connect({ push, close, clear });
 </script>

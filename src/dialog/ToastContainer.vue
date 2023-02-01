@@ -10,10 +10,11 @@
 </template>
 
 <script setup lang="ts">
-import { inject, shallowReactive } from "vue";
+import { shallowReactive } from "vue";
 import { uniqueKey } from "../common";
-import { ToastController, ToastProps } from "./core";
+import { ToastProps } from "./core";
 import KxToast from "./KxToast.vue";
+import { useToast } from "./quick-alert";
 
 interface InternalToastProps extends ToastProps {
 	id: number;
@@ -34,12 +35,7 @@ function push(options: ToastProps) {
 	stack.push(options as InternalToastProps);
 }
 
-const controller = inject<ToastController>("$toast");
-if (!controller) {
-	throw new Error("必须将 QuickAlert 插件注册到 Vue 实例");
-}
-
-controller.mountPoint = { push, clear };
+useToast().mountPoint = { push, clear };
 </script>
 
 <style module lang="less">
