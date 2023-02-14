@@ -92,11 +92,17 @@
 		counter-increment: index;
 		margin-bottom: .75em;
 
-		&:first-child::before { background: @color-second; }
+		&:first-child::before {
+			background: @color-second;
+		}
 
-		&:nth-child(2)::before { background: lighten(@color-second, 10%); }
+		&:nth-child(2)::before {
+			background: lighten(@color-second, 10%);
+		}
 
-		&:nth-child(3)::before { background: lighten(@color-second, 20%); }
+		&:nth-child(3)::before {
+			background: lighten(@color-second, 20%);
+		}
 
 		&::before {
 			content: counter(index);

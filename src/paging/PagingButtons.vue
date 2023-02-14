@@ -24,19 +24,18 @@ const defaultTheme = {
 
 const textTheme = {
 	button($style, emit, page, content, link, active) {
+		if (active) {
+			return h("span", { class: [$style.text, $style.active] }, content);
+		}
 		const data = {
+			// 需要有 href 属性使按钮能被聚焦。
+			href: link ? link(page) : "#",
 			class: $style.text,
 			onClick(event) {
 				event.preventDefault();
 				emit("show-page", page);
 			},
 		};
-		if (active) {
-			return h("span", { class: [$style.text, $style.active] }, content);
-		}
-		if (link) {
-			data.href = link(page);
-		}
 		return h("a", data, content);
 	},
 
@@ -173,8 +172,7 @@ export default PagingButtons;
 .text {
 	padding: 0 4px;
 
-	&:hover,
-	:focus {
+	&:hover, &:focus {
 		color: @color-second;
 	}
 

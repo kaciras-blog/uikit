@@ -25,7 +25,7 @@ body {
 	font-size: 14px;
 }
 
-//去除标题的上间隔
+// 去除标题的上间隔
 h1, h2, h3, h4, h5, h6 {
 	margin-top: 0;
 }
@@ -56,14 +56,14 @@ hr {
 	border-bottom-width: 1px;
 }
 
-// 这东西主要用来批量禁用 input，样式就不要了。
+// 这东西主要拿来批量禁用 input，样式就不要了。
 fieldset {
 	min-width: 0;
 	padding: 0;
 	border: none;
 }
 
-.input, input {
+:where(.input, input, textarea) {
 	--shadow-color: #a8e8ff;
 
 	padding: 0.4rem 0.5rem;
