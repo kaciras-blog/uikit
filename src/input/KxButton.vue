@@ -8,13 +8,13 @@ const KxButton: FunctionalComponent<any> = (props, context) => {
 
 	const $style = useCssModule();
 
+	// Vue 还会在底层做 inheritAttrs，不用在此添加 attrs.class。
 	const data: any = {
 		...attrs,
 		class: [
 			"kx-btn",
 			$style[color],
 			$style[type],
-			attrs.class,
 		],
 	};
 
