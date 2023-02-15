@@ -2,7 +2,7 @@
 import { defineConfig } from "vite";
 import svgSfc from "vite-plugin-svg-sfc";
 import vue from "@vitejs/plugin-vue";
-import { dependencies } from "./package.json" assert { type: "json" };
+import packageJson from "./package.json" assert { type: "json" };
 
 /*
  * 【已经试过的库】
@@ -28,7 +28,7 @@ export default defineConfig(({ mode }) => ({
 			fileName: () => "index.js",
 		},
 		rollupOptions: {
-			external: Object.keys(dependencies),
+			external: Object.keys(packageJson.dependencies),
 		},
 	},
 	css: {
