@@ -5,6 +5,7 @@ import AtomSpinner from "./components/AtomSpinner.vue";
 import SkFadingCircle from "./components/SkFadingCircle.vue";
 import KxProgress from "./components/KxProgress.vue";
 import SmartLink from "./components/SmartLink.vue";
+import RelativeTime from "./components/RelativeTime.vue";
 import KxCheckBox from "./input/KxCheckBox.vue";
 import KxRadioBox from "./input/KxRadioBox.vue";
 import KxSelect from "./input/KxSelect.vue";
@@ -54,6 +55,7 @@ export {
 	SkFadingCircle,
 	PagingButtons,
 	SmartLink,
+	RelativeTime,
 	ScrollPager,
 	ScrollPagingView,
 	ButtonPagingView,
@@ -83,6 +85,7 @@ export {
 export function registerComponents(app: App) {
 	app.component("AtomSpinner", AtomSpinner);
 	app.component("SmartLink", SmartLink);
+	app.component("RelativeTime", RelativeTime);
 	app.component("SkFadingCircle", SkFadingCircle);
 	app.component("PagingButtons", PagingButtons);
 	app.component("ScrollPager", ScrollPager);
