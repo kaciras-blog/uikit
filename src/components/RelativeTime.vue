@@ -42,9 +42,15 @@ const divisions: any = [
 </script>
 
 <script setup lang='ts'>
-import { computed } from "vue";
+import { computed, shallowRef, toRef } from "vue";
+import { useIntervalFn } from "@vueuse/core";
 
 interface RelativeTimeProps {
+	/**
+	 * 自动刷新间隔（毫秒），默认为 0 代表禁用。
+	 */
+	autoRefresh?: number;
+
 	/**
 	 * 如果时差（秒）大于该值，直接显示时刻，否则显示格式化后的时差。
 	 *
@@ -59,8 +65,15 @@ interface RelativeTimeProps {
 }
 
 const props = withDefaults(defineProps<RelativeTimeProps>(), {
+	autoRefresh: 0,
 	threshold: 31536e+3, // 1 年
 });
+
+const now = shallowRef(Date.now());
+
+// 每个实例都会添加一个定时器，数量多了会不会有性能问题？
+// useNow() 不支持响应式 interval 参数。
+useIntervalFn(() => now.value = Date.now(), toRef(props, "autoRefresh"));
 
 const date = computed(() => {
 	const { value } = props;
@@ -70,7 +83,7 @@ const date = computed(() => {
 const title = computed(() => dateTimeMinute.format(date.value));
 
 const text = computed(() => {
-	let duration = date.value.getTime() - new Date().getTime();
+	let duration = date.value.getTime() - now.value;
 
 	const sign = duration >= 0 ? 1 : -1;
 	duration = Math.abs(duration / 1000);

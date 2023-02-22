@@ -8,12 +8,19 @@ export default {
 	},
 	argTypes: {
 		value: {
-			control: { type: "date" },
+			control: { 
+				type: "date",
+			},
+			autoRefresh: { 
+				type: "number",
+				min: 0,
+				step: 10,
+			},
 		},
 	},
 };
 
-export const RelativeTime: Story = ({ value }) => ({
-	data: () => ({ value }),
-	template: "<RelativeTime :value='value'/>",
+export const RelativeTime: Story = args => ({
+	data: () => ({ args }),
+	template: "<RelativeTime v-bind='args'/>",
 });
