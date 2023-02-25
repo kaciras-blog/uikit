@@ -13,6 +13,7 @@
 	],
 	"main": "dist/index.js",
 	"types": "src/index.ts",
+	"sideEffects": false,
 	"scripts": {
 		"storybook": "start-storybook",
 		"build-storybook": "build-storybook -o .out",
