@@ -110,11 +110,13 @@
 			<div :class='$style.right_buttons'>
 				<KxButton
 					color='second'
-					@click='$dialog.close()'
+					@click='$dialog.close'
 				>
 					取消
 				</KxButton>
-				<KxButton @click='$dialog.confirm()'>跳过</KxButton>
+				<KxButton @click='$dialog.confirm'>
+					跳过
+				</KxButton>
 				<KxButton @click='ok'>确定</KxButton>
 			</div>
 		</div>
