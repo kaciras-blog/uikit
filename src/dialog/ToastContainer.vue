@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { shallowReactive } from "vue";
-import { uniqueKey } from "../common";
+import { uniqueId } from "@kaciras/utilities/browser";
 import { ToastProps } from "./core";
 import KxToast from "./KxToast.vue";
 import { useToast } from "./quick-alert";
@@ -31,7 +31,7 @@ function clear() {
 }
 
 function push(options: ToastProps) {
-	(options as InternalToastProps).id = uniqueKey();
+	(options as InternalToastProps).id = uniqueId();
 	stack.push(options as InternalToastProps);
 }
 

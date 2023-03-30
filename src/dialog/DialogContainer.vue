@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import { onBeforeUpdate, shallowReactive } from "vue";
 import { useEventListener } from "@vueuse/core";
-import { uniqueKey } from "../common";
+import { uniqueId } from "@kaciras/utilities/browser";
 import { DialogOptions, DialogResult } from "./core";
 import { useDialog } from "./quick-alert";
 
@@ -98,7 +98,7 @@ function closeDialog(config: InternalOptions, result = DialogResult.CANCELED) {
  * @param config 弹出层会话
  */
 function push(config: InternalOptions) {
-	const id = uniqueKey();
+	const id = uniqueId();
 	config.id = id;
 	stack.push(config);
 

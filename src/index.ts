@@ -43,7 +43,6 @@ export * from "./composition";
 export * from "./dragging";
 export * from "./media-resolution";
 export * from "./scroll";
-export * from "./interactive";
 
 export { default as PromiseDelegate } from "./PromiseDelegate";
 export { default as PromiseSource } from "./PromiseSource";

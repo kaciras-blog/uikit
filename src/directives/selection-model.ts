@@ -1,6 +1,6 @@
 import { DirectiveBinding } from "vue";
 import bindDirective from "./selection-bind";
-import { addSelectionChangeListener } from "../interactive";
+import { addSelectionChangeListener } from "../common";
 
 /**
  * TODO: Vue3 实现自定义 v-model 需要扩展编译器，目前考虑中。

@@ -1,22 +1,3 @@
-let uniqueKeyCounter = 1;
-
-/**
- * Generate a unique number, it can be used as the key prop in React element.
- */
-export function uniqueKey() {
-	return uniqueKeyCounter += 1;
-}
-
-/**
- * 返回一个Promise，在指定的时间后完成，可用于模拟耗时的操作。
- *
- * @param time 时间，毫秒
- * @return 在指定的时间后完成的 Promise
- */
-export function sleep(time: number) {
-	return new Promise(resolve => setTimeout(resolve, time));
-}
-
 /**
  * 判断事件是触摸事件还是鼠标事件。
  * 桌面的 Firefox 中没有 TouchEvent，故不能用 instanceof。
@@ -28,20 +9,44 @@ export function isTouchEvent(e: MouseEvent | TouchEvent): e is TouchEvent {
 	return e.constructor.name === "TouchEvent";
 }
 
+type SelectionElement = HTMLTextAreaElement | HTMLInputElement;
+
+export type SelectionChangeHandler = (start: number, end: number) => void;
+
 /**
- * 将 Blob 对象转为 base64 编码的 Data-URL 字符串。
+ * 监听文本框光标位置和选区的改变。
  *
- * 【其他方案】
- * 如果不需要持久化，使用 URL.createObjectURL + URL.revokeObjectURL 性能更好。
+ * 【焦点离开的处理】
+ * 没有监听焦点离开事件，因为调用方对离开的处理方式可能不一样。
  *
- * @param blob Blob 对象
- * @return Data-URL 字符串
+ * @param el 文本框元素
+ * @param handler 监听处理函数
+ * @return 取消监听的函数
  */
-export function blobToURL(blob: Blob) {
-	return new Promise<string>((resolve, reject) => {
-		const reader = new FileReader();
-		reader.onerror = reject;
-		reader.onloadend = () => resolve(reader.result as string);
-		reader.readAsDataURL(blob);
-	});
+export function addSelectionChangeListener(el: SelectionElement, handler: SelectionChangeHandler) {
+	let oS = el.selectionStart;
+	let oE = el.selectionEnd;
+
+	function handleSelect() {
+		const { selectionStart, selectionEnd } = el;
+		if (oS !== selectionStart || oE !== selectionEnd) {
+			oS = selectionStart;
+			oE = selectionEnd;
+			handler(selectionStart!, selectionEnd!);
+		}
+	}
+
+	el.addEventListener("select", handleSelect);	// 移动端和 PC 端的选择结束
+	el.addEventListener("click", handleSelect);		// 点击改变光标位置
+	el.addEventListener("input", handleSelect);		// 增删内容改变光标位置
+	el.addEventListener("keydown", handleSelect);	// 移动光标的键按住不放
+	el.addEventListener("keyup", handleSelect);		// 处理键盘移动的边界问题
+
+	return () => {
+		el.removeEventListener("select", handleSelect);
+		el.removeEventListener("click", handleSelect);
+		el.removeEventListener("input", handleSelect);
+		el.removeEventListener("keydown", handleSelect);
+		el.removeEventListener("keyup", handleSelect);
+	};
 }

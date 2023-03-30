@@ -1,5 +1,5 @@
 import { Story } from "@storybook/vue3";
-import { openFile } from "@";
+import { selectFile } from "@kaciras/utilities/browser";
 import ImageCropperVue from "@/dialog/ImageCropper.vue";
 
 export default {
@@ -54,7 +54,7 @@ export const ImageCropper: Story = () => ({
 	},
 	methods: {
 		async showCropper() {
-			const image = await openFile("image/*");
+			const [image] = await selectFile("image/*");
 			const cropper = this.$dialog.show(ImageCropperVue, {
 				image,
 				aspectRatio: 16 / 9,
