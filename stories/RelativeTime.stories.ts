@@ -1,4 +1,4 @@
-import { Story } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3";
 import RelativeTimeVue from "@/components/RelativeTime.vue";
 
 export default {
@@ -20,7 +20,7 @@ export default {
 	},
 };
 
-export const RelativeTime: Story = args => ({
+export const RelativeTime: StoryFn = args => ({
 	data: () => ({ args }),
 	template: "<RelativeTime v-bind='args'/>",
 });

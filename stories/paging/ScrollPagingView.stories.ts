@@ -1,4 +1,4 @@
-import { Story } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3";
 import { getQuotes } from "../data";
 import ListItem from "./ListItem.vue";
 import ScrollPagingViewVue from "@/paging/ScrollPagingView.vue";
@@ -23,7 +23,7 @@ export default {
 	},
 };
 
-export const ScrollPagingView: Story = (args) => ({
+export const ScrollPagingView: StoryFn = (args) => ({
 	components: { ListItem },
 	template: `
 		<ScrollPagingView
@@ -31,9 +31,9 @@ export const ScrollPagingView: Story = (args) => ({
 			v-model="model"
 			:loader="load"
 		>
-		<template v-slot="{ items }">
-			<ListItem v-for="v in items" :key="v.id" v-bind="v"/>
-		</template>
+			<template v-slot="{ items }">
+				<ListItem v-for="v in items" :key="v.id" v-bind="v"/>
+			</template>
 		</ScrollPagingView>
 	`,
 	data() {
@@ -49,6 +49,9 @@ export const ScrollPagingView: Story = (args) => ({
 			if (this.loadTimes >= args.mockErrorAt) {
 				throw new Error("Mocked Error");
 			}
+
+			await new Promise(resolve => setTimeout(resolve, 1000));
+
 			const { total } = args;
 			const count = Math.min(total - start, size);
 			this.loadTimes++;

@@ -1,4 +1,4 @@
-import { Story } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3";
 import { ref } from "vue";
 import MaterialTextInput from "@/input/MaterialTextInput.vue";
 
@@ -23,7 +23,7 @@ export default {
 	},
 };
 
-export const Password: Story = args => ({
+export const Password: StoryFn = args => ({
 	template: `
 		<MaterialTextInput v-model="value" v-bind="args"/>
 	`,

@@ -1,4 +1,4 @@
-import { Story } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3";
 import { action } from "@storybook/addon-actions";
 import { MessageType } from "@/dialog/core";
 import KxMessageBox from "@/dialog/KxMessageBox.vue";
@@ -20,7 +20,7 @@ export default {
 	},
 };
 
-export const MessageBox: Story = (args) => ({
+export const MessageBox: StoryFn = (args) => ({
 	template: `
 		<KxButton @click="show">显示消息框</KxButton>
 		<DialogContainer/>

@@ -1,11 +1,11 @@
-import { Story } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3";
 import KxProgress from "@/components/KxProgress.vue";
 
 export default {
 	component: KxProgress,
 };
 
-export const Progress: Story = () => ({
+export const Progress: StoryFn = () => ({
 	template: `
 		<KxProgress ref="progress"/>
 		<p>

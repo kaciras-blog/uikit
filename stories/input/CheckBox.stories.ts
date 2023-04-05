@@ -1,4 +1,4 @@
-import { Story } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3";
 import { ref } from "vue";
 import KxCheckBox from "@/input/KxCheckBox.vue";
 
@@ -14,7 +14,7 @@ export default {
 	},
 };
 
-export const CheckBox: Story = args => ({
+export const CheckBox: StoryFn = args => ({
 	template: `
 		<p>
 			modelValue: {{ value }}

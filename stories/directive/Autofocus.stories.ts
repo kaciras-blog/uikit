@@ -1,8 +1,10 @@
-import { Story } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3";
 
-export default {};
+export default {
+	title: "Autofocus",
+};
 
-export const Autofocus: Story = () => ({
+export const Autofocus: StoryFn = () => ({
 	template: `
 		<KxButton 
 			@click="visible = !visible"

@@ -1,6 +1,9 @@
 import { vImeInput } from "../../src";
 
-export default {};
+export default {
+	title: "ImeInput",
+
+};
 
 export const ImeInput = () => ({
 	directives: {

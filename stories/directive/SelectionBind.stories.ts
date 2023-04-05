@@ -1,6 +1,9 @@
 import { vBindSelection } from "../../src";
 
-export default {};
+export default {
+	title: "SelectionChange",
+
+};
 
 export const SelectionBind = () => ({
 	directives: {

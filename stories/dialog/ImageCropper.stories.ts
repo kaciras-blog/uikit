@@ -1,4 +1,4 @@
-import { Story } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3";
 import { selectFile } from "@kaciras/utilities/browser";
 import ImageCropperVue from "@/dialog/ImageCropper.vue";
 
@@ -6,7 +6,7 @@ export default {
 	component: ImageCropperVue,
 };
 
-export const ImageCropper: Story = () => ({
+export const ImageCropper: StoryFn = () => ({
 	template: `
 		<div class="crop-image">
 			<KxButton @click="showCropper">

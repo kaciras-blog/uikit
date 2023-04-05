@@ -10,7 +10,7 @@ import packageJson from "./package.json" assert { type: "json" };
  */
 
 export default defineConfig(({ mode }) => ({
-	plugins: [vue(), svgSfc()],
+	plugins: [svgSfc(), vue()],
 	test: {
 		environment: "happy-dom",
 		clearMocks: true,
@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => ({
 			entry: "src/index.ts",
 			name: "ui-kit",
 			formats: ["es"],
-			fileName: () => "index.js",
+			fileName: "index.js",
 		},
 		rollupOptions: {
 			external: Object.keys(packageJson.dependencies),

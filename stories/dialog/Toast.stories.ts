@@ -1,4 +1,4 @@
-import { Story } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3";
 import { MessageType } from "@";
 import ToastComponent from "@/dialog/KxToast.vue";
 
@@ -6,7 +6,7 @@ export default {
 	component: ToastComponent,
 };
 
-export const Toast: Story = () => ({
+export const Toast: StoryFn = () => ({
 	template: `
 		<KxButton @click="show">
 			显示气泡通知

@@ -1,9 +1,11 @@
-import { Story } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3";
 import { syncScroll } from "@";
 
-export default {};
+export default {
+	title: "Scroll",
+};
 
-export const SyncScroll: Story = () => ({
+export const SyncScroll: StoryFn = () => ({
 	template: `
 		<div class="sync-scroll">
 			<textarea ref="a" :value="content"/>

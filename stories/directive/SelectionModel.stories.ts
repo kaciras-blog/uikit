@@ -1,9 +1,12 @@
-import { Story } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3";
 import { vSelectionModel } from "../../src";
 
-export default {};
+export default {
+	title: "SelectionModel",
 
-export const SelectionModel: Story = () => ({
+};
+
+export const SelectionModel: StoryFn = () => ({
 	template: `
 		<textarea
 			v-selection-model.focus="'selection'"

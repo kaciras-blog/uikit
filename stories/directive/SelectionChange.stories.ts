@@ -1,7 +1,10 @@
 import { ref } from "vue";
 import { vSelectionChange } from "../../src";
 
-export default {};
+export default {
+	title: "SelectionBind",
+
+};
 
 export const SelectionChange = () => ({
 	directives: {

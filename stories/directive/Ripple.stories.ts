@@ -1,7 +1,9 @@
-import { Story } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3";
 import { vRipple } from "../../src";
 
 export default {
+	title: "Ripple",
+
 	args: {
 		centered: false,
 		circle: false,
@@ -16,7 +18,7 @@ export default {
 	},
 };
 
-export const Ripple: Story = (args) => ({
+export const Ripple: StoryFn = (args) => ({
 	data: () => args,
 	directives: {
 		ripple: vRipple,

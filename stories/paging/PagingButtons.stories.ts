@@ -1,4 +1,4 @@
-import { Story } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3";
 import { action } from "@storybook/addon-actions";
 import PagingButtons from "@/paging/PagingButtons.vue";
 
@@ -15,7 +15,7 @@ export default {
 	},
 };
 
-const render: Story = (args) => ({
+const render: StoryFn = (args) => ({
 	template: `
 		<PagingButtons v-bind="args" :page-link=pageLink @show-page="showPage"/>
 	`,

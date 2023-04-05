@@ -1,4 +1,4 @@
-import { Args, Story } from "@storybook/vue3";
+import { Args, StoryFn } from "@storybook/vue3";
 import { action } from "@storybook/addon-actions";
 import { h } from "vue";
 import TrashIcon from "bootstrap-icons/icons/trash.svg?sfc";
@@ -7,7 +7,7 @@ import ArrowHeartIcon from "bootstrap-icons/icons/arrow-through-heart-fill.svg?s
 import KxButton from "@/input/KxButton.vue";
 
 export default {
-	component: KxButton,
+	title: "Button",
 	args: {
 		disabled: false,
 		onClick: action("click"),
@@ -28,7 +28,7 @@ export default {
 };
 
 // 这里按钮的内容包了层函数，避免警告 Non-function value encountered for default slot.
-const render: Story = args => h(KxButton, args, { default: () => "按钮" });
+const render: StoryFn = args => h(KxButton, args, { default: () => "按钮" });
 
 export const Default = {
 	render,

@@ -1,4 +1,4 @@
-import { Story } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3";
 import { getQuotes } from "../data";
 import ListItem from "./ListItem.vue";
 import ButtonPagingViewVue from "@/paging/ButtonPagingView.vue";
@@ -24,7 +24,7 @@ export default {
 	},
 };
 
-export const ButtonPagingView: Story = (args) => ({
+export const ButtonPagingView: StoryFn = (args) => ({
 	components: { ListItem },
 	template: `
 		<ButtonPagingView

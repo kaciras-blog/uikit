@@ -1,5 +1,6 @@
-import { Story } from "@storybook/vue3";
-import { KxTaskButton, sleep } from "@";
+import { StoryFn } from "@storybook/vue3";
+import { sleep } from "@kaciras/utilities/browser";
+import { KxTaskButton } from "@";
 import { noop } from "@vueuse/core";
 
 export default {
@@ -10,7 +11,7 @@ export default {
 	},
 };
 
-const render: Story = args => ({
+const render: StoryFn = args => ({
 	template: `
 		<KxTaskButton 
 			v-bind="args"

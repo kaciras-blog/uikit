@@ -1,9 +1,12 @@
-import { Story } from "@storybook/vue3";
-import { getImageResolution, getVideoResolution, openFile } from "@";
+import { StoryFn } from "@storybook/vue3";
+import { selectFile } from "@kaciras/utilities/browser";
+import { getImageResolution, getVideoResolution } from "@";
 
-export default {};
+export default {
+	title: "HelperFunctions",
+};
 
-export const MediaResolution: Story = () => ({
+export const MediaResolution: StoryFn = () => ({
 	template: `
 		<input v-model="urlInput" placeholder="媒体的URL" style="min-width: 500px">
 		<KxButton @click="showImageURLSize">读取URL</KxButton>
@@ -61,7 +64,7 @@ export const MediaResolution: Story = () => ({
 		},
 
 		async showImageFileSize() {
-			const file = await openFile("image/*,video/*");
+			const [file] = await selectFile("image/*,video/*");
 			this.error = null;
 
 			try {

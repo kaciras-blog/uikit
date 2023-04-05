@@ -1,9 +1,10 @@
-import { Story } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3";
 import { computed, ref } from "vue";
 import { tap } from "rxjs/operators";
 import { EdgeScrollObserver, limitInWindow, moveElement, observeMouseMove } from "@/dragging";
 
 export default {
+	title: "Dragging",
 	args: {
 		size: 80,
 		speed: 0.4,
@@ -24,7 +25,7 @@ export default {
 	},
 };
 
-export const Demo: Story = (args) => ({
+export const Demo: StoryFn = (args) => ({
 	template: `
 		<div id="drag-demo" :style="style">
 			<aside id="drag-demo-labels">

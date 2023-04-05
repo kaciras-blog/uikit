@@ -1,9 +1,11 @@
-import { Story } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3";
 import { useBreakPoint } from "@";
 
-export default {};
+export default {
+	title: "BreakPoint",
+};
 
-export const BreakPoint: Story = () => ({
+export const BreakPoint: StoryFn = () => ({
 	template: `
 		<p>当前视区宽度信息：</p>
 		<p>Current screen: {{ $bp.value }}</p>
