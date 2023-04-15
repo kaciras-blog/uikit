@@ -9,19 +9,18 @@ export default <StorybookConfig>{
 		options: {},
 	},
 	addons: [
-		"@storybook/addon-actions",
+		"@storybook/addon-links",
+		"@storybook/addon-essentials",
+		"@storybook/addon-interactions",
 	],
 	docs: {
 		autodocs: "tag",
 	},
-
 	stories: [
 		// "../stories/**/*.mdx",
 		"../stories/**/*.stories.ts",
 	],
 	viteFinal(config) {
-
-
 		return mergeConfig(config, {
 			resolve: {
 				alias: {

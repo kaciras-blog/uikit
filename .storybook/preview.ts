@@ -1,10 +1,9 @@
-import type { Preview } from "@storybook/vue3";
-import { setup } from "@storybook/vue3";
+import { Preview, setup } from "@storybook/vue3";
 import "../src/css/index.less";
 import "./stories.less";
 import { createMemoryHistory, createRouter } from "vue-router";
 import { createPinia } from "pinia";
-import UIKit, { observeMediaQuery, registerComponents } from "../src/index";
+import UIKit, { observeMediaQuery } from "../src/index";
 
 setup(app => {
 	const pinia = createPinia();
@@ -17,11 +16,10 @@ setup(app => {
 		routes: [],
 		history: createMemoryHistory()
 	}));
-
-	registerComponents(app);
 });
 
-export default <Preview>{
+// <Preview>{...} 无法解析，实测 ESBuild 能处理，不知道哪的问题。
+export default {
 	parameters: {
 		actions: { argTypesRegex: "^on[A-Z].*" },
 		controls: {
@@ -31,4 +29,4 @@ export default <Preview>{
 			},
 		},
 	},
-};
+} satisfies Preview;
