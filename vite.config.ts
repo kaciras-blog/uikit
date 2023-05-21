@@ -25,7 +25,7 @@ export default defineConfig(({ mode }) => ({
 			entry: "src/index.ts",
 			name: "ui-kit",
 			formats: ["es"],
-			fileName: "index.js",
+			fileName: "index",
 		},
 		rollupOptions: {
 			external: Object.keys(packageJson.dependencies),
