@@ -12,6 +12,7 @@
 			:placeholder='placeholder'
 			:required='required'
 			:disabled='disabled'
+			:autocomplete='autocomplete'
 			@input='handleInput'
 		>
 		<KxButton
@@ -38,11 +39,16 @@ interface PasswordInputProps {
 	inputId?: string;
 	disabled?: boolean;
 	required?: boolean;
+	autocomplete?: string;
 	placeholder?: string;
 }
 
+interface PasswordInputEvents {
+	"update:modelValue": [string];
+}
+
 defineProps<PasswordInputProps>();
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits<PasswordInputEvents>();
 
 const visible = ref(false);
 
