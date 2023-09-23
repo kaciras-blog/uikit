@@ -17,12 +17,10 @@
 
 		"jsx": "preserve",
 		"strict": true,
-		"sourceMap": true,
+		"noEmit": true,
 		"useUnknownInCatchVariables": false,
 		"skipLibCheck": true,
 		"resolveJsonModule": true,
-		"allowJs": true,
-		"allowSyntheticDefaultImports": true,
-
+		"allowSyntheticDefaultImports": true
 	}
 }
