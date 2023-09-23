@@ -2,9 +2,9 @@
 	<div><slot/></div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic='T'>
 export interface RadioGroupProps {
-	modelValue: any;
+	modelValue: T;
 	name?: string;
 	disabled?: boolean;
 }

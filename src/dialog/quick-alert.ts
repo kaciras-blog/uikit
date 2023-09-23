@@ -1,23 +1,11 @@
 import { App, inject } from "vue";
 import { DialogSession, MessageType, QuickDialogController, ToastController } from "./core";
-import KxMessageBox from "./KxMessageBox.vue";
+import { default as KxMessageBox, MessageBoxProps } from "./KxMessageBox.vue";
 
 export { QuickDialogController, DialogSession, MessageType };
 
 const kDialog = Symbol("Dialog");
 const kToast = Symbol("Toast");
-
-/**
- * KxMessageBox 的 Props 类型，因为 Vue 的编译器 bug 只能复制出来：
- * https://github.com/vuejs/vue-next/issues/4918
- */
-interface MessageBoxProps {
-	title: string;
-	type: MessageType;
-	content?: string;
-	cancelable?: boolean;
-	closable?: boolean;
-}
 
 /**
  * 全局的弹出层 API，通过调用方法来将组件挂载到 DialogContainer 中，通常用于弹窗。

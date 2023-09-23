@@ -20,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from "vue";
 import ReloadIcon from "bootstrap-icons/icons/arrow-clockwise.svg?sfc";
 import AtomSpinner from "./AtomSpinner.vue";
 

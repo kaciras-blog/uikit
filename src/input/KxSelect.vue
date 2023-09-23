@@ -16,12 +16,12 @@
 	</div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic='T'>
 import { useVModel } from "@vueuse/core";
 import CaretDownIcon from "bootstrap-icons/icons/caret-down-fill.svg?sfc";
 
 export interface SelectProps {
-	modelValue: unknown;
+	modelValue: T;
 }
 
 const props = defineProps<SelectProps>();

@@ -42,12 +42,6 @@
 	</div>
 </template>
 
-<script lang="ts">
-export default {
-	inheritAttrs: false, // 避免警告，虽然不设置也没问题。
-};
-</script>
-
 <script setup lang="ts">
 import { ref } from "vue";
 import CloseIcon from "../assets/icon-close.svg?sfc";
@@ -57,6 +51,8 @@ import { isTouchEvent } from "../common";
 import vAutofocus from "../directives/autofocus";
 import { useDialog } from "./quick-alert";
 import KxButton from "../input/KxButton.vue";
+
+defineOptions({ inheritAttrs: false });
 
 const props = defineProps({
 

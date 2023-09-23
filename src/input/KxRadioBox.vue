@@ -25,11 +25,11 @@
 	</label>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic='T'>
 import { computed, getCurrentInstance } from "vue";
 
 interface RadioBoxProps {
-	value: any;
+	value: T;
 }
 
 const props = defineProps<RadioBoxProps>();

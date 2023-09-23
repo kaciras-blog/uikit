@@ -46,7 +46,7 @@ import KxButton from "../input/KxButton.vue";
 import KxDialogButtons from "./KxDialogButtons.vue";
 import { useDialog } from "./quick-alert";
 
-interface MessageBoxProps {
+export interface MessageBoxProps {
 	title: string;
 	type: MessageType;
 
