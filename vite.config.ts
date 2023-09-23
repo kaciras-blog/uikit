@@ -2,15 +2,15 @@
 import { defineConfig } from "vite";
 import svgSfc from "vite-plugin-svg-sfc";
 import vue from "@vitejs/plugin-vue";
+import dts from "vite-plugin-dts";
 import packageJson from "./package.json" assert { type: "json" };
 
-/*
- * 【已经试过的库】
- * https://github.com/qmhc/vite-plugin-dts 不生成 vue 文件的类型。
- */
-
 export default defineConfig(({ mode }) => ({
-	plugins: [svgSfc(), vue()],
+	plugins: [svgSfc(), vue(), dts({
+		include: "src",
+		rollupTypes: true,
+		staticImport: true,
+	})],
 	test: {
 		environment: "happy-dom",
 		clearMocks: true,
@@ -23,7 +23,6 @@ export default defineConfig(({ mode }) => ({
 		target: "esnext",
 		lib: {
 			entry: "src/index.ts",
-			name: "ui-kit",
 			formats: ["es"],
 			fileName: "index",
 		},

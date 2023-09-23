@@ -8,11 +8,10 @@
 		"url": "https://github.com/kaciras-blog/uikit"
 	},
 	"files": [
-		"src",
 		"dist"
 	],
 	"main": "dist/index.js",
-	"types": "src/index.ts",
+	"types": "dist/index.d.ts",
 	"sideEffects": false,
 	"type": "module",
 	"scripts": {
@@ -54,6 +53,7 @@
 		"typescript": "^5.2.2",
 		"vite": "^4.4.9",
 		"vite-plugin-svg-sfc": "^1.2.1",
+		"vite-plugin-dts": "^3.5.4",
 		"vitest": "^0.34.4"
 	}
 }

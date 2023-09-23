@@ -5,7 +5,7 @@ export type OnRejected<R> = ((reason: any) => R | PromiseLike<R>) | null;
 /**
  * Promise不能直接继承，否则使用await的时候会出错，所以需要用代理的方式来扩展。
  */
-export default abstract class<T> implements Promise<T> {
+export default abstract class PromiseDelegate<T> implements Promise<T> {
 
 	readonly raw: Promise<T>;
 
