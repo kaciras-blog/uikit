@@ -1,7 +1,7 @@
 {
 	"name": "@kaciras-blog/uikit",
 	"description": "Component library for kaciras blog",
-	"version": "2.5.1",
+	"version": "2.6.0",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
