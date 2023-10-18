@@ -24,7 +24,7 @@ it("should render future time in relative", async () => {
 	expect(wrapper.html()).toBe('<time title="2023-02-21 10:13" datetime="2023-02-21T02:13:23.000Z">6天后</time>');
 });
 
-it("should render time that greater than the threshold in absoulate", () => {
+it("should render time that greater than the threshold in absolute", () => {
 	vi.setSystemTime(1676456200_000);
 
 	const wrapper = shallowMount(RelativeTime, {
@@ -32,4 +32,18 @@ it("should render time that greater than the threshold in absoulate", () => {
 	});
 
 	expect(wrapper.html()).toBe('<time title="2019-08-22 5:13" datetime="2019-08-21T21:13:23.000Z">2019-08-22</time>');
+});
+
+it("should update current time on value change", async () => {
+	vi.setSystemTime(1676456200_000);
+
+	const wrapper = shallowMount(RelativeTime, {
+		props: { value: 1671848003_000 },
+	});
+
+	// 模拟全局时间改变后设置 value，textContent 应当能够更新。
+	vi.setSystemTime(1000);
+	await wrapper.setProps({ value: 3000 });
+
+	expect(wrapper.html()).toBe('<time title="1970-01-01 8:00" datetime="1970-01-01T00:00:03.000Z">2秒钟后</time>');
 });

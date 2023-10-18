@@ -42,7 +42,7 @@ const divisions: any = [
 </script>
 
 <script setup lang='ts'>
-import { computed, shallowRef, toRef } from "vue";
+import { computed, shallowRef, watchEffect } from "vue";
 import { useIntervalFn } from "@vueuse/core";
 
 interface RelativeTimeProps {
@@ -69,11 +69,7 @@ const props = withDefaults(defineProps<RelativeTimeProps>(), {
 	threshold: 31536e+3, // 1 年
 });
 
-const now = shallowRef(Date.now());
-
-// 每个实例都会添加一个定时器，数量多了会不会有性能问题？
-// useNow() 不支持响应式 interval 参数。
-useIntervalFn(() => now.value = Date.now(), toRef(props, "autoRefresh"));
+const text = shallowRef("");
 
 const date = computed(() => {
 	const { value } = props;
@@ -82,14 +78,14 @@ const date = computed(() => {
 
 const title = computed(() => dateTimeMinute.format(date.value));
 
-const text = computed(() => {
-	let duration = date.value.getTime() - now.value;
+function refreshText() {
+	let duration = date.value.getTime() - Date.now();
 
 	const sign = duration >= 0 ? 1 : -1;
 	duration = Math.abs(duration / 1000);
 
 	if (duration > props.threshold) {
-		return dateOnly.format(date.value);
+		return text.value = dateOnly.format(date.value);
 	}
 
 	/*
@@ -109,6 +105,10 @@ const text = computed(() => {
 		}
 	}
 	duration = sign * Math.round(duration);
-	return relative.format(duration, divisions[i + 1]);
-});
+	text.value = relative.format(duration, divisions[i + 1]);
+}
+
+watchEffect(refreshText);
+
+useIntervalFn(refreshText, () => props.autoRefresh);
 </script>

@@ -1,5 +1,5 @@
-import { StoryFn } from "@storybook/vue3";
-import RelativeTimeVue from "@/components/RelativeTime.vue";
+import type { Meta } from "@storybook/vue3";
+import RelativeTimeVue from "../src/components/RelativeTime.vue";
 
 export default {
 	component: RelativeTimeVue,
@@ -8,19 +8,18 @@ export default {
 	},
 	argTypes: {
 		value: {
-			control: { 
+			control: {
 				type: "date",
 			},
-			autoRefresh: { 
+		},
+		autoRefresh: {
+			control: {
 				type: "number",
 				min: 0,
 				step: 10,
 			},
 		},
 	},
-};
+} satisfies Meta<typeof RelativeTimeVue>;
 
-export const RelativeTime: StoryFn = args => ({
-	data: () => ({ args }),
-	template: "<RelativeTime v-bind='args'/>",
-});
+export const RelativeTime = {};
