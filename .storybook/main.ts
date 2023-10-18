@@ -21,6 +21,9 @@ export default <StorybookConfig>{
 		"../stories/**/*.stories.ts",
 	],
 	viteFinal(config) {
+		const vueDocgenIndex = config.plugins.findIndex(({ name }) => name === 'storybook:vue-docgen-plugin')
+		if (vueDocgenIndex !== -1) config.plugins.splice(vueDocgenIndex, 1)
+
 		return mergeConfig(config, {
 			resolve: {
 				alias: {

@@ -1,5 +1,4 @@
 import { StoryFn } from "@storybook/vue3";
-import { action } from "@storybook/addon-actions";
 import HookedDialog from "./HookedDialog.vue";
 import LuckyNumber from "./LuckyNumberDialog.vue";
 
@@ -21,26 +20,26 @@ export const Custom: StoryFn = () => ({
 	},
 });
 
-export const Buttons: StoryFn = (args) => ({
-	template: `
-		<div class="mock-dialog">
-			<h1 class="mock-dialog-content">
-				对话框框
-			</h1>
-			<KxDialogButtons
-				:on-apply="applyEvent && apply"
-				:on-cancel="cancelEvent && cancel"
-				:on-accept="acceptEvent && accept"
-			/>
-		</div>
-	`,
-	data: () => args,
-	methods: {
-		apply: action("onApply"),
-		cancel: action("onCancel"),
-		accept: action("onAccept"),
-	},
-});
+// export const Buttons: StoryFn = (args) => ({
+// 	template: `
+// 		<div class="mock-dialog">
+// 			<h1 class="mock-dialog-content">
+// 				对话框框
+// 			</h1>
+// 			<KxDialogButtons
+// 				:on-apply="applyEvent && apply"
+// 				:on-cancel="cancelEvent && cancel"
+// 				:on-accept="acceptEvent && accept"
+// 			/>
+// 		</div>
+// 	`,
+// 	data: () => args,
+// 	methods: {
+// 		apply: action("onApply"),
+// 		cancel: action("onCancel"),
+// 		accept: action("onAccept"),
+// 	},
+// });
 
 Buttons.args = {
 	cancelEvent: true,
