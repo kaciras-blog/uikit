@@ -2,7 +2,7 @@
 	<div
 		class='dialog-backdrop full-vertex'
 		@click.self='onOverlayClick'
-		@keyup.esc='closable && close'
+		@keyup.esc='closable && cancel'
 	>
 		<div
 			class='kx-msgbox'
@@ -17,7 +17,7 @@
 				type='icon'
 				:class='$style.closeIcon'
 				title='关闭'
-				@click='close'
+				@click='cancel'
 			>
 				<CloseIcon/>
 			</KxButton>
@@ -29,8 +29,8 @@
 			<pre v-if='content' :class='$style.content'>{{ content }}</pre>
 
 			<KxDialogButtons
-				:on-cancel='cancelable && close'
-				:on-accept='() => close(true)'
+				:on-accept='accept'
+				:on-cancel='cancelable && cancel'
 			/>
 		</div>
 	</div>
@@ -39,7 +39,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import CloseIcon from "../assets/icon-close.svg?sfc";
-import { DialogResult, MessageType } from "./core";
+import { MessageType } from "./core";
 import vAutoFocus from "../directives/autofocus";
 import DialogIcons from "./DialogIcons.vue";
 import KxButton from "../input/KxButton.vue";
@@ -77,13 +77,13 @@ const dialog = useDialog();
 const dialogZoomIn = ref(true);
 const shaking = ref(false);
 
-function close(isConfirm = false) {
-	dialog.close(new DialogResult(null, isConfirm));
-}
+// 包一层 lambda 以免将 Event 参数给传递出去了。
+const cancel = () => dialog.close();
+const accept = () => dialog.confirm();
 
 function onOverlayClick() {
 	if (props.closable) {
-		close();
+		cancel();
 	} else {
 		// 一个元素不能有多个 animation 属性，要先把进入动画去掉
 		dialogZoomIn.value = false;

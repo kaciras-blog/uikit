@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { shallowMount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import { nextTick } from "vue";
-import { DialogResult, DialogSession, QuickDialogController } from "../src/dialog/core";
+import { DialogResult, DialogSession, MessageType } from "../src/dialog/core";
+import { default as plugin } from "../src/dialog/quick-alert";
 import DialogContainer from "../src/dialog/DialogContainer.vue";
 
 describe("DialogSession", () => {
@@ -20,13 +21,20 @@ describe("DialogSession", () => {
 	});
 });
 
-it("should support clear dialogs", async () => {
-	const $dialog = new QuickDialogController();
-	const wrapper = shallowMount(DialogContainer, {
+function mountContainer() {
+	const wrapper = mount(DialogContainer, {
 		global: {
-			provide: { $dialog },
+			plugins: [plugin],
 		},
 	});
+
+	const { app } = wrapper.vm.$.appContext;
+	const { $dialog } = app.config.globalProperties;
+	return { wrapper, $dialog };
+}
+
+it("should support clear dialogs", async () => {
+	const { wrapper, $dialog } = mountContainer();
 
 	$dialog.show("div", { class: "test" });
 	$dialog.show("span", { class: "test" });
@@ -37,4 +45,32 @@ it("should support clear dialogs", async () => {
 	$dialog.clear();
 	await nextTick();
 	expect(wrapper.findAll(".test")).toHaveLength(0);
+});
+
+it("should cancel the session when click the cancel button", async () => {
+	const { wrapper, $dialog } = mountContainer();
+
+	const session = $dialog.alert({
+		cancelable: true,
+		title: "Test",
+		type: MessageType.Info,
+	});
+	await nextTick();
+	await wrapper.findAll(".btn-group > button")[0].trigger("click");
+
+	await expect(session).resolves.toBe(DialogResult.CANCELED);
+});
+
+it("should conform the session when click the accept button", async () => {
+	const { wrapper, $dialog } = mountContainer();
+
+	const session = $dialog.alert({
+		cancelable: true,
+		title: "Test",
+		type: MessageType.Info,
+	});
+	await nextTick();
+	await wrapper.findAll(".btn-group > button")[1].trigger("click");
+
+	await expect(session.confirmPromise).resolves.toBeUndefined();
 });
