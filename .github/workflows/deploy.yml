@@ -10,13 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Use Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: latest
 
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - run: npm i -g pnpm
 
@@ -24,8 +22,7 @@ jobs:
 
       - run: pnpm test
 
-      - name: Build StoryBook
-        run: pnpm run build-storybook --quiet
+      - run: pnpm run build-storybook --quiet
 
       - name: Configure GitHub pages
         run: touch .out/.nojekyll
