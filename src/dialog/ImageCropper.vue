@@ -99,7 +99,7 @@
 				min='0.01'
 				step='0.1'
 				:value='transform.scale.toPrecision(3)'
-				@input='e => transform.scale = e.target.valueAsNumber'
+				@input='e => transform.scale = e.target!.valueAsNumber'
 			>
 
 			<div :class='$style.stats'>
@@ -114,7 +114,8 @@
 				>
 					取消
 				</KxButton>
-				<KxButton @click='$dialog.confirm'>
+				<!-- 此处不能去掉括号，否则会返回 Event 对象 -->
+				<KxButton @click='$dialog.confirm()'>
 					跳过
 				</KxButton>
 				<KxButton @click='ok'>确定</KxButton>
