@@ -7,13 +7,12 @@
 		<input
 			:type="visible ? 'text': 'password'"
 			:id='inputId'
+			v-model='value'
 			:class='$style.input'
-			:value='modelValue'
 			:placeholder='placeholder'
 			:required='required'
 			:disabled='disabled'
 			:autocomplete='autocomplete'
-			@input='handleInput'
 		>
 		<KxButton
 			:title="visible ? '隐藏' : '显示密码'"
@@ -35,7 +34,6 @@ import HiddenIcon from "../assets/visible-off.svg?sfc";
 import KxButton from "./KxButton.vue";
 
 interface PasswordInputProps {
-	modelValue: string;
 	inputId?: string;
 	disabled?: boolean;
 	required?: boolean;
@@ -43,18 +41,11 @@ interface PasswordInputProps {
 	placeholder?: string;
 }
 
-interface PasswordInputEvents {
-	"update:modelValue": [string];
-}
-
 defineProps<PasswordInputProps>();
-const emit = defineEmits<PasswordInputEvents>();
+
+const value = defineModel<string>({ required: true });
 
 const visible = ref(false);
-
-function handleInput(event: Event) {
-	emit("update:modelValue", (event.target as HTMLInputElement).value);
-}
 </script>
 
 <style module lang="less">

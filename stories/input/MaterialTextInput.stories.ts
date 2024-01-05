@@ -23,7 +23,8 @@ export default {
 	},
 };
 
-export const Password: StoryFn = args => ({
+export const Default: StoryFn = args => ({
+	components: { MaterialTextInput },
 	template: `
 		<MaterialTextInput v-model="value" v-bind="args"/>
 	`,
@@ -32,7 +33,7 @@ export const Password: StoryFn = args => ({
 	},
 });
 
-Password.args = {
+Default.args = {
 	disabled: false,
 	name: "name",
 	label: "Your name:",

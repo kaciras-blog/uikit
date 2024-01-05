@@ -14,7 +14,8 @@ export default {
 	},
 };
 
-export const Switch: StoryFn = args => ({
+export const SwitchBox: StoryFn = args => ({
+	components: { KxSwitchBox },
 	template: `
 		<div style="width: 300px">
 			<p>

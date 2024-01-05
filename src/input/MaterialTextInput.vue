@@ -7,10 +7,9 @@
 		<input
 			:class='$style.input'
 			:name='name'
+			v-model='value'
 			:disabled='disabled'
 			:placeholder='placeholder'
-			:value='modelValue'
-			@input="e => $emit('update:modelValue', e.target.value)"
 		>
 	</label>
 </template>
@@ -18,14 +17,14 @@
 <script setup lang="ts">
 interface TextInputProps {
 	name?: string;
-	modelValue: string;
 	disabled?: boolean;
 	label?: string;
 	placeholder?: string;
 }
 
 defineProps<TextInputProps>();
-defineEmits(["update:modelValue"]);
+
+const value = defineModel<string>({ required: true });
 </script>
 
 <style module lang="less">

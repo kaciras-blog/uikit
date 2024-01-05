@@ -8,7 +8,7 @@
 	<div :class='$style.container'>
 		<select
 			:class='$style.select'
-			v-model='forward'
+			v-model='value'
 		>
 			<slot></slot>
 		</select>
@@ -17,15 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { useVModel } from "@vueuse/core";
 import CaretDownIcon from "bootstrap-icons/icons/caret-down-fill.svg?sfc";
-
-export interface SelectProps {
-	modelValue: any;
-}
-
-const props = defineProps<SelectProps>();
-const emit = defineEmits(["update:modelValue"]);
 
 /**
  * v-model 指令对表单元素有特殊的处理，比如 select 支持任意类型的值，
@@ -33,7 +25,7 @@ const emit = defineEmits(["update:modelValue"]);
  *
  * https://github.com/vuejs/core/blob/main/packages/runtime-dom/src/directives/vModel.ts
  */
-const forward = useVModel(props, "modelValue", emit);
+const value = defineModel<any>({ required: true });
 </script>
 
 <style module lang="less">

@@ -2,7 +2,7 @@
 	<label
 		class='kx-switch-box'
 		role='switch'
-		:aria-checked='modelValue.toString()'
+		:aria-checked='checked.toString()'
 		:aria-disabled='disabled'
 		:class='{ disabled }'
 	>
@@ -14,15 +14,14 @@
 		-->
 		<span
 			class='kx-switch'
-			:class='{ checked: modelValue }'
+			:class='{ checked }'
 		>
 			<input
-				:name='name'
 				class='kx-switch-input'
 				type='checkbox'
-				:checked='modelValue'
+				v-model='checked'
+				:name='name'
 				:disabled='disabled'
-				@change='handleChange'
 			>
 		</span>
 	</label>
@@ -30,17 +29,13 @@
 
 <script setup lang="ts">
 interface SwitchBoxProps {
-	modelValue: boolean;
 	name?: string;
 	disabled?: boolean;
 }
 
 defineProps<SwitchBoxProps>();
-const emit = defineEmits(["update:modelValue"]);
 
-function handleChange(event: Event) {
-	emit("update:modelValue", (event.target as HTMLInputElement).checked);
-}
+const checked = defineModel<boolean>({ required: true });
 </script>
 
 <style lang="less">

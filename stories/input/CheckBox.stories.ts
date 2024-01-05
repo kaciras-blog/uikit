@@ -15,6 +15,7 @@ export default {
 };
 
 export const CheckBox: StoryFn = args => ({
+	components: { KxCheckBox },
 	template: `
 		<p>
 			modelValue: {{ value }}

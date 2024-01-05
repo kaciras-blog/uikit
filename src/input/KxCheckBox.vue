@@ -8,21 +8,20 @@
 		class='kx-check-box'
 		:class='{ disabled }'
 		role='checkbox'
-		:aria-checked='modelValue.toString()'
+		:aria-checked='checked.toString()'
 		:aria-disabled='disabled'
 	>
 		<input
 			type='checkbox'
 			class='check-box-input'
+			v-model='checked'
 			:disabled='disabled'
 			aria-hidden='true'
-			:value='modelValue'
-			@change='handleChange'
 		>
 
 		<span
 			class='check-box-mark'
-			:class='{ checked: modelValue }'
+			:class='{ checked }'
 		/>
 
 		<!-- 如果有内容，则用 span 包裹住添加样式 -->
@@ -37,16 +36,12 @@
 
 <script setup lang="ts">
 interface CheckBoxProps {
-	modelValue: boolean;
 	disabled?: boolean;
 }
 
 defineProps<CheckBoxProps>();
-const emit = defineEmits(["update:modelValue"]);
 
-function handleChange(event: Event) {
-	emit("update:modelValue", (event.target as HTMLInputElement).checked);
-}
+const checked = defineModel<boolean>({ required: true });
 </script>
 
 <style lang="less">
