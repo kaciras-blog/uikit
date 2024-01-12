@@ -30,7 +30,7 @@
 		"bootstrap-icons": "^1.11.3",
 		"pinia": "^2.1.7",
 		"rxjs": "^7.8.1",
-		"vue": "^3.4.5",
+		"vue": "^3.4.10",
 		"vue-router": "^4.2.5"
 	},
 	"devDependencies": {
@@ -44,11 +44,11 @@
 		"@storybook/blocks": "7.6.7",
 		"@storybook/vue3": "7.6.7",
 		"@storybook/vue3-vite": "7.6.7",
-		"@vitejs/plugin-vue": "^5.0.2",
+		"@vitejs/plugin-vue": "^5.0.3",
 		"@vue/test-utils": "^2.4.3",
 		"eslint": "^8.56.0",
 		"eslint-plugin-storybook": "^0.6.15",
-		"happy-dom": "^12.10.3",
+		"happy-dom": "^13.0.2",
 		"less": "^4.2.0",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
@@ -56,7 +56,7 @@
 		"typescript": "^5.3.3",
 		"vite": "^5.0.11",
 		"vite-plugin-dts": "^3.7.0",
-		"vite-plugin-svg-sfc": "^1.2.1",
+		"vite-plugin-svg-sfc": "^2.0.1",
 		"vitest": "^1.1.3"
 	}
 }
