@@ -26,11 +26,11 @@
 	},
 	"dependencies": {
 		"@kaciras/utilities": "^0.12.2",
-		"@vueuse/core": "^10.8.0",
+		"@vueuse/core": "^10.9.0",
 		"bootstrap-icons": "^1.11.3",
 		"pinia": "^2.1.7",
 		"rxjs": "^7.8.1",
-		"vue": "^3.4.19",
+		"vue": "^3.4.21",
 		"vue-router": "^4.3.0"
 	},
 	"devDependencies": {
@@ -46,9 +46,9 @@
 		"@storybook/vue3-vite": "7.6.17",
 		"@vitejs/plugin-vue": "^5.0.4",
 		"@vue/test-utils": "^2.4.4",
-		"eslint": "^8.56.0",
+		"eslint": "^8.57.0",
 		"eslint-plugin-storybook": "^0.8.0",
-		"happy-dom": "^13.4.1",
+		"happy-dom": "^13.6.2",
 		"less": "^4.2.0",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
