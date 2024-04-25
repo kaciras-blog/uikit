@@ -1,7 +1,6 @@
 import { StoryFn } from "@storybook/vue3";
-import { action } from "@storybook/addon-actions";
-import { MessageType } from "@/dialog/core";
-import KxMessageBox from "@/dialog/KxMessageBox.vue";
+import { MessageType } from "../../src/dialog/core";
+import KxMessageBox from "../../src/dialog/KxMessageBox.vue";
 
 export default {
 	component: KxMessageBox,
@@ -17,6 +16,9 @@ export default {
 				Error: 3,
 			},
 		},
+		onClick: {
+			action: "clicked",
+		},
 	},
 };
 
@@ -25,12 +27,10 @@ export const MessageBox: StoryFn = (args) => ({
 		<KxButton @click="show">显示消息框</KxButton>
 		<DialogContainer/>
 	`,
-	data: () => ({
-		onClose: action("close"),
-	}),
 	methods: {
 		show() {
-			this.$dialog.alert(args).then(this.onClose);
+
+			this.$dialog.alert(args).then(args.onClick);
 		},
 	},
 });

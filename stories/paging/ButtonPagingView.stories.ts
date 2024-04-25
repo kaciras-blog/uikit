@@ -1,7 +1,7 @@
 import { StoryFn } from "@storybook/vue3";
 import { getQuotes } from "../data";
 import ListItem from "./ListItem.vue";
-import ButtonPagingViewVue from "@/paging/ButtonPagingView.vue";
+import ButtonPagingViewVue from "../../src/paging/ButtonPagingView.vue";
 
 export default {
 	component: ButtonPagingViewVue,

@@ -1,6 +1,6 @@
 import { StoryFn } from "@storybook/vue3";
 import { ref } from "vue";
-import KxSelect from "@/input/KxSelect.vue";
+import KxSelect from "../../src/input/KxSelect.vue";
 
 export default {
 	component: KxSelect,

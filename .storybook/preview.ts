@@ -8,13 +8,13 @@ import UIKit, { observeMediaQuery } from "../src/index";
 setup(app => {
 	const pinia = createPinia();
 
-	observeMediaQuery(pinia)
+	observeMediaQuery(pinia);
 
 	app.use(UIKit);
 	app.use(pinia);
 	app.use(createRouter({
 		routes: [],
-		history: createMemoryHistory()
+		history: createMemoryHistory(),
 	}));
 });
 

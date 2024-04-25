@@ -1,6 +1,6 @@
 import { StoryFn } from "@storybook/vue3";
 import { ref } from "vue";
-import KxCheckBox from "@/input/KxCheckBox.vue";
+import KxCheckBox from "../../src/input/KxCheckBox.vue";
 
 export default {
 	component: KxCheckBox,

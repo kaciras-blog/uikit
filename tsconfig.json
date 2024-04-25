@@ -9,12 +9,6 @@
 			"DOM.Iterable"
 		],
 		"baseUrl": ".",
-
-		// 目前没法打包类型定义文件，不要再源码中用别名。
-		// "paths": {
-		// 	"@/*": ["src/*"]
-		// },
-
 		"jsx": "preserve",
 		"strict": true,
 		"noEmit": true,

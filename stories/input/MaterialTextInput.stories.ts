@@ -1,6 +1,6 @@
 import { StoryFn } from "@storybook/vue3";
 import { ref } from "vue";
-import MaterialTextInput from "@/input/MaterialTextInput.vue";
+import MaterialTextInput from "../../src/input/MaterialTextInput.vue";
 
 export default {
 	component: MaterialTextInput,

@@ -1,7 +1,7 @@
 import { Args, StoryFn } from "@storybook/vue3";
 import { h } from "vue";
-import AtomSpinnerC from "@/components/AtomSpinner.vue";
-import SkFadingCircleC from "@/components/SkFadingCircle.vue";
+import AtomSpinnerC from "../src/components/AtomSpinner.vue";
+import SkFadingCircleC from "../src/components/SkFadingCircle.vue";
 
 export default {
 	title: "Loading",

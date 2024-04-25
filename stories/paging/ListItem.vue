@@ -8,12 +8,15 @@
 	</div>
 </template>
 
-<script lang="ts">
-// props 数据可以用 data.ts 里的 getQuotes() 生成。
-export default {
-	name: "DemoListItem",
-	props: ["avatar", "name", "content"],
-};
+<script setup lang="ts">
+// 可以用 data.ts 里的 getQuotes() 生成。
+interface DemoListItemProps{
+	avatar: string;
+	name: string;
+	content: string;
+}
+
+defineProps<DemoListItemProps>();
 </script>
 
 <style module lang="less">

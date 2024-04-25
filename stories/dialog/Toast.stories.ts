@@ -1,6 +1,6 @@
 import { StoryFn } from "@storybook/vue3";
 import { MessageType } from "@";
-import ToastComponent from "@/dialog/KxToast.vue";
+import ToastComponent from "../../src/dialog/KxToast.vue";
 
 export default {
 	component: ToastComponent,

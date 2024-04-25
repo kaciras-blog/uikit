@@ -1,6 +1,6 @@
 import { StoryFn } from "@storybook/vue3";
 import { ref } from "vue";
-import KxSwitchBox from "@/input/KxSwitchBox.vue";
+import KxSwitchBox from "../../src/input/KxSwitchBox.vue";
 
 export default {
 	component: KxSwitchBox,

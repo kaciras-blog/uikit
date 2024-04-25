@@ -1,6 +1,6 @@
 import { StoryFn } from "@storybook/vue3";
 import { selectFile } from "@kaciras/utilities/browser";
-import ImageCropperVue from "@/dialog/ImageCropper.vue";
+import ImageCropperVue from "../../src/dialog/ImageCropper.vue";
 
 export default {
 	component: ImageCropperVue,

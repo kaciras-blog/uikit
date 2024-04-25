@@ -1,7 +1,7 @@
 import { StoryFn } from "@storybook/vue3";
 import { computed, ref } from "vue";
 import { tap } from "rxjs/operators";
-import { EdgeScrollObserver, limitInWindow, moveElement, observeMouseMove } from "@/dragging";
+import { EdgeScrollObserver, limitInWindow, moveElement, observeMouseMove } from "../src/dragging.js";
 
 export default {
 	title: "Dragging",

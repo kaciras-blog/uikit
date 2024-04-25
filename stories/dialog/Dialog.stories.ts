@@ -3,7 +3,7 @@ import HookedDialog from "./HookedDialog.vue";
 import LuckyNumber from "./LuckyNumberDialog.vue";
 
 export default {
-	title: "Dialogs"
+	title: "Dialogs",
 };
 
 export const Custom: StoryFn = () => ({
@@ -40,12 +40,12 @@ export const Custom: StoryFn = () => ({
 // 		accept: action("onAccept"),
 // 	},
 // });
-
-Buttons.args = {
-	cancelEvent: true,
-	acceptEvent: true,
-	applyEvent: false,
-};
+//
+// Buttons.args = {
+// 	cancelEvent: true,
+// 	acceptEvent: true,
+// 	applyEvent: false,
+// };
 
 export const BeforeDialogClose: StoryFn = () => ({
 	template: `

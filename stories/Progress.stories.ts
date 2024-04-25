@@ -1,5 +1,5 @@
 import { StoryFn } from "@storybook/vue3";
-import KxProgress from "@/components/KxProgress.vue";
+import KxProgress from "../src/components/KxProgress.vue";
 
 export default {
 	component: KxProgress,

@@ -1,6 +1,6 @@
 import { StoryFn } from "@storybook/vue3";
 import { ref } from "vue";
-import KxPasswordInput from "@/input/KxPasswordInput.vue";
+import KxPasswordInput from "../../src/input/KxPasswordInput.vue";
 
 export default {
 	component: KxPasswordInput,
