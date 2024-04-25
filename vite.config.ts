@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => ({
 	test: {
 		environment: "happy-dom",
 		clearMocks: true,
-		include: ["__tests__/**/*.spec.ts"],
+		include: ["tests/**/*.spec.ts"],
 	},
 	build: {
 		reportCompressedSize: false,

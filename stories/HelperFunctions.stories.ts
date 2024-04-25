@@ -1,6 +1,6 @@
 import { StoryFn } from "@storybook/vue3";
 import { selectFile } from "@kaciras/utilities/browser";
-import { getImageResolution, getVideoResolution } from "@";
+import { getImageResolution, getVideoResolution } from "../src/media-resolution.ts";
 
 export default {
 	title: "HelperFunctions",

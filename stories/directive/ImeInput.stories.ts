@@ -1,4 +1,4 @@
-import { vImeInput } from "../../src";
+import vImeInput from "../../src/directives/ime-input.ts";
 
 export default {
 	title: "ImeInput",

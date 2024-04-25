@@ -2,7 +2,7 @@ import { StoryFn } from "@storybook/vue3";
 import DemoFrame from "./DemoFrame.vue";
 
 export default {
-	component: DemoFrame
+	component: DemoFrame,
 };
 
 export const Frame: StoryFn = () => ({

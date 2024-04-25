@@ -1,5 +1,5 @@
 import { StoryFn } from "@storybook/vue3";
-import { MessageType } from "../../src/dialog/core";
+import { MessageType } from "../../src/dialog/core.js";
 import KxMessageBox from "../../src/dialog/KxMessageBox.vue";
 
 export default {

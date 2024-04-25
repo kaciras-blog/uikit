@@ -1,5 +1,5 @@
 import { StoryFn } from "@storybook/vue3";
-import { useBreakPoint } from "@";
+import { useBreakPoint } from "../src/break-point.ts";
 
 export default {
 	title: "BreakPoint",
