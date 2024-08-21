@@ -35,20 +35,17 @@ export { default as ButtonPagingView } from "./paging/ButtonPagingView.vue";
 export { default as ScrollPager } from "./paging/ScrollPager.vue";
 export { default as ScrollPagingView } from "./paging/ScrollPagingView.vue";
 
-export * from "./dialog/quick-alert";
 export * from "./break-point";
 export * from "./common";
 export * from "./composition";
 export * from "./dragging";
-export * from "./media-resolution";
 export * from "./scroll";
+export * from "./dialog/quick-alert";
 
 export { default as PromiseDelegate } from "./PromiseDelegate";
 export { default as PromiseSource } from "./PromiseSource";
 
-/**
- * 自动注册各个模块的插件和指令，指令因为 WebStorm 的问题暂不使用导入。
- */
+/** 注册各个子模块的插件 */
 export default function install(app: App) {
 	app.use(QuickAlert);
 	app.use(BreakPoint);
