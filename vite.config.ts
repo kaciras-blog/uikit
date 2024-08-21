@@ -3,7 +3,7 @@ import { defineConfig } from "vite";
 import svgSfc from "vite-plugin-svg-sfc";
 import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
-import packageJson from "./package.json" assert { type: "json" };
+import packageJson from "./package.json" with { type: "json" };
 
 export default defineConfig(({ mode }) => ({
 	plugins: [svgSfc(), vue(), dts({
