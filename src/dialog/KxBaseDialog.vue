@@ -16,8 +16,7 @@
 		>
 			<header
 				:class='$style.header'
-				@mousedown='drag'
-				@touchstart.self.prevent='drag'
+				@pointerdown='drag'
 			>
 				<slot name='title'>
 					<h2 :class='$style.title'>
@@ -47,7 +46,6 @@ import { ref } from "vue";
 import CloseIcon from "../assets/icon-close.svg?sfc";
 import { usePreventScroll } from "../composition";
 import { limitInWindow, moveElement, observeMouseMove } from "../dragging";
-import { isTouchEvent } from "../common";
 import vAutofocus from "../directives/autofocus";
 import { useDialog } from "./quick-alert";
 import KxButton from "../input/KxButton.vue";
@@ -78,12 +76,9 @@ const dialogEl = ref<HTMLElement>();
 
 usePreventScroll();
 
-function drag(event: TouchEvent | MouseEvent) {
-	if (!props.draggable) {
-		return;
-	}
-	if (!isTouchEvent(event) && event.button !== 0) {
-		return; // 鼠标右键不拖动
+function drag(event: PointerEvent) {
+	if (!props.draggable || event.button !== 0) {
+		return; // 鼠标右键不拖动。
 	}
 	observeMouseMove()
 		.pipe(limitInWindow(), moveElement(event, dialogEl.value!))

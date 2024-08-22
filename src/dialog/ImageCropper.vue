@@ -23,8 +23,7 @@
 			v-show='loadStatus'
 			ref='main'
 			:class='$style.cropView'
-			@mousedown='drag'
-			@touchstart.self.prevent='drag'
+			@pointerdown='drag'
 			@wheel='handleWheel'
 		>
 			<div :style='wrapStyle'>
@@ -99,7 +98,7 @@
 				min='0.01'
 				step='0.1'
 				:value='transform.scale.toPrecision(3)'
-				@input='e => transform.scale = e.target!.valueAsNumber'
+				@input='e => transform.scale = e.currentTarget!.valueAsNumber'
 			>
 
 			<div :class='$style.stats'>
@@ -133,7 +132,7 @@ import SwapHorizIcon from "../assets/swap_horiz.svg?sfc";
 import SwapVertIcon from "../assets/swap_vert.svg?sfc";
 import RotateRightIcon from "../assets/rotate_right.svg?sfc";
 import { useDialog } from "./quick-alert";
-import { cursorPosition, observeMouseMove } from "../dragging";
+import { observeMouseMove } from "../dragging";
 import KxButton from "../input/KxButton.vue";
 import AtomSpinner from "../components/AtomSpinner.vue";
 
@@ -347,8 +346,8 @@ function fixTransform() {
 	}
 }
 
-function drag(event: MouseEvent | TouchEvent) {
-	const { clientX, clientY } = cursorPosition(event);
+function drag(event: PointerEvent) {
+	const { clientX, clientY } = event;
 
 	const Δx = transform.x - clientX;
 	const Δy = transform.y - clientY;

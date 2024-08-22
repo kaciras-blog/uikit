@@ -13,40 +13,22 @@ interface Point2D {
 }
 
 /**
- * 统一触摸和鼠标事件，返回包含指针位置的对象。
- * 触摸以第一个点击为准。
- *
- * @param event 事件对象
- * @return 包含指针位置的对象
- */
-export function cursorPosition(event: MouseEvent | TouchEvent) {
-	return isTouchEvent(event) ? event.touches[0] : event;
-}
-
-/**
  * 监听鼠标的移动，不断产生鼠标的位置，请保证调用该函数时鼠标处于按下状态或触摸状态，
- * 比如在 mousedown 和 touchstart 事件里调用此函数。
+ * 比如在 pointerdown 事件里调用此函数。
  *
  * @return 不断发出鼠标坐标的Observable
  */
 export function observeMouseMove() {
 	return new Observable<Point2D>((subscriber) => {
 
-		function onMouseMove(event: MouseEvent) {
+		function onMove(event: PointerEvent) {
 			const { clientX, clientY } = event;
 			subscriber.next({ x: clientX, y: clientY });
 		}
 
-		function onTouchMove(event: TouchEvent) {
-			const { clientX, clientY } = event.touches[0];
-			subscriber.next({ x: clientX, y: clientY });
-		}
-
 		function cleanListeners() {
-			document.removeEventListener("mousemove", onMouseMove);
-			document.removeEventListener("mouseup", onUp);
-			document.removeEventListener("touchmove", onTouchMove);
-			document.removeEventListener("touchend", onUp);
+			document.removeEventListener("pointerup", onUp);
+			document.removeEventListener("pointermove", onMove);
 		}
 
 		function onUp(event: Event) {
@@ -57,10 +39,8 @@ export function observeMouseMove() {
 
 		subscriber.add(cleanListeners);
 
-		document.addEventListener("mousemove", onMouseMove);
-		document.addEventListener("mouseup", onUp);
-		document.addEventListener("touchmove", onTouchMove);
-		document.addEventListener("touchend", onUp);
+		document.addEventListener("pointerup", onUp);
+		document.addEventListener("pointermove", onMove);
 	});
 }
 
@@ -80,13 +60,12 @@ export function limitInWindow() {
  * @param event 鼠标事件
  * @param el 被移动的元素
  */
-export function moveElement(event: MouseEvent | TouchEvent, el: HTMLElement) {
-	const { clientX, clientY } = cursorPosition(event);
+export function moveElement(event: MouseEvent, el: HTMLElement) {
+	const { clientX, clientY } = event;
 	const { style } = el;
 	const clientRect = el.getBoundingClientRect();
 
 	// 拖动开始时，元素的左上角坐标 - 鼠标的坐标，以后每个鼠标坐标加上该值即为元素左上角坐标。
-	// 我就是要用符号来做变量
 	const Δx = clientRect.left - clientX;
 	const Δy = clientRect.top - clientY;
 
