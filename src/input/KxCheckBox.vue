@@ -8,7 +8,7 @@
 		class='kx-check-box'
 		:class='{ disabled }'
 		role='checkbox'
-		:aria-checked='checked.toString()'
+		:aria-checked='checked'
 		:aria-disabled='disabled'
 	>
 		<input
@@ -84,7 +84,8 @@ const checked = defineModel<boolean>({ required: true });
 .check-box-mark {
 	display: inline-block;
 	position: relative;
-	.size(1.6em);
+	width: 1.6em;
+	height: 1.6em;
 
 	border: 1px solid @color-border;
 	border-radius: 4px;

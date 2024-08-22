@@ -23,11 +23,14 @@ export function startDragging(init: PointerEvent, handlers: OnMove | DragHandler
 		handlers = { onMove: handlers };
 	}
 
+	// 傻逼艹的 TypeScript 对 let 变量和参数不做 Narrow。
+	const typeCasted = handlers;
+
 	// Avoid dragging selected contents.
 	init.preventDefault();
 
 	function handleMove(event: PointerEvent) {
-		handlers.onMove(event);
+		typeCasted.onMove(event);
 	}
 
 	/*
@@ -35,7 +38,7 @@ export function startDragging(init: PointerEvent, handlers: OnMove | DragHandler
 	 * user can use window events to ensure runs after the drag handler.
 	 */
 	function handleEnd(event: Event) {
-		handlers.onEnd?.(event);
+		typeCasted.onEnd?.(event);
 		event.preventDefault();
 		document.removeEventListener("pointerup", handleEnd);
 		document.removeEventListener("pointermove", handleMove);

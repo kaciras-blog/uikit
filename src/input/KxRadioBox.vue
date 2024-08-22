@@ -6,13 +6,13 @@
 	<label
 		class='kx-radio-box'
 		role='radio'
-		:aria-checked='checked.toString()'
+		:aria-checked='checked'
 		:aria-disabled='disabled'
 	>
 		<input
 			class='radio-box-input'
 			type='radio'
-			:name='groupProps.name'
+			:name='groupProps.name as string'
 			:disabled='disabled'
 			:checked='checked'
 			@change='handleInput'
@@ -42,7 +42,7 @@ if (!self?.parent) {
 
 const { props: groupProps, emit: groupEmit } = self.parent;
 
-const disabled = computed(() => groupProps.disabled);
+const disabled = computed(() => groupProps.disabled as boolean);
 const checked = computed(() => props.value === groupProps.modelValue);
 
 function handleInput() {

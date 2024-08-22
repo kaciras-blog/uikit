@@ -11,7 +11,7 @@
 		v-bind='options.props'
 		v-show='isVisible(options, i)'
 		:is='options.component'
-		:ref='v => v && instances.set(options, v)'
+		:ref='(v: any) => v && instances.set(options, v)'
 	/>
 </template>
 
@@ -22,7 +22,7 @@ import { uniqueId } from "@kaciras/utilities/browser";
 import { DialogOptions, DialogResult } from "./core";
 import { useDialog } from "./quick-alert";
 
-interface InternalOptions extends DialogOptions<unknown> {
+interface InternalOptions extends DialogOptions<any> {
 	id: number;
 	closed?: boolean;
 }

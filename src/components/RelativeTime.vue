@@ -45,7 +45,7 @@ const divisions: any = [
 import { computed, shallowRef, watchEffect } from "vue";
 import { useIntervalFn } from "@vueuse/core";
 
-interface RelativeTimeProps {
+export interface RelativeTimeProps {
 	/**
 	 * 自动刷新间隔（毫秒），默认为 0 代表禁用。
 	 */

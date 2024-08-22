@@ -1,4 +1,4 @@
-import { customRef, onMounted, onUnmounted } from "vue";
+import { ComponentPublicInstance, customRef, onMounted, onUnmounted } from "vue";
 import { noop } from "@vueuse/core";
 
 /**
@@ -91,11 +91,10 @@ export function useIntersectionHandler(
 	}
 	const observer = new IntersectionObserver(cb, options);
 
-	return (el: Element | null) => {
-		if (el) {
-			observer.observe(el);
-		} else {
-			observer.disconnect();
+	return (el: Element | ComponentPublicInstance | null) => {
+		if (!el) {
+			return observer.disconnect();
 		}
+		observer.observe("$el" in el ? el.$el : el);
 	};
 }

@@ -98,7 +98,7 @@
 				min='0.01'
 				step='0.1'
 				:value='transform.scale.toPrecision(3)'
-				@input='e => transform.scale = e.currentTarget!.valueAsNumber'
+				@input='e => transform.scale = (e.target as HTMLInputElement).valueAsNumber'
 			>
 
 			<div :class='$style.stats'>

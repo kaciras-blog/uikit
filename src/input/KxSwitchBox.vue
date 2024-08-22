@@ -2,7 +2,7 @@
 	<label
 		class='kx-switch-box'
 		role='switch'
-		:aria-checked='checked.toString()'
+		:aria-checked='checked'
 		:aria-disabled='disabled'
 		:class='{ disabled }'
 	>
