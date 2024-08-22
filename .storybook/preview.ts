@@ -20,6 +20,7 @@ setup(app => {
 
 // <Preview>{...} 无法解析，实测 ESBuild 能处理，不知道哪的问题。
 export default {
+	tags: ["autodocs"],
 	parameters: {
 		actions: { argTypesRegex: "^on[A-Z].*" },
 		controls: {

@@ -12,9 +12,6 @@ export default <StorybookConfig>{
 		"@storybook/addon-essentials",
 		"@storybook/addon-interactions",
 	],
-	docs: {
-		autodocs: "tag",
-	},
 	stories: [
 		"../stories/**/*.stories.ts",
 	],
