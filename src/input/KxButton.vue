@@ -8,7 +8,7 @@ const KxButton: FunctionalComponent<any> = (props, context) => {
 
 	const $style = useCssModule();
 
-	// Vue 还会在底层做 inheritAttrs，不用在此添加 attrs.class。
+	/* Vue 还会在底层做 inheritAttrs，不用在此添加 attrs.class。 */
 	const data: any = {
 		...attrs,
 		class: [
@@ -94,7 +94,7 @@ export default KxButton;
  * --struct-*: 各种状态下的结构色。
  */
 
-// 最顶层的类公开，以便从外层识别。
+/* 最顶层的类公开，以便从外层识别。 */
 :global(.kx-btn) {
 	display: inline-flex;
 	justify-content: center;
@@ -107,7 +107,7 @@ export default KxButton;
 	border-radius: var(--btn-radius, 4px);
 	transition: ease-in-out 0.15s;
 
-	// 基础样式，也是默认的类型
+	/* 基础样式，也是默认的类型 */
 	color: var(--text-active);
 	background-color: var(--struct-color);
 	border: solid 1px var(--struct-color);
@@ -116,7 +116,7 @@ export default KxButton;
 		background-color: var(--struct-highlight);
 		border-color: var(--struct-highlight);
 
-		// 用于覆盖 a 元素的样式
+		/* 用于覆盖 a 元素的样式 */
 		color: var(--text-active);
 		text-decoration: none;
 	}
@@ -137,7 +137,7 @@ export default KxButton;
 	.generateColors(white, @color-button-primary);
 }
 
-// 镂空按钮样式
+/* 镂空按钮样式 */
 .outline {
 	color: var(--text-color);
 	border-color: var(--struct-color);
@@ -147,18 +147,18 @@ export default KxButton;
 	--struct-color: #ddd;
 }
 
-// 未激活状态只有文字的样式
+/* 未激活状态只有文字的样式 */
 .text {
 	color: var(--struct-color);
 	background-color: transparent;
 	border-color: transparent;
 }
 
-// 只有一个图标就用这个
+/* 只有一个图标就用这个 */
 .icon {
 	padding: 5px;
 
-	// 这个大小跟文字一起排版较合适，其他地方可能要覆盖。
+	/* 这个大小跟文字一起排版较合适，其他地方可能要覆盖。 */
 	font-size: 24px;
 
 	color: var(--struct-color);
@@ -194,8 +194,8 @@ export default KxButton;
 	.generateColors(white, @color-button-dangerous);
 }
 
-// 禁用按钮样式，所有颜色的按钮禁用样式都一样。
-// 因为 a 元素没有 :disabled 状态，所以用类来代替。
+/* 禁用按钮样式，所有颜色的按钮禁用样式都一样。 */
+/* 因为 a 元素没有 :disabled 状态，所以用类来代替。 */
 .disabled {
 	cursor: initial;
 	pointer-events: none;
@@ -205,7 +205,7 @@ export default KxButton;
 	border-color: #d9dfdf;
 }
 
-// 配置各主题色，less 不支运算作为 CSS 变量值，需要再用变量定义
+/* 配置各主题色，less 不支运算作为 CSS 变量值，需要再用变量定义 */
 .generateColors(@text, @color) {
 	@color-active: @color - #0c0c0c;
 	@color-highlight: lighten(@color, 4%);

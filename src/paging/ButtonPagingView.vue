@@ -143,8 +143,8 @@ defineExpose({ reload, refresh });
 </script>
 
 <style module lang='less'>
-// 列表项目不一定有容器，所以边距还是要放在按钮上；
-// 上按钮组可能不存在，所以也不能设上边距。
+/* 列表项目不一定有容器，所以边距还是要放在按钮上； */
+/* 上按钮组可能不存在，所以也不能设上边距。 */
 
 .top {
 	margin-bottom: var(--pagenation-margin, 2em);

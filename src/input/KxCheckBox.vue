@@ -50,15 +50,15 @@ const checked = defineModel<boolean>({ required: true });
 .kx-check-box {
 	display: inline-flex;
 
-	// 里面的input使用了绝对定位，这里一定要设置个相对定位。否则虽然input仍在
-	// 里面并且不影响布局，但是它的的绝对定位会导致更外层的布局BUG，如虚空滚动条和点击乱跳等。
+	/* 里面的input使用了绝对定位，这里一定要设置个相对定位。否则虽然input仍在 */
+	/* 里面并且不影响布局，但是它的的绝对定位会导致更外层的布局BUG，如虚空滚动条和点击乱跳等。 */
 	position: relative;
 	align-items: center;
 	height: 1.6em;
 	cursor: pointer;
 
-	// 竖直对齐以内部的input为基准，但input设了绝对定位且容器不是相对定位，没法调整
-	// 内部input的位置，所以这里手动调下距离，14和16像素的字体刚好能对齐
+	/* 竖直对齐以内部的input为基准，但input设了绝对定位且容器不是相对定位，没法调整 */
+	/* 内部input的位置，所以这里手动调下距离，14和16像素的字体刚好能对齐 */
 	vertical-align: -6px;
 }
 
@@ -109,7 +109,7 @@ const checked = defineModel<boolean>({ required: true });
 	}
 }
 
-// 这个边距不能放在框框上，因为会有无文字的复选框用法
+/* 这个边距不能放在框框上，因为会有无文字的复选框用法 */
 .check-box-text {
 	margin-left: 5px;
 }

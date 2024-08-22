@@ -63,7 +63,7 @@ async function reset() {
 
 function finish() {
 	if (!visible.value) {
-		return; // 必须先调用启动方法
+		return; /* 必须先调用启动方法 */
 	}
 	fadeout();
 	progress.value = 100;
@@ -101,7 +101,7 @@ defineExpose({ finish, start, fail, reset, setProgress, increase });
 	width: calc(var(--progress) * 1%);
 	height: 2px;
 
-	// 全局加载条在样式上是比页面更外层的元素，设置最大的 z-index 值
+	/* 全局加载条在样式上是比页面更外层的元素，设置最大的 z-index 值 */
 	z-index: 999999;
 
 	background: var(--color, @default-color);
@@ -118,7 +118,7 @@ defineExpose({ finish, start, fail, reset, setProgress, increase });
 		rgba(255, 255, 255, 0.9) 60%,
 		transparent 100%);
 
-		// 恒速运动
+		/* 恒速运动 */
 		animation: highlight linear calc(@comet-speed * var(--progress)) infinite;
 	}
 }

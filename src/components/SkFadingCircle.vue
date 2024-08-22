@@ -62,7 +62,7 @@ each(range(2, 12), {
 	}
 });
 
-// 动画名也会被 CSS Module 转换
+/* 动画名也会被 CSS Module 转换 */
 @keyframes animation {
 	40% {
 		opacity: 1;

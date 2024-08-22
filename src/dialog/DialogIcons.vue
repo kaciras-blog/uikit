@@ -31,7 +31,7 @@ defineProps<DialogIconProps>();
 	box-sizing: content-box;
 }
 
-// 下面几个用驼峰命名，便于动态获取。
+/* 下面几个用驼峰命名，便于动态获取。 */
 
 &.Error {
 	border-color: @color-error;

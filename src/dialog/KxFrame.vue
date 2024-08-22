@@ -62,7 +62,7 @@ defineProps<FrameHeaderProps>();
 	border-radius: 0;
 }
 
-// TODO: 被全局的 .btn { font-size } 覆盖了，只能放在图标上。
+/* TODO: 被全局的 .btn { font-size } 覆盖了，只能放在图标上。 */
 .backIcon {
 	font-size: 20px;
 }

@@ -77,7 +77,7 @@ function handleInput() {
 	border-radius: 50%;
 	--color: @color-input-active;
 
-	// 选中状态下圆框内的小圆点
+	/* 选中状态下圆框内的小圆点 */
 	&::after {
 		content: "";
 		display: none;

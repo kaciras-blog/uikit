@@ -69,7 +69,7 @@ const checked = defineModel<boolean>({ required: true });
 	&::after {
 		content: "";
 
-		// inline-block 会受 font-size 影响
+		/* inline-block 会受 font-size 影响 */
 		display: block;
 		width: 16px;
 		height: 100%;

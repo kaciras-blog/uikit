@@ -120,8 +120,6 @@ function onEscape() {
 	align-items: center;
 
 	height: 3rem;
-	//border-bottom: solid 1px #d5d5d5;
-
 	user-select: none;
 }
 

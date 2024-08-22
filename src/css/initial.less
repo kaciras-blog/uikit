@@ -7,10 +7,10 @@
 html {
 	font-family: Helvetica, Arial, Microsoft YaHei, WenQuanYi Micro Hei, sans-serif;
 
-	// 原本的是 1.15 但我喜欢更宽松的
+	/* 原本的是 1.15 但我喜欢更宽松的 */
 	line-height: 1.5;
 
-	// Chrome 默认缩小图片会糊，加上这个能缓解一下
+	/* Chrome 默认缩小图片会糊，加上这个能缓解一下 */
 	image-rendering: -webkit-optimize-contrast;
 
 	-webkit-text-size-adjust: 100%;
@@ -25,7 +25,7 @@ body {
 	font-size: 14px;
 }
 
-// 去除标题的上间隔
+/* 去除标题的上间隔 */
 h1, h2, h3, h4, h5, h6 {
 	margin-top: 0;
 }
@@ -39,8 +39,8 @@ pre, code, kbd, samp {
 	font-size: 1em;
 }
 
-// 清除浏览器自带的样式，并设置鼠标指针，
-// 这样跟 a 元素保持一致，并且便于后续自定义。
+/* 清除浏览器自带的样式，并设置鼠标指针， */
+/* 这样跟 a 元素保持一致，并且便于后续自定义。 */
 button {
 	font-size: initial;
 	border: none;
@@ -56,7 +56,7 @@ hr {
 	border-bottom-width: 1px;
 }
 
-// 这东西主要拿来批量禁用 input，样式就不要了。
+/* 这东西主要拿来批量禁用 input，样式就不要了。 */
 fieldset {
 	min-width: 0;
 	padding: 0;
@@ -67,7 +67,7 @@ fieldset {
 	--shadow-color: #a8e8ff;
 
 	padding: 0.4rem 0.5rem;
-	min-width: 0; //去掉谷歌浏览器的最小宽度
+	min-width: 0; /* 去掉谷歌浏览器的最小宽度 */
 
 	outline: none;
 	border: solid 1px @color-border;
@@ -77,13 +77,13 @@ fieldset {
 
 	transition: box-shadow .2s;
 
-	// TODO: 高亮样式跟按钮的有点像，能不能通用一下
+	/* TODO: 高亮样式跟按钮的有点像，能不能通用一下 */
 	&:hover {
 		outline: 0;
 		border-color: #209cee;
 	}
 
-	// 一些模仿 input 样式的复合组件使用 focus-within
+	/* 一些模仿 input 样式的复合组件使用 focus-within */
 	&:focus-within {
 		outline: 0;
 		border-color: #209cee;

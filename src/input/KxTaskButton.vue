@@ -63,10 +63,10 @@ function handleClick(event: MouseEvent) {
 <style module lang="less">
 @import "../css/exports";
 
-// 条纹宽度
+/* 条纹宽度 */
 @stripeWidth: 32px;
 
-// 正在运行的按钮样式，因为需要长时间运行的任务并不一定是加载，所以没用 loading 而是 running
+/* 正在运行的按钮样式，因为需要长时间运行的任务并不一定是加载，所以没用 loading 而是 running */
 .running {
 	&, &:hover {
 		color: white;
@@ -86,7 +86,7 @@ function handleClick(event: MouseEvent) {
 	animation: barbershop linear .4s infinite;
 }
 
-// 国内理发店就是这个效果
+/* 国内理发店就是这个效果 */
 @keyframes barbershop {
 	from { background-position: 0; }
 	to { background-position: -@stripeWidth; }

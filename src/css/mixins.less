@@ -3,7 +3,7 @@
  * https://blog.csdn.net/boyit0/article/details/78802385
  */
 
-// 指定边长的正方形盒子
+/* 指定边长的正方形盒子 */
 .size(@size) {
 	width: @size;
 	height: @size;
@@ -16,13 +16,13 @@
 	right: @margin;
 }
 
-// 最小尺寸
+/* 最小尺寸 */
 .min-size(@w, @h) {
 	min-width: @w;
 	min-height: @h;
 }
 
-// 居中, 确定尺寸
+/* 居中, 确定尺寸 */
 .center-absolute(@w, @h) {
 	width: @w;
 	height: @h;
@@ -33,7 +33,7 @@
 	margin-top: -(@h / 2);
 }
 
-// 扩展点击区域
+/* 扩展点击区域 */
 .extend-click(@left, @right, @top, @bottom) {
 	position: relative;
 
@@ -47,14 +47,14 @@
 	}
 }
 
-// 定宽居中页面布局
+/* 定宽居中页面布局 */
 .layout-page(@width: 80%) {
 	width: @width;
 	margin-left: auto;
 	margin-right: auto;
 }
 
-// 圆形
+/* 圆形 */
 .circle(@diameter) {
 	width: @diameter;
 	height: @diameter;
@@ -73,14 +73,14 @@
 	text-overflow: ellipsis;
 }
 
-// 用 max-width 来防止图片撑破容器
+/* 用 max-width 来防止图片撑破容器 */
 .max-img() {
 	display: block;
 	max-width: 100%;
 	height: auto;
 }
 
-// 全屏大图背景
+/* 全屏大图背景 */
 .fullscreen-bg(@url) {
 	width: 100vw;
 	height: 100vh;

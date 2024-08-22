@@ -42,7 +42,7 @@
 	}
 }
 
-// 下面的垂直按钮组display是flex，这里并不需要，但是统一下是否更好？
+/* 下面的垂直按钮组display是flex，这里并不需要，但是统一下是否更好？ */
 .btn-group {
 
 	& > .kx-btn + .kx-btn {
@@ -89,7 +89,7 @@
 			border-top-left-radius: 0;
 			border-top-right-radius: 0;
 
-			// TODO: 默认按钮是outline样式的却没有class
+			/* TODO: 默认按钮是outline样式的却没有class */
 			margin-top: 1px;
 
 			&.outline {
@@ -109,7 +109,7 @@
 	list-style: none;
 }
 
-// 清除链接元素的所有高亮样式
+/* 清除链接元素的所有高亮样式 */
 .clean-link {
 	&:hover, &:focus, &:visited {
 		color: inherit;
@@ -117,7 +117,7 @@
 	}
 }
 
-// Highlight dark link
+/* Highlight dark link */
 .hd-link {
 	color: @color-second;
 }
@@ -145,7 +145,7 @@
 	background-color: rgba(0, 0, 0, .3);
 }
 
-// 禁止换行, 文本溢出省略号显示 (一行)
+/* 禁止换行, 文本溢出省略号显示 (一行) */
 .ellipsis {
 	white-space: normal;
 	word-break: break-all;
@@ -153,7 +153,7 @@
 	overflow: hidden;
 }
 
-// 用于点击的元素，指针为手指样式、并禁止选取
+/* 用于点击的元素，指针为手指样式、并禁止选取 */
 .click-item {
 	cursor: pointer;
 	user-select: none;
