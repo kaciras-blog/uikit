@@ -33,3 +33,5 @@ export default <Directive<SelectableElement>>{
 	mounted: listen,
 	unmounted: (el: any) => el[kListener](),
 };
+
+// TODO: 想搞个 v-selection-model 替换 bind + change，但自定义 v-model 需要扩展编译器。

@@ -7,7 +7,6 @@ export { default as vAutofocus } from "./directives/autofocus";
 export { default as vImeInput } from "./directives/ime-input";
 export { default as vBindSelection } from "./directives/selection-bind";
 export { default as vSelectionChange } from "./directives/selection-change";
-export { default as vSelectionModel } from "./directives/selection-model";
 export { default as vRipple } from "./directives/ripple";
 
 export { default as AtomSpinner } from "./components/AtomSpinner.vue";
