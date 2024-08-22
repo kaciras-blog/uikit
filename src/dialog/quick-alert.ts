@@ -55,7 +55,7 @@ export class KxDialogAPI extends QuickDialogController {
 
 export function useDialog() {
 	const value = inject<KxDialogAPI>(kDialog);
-	if (process.env.NODE_ENV === "production" || value) {
+	if (import.meta.env.PROD || value) {
 		return value!;
 	}
 	throw new Error("无法获取 $dialog，请确保加入了插件");
@@ -63,7 +63,7 @@ export function useDialog() {
 
 export function useToast() {
 	const value = inject<ToastController>(kToast);
-	if (process.env.NODE_ENV === "production" || value) {
+	if (import.meta.env.PROD || value) {
 		return value!;
 	}
 	throw new Error("无法获取 $toast，请确保加入了插件");
