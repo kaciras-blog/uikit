@@ -1,7 +1,6 @@
 import { StoryFn } from "@storybook/vue3";
 import { computed, ref } from "vue";
-import { tap } from "rxjs/operators";
-import { EdgeScrollObserver, limitInWindow, moveElement, observeMouseMove } from "../src/dragging.js";
+import { EdgeScrollObserver, limitInWindow, moveElement, startDragging } from "../src/dragging.js";
 
 export default {
 	title: "Dragging",
@@ -45,16 +44,21 @@ export const Demo: StoryFn = (args) => ({
 			const { size, speed } = args;
 			const el = event.target as HTMLElement;
 
-			const eso = new EdgeScrollObserver(size, speed);
-
+			const edgeScroller = new EdgeScrollObserver(size, speed);
+			const move = moveElement(event, el);
 			el.style.cursor = "grabbing";
 
-			observeMouseMove().pipe(limitInWindow(), tap(eso), moveElement(event, el)).subscribe({
-				next: () => {
-					vX.value = eso.vX.toFixed(1);
-					vY.value = eso.vY.toFixed(1);
+			startDragging(event, {
+				onMove(point) {
+					limitInWindow(point);
+					move(point);
+					vX.value = edgeScroller.vX.toFixed(1);
+					vY.value = edgeScroller.vY.toFixed(1);
 				},
-				complete: () => el.style.cursor = "",
+				onEnd(event: Event) {
+					el.style.cursor = "";
+					edgeScroller.onEnd(event);
+				},
 			});
 		}
 

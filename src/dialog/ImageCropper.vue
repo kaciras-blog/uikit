@@ -132,7 +132,7 @@ import SwapHorizIcon from "../assets/swap_horiz.svg?sfc";
 import SwapVertIcon from "../assets/swap_vert.svg?sfc";
 import RotateRightIcon from "../assets/rotate_right.svg?sfc";
 import { useDialog } from "./quick-alert";
-import { observeMouseMove } from "../dragging";
+import { startDragging } from "../dragging";
 import KxButton from "../input/KxButton.vue";
 import AtomSpinner from "../components/AtomSpinner.vue";
 
@@ -161,7 +161,6 @@ const props = defineProps({
 });
 
 // 暂不支持修改 image，要裁剪其它图片请重新创建 ImageCropper 组件。
-// eslint-disable-next-line vue/no-setup-props-destructure
 const { image } = props;
 const imgUrl = typeof image === "string"
 	? image
@@ -352,7 +351,7 @@ function drag(event: PointerEvent) {
 	const Δx = transform.x - clientX;
 	const Δy = transform.y - clientY;
 
-	observeMouseMove().subscribe(({ x, y }) => {
+	startDragging(event, ({ x, y }) => {
 		transform.x = Δx + x;
 		transform.y = Δy + y;
 		fixTransform();

@@ -1,57 +1,56 @@
-/**
- * 拖动相关的工具函数集合，包含统一鼠标和触摸事件、防止超出窗口、移动元素、靠近边缘自动滚动等功能。
- *
- * 因为无聊所以用RxJS写了，其实这种逻辑并不算特别复杂，可以不用RxJS的。
- */
-import { Observable } from "rxjs";
-import { map, tap } from "rxjs/operators";
-import { isTouchEvent } from "./common";
-
 interface Point2D {
-	readonly x: number;
-	readonly y: number;
+	x: number;
+	y: number;
+}
+
+type OnMove = (event: Point2D) => void;
+
+interface DragHandlers {
+	onMove: OnMove;
+
+	onEnd?(event: Event): void;
 }
 
 /**
  * 监听鼠标的移动，不断产生鼠标的位置，请保证调用该函数时鼠标处于按下状态或触摸状态，
  * 比如在 pointerdown 事件里调用此函数。
- *
- * @return 不断发出鼠标坐标的Observable
  */
-export function observeMouseMove() {
-	return new Observable<Point2D>((subscriber) => {
+export function startDragging(init: PointerEvent, handlers: OnMove | DragHandlers) {
+	if (init.button !== 0) {
+		return;
+	}
+	if (typeof handlers === "function") {
+		handlers = { onMove: handlers };
+	}
 
-		function onMove(event: PointerEvent) {
-			const { clientX, clientY } = event;
-			subscriber.next({ x: clientX, y: clientY });
-		}
+	// Avoid dragging selected contents.
+	init.preventDefault();
 
-		function cleanListeners() {
-			document.removeEventListener("pointerup", onUp);
-			document.removeEventListener("pointermove", onMove);
-		}
+	function handleMove(event: PointerEvent) {
+		handlers.onMove(event);
+	}
 
-		function onUp(event: Event) {
-			event.preventDefault();
-			cleanListeners();
-			subscriber.complete();
-		}
+	/*
+	 * It's better to attach handlers to `document` over `window`, as the
+	 * user can use window events to ensure runs after the drag handler.
+	 */
+	function handleEnd(event: Event) {
+		handlers.onEnd?.(event);
+		event.preventDefault();
+		document.removeEventListener("pointerup", handleEnd);
+		document.removeEventListener("pointermove", handleMove);
+	}
 
-		subscriber.add(cleanListeners);
-
-		document.addEventListener("pointerup", onUp);
-		document.addEventListener("pointermove", onMove);
-	});
+	document.addEventListener("pointerup", handleEnd);
+	document.addEventListener("pointermove", handleMove);
 }
 
 /**
  * 将坐标点限制在窗口内。
  */
-export function limitInWindow() {
-	return map<Point2D, Point2D>(({ x, y }) => ({
-		x: Math.max(0, Math.min(x, window.innerWidth)),
-		y: Math.max(0, Math.min(y, window.innerHeight)),
-	}));
+export function limitInWindow(point: Point2D) {
+	point.x = Math.max(0, Math.min(point.x, window.innerWidth));
+	point.y = Math.max(0, Math.min(point.y, window.innerHeight));
 }
 
 /**
@@ -61,23 +60,23 @@ export function limitInWindow() {
  * @param el 被移动的元素
  */
 export function moveElement(event: MouseEvent, el: HTMLElement) {
-	const { clientX, clientY } = event;
+	const { x, y } = event;
 	const { style } = el;
 	const clientRect = el.getBoundingClientRect();
 
 	// 拖动开始时，元素的左上角坐标 - 鼠标的坐标，以后每个鼠标坐标加上该值即为元素左上角坐标。
-	const Δx = clientRect.left - clientX;
-	const Δy = clientRect.top - clientY;
+	const Δx = clientRect.left - x;
+	const Δy = clientRect.top - y;
 
 	// 设置 fixed 定位及初始坐标
 	style.position = "fixed";
 	style.top = clientRect.top + "px";
 	style.left = clientRect.left + "px";
 
-	return tap<Point2D>(({ x, y }) => {
+	return ({ x, y }: Point2D) => {
 		style.top = y + Δy + "px";
 		style.left = x + Δx + "px";
-	});
+	};
 }
 
 /**
@@ -92,34 +91,34 @@ export function moveElement(event: MouseEvent, el: HTMLElement) {
  */
 export class EdgeScrollObserver {
 
-	private readonly size: number;
+	private readonly margin: number;
 	private readonly speed: number;
 
 	// 为了方便直接 public 了，但是不要再外部修改它们
-	public vX = 0;
-	public vY = 0;
+	vX = 0;
+	vY = 0;
 
 	private animationFrame: number;
 
 	/**
 	 * 创建 EdgeScrollObserver 的实例，并启动循环。
 	 *
-	 * @param size 触发宽度，离边缘距离小于该值时开始滚动
+	 * @param margin 触发宽度，离边缘距离小于该值时开始滚动
 	 * @param speed 速度因子，值越大滚动得越快
 	 */
-	constructor(size: number, speed: number) {
-		this.size = size;
+	constructor(margin = 80, speed = 0.4) {
+		this.margin = margin;
 		this.speed = speed;
 		this.loop = this.loop.bind(this);
 		this.animationFrame = requestAnimationFrame(this.loop);
 	}
 
-	next({ x, y }: Point2D) {
+	onMove({ x, y }: Point2D) {
 		this.vX = this.calc(x, window.innerWidth / 2);
 		this.vY = this.calc(y, window.innerHeight / 2);
 	}
 
-	complete() {
+	onEnd() {
 		cancelAnimationFrame(this.animationFrame);
 	}
 
@@ -134,20 +133,11 @@ export class EdgeScrollObserver {
 	}
 
 	private calc(pos: number, middle: number) {
-		const { size, speed } = this;
+		const { margin, speed } = this;
 
 		const offset = pos - middle;
-		const v = Math.max(0, Math.abs(offset) + size - middle);
+		const v = Math.max(0, Math.abs(offset) + margin - middle);
 		return speed * v * Math.sign(offset);
 	}
 }
 
-/**
- * 创建 EdgeScrollObserver 的便捷函数，使用 tap 来附加到 Observable 上。
- *
- * @example
- * observeMouseMove().pipe(..., edgeScroll(), ...).subscribe(...)
- */
-export function edgeScroll(size = 80, speed = 0.4) {
-	return tap<Point2D>(new EdgeScrollObserver(size, speed));
-}

@@ -45,7 +45,7 @@
 import { ref } from "vue";
 import CloseIcon from "../assets/icon-close.svg?sfc";
 import { usePreventScroll } from "../composition";
-import { limitInWindow, moveElement, observeMouseMove } from "../dragging";
+import { limitInWindow, moveElement, startDragging } from "../dragging";
 import vAutofocus from "../directives/autofocus";
 import { useDialog } from "./quick-alert";
 import KxButton from "../input/KxButton.vue";
@@ -80,9 +80,11 @@ function drag(event: PointerEvent) {
 	if (!props.draggable || event.button !== 0) {
 		return; // 鼠标右键不拖动。
 	}
-	observeMouseMove()
-		.pipe(limitInWindow(), moveElement(event, dialogEl.value!))
-		.subscribe();
+	const move = moveElement(event, dialogEl.value!);
+	startDragging(event, point => {
+		limitInWindow(point);
+		move(point);
+	});
 }
 
 function onEscape() {
