@@ -31,7 +31,7 @@ export const Demo: StoryFn = (args) => ({
 				<div>横向速度：{{ vX }}</div>
 				<div>纵向速度：{{ vY }}</div>
 			</aside>
-			<div id="drag-demo-el" @mousedown="drag" @touchstart.prevent="drag">拖动示例</div>
+			<div id="drag-demo-el" @pointerdown="drag">拖动试试</div>
 		</div>
 	`,
 	setup() {
@@ -40,7 +40,7 @@ export const Demo: StoryFn = (args) => ({
 
 		const style = computed(() => ({ "--edge-size": args.size + "px" }));
 
-		function drag(event: MouseEvent) {
+		function drag(event: PointerEvent) {
 			const { size, speed } = args;
 			const el = event.target as HTMLElement;
 
@@ -52,12 +52,13 @@ export const Demo: StoryFn = (args) => ({
 				onMove(point) {
 					limitInWindow(point);
 					move(point);
+					edgeScroller.onMove(point);
 					vX.value = edgeScroller.vX.toFixed(1);
 					vY.value = edgeScroller.vY.toFixed(1);
 				},
-				onEnd(event: Event) {
+				onEnd() {
 					el.style.cursor = "";
-					edgeScroller.onEnd(event);
+					edgeScroller.onEnd();
 				},
 			});
 		}

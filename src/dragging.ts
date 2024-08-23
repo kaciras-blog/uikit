@@ -15,7 +15,7 @@ interface DragHandlers {
  * 监听鼠标的移动，不断产生鼠标的位置，请保证调用该函数时鼠标处于按下状态或触摸状态，
  * 比如在 pointerdown 事件里调用此函数。
  */
-export function startDragging(init: PointerEvent, handlers: OnMove | DragHandlers) {
+export function startDragging(init: MouseEvent, handlers: OnMove | DragHandlers) {
 	if (init.button !== 0) {
 		return;
 	}
@@ -30,7 +30,8 @@ export function startDragging(init: PointerEvent, handlers: OnMove | DragHandler
 	init.preventDefault();
 
 	function handleMove(event: PointerEvent) {
-		typeCasted.onMove(event);
+		const { x, y } = event;
+		typeCasted.onMove({ x, y });
 	}
 
 	/*

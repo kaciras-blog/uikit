@@ -5,9 +5,16 @@ import { createMemoryHistory, createRouter } from "vue-router";
 import { createPinia } from "pinia";
 import UIKit, { observeMediaQuery } from "../src/index";
 
-setup(app => {
-	const pinia = createPinia();
+const kHasSetup = Symbol();
 
+setup(app => {
+	// https://github.com/storybookjs/storybook/issues/18222
+	if (Reflect.get(app, kHasSetup)) {
+		return;
+	}
+	Reflect.set(app, kHasSetup, true);
+
+	const pinia = createPinia();
 	observeMediaQuery(pinia);
 
 	app.use(UIKit);
@@ -18,7 +25,7 @@ setup(app => {
 	}));
 });
 
-// <Preview>{...} 无法解析，实测 ESBuild 能处理，不知道哪的问题。
+// 由于启用了 JSX，所以不能用 <Preview> 来定义类型。
 export default {
 	tags: ["autodocs"],
 	parameters: {
