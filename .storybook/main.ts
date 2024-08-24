@@ -13,6 +13,7 @@ export default <StorybookConfig>{
 		"@storybook/addon-interactions",
 	],
 	stories: [
+		"../stories/**/*.mdx",
 		"../stories/**/*.stories.ts",
 	],
 };
