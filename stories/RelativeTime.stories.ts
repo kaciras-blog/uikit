@@ -13,10 +13,16 @@ export default {
 			},
 		},
 		autoRefresh: {
+			type: "number",
 			control: {
-				type: "number",
 				min: 0,
 				step: 10,
+			},
+		},
+		threshold: {
+			type: "number",
+			control: {
+				min: 0,
 			},
 		},
 	},

@@ -2,8 +2,7 @@ import { ref } from "vue";
 import { vSelectionChange } from "../../src";
 
 export default {
-	title: "SelectionBind",
-
+	title: "SelectionChange",
 };
 
 export const SelectionChange = () => ({
@@ -22,8 +21,8 @@ export const SelectionChange = () => ({
 			class="directive-textarea"
 		/>
 		<div>
-		选择范围：
-		{{ selA[0] }} - {{ selA[1] }}
+			选择范围：
+			{{ selA[0] }} - {{ selA[1] }}
 		</div>
 	`,
 	setup() {

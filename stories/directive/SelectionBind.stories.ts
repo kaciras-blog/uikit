@@ -1,8 +1,7 @@
-import { vBindSelection } from "../../src";
+import vBindSelection from "../../src/directives/selection-bind.ts";
 
 export default {
-	title: "SelectionChange",
-
+	title: "SelectionBind",
 };
 
 export const SelectionBind = () => ({

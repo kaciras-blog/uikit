@@ -24,7 +24,10 @@ export default {
 };
 
 export const ScrollPagingView: StoryFn = (args) => ({
-	components: { ListItem },
+	components: {
+		ListItem,
+		ScrollPagingView: ScrollPagingViewVue,
+	},
 	template: `
 		<ScrollPagingView
 			v-bind="binding"

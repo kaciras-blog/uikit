@@ -25,9 +25,7 @@ const render: StoryFn = args => ({
 	`,
 	setup: () => ({
 		args,
-		handleClick: args.async
-			? () => sleep(3000)
-			: noop,
+		handleClick: args.async ? () => sleep(3000) : noop,
 	}),
 });
 

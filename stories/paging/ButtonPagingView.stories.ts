@@ -25,7 +25,10 @@ export default {
 };
 
 export const ButtonPagingView: StoryFn = (args) => ({
-	components: { ListItem },
+	components: {
+		ListItem,
+		ButtonPagingView: ButtonPagingViewVue,
+	},
 	template: `
 		<ButtonPagingView
 			ref="pagingView"

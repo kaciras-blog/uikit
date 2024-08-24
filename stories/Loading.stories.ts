@@ -1,4 +1,4 @@
-import { Args, StoryFn } from "@storybook/vue3";
+import { Args, Meta, StoryFn } from "@storybook/vue3";
 import { h } from "vue";
 import AtomSpinnerC from "../src/components/AtomSpinner.vue";
 import SkFadingCircleC from "../src/components/SkFadingCircle.vue";
@@ -17,16 +17,14 @@ export default {
 			control: { type: "color" },
 		},
 	},
-};
+} satisfies Meta;
 
-function getAttrs(args: Args) {
-	return {
-		style: {
-			"--size": args.size + "px",
-			"--color": args.color,
-		},
-	};
-}
+const getAttrs = (args: Args) => ({
+	style: {
+		"--color": args.color,
+		"--size": args.size + "px",
+	},
+});
 
 export const AtomSpinner: StoryFn = (args) => ({
 	render: () => h(AtomSpinnerC, getAttrs(args)),

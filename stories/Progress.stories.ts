@@ -1,11 +1,13 @@
 import { StoryFn } from "@storybook/vue3";
 import KxProgress from "../src/components/KxProgress.vue";
+import KxButton from "../src/input/KxButton.vue";
 
 export default {
 	component: KxProgress,
 };
 
 export const Progress: StoryFn = () => ({
+	components: { KxProgress, KxButton },
 	template: `
 		<KxProgress ref="progress"/>
 		<p>
@@ -40,7 +42,7 @@ export const Progress: StoryFn = () => ({
 		},
 		reset() {
 			this.value = 0;
-			this.$refs.progress.reset();
+			return this.$refs.progress.reset();
 		},
 	},
 });

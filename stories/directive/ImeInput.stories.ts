@@ -2,7 +2,6 @@ import vImeInput from "../../src/directives/ime-input.ts";
 
 export default {
 	title: "ImeInput",
-
 };
 
 export const ImeInput = () => ({
@@ -11,7 +10,7 @@ export const ImeInput = () => ({
 	},
 	template: `
 		<label>
-			<div>使用输入法输入一些文本：</div>
+			<span>使用输入法输入一些文本：</span>
 			<textarea
 				v-ime-input="e => imeValue = e.target.value"
 				@input="e => value = e.target.value"

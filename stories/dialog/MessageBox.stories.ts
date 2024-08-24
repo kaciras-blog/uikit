@@ -1,5 +1,7 @@
-import { StoryFn } from "@storybook/vue3";
+import { Meta, StoryFn } from "@storybook/vue3";
 import { MessageType } from "../../src/dialog/core.js";
+import { DialogContainer } from "../../src/index.ts";
+import KxButton from "../../src/input/KxButton.vue";
 import KxMessageBox from "../../src/dialog/KxMessageBox.vue";
 
 export default {
@@ -20,16 +22,19 @@ export default {
 			action: "clicked",
 		},
 	},
-};
+} satisfies Meta<typeof KxMessageBox>;
 
-export const MessageBox: StoryFn = (args) => ({
+export const MessageBox: StoryFn = args => ({
+	components: {
+		KxButton,
+		DialogContainer,
+	},
 	template: `
 		<KxButton @click="show">显示消息框</KxButton>
 		<DialogContainer/>
 	`,
 	methods: {
 		show() {
-
 			this.$dialog.alert(args).then(args.onClick);
 		},
 	},

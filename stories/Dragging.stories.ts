@@ -24,7 +24,7 @@ export default {
 	},
 };
 
-export const Demo: StoryFn = (args) => ({
+export const Dragging: StoryFn = (args) => ({
 	template: `
 		<div id="drag-demo" :style="style">
 			<aside id="drag-demo-labels">

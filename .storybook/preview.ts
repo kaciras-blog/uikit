@@ -27,7 +27,7 @@ setup(app => {
 
 // 由于启用了 JSX，所以不能用 <Preview> 来定义类型。
 export default {
-	tags: ["autodocs"],
+
 	parameters: {
 		actions: { argTypesRegex: "^on[A-Z].*" },
 		controls: {

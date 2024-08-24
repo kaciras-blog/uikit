@@ -1,5 +1,7 @@
 import { StoryFn } from "@storybook/vue3";
 import { MessageType } from "../../src/dialog/core.js";
+import KxButton from "../../src/input/KxButton.vue";
+import { ToastContainer } from "../../src/index.ts";
 import ToastComponent from "../../src/dialog/KxToast.vue";
 
 export default {
@@ -7,6 +9,10 @@ export default {
 };
 
 export const Toast: StoryFn = () => ({
+	components: {
+		KxButton,
+		ToastContainer,
+	},
 	template: `
 		<KxButton @click="show">
 			显示气泡通知

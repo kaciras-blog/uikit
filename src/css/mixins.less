@@ -65,9 +65,9 @@
  * 使用 -webkit-line-clamp 属性限制文字的行数，多余的显示省略号。
  * 这个属性的兼容性目前还不太好。
  */
-.line-clamp(@count) {
+.line-clamp {
 	display: -webkit-box;
-	-webkit-line-clamp: @count;
+	-webkit-line-clamp: var(--line-clamp);
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 	text-overflow: ellipsis;

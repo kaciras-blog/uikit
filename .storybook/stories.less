@@ -39,14 +39,10 @@
 	color: red;
 }
 
-.line-clamp {
+.line-clamp.story {
 	border: solid 1px;
 	width: 28em;
 	padding: .5em;
-
-	& > article {
-		.line-clamp(3);
-	}
 }
 
 .scroll-to-box {
@@ -104,12 +100,12 @@
 	left: calc(50% - 150px);
 	width: 300px;
 	height: 200px;
+	font-size: 40px;
 
 	cursor: grab;
 	user-select: none;
-	background: whitesmoke;
-	border: solid #0000ee;
-	font-size: 40px;
+	color: white;
+	background: #118136;
 }
 
 #drag-demo-labels {

@@ -34,5 +34,5 @@ jobs:
           silent: true
           clean: true
           branch: gh-pages
-          folder: .out
+          folder: storybook-static
           single-commit: true

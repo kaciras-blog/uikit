@@ -17,7 +17,8 @@ export default {
 
 export const RadioBox: StoryFn = args => ({
 	components: {
-		KxRadioBoxGroup,KxRadioBox
+		KxRadioBoxGroup,
+		KxRadioBox,
 	},
 	template: `
 		<h1>Selected: {{ value }}</h1>
