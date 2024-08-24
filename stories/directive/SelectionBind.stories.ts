@@ -1,10 +1,9 @@
+import { Meta, StoryFn } from "@storybook/vue3";
 import vBindSelection from "../../src/directives/selection-bind.ts";
 
-export default {
-	title: "SelectionBind",
-};
+export default {} satisfies Meta;
 
-export const SelectionBind = () => ({
+export const SelectionBind: StoryFn = () => ({
 	directives: {
 		bindSelection: vBindSelection,
 	},

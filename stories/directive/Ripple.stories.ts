@@ -2,8 +2,6 @@ import { StoryFn } from "@storybook/vue3";
 import vRipple from "../../src/directives/ripple.ts";
 
 export default {
-	title: "Ripple",
-
 	args: {
 		centered: false,
 		circle: false,

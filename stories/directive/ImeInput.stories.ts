@@ -1,10 +1,9 @@
+import { Meta, StoryFn } from "@storybook/vue3";
 import vImeInput from "../../src/directives/ime-input.ts";
 
-export default {
-	title: "ImeInput",
-};
+export default {} satisfies Meta;
 
-export const ImeInput = () => ({
+export const ImeInput: StoryFn = () => ({
 	directives: {
 		imeInput: vImeInput,
 	},

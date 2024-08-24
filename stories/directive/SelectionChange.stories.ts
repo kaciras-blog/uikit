@@ -1,11 +1,10 @@
+import { Meta, StoryFn } from "@storybook/vue3";
 import { ref } from "vue";
 import { vSelectionChange } from "../../src";
 
-export default {
-	title: "SelectionChange",
-};
+export default {} satisfies Meta;
 
-export const SelectionChange = () => ({
+export const SelectionChange: StoryFn = () => ({
 	directives: {
 		selectionChange: vSelectionChange,
 	},
