@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { getScrollTop } from "../scroll";
+import { getScrollTop } from "../common.ts";
 import { LoadDateFn, PageData, PageLinkFn } from "./core";
 import PagingButtons from "./PagingButtons.vue";
 import LoadingStatus from "../components/LoadingStatus.vue";

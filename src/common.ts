@@ -8,6 +8,16 @@
 export function isTouchEvent(e: MouseEvent | TouchEvent): e is TouchEvent {
 	return e.constructor.name === "TouchEvent";
 }
+/**
+ * 获取文档当前的的滚动高度，兼容各种浏览器。
+ *
+ * @return 滚动高度
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/Element/getBoundingClientRect
+ */
+export function getScrollTop() {
+	const doc = document.documentElement || document.body.parentNode;
+	return (typeof doc.scrollTop === "number" ? doc : document.body).scrollTop;
+}
 
 type SelectionElement = HTMLTextAreaElement | HTMLInputElement;
 

@@ -8,7 +8,6 @@
 			"DOM",
 			"DOM.Iterable"
 		],
-		"baseUrl": ".",
 		"jsx": "preserve",
 		"strict": true,
 		"noEmit": true,
