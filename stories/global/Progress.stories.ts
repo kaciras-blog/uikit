@@ -1,6 +1,6 @@
 import { StoryFn } from "@storybook/vue3";
-import KxProgress from "../src/components/KxProgress.vue";
-import KxButton from "../src/input/KxButton.vue";
+import KxProgress from "../../src/components/KxProgress.vue";
+import KxButton from "../../src/input/KxButton.vue";
 
 export default {
 	component: KxProgress,

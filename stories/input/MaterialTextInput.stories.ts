@@ -1,9 +1,8 @@
-import { StoryFn } from "@storybook/vue3";
-import { ref } from "vue";
-import MaterialTextInput from "../../src/input/MaterialTextInput.vue";
+import { StoryObj } from "@storybook/vue3";
+import MaterialTextInputC from "../../src/input/MaterialTextInput.vue";
 
 export default {
-	component: MaterialTextInput,
+	component: MaterialTextInputC,
 	args: {
 		disabled: false,
 	},
@@ -23,19 +22,11 @@ export default {
 	},
 };
 
-export const Default: StoryFn = args => ({
-	components: { MaterialTextInput },
-	template: `
-		<MaterialTextInput v-model="value" v-bind="args"/>
-	`,
-	setup() {
-		return { args, value: ref("") };
+export const MaterialTextInput: StoryObj = {
+	args: {
+		disabled: false,
+		name: "name",
+		label: "Your name:",
+		placeholder: "default name",
 	},
-});
-
-Default.args = {
-	disabled: false,
-	name: "name",
-	label: "Your name:",
-	placeholder: "default name",
 };
