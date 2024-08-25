@@ -2,6 +2,7 @@
 对 <time> 的简单封装，提供了格式化时间的功能，使用原生的 Internationalization API。
 
 这里把绝对时间（Absolute time）称为时刻，相对时间（Relative time）称为时差（Duration）。
+当渲染为绝对时间时，默认使用当前的时区，这在 SSR 中会造成不一致，但不是什么大问题。
 -->
 
 <template>

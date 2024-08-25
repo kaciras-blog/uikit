@@ -13,14 +13,14 @@
 		</KxButton>
 		<KxButton
 			v-if='onAccept'
-			:disabled='acceptable === false'
+			:disabled='!acceptable'
 			@click='onAccept'
 		>
 			确定
 		</KxButton>
 		<KxButton
 			v-if='onApply'
-			:disabled='acceptable === false'
+			:disabled='!acceptable'
 			@click='onApply'
 		>
 			应用
@@ -45,7 +45,9 @@ export interface KxDialogButtonsProps{
 	onAccept?: false | (() => void);
 }
 
-defineProps<KxDialogButtonsProps>();
+withDefaults(defineProps<KxDialogButtonsProps>(), {
+	acceptable: true, // 默认不是 undefined 而是 false？
+});
 </script>
 
 <style module lang="less">
