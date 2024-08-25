@@ -6,11 +6,15 @@ import dts from "vite-plugin-dts";
 import packageJson from "./package.json" with { type: "json" };
 
 export default defineConfig(({ mode }) => ({
-	plugins: [svgSfc(), vue(), dts({
-		include: "src",
-		rollupTypes: true,
-		staticImport: true,
-	})],
+	plugins: [
+		svgSfc(),
+		vue(),
+		mode === "lib" && dts({
+			include: "src",
+			rollupTypes: true,
+			staticImport: true,
+		}),
+	],
 	test: {
 		environment: "happy-dom",
 		clearMocks: true,
@@ -35,7 +39,7 @@ export default defineConfig(({ mode }) => ({
 	},
 	css: {
 		modules: {
-			generateScopedName: mode === "production"
+			generateScopedName: mode !== "development"
 				? "[hash:base64:5]" : undefined,
 		},
 	},

@@ -20,7 +20,7 @@
 	"scripts": {
 		"lint": "eslint --fix .",
 		"test": "vitest run",
-		"build": "vite build",
+		"build": "vite build --mode lib",
 		"storybook": "storybook dev",
 		"build-storybook": "storybook build"
 	},
