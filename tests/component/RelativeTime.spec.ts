@@ -11,7 +11,7 @@ it("should render past time in relative", async () => {
 		props: { value: 1671848003_000 },
 	});
 
-	expect(wrapper.html()).toBe('<time title="2022-12-24 10:13" datetime="2022-12-24T02:13:23.000Z">2个月前</time>');
+	expect(wrapper.html()).toBe('<time title="2022-12-24 10:13" datetime="2022-12-24T02:13:23.000Z">上个月</time>');
 });
 
 it("should render future time in relative", async () => {
@@ -21,7 +21,7 @@ it("should render future time in relative", async () => {
 		props: { value: 1676945603_000 },
 	});
 
-	expect(wrapper.html()).toBe('<time title="2023-02-21 10:13" datetime="2023-02-21T02:13:23.000Z">6天后</time>');
+	expect(wrapper.html()).toBe('<time title="2023-02-21 10:13" datetime="2023-02-21T02:13:23.000Z">5天后</time>');
 });
 
 it("should render time that greater than the threshold in absolute", () => {

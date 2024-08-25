@@ -82,7 +82,7 @@ const title = computed(() => dateTimeMinute.format(date.value));
 function refreshText() {
 	let duration = date.value.getTime() - Date.now();
 
-	const sign = duration >= 0 ? 1 : -1;
+	const sign = duration > 0 ? 1 : -1;
 	duration = Math.abs(duration / 1000);
 
 	if (duration > props.threshold) {
@@ -105,7 +105,13 @@ function refreshText() {
 			duration /= d;
 		}
 	}
-	duration = sign * Math.round(duration);
+	/*
+	 * 由于 RelativeTimeFormat 不支持 1 个多月这样的模糊词，所以要考虑舍入问题。
+	 * GitHub 是在 90% 的位置向上舍入，这里还是简单些全部向下取整。
+	 *
+	 * https://github.com/github/relative-time-element/blob/7a8113f5a9035fc9e6e81c75099eba2877dcf51d/src/duration.ts#L126
+	 */
+	duration = sign * Math.floor(duration);
 	text.value = relative.format(duration, divisions[i + 1]);
 }
 
