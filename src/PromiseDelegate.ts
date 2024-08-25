@@ -1,6 +1,4 @@
-// 这两个太长了单独拿出来
-export type OnFulfilled<T, R> = ((value: T) => R | PromiseLike<R>) | null;
-export type OnRejected<R> = ((reason: any) => R | PromiseLike<R>) | null;
+import { OnFulfilled, OnRejected } from "@kaciras/utilities/browser";
 
 /**
  * Promise不能直接继承，否则使用await的时候会出错，所以需要用代理的方式来扩展。

@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { mount } from "@vue/test-utils";
 import { nextTick } from "vue";
-import { DialogResult, DialogSession, MessageType } from "../src/dialog/core";
-import { default as plugin } from "../src/dialog/quick-alert";
+import { DialogResult, DialogSession, MessageType } from "../src/dialog/core.ts";
+import { default as plugin } from "../src/dialog/quick-alert.ts";
 import DialogContainer from "../src/dialog/DialogContainer.vue";
 
 describe("DialogSession", () => {

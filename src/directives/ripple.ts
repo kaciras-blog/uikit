@@ -5,8 +5,8 @@
  *   circle - 波纹最大宽度不超过元素，默认是要超过的
  */
 import { DirectiveBinding } from "vue";
-import { isTouchEvent } from "../common";
-import { RippleEffect } from "../ripple-effect";
+import { isTouchEvent } from "../common.ts";
+import { RippleEffect } from "../ripple-effect.ts";
 
 class RippleBinding extends RippleEffect {
 	touched = false;

@@ -2,7 +2,7 @@ import { expect, it, vi } from "vitest";
 import { nextTick, ref, watchEffect } from "vue";
 import { createTestingPinia } from "@pinia/testing";
 import { shallowMount } from "@vue/test-utils";
-import BreakPoint, { useBreakPoint, useMQStore } from "../src/break-point";
+import BreakPoint, { useBreakPoint, useMQStore } from "../src/break-point.ts";
 
 function createSuite(root: any) {
 	const store = createTestingPinia({ createSpy: vi.fn });

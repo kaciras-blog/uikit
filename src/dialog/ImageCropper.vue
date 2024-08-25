@@ -126,13 +126,13 @@
 <script setup lang="ts">
 import { computed, onUnmounted, reactive, shallowRef, watch } from "vue";
 import PlusIcon from "bootstrap-icons/icons/plus-lg.svg?sfc";
-import { plainRef, usePreventScroll } from "../composition";
+import { plainRef, usePreventScroll } from "../composition/index.ts";
 import CloseIcon from "../assets/icon-close.svg?sfc";
 import SwapHorizIcon from "../assets/swap_horiz.svg?sfc";
 import SwapVertIcon from "../assets/swap_vert.svg?sfc";
 import RotateRightIcon from "../assets/rotate_right.svg?sfc";
-import { useDialog } from "./quick-alert";
-import { startDragging } from "../dragging";
+import { useDialog } from "./quick-alert.ts";
+import { startDragging } from "../dragging.ts";
 import KxButton from "../input/KxButton.vue";
 import AtomSpinner from "../components/AtomSpinner.vue";
 

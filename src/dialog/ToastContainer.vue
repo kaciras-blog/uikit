@@ -12,9 +12,9 @@
 <script setup lang="ts">
 import { shallowReactive } from "vue";
 import { uniqueId } from "@kaciras/utilities/browser";
-import { ToastProps } from "./core";
+import { ToastProps } from "./core.ts";
 import KxToast from "./KxToast.vue";
-import { useToast } from "./quick-alert";
+import { useToast } from "./quick-alert.ts";
 
 interface InternalToastProps extends ToastProps {
 	id: number;

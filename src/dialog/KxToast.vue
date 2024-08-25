@@ -32,7 +32,7 @@ import CheckIcon from "bootstrap-icons/icons/check-circle-fill.svg?sfc";
 import WarnIcon from "bootstrap-icons/icons/exclamation-triangle-fill.svg?sfc";
 import ErrorIcon from "bootstrap-icons/icons/x-circle-fill.svg?sfc";
 import CloseIcon from "../assets/icon-close.svg?sfc";
-import { MessageType } from "./core";
+import { MessageType } from "./core.ts";
 import KxButton from "../input/KxButton.vue";
 
 const iconMap = {

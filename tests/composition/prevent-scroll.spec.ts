@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 import { h } from "vue";
-import { usePreventScroll } from "../../src/composition";
+import { usePreventScroll } from "../../src/composition/index.ts";
 import { mount } from "@vue/test-utils";
 
 const ScrollLock = {

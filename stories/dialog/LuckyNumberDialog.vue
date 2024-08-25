@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { reactive, toRefs } from "vue";
-import { KxBaseDialog, KxButton, useDialog } from "../../src";
+import { KxBaseDialog, KxButton, useDialog } from "../../src/index.ts";
 import InputBox from "./InputBox.vue";
 
 const $dialog = useDialog();

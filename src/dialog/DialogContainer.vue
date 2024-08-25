@@ -19,8 +19,8 @@
 import { onBeforeUpdate, shallowReactive } from "vue";
 import { useEventListener } from "@vueuse/core";
 import { uniqueId } from "@kaciras/utilities/browser";
-import { DialogOptions, DialogResult } from "./core";
-import { useDialog } from "./quick-alert";
+import { DialogOptions, DialogResult } from "./core.ts";
+import { useDialog } from "./quick-alert.ts";
 
 interface InternalOptions extends DialogOptions<any> {
 	id: number;

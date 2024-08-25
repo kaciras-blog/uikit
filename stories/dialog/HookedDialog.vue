@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { KxBaseDialog } from "../../src";
+import { KxBaseDialog } from "../../src/index.ts";
 
 const time = ref(0);
 

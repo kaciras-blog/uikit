@@ -31,10 +31,10 @@
 </template>
 
 <script setup lang="ts">
-import { State } from "./core";
-import LoadingStatus from "../components/LoadingStatus.vue";
+import { useIntersectionHandler } from "../composition/index.ts";
+import { State } from "./core.ts";
 import KxButton from "../input/KxButton.vue";
-import { useIntersectionHandler } from "../composition";
+import LoadingStatus from "../components/LoadingStatus.vue";
 
 interface ScrollPagerProps {
 

@@ -1,6 +1,6 @@
 import { Directive, DirectiveBinding } from "vue";
-import { addSelectionChangeListener, SelectionChangeHandler } from "../common";
-import { SelectableElement } from "./selection-bind";
+import { addSelectionChangeListener, SelectionChangeHandler } from "../common.ts";
+import { SelectableElement } from "./selection-bind.ts";
 
 type DirValue = SelectionChangeHandler | [number, number];
 

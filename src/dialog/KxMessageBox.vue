@@ -39,12 +39,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import CloseIcon from "../assets/icon-close.svg?sfc";
-import { MessageType } from "./core";
-import vAutoFocus from "../directives/autofocus";
+import { MessageType } from "./core.ts";
+import vAutoFocus from "../directives/autofocus.ts";
+import { useDialog } from "./quick-alert.ts";
 import DialogIcons from "./DialogIcons.vue";
 import KxButton from "../input/KxButton.vue";
 import KxDialogButtons from "./KxDialogButtons.vue";
-import { useDialog } from "./quick-alert";
 
 export interface MessageBoxProps {
 	title: string;

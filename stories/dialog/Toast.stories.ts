@@ -1,5 +1,5 @@
 import { StoryFn } from "@storybook/vue3";
-import { MessageType } from "../../src/dialog/core.js";
+import { MessageType } from "../../src/dialog/core.ts";
 import KxButton from "../../src/input/KxButton.vue";
 import { ToastContainer } from "../../src/index.ts";
 import ToastComponent from "../../src/dialog/KxToast.vue";

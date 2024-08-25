@@ -1,5 +1,5 @@
 import { StoryFn } from "@storybook/vue3";
-import { getQuotes } from "../data";
+import { getQuotes } from "../data.ts";
 import ListItem from "./ListItem.vue";
 import ScrollPagingViewVue from "../../src/paging/ScrollPagingView.vue";
 

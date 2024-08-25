@@ -1,6 +1,6 @@
 import { StoryFn } from "@storybook/vue3";
 import { computed, ref } from "vue";
-import { EdgeScrollObserver, limitInWindow, moveElement, startDragging } from "../src/dragging.js";
+import { EdgeScrollObserver, limitInWindow, moveElement, startDragging } from "../src/dragging.ts";
 
 export default {
 	title: "Dragging",

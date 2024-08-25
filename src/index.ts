@@ -34,14 +34,14 @@ export { default as ButtonPagingView } from "./paging/ButtonPagingView.vue";
 export { default as ScrollPager } from "./paging/ScrollPager.vue";
 export { default as ScrollPagingView } from "./paging/ScrollPagingView.vue";
 
-export * from "./break-point";
-export * from "./common";
-export * from "./composition";
-export * from "./dragging";
-export * from "./dialog/quick-alert";
+export * from "./break-point.ts";
+export * from "./common.ts";
+export * from "./composition/index.ts";
+export * from "./dragging.ts";
+export * from "./dialog/quick-alert.ts";
 
-export { default as PromiseDelegate } from "./PromiseDelegate";
-export { default as PromiseSource } from "./PromiseSource";
+export { default as PromiseDelegate } from "./PromiseDelegate.ts";
+export { default as PromiseSource } from "./PromiseSource.ts";
 
 /** 注册各个子模块的插件 */
 export default function install(app: App) {

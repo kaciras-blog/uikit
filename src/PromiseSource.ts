@@ -1,4 +1,4 @@
-import { OnFulfilled, OnRejected } from "./PromiseDelegate";
+import { OnFulfilled, OnRejected } from "./PromiseDelegate.ts";
 
 export default class PromiseSource<T> implements Promise<T> {
 

@@ -44,9 +44,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import CloseIcon from "../assets/icon-close.svg?sfc";
-import { usePreventScroll } from "../composition";
-import { limitInWindow, moveElement, startDragging } from "../dragging";
-import vAutofocus from "../directives/autofocus";
+import { usePreventScroll } from "../composition/index.ts";
+import { limitInWindow, moveElement, startDragging } from "../dragging.ts";
+import vAutofocus from "../directives/autofocus.ts";
 import { useDialog } from "./quick-alert";
 import KxButton from "../input/KxButton.vue";
 

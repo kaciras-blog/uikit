@@ -1,5 +1,5 @@
 import { Component } from "vue";
-import PromiseDelegate from "../PromiseDelegate";
+import PromiseDelegate from "../PromiseDelegate.ts";
 
 export enum MessageType {
 	Info,

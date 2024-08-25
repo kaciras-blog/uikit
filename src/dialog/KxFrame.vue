@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import ArrowLeftIcon from "../assets/arrow-left.svg?sfc";
 import KxButton from "../input/KxButton.vue";
-import { usePreventScroll } from "../composition";
+import { usePreventScroll } from "../composition/index.ts";
 
 interface FrameHeaderProps {
 	title?: string;

@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { reactive, toRaw } from "vue";
-import { KxBaseDialog, KxDialogButtons, useDialog } from "../../src";
+import { KxBaseDialog, KxDialogButtons, useDialog } from "../../src/index.ts";
 
 interface InputBoxProps {
 	name: string;

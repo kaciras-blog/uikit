@@ -1,3 +1,6 @@
+/// <reference types="vite-plugin-svg-sfc/client" />
+/// <reference types="vite/client" />
+
 import { BreakPointAPI } from "./break-point";
 import { KxDialogAPI } from "./dialog/quick-alert";
 import { ToastController } from "./dialog/core";

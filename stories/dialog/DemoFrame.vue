@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { KxButton, KxFrame } from "../../src";
+import { KxButton, KxFrame } from "../../src/index.ts";
 import SearchIcon from "../assets/search.svg?sfc";
 import HelpIcon from "../assets/help.svg?sfc";
 import LuckyNumber from "./LuckyNumberDialog.vue";

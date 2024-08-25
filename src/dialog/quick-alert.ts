@@ -1,5 +1,5 @@
 import { App, inject } from "vue";
-import { DialogSession, MessageType, QuickDialogController, ToastController } from "./core";
+import { DialogSession, MessageType, QuickDialogController, ToastController } from "./core.ts";
 import { default as KxMessageBox, MessageBoxProps } from "./KxMessageBox.vue";
 
 export { QuickDialogController, DialogSession, MessageType };
