@@ -65,18 +65,12 @@ export interface RelativeTimeProps {
 	value: Date | number;
 }
 
-const props = withDefaults(defineProps<RelativeTimeProps>(), {
-	autoRefresh: 0,
-	threshold: 31536e+3, // 1 年
-});
+// Vue 3.5 支持解构写法啦，但本来 setup 块变量就多，这一搞就更乱了。
+const { value, autoRefresh = 0, threshold = 31536e+3 } = defineProps<RelativeTimeProps>();
 
 const text = shallowRef("");
 
-const date = computed(() => {
-	const { value } = props;
-	return typeof value === "number" ? new Date(value) : value;
-});
-
+const date = computed(() => typeof value === "number" ? new Date(value) : value);
 const title = computed(() => dateTimeMinute.format(date.value));
 
 function refreshText() {
@@ -85,7 +79,7 @@ function refreshText() {
 	const sign = duration > 0 ? 1 : -1;
 	duration = Math.abs(duration / 1000);
 
-	if (duration > props.threshold) {
+	if (duration > threshold) {
 		return text.value = dateOnly.format(date.value);
 	}
 
@@ -117,5 +111,5 @@ function refreshText() {
 
 watchEffect(refreshText);
 
-useIntervalFn(refreshText, () => props.autoRefresh);
+useIntervalFn(refreshText, () => autoRefresh);
 </script>
