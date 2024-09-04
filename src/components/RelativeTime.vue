@@ -6,7 +6,7 @@
 -->
 
 <template>
-	<time :title='title' :datetime='date.toISOString()'>{{ text }}</time>
+	<time data-allow-mismatch :title='title' :datetime='date.toISOString()'>{{ text }}</time>
 </template>
 
 <script lang='ts'>
