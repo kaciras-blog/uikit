@@ -11,7 +11,7 @@
 		v-bind='options.props'
 		v-show='isVisible(options, i)'
 		:is='options.component'
-		:ref='(v: any) => v && instances.set(options, v)'
+		:ref='(v: any) => v && instances.set(options.id, v)'
 	/>
 </template>
 
@@ -84,7 +84,7 @@ function closeDialog(config: InternalOptions, result = DialogResult.CANCELED) {
 	}
 	config.closed = true;
 
-	const { beforeDialogClose } = instances.get(config);
+	const { beforeDialogClose } = instances.get(config.id);
 	if (typeof beforeDialogClose !== "function") {
 		remove(config, result);
 	} else {
