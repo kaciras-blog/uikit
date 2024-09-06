@@ -39,7 +39,6 @@ import PagingButtons from "./PagingButtons.vue";
 import LoadingStatus from "../components/LoadingStatus.vue";
 
 interface ButtonPagingViewProps {
-
 	/**
 	 * 分页数据，该属性身与内部的两个属性（items,total）都不能为空，
 	 * 若要表示未加载状态，请对本组件使用 v-if。

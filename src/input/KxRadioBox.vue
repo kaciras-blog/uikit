@@ -32,7 +32,7 @@ export interface RadioBoxProps {
 	value: any;
 }
 
-const props = defineProps<RadioBoxProps>();
+const { value } = defineProps<RadioBoxProps>();
 const self = getCurrentInstance();
 
 // Vue 好像没有 React.cloneElement 这样的功能，用 slot 传递太麻烦。
@@ -43,10 +43,10 @@ if (!self?.parent) {
 const { props: groupProps, emit: groupEmit } = self.parent;
 
 const disabled = computed(() => groupProps.disabled as boolean);
-const checked = computed(() => props.value === groupProps.modelValue);
+const checked = computed(() => value === groupProps.modelValue);
 
 function handleInput() {
-	groupEmit("update:modelValue", props.value);
+	groupEmit("update:modelValue", value);
 }
 </script>
 

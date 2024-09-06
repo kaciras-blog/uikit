@@ -3,7 +3,9 @@
 -->
 <template>
 	<label :class='$style.container'>
-		<span :class='$style.label'>{{ label }}</span>
+		<span :class='$style.label'>
+			{{ label }}
+		</span>
 		<input
 			:class='$style.input'
 			:name='name'

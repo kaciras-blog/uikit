@@ -228,18 +228,19 @@ function invert(value: number) {
 }
 
 const region = computed(() => {
-	stencil.x;
-	transform.x;
+	// Computed 中必须通过 getter 来记录依赖，否则无法更新。
+	const width = invert(stencil.width);
+	const height = invert(stencil.height);
 
-	if (!main.value) {
-		return { top: 0, left: 0, width: 0, height: 0 };
+	const container = main.value;
+	if (!container) {
+		return { top: 0, left: 0, width, height };
 	}
-	const ri = main.value.firstElementChild!.getBoundingClientRect();
-	const rs = main.value.lastElementChild!.getBoundingClientRect();
+	const ri = container.firstElementChild!.getBoundingClientRect();
+	const rs = container.lastElementChild!.getBoundingClientRect();
 
 	return {
-		width: invert(stencil.width),
-		height: invert(stencil.height),
+		width, height,
 		left: invert(rs.left - ri.left),
 		top: invert(rs.top - ri.top),
 	};
