@@ -13,35 +13,37 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onBeforeUnmount, ref } from "vue";
 import KxButton from "./KxButton.vue";
 
 type TaskHandler = (event: Event, signal: AbortSignal) => Promise<unknown>;
 
 interface TaskButtonProps {
-
 	// Vue 残废的 TS 支持，只能把按钮的属性复制一遍。
 	type?: string;
 	color?: string;
 	route?: string;
 
-	// 在运行状态下点击时是否取消当前操作
+	/**
+	 * 在运行状态下点击，是否取消当前操作，处理函数也得支持取消才行。
+	 */
 	abortable?: boolean;
 
-	// 事件无法获取返回值所以用 props
+	/**
+	 * 事件无法获取返回的 Promise 所以得用 props。
+	 */
 	onClick: TaskHandler | TaskHandler[];
 }
 
-const props = withDefaults(defineProps<TaskButtonProps>(), {
-	abortable: false,
-});
+const { onClick, abortable = false } = defineProps<TaskButtonProps>();
 
 const running = ref(false);
 let controller = new AbortController();
 
-function handleClick(event: MouseEvent) {
-	const { onClick, abortable } = props;
+// 按钮卸载的话可以认为整个需要处理的组件全没了，故取消处理。
+onBeforeUnmount(() => controller.abort());
 
+function handleClick(event: MouseEvent) {
 	if (running.value) {
 		if (abortable) {
 			running.value = false;
