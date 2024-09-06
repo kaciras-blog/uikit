@@ -36,7 +36,9 @@
 			</header>
 
 			<!-- 为了方便 padding 还是包一层 -->
-			<div :class='$style.body'><slot/></div>
+			<div :class='$style.body'>
+				<slot/>
+			</div>
 		</div>
 	</div>
 </template>
@@ -80,11 +82,10 @@ function drag(event: PointerEvent) {
 	if (!props.draggable || event.button !== 0) {
 		return; // 鼠标右键不拖动。
 	}
-	const move = moveElement(event, dialogEl.value!);
-	startDragging(event, point => {
-		limitInWindow(point);
-		move(point);
-	});
+	startDragging(event, [
+		limitInWindow,
+		moveElement(event, dialogEl.value!),
+	]);
 }
 
 function onEscape() {

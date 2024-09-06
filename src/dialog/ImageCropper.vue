@@ -193,6 +193,13 @@ const transform = reactive({
 	flipY: 1,
 });
 
+const region = reactive({
+	top: 0,
+	left: 0,
+	width: 0,
+	height: 0,
+});
+
 const imgStyle = computed(() => ({
 	transform: `scaleX(${transform.flipX}) scaleY(${transform.flipY})`,
 }));
@@ -227,23 +234,13 @@ function invert(value: number) {
 	return Math.floor(value / transform.scale);
 }
 
-const region = computed(() => {
-	// Computed 中必须通过 getter 来记录依赖，否则无法更新。
-	const width = invert(stencil.width);
-	const height = invert(stencil.height);
-
-	const container = main.value;
-	if (!container) {
-		return { top: 0, left: 0, width, height };
-	}
-	const ri = container.firstElementChild!.getBoundingClientRect();
-	const rs = container.lastElementChild!.getBoundingClientRect();
-
-	return {
-		width, height,
-		left: invert(rs.left - ri.left),
-		top: invert(rs.top - ri.top),
-	};
+watch([stencil, transform], () => {
+	const ri = main.value!.firstElementChild!.getBoundingClientRect();
+	const rs = main.value!.lastElementChild!.getBoundingClientRect();
+	region.width = invert(stencil.width);
+	region.height = invert(stencil.height);
+	region.top = invert(rs.top - ri.top);
+	region.left = invert(rs.left - ri.left);
 });
 
 export interface CropResult {
@@ -260,7 +257,7 @@ export interface CropResult {
 
 function ok() {
 	$dialog.confirm({
-		...region.value,
+		...region,
 		rotate: transform.rotate,
 		flipX: transform.flipX === -1,
 		flipY: transform.flipY === -1,
@@ -420,11 +417,10 @@ function handleWheel(event: WheelEvent) {
 	overflow: hidden;
 	user-select: none;
 
-	background-image:
-			linear-gradient(45deg, @tile-color 25%, transparent 0),
-			linear-gradient(45deg, transparent 75%, @tile-color 0),
-			linear-gradient(45deg, @tile-color 25%, transparent 0),
-			linear-gradient(45deg, transparent 75%, @tile-color 0);
+	background-image: linear-gradient(45deg, @tile-color 25%, transparent 0),
+	linear-gradient(45deg, transparent 75%, @tile-color 0),
+	linear-gradient(45deg, @tile-color 25%, transparent 0),
+	linear-gradient(45deg, transparent 75%, @tile-color 0);
 	background-size: 20px 20px;
 	background-position: 0 0, 10px 10px, 10px 10px, 0 0;
 }

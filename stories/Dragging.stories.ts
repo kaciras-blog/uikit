@@ -38,29 +38,31 @@ export const Dragging: StoryFn = (args) => ({
 		const vX = ref("0.0");
 		const vY = ref("0.0");
 
-		const style = computed(() => ({ "--edge-size": args.size + "px" }));
+		const style = computed(() => ({
+			"--edge-size": args.size + "px",
+		}));
 
 		function drag(event: PointerEvent) {
 			const { size, speed } = args;
 			const el = event.target as HTMLElement;
 
-			const edgeScroller = new EdgeScrollObserver(size, speed);
-			const move = moveElement(event, el);
+			const edgeScroll = new EdgeScrollObserver(document.scrollingElement, size, speed);
 			el.style.cursor = "grabbing";
 
-			startDragging(event, {
-				onMove(point) {
-					limitInWindow(point);
-					move(point);
-					edgeScroller.onMove(point);
-					vX.value = edgeScroller.vX.toFixed(1);
-					vY.value = edgeScroller.vY.toFixed(1);
+			startDragging(event, [
+				limitInWindow,
+				moveElement(event, el),
+				edgeScroll,
+				{
+					onEnd() {
+						el.style.cursor = "";
+					},
+					onMove() {
+						vX.value = edgeScroll.vX.toFixed(1);
+						vY.value = edgeScroll.vY.toFixed(1);
+					},
 				},
-				onEnd() {
-					el.style.cursor = "";
-					edgeScroller.onEnd();
-				},
-			});
+			]);
 		}
 
 		return { vX, vY, style, drag };

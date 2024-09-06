@@ -1,37 +1,50 @@
-interface Point2D {
+export interface Point2D {
 	x: number;
 	y: number;
 }
 
-type OnMove = (event: Point2D) => void;
+interface DragHandlerObject {
 
-interface DragHandlers {
-	onMove: OnMove;
+	onMove(event: Point2D): void | boolean;
 
 	onEnd?(event: Event): void;
+}
+
+type DragHandler = DragHandlerObject | DragHandlerObject["onMove"];
+
+type HandlerParam = DragHandler | DragHandler[];
+
+function normalize(handlers: HandlerParam) {
+	if (!Array.isArray(handlers)) {
+		handlers = [handlers];
+	}
+	for (let i = 0; i < handlers.length; i++) {
+		if (typeof handlers[i] === "function") {
+			handlers[i] = { onMove: handlers[i] } as any;
+		}
+	}
+	return handlers as DragHandlerObject[];
 }
 
 /**
  * 监听鼠标的移动，不断产生鼠标的位置，请保证调用该函数时鼠标处于按下状态或触摸状态，
  * 比如在 pointerdown 事件里调用此函数。
  */
-export function startDragging(init: MouseEvent, handlers: OnMove | DragHandlers) {
+export function startDragging(init: MouseEvent, handlers: HandlerParam) {
 	if (init.button !== 0) {
 		return;
 	}
-	if (typeof handlers === "function") {
-		handlers = { onMove: handlers };
-	}
-
-	// 傻逼艹的 TypeScript 对 let 变量和参数不做 Narrow。
-	const typeCasted = handlers;
-
 	// Avoid dragging selected contents.
 	init.preventDefault();
+	handlers = normalize(handlers);
 
 	function handleMove(event: PointerEvent) {
 		const { x, y } = event;
-		typeCasted.onMove({ x, y });
+		const point = { x, y };
+
+		for (const handler of handlers as DragHandlerObject[]) {
+			if (handler.onMove(point) === false) break;
+		}
 	}
 
 	/*
@@ -39,7 +52,9 @@ export function startDragging(init: MouseEvent, handlers: OnMove | DragHandlers)
 	 * user can use window events to ensure runs after the drag handler.
 	 */
 	function handleEnd(event: Event) {
-		typeCasted.onEnd?.(event);
+		for (const handler of handlers as DragHandlerObject[]) {
+			handler.onEnd?.(event);
+		}
 		event.preventDefault();
 		document.removeEventListener("pointerup", handleEnd);
 		document.removeEventListener("pointermove", handleMove);
@@ -50,7 +65,7 @@ export function startDragging(init: MouseEvent, handlers: OnMove | DragHandlers)
 }
 
 /**
- * 将坐标点限制在窗口内。
+ * 将坐标点限制在窗口内，可以避免把元素拖出窗口外拿不回来的情况。
  */
 export function limitInWindow(point: Point2D) {
 	point.x = Math.max(0, Math.min(point.x, window.innerWidth));
@@ -91,7 +106,7 @@ export function moveElement(event: MouseEvent, el: HTMLElement) {
  * 实例化时会启动动画循环（requireAnimationFrame），不断给滚动条的位置加上 vX 和 vY，
  * 它们默认为 0，当鼠标进入边缘区域时它们被设置为非 0 值，结束后清除动画帧回调，停止循环。
  */
-export class EdgeScrollObserver {
+export class EdgeScrollObserver implements DragHandlerObject {
 
 	private readonly margin: number;
 	private readonly speed: number;
