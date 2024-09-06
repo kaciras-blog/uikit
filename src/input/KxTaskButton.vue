@@ -25,19 +25,19 @@ interface TaskButtonProps {
 	route?: string;
 
 	/**
-	 * 在运行状态下点击，是否取消当前操作，处理函数也得支持取消才行。
-	 */
-	abortable?: boolean;
-
-	/**
 	 * 事件无法获取返回的 Promise 所以得用 props。
 	 */
 	onClick: TaskHandler | TaskHandler[];
 }
 
-const { onClick, abortable = false } = defineProps<TaskButtonProps>();
+const { onClick } = defineProps<TaskButtonProps>();
 
 const running = ref(false);
+
+/*
+ * 每次开始任务都会附带一个取消信号，处理函数如果不支持取消的话可以忽略它；
+ * 如果支持取消，就应当使用第二个参数，并在取消后让 Promise 完成。
+ */
 let controller = new AbortController();
 
 // 按钮卸载的话可以认为整个需要处理的组件全没了，故取消处理。
@@ -45,20 +45,16 @@ onBeforeUnmount(() => controller.abort());
 
 function handleClick(event: MouseEvent) {
 	if (running.value) {
-		if (abortable) {
-			running.value = false;
-			controller.abort();
-		}
-	} else {
-		const { signal } = controller = new AbortController();
-
-		const task = typeof onClick === "function"
-			? onClick(event, signal)
-			: Promise.all(onClick.map(v => v(event, signal)));
-
-		running.value = true;
-		task.finally(() => running.value = false);
+		return controller.abort();
 	}
+	const { signal } = controller = new AbortController();
+
+	const task = typeof onClick === "function"
+		? onClick(event, signal)
+		: Promise.all(onClick.map(v => v(event, signal)));
+
+	running.value = true;
+	task.finally(() => running.value = false);
 }
 </script>
 
