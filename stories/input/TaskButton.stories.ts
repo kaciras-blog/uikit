@@ -25,6 +25,8 @@ export const TaskButton: StoryFn = args => ({
 	`,
 	setup: () => ({
 		args,
-		handleClick: args.async ? (_, signal) => sleep(3000, signal) : noop,
+		handleClick(_: unknown, signal: AbortSignal) {
+			return args.async ? sleep(3000, signal) : noop;
+		},
 	}),
 });

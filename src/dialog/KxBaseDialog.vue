@@ -55,8 +55,9 @@ import KxButton from "../input/KxButton.vue";
 defineOptions({ inheritAttrs: false });
 
 const props = defineProps({
-
-	/** 简单的标题，如果使用了 title 插槽则忽略 */
+	/**
+	 * 简单的标题，如果使用了 title 插槽则忽略
+	 */
 	title: String,
 
 	/** 是否可以点击标题栏拖动，默认true */
