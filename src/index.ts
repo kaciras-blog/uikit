@@ -41,7 +41,6 @@ export * from "./dragging.ts";
 export * from "./dialog/quick-alert.ts";
 
 export { default as PromiseDelegate } from "./PromiseDelegate.ts";
-export { default as PromiseSource } from "./PromiseSource.ts";
 
 /** 注册各个子模块的插件 */
 export default function install(app: App) {
