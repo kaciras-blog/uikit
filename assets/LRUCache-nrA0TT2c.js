@@ -1,0 +1,1 @@
+const o={aborted:!1,reason:void 0,get onabort(){return null},set onabort(t){},throwIfAborted(){},dispatchEvent(){throw new Error("Not supported")},addEventListener(){},removeEventListener(){}};let u=0;function s(){return u+=1}function d(t,e=o){return new Promise((n,r)=>{e.aborted&&r(e.reason),setTimeout(n,t),e.addEventListener("abort",()=>r(e.reason))})}export{d as s,s as u};
