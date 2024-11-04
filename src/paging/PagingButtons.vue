@@ -10,7 +10,7 @@ const defaultTheme = {
 			disabled: active,
 			onClick(event) {
 				event.preventDefault();
-				emit("show-page", page);
+				emit("showPage", page);
 			},
 		};
 		if (link && !active) {
@@ -33,7 +33,7 @@ const textTheme = {
 			class: $style.text,
 			onClick(event) {
 				event.preventDefault();
-				emit("show-page", page);
+				emit("showPage", page);
 			},
 		};
 		return h("a", data, content);
@@ -56,7 +56,7 @@ function jumpInput(total, $style, context) {
 			const i = parseInt(target.value);
 			if (i > 0 && i < total) {
 				target.value = "";
-				emit("show-page", i);
+				emit("showPage", i);
 			}
 		},
 	});
@@ -133,7 +133,7 @@ PagingButtons.props = {
 	},
 };
 
-PagingButtons.emits = ["show-page"];
+PagingButtons.emits = ["showPage"];
 
 export default PagingButtons;
 </script>
