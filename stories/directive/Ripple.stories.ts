@@ -1,4 +1,4 @@
-import { StoryFn } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3-vite";
 import vRipple from "../../src/directives/ripple.ts";
 
 export default {

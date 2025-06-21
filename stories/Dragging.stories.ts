@@ -1,4 +1,4 @@
-import { StoryFn } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3-vite";
 import { computed, ref } from "vue";
 import { EdgeScrollObserver, limitInWindow, moveElement, startDragging } from "../src/dragging.ts";
 

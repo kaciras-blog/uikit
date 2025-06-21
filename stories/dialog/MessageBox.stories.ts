@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from "@storybook/vue3";
+import { Meta, StoryFn } from "@storybook/vue3-vite";
 import { MessageType } from "../../src/dialog/core.js";
 import { DialogContainer } from "../../src/index.ts";
 import KxButton from "../../src/input/KxButton.vue";

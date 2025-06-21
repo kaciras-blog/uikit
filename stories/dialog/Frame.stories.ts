@@ -1,4 +1,4 @@
-import { StoryFn } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3-vite";
 import DemoFrame from "./DemoFrame.vue";
 import KxButton from "../../src/input/KxButton.vue";
 import { DialogContainer } from "../../src/index.ts";

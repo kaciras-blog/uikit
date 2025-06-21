@@ -1,4 +1,4 @@
-import type { Meta } from "@storybook/vue3";
+import type { Meta } from "@storybook/vue3-vite";
 import RelativeTimeVue from "../src/components/RelativeTime.vue";
 
 export default {

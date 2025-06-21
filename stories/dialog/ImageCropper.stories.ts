@@ -1,4 +1,4 @@
-import { StoryFn } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3-vite";
 import { selectFile } from "@kaciras/utilities/browser";
 import ImageCropperVue from "../../src/dialog/ImageCropper.vue";
 import KxButton from "../../src/input/KxButton.vue";

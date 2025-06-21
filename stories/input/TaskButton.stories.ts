@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from "@storybook/vue3";
+import { Meta, StoryFn } from "@storybook/vue3-vite";
 import { sleep } from "@kaciras/utilities/browser";
 import { noop } from "@vueuse/core";
 import KxTaskButton from "../../src/input/KxTaskButton.vue";

@@ -1,6 +1,4 @@
-import type { StorybookConfig } from "@storybook/vue3-vite";
-
-export default <StorybookConfig>{
+export default {
 	framework: {
 		name: "@storybook/vue3-vite",
 		options: {
@@ -9,8 +7,7 @@ export default <StorybookConfig>{
 	},
 	addons: [
 		"@storybook/addon-links",
-		"@storybook/addon-essentials",
-		"@storybook/addon-interactions",
+		"@storybook/addon-docs"
 	],
 	stories: [
 		"../stories/**/*.mdx",

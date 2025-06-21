@@ -1,4 +1,4 @@
-import { StoryFn } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3-vite";
 import { ref } from "vue";
 import KxRadioBoxGroup from "../../src/input/KxRadioBoxGroup.vue";
 import KxRadioBox from "../../src/input/KxRadioBox.vue";

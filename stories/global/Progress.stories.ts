@@ -1,4 +1,4 @@
-import { StoryFn } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3-vite";
 import KxProgress from "../../src/components/KxProgress.vue";
 import KxButton from "../../src/input/KxButton.vue";
 

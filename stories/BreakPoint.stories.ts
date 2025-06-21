@@ -1,4 +1,4 @@
-import { StoryFn } from "@storybook/vue3";
+import { StoryFn } from "@storybook/vue3-vite";
 import { useBreakPoint } from "../src/break-point.ts";
 
 export default {

@@ -1,4 +1,4 @@
-import { Args, Meta, StoryFn } from "@storybook/vue3";
+import { Args, Meta, StoryFn } from "@storybook/vue3-vite";
 import { h } from "vue";
 import AtomSpinnerC from "../src/components/AtomSpinner.vue";
 import SkFadingCircleC from "../src/components/SkFadingCircle.vue";
